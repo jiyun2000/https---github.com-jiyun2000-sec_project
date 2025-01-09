@@ -172,7 +172,7 @@ const StompComponent = () => {
         console.log("outChatRoom");
     }
 
-    return (
+    return ( 
         <div>
             {!isEnterChat ? (
                 <div style={{ textAlign: 'center' }}>
