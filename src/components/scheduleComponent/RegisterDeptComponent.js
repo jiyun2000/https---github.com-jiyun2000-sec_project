@@ -31,26 +31,24 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
             postDeptSchedule(deptNoSave, empNo, deptNo).then((data) => { //register
                 console.log(JSON.stringify(data));
             }).catch((error) => {
-                console.error("postDeptSchedule errrror" + error);
+                console.log("postDeptSchedule errrror" + error);
             });
         } else {
             putDeptSchedule(deptNoSave, deptNo, empNo, deptSchNo).then((data) => {
                 console.log("일정 수정 성공:", data);
             }).catch((error) => {
-                console.error("일정 수정 실패:", error);
+                console.log("일정 수정 실패:", error);
             })}};
 
     return (
-        <div className="modal" tabIndex="-1">
-            <div className="modal-dialog">
-                <div className="modal-content">
-                    <div className="modal-header">
-                        <h5 className="modal-title">일정 입력</h5>
-                        <button type="button" className="btn-close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <div className="form-group">
-                            <input
+        <>
+            <div className="flex justify-center items-center min-h-screen bg-gray-100 bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                    <h2 className="text-2xl font-semibold text-center mb-6">[DEPT] 일정 입력</h2>
+                    
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">일정 제목</label>
+                        <input
                                 type="text"
                                 className="form-control"
                                 name="scheduleText"
@@ -58,38 +56,40 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
                                 value={newEvent.scheduleText}
                                 onChange={handleClickChangeInput}
                             />
-                        </div>
-                        <div className="form-group">
-                            <input
+                    </div>
+                    
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">시작 날짜</label>
+                        <input
                                 type="datetime-local"
                                 className="form-control"
                                 name="startDate"
                                 value={newEvent.startDate}
                                 onChange={handleClickChangeInput}
                             />
-                        </div>
-                        <div className="form-group">
-                            <input
+                    </div>
+                    
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">종료 날짜</label>
+                        <input
                                 type="datetime-local"
                                 className="form-control"
                                 name="endDate"
                                 value={newEvent.endDate}
                                 onChange={handleClickChangeInput}
                             />
-                        </div>
                     </div>
-                    <div className="modal-footer">
-                        <button
-                            type="button"
-                            className="btn btn-warning replySave"
-                            onClick={handleSaveEvent}
-                        >
-                            Save
-                        </button>
-                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleSaveEvent}
+                        className="w-full bg-sky-300 text-white py-2 rounded-md "
+                    >
+                        등록
+                    </button>
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

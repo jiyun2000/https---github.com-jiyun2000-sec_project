@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { getDeptTodo } from "../../api/todoApi/deptTodoApi";
 import { useNavigate } from "react-router-dom";
 import { deleteDeptScheduleOne } from "../../api/scheduleAPi/deptScheduleApi";
-import { postDeptSchedule } from "../../api/scheduleAPi/deptScheduleApi"; // 추가된 import
+
 
 const formatSelectDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) { //날짜 유효 검사
-        console.error("dateString" + dateString);
+        console.log("dateString" + dateString);
         return null;
     }
     return date.toISOString().split('T')[0]; //yyyy-mm-dd
@@ -25,7 +25,7 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
     useEffect(() => {
         const formattedDate = formatSelectDate(selectDate);
         if (!formattedDate) {
-            console.error("formattedDate error");
+            console.log("formattedDate error");
             return;
         }
 
@@ -36,7 +36,7 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
                 setEvents([]);
             }
         }).catch((error) => {
-            console.error("getDeptTodo Error: " + error);
+            console.log("getDeptTodo Error: " + error);
         });
     }, [empNo, deptNo, selectDate]);
 
@@ -50,7 +50,7 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
         deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
             setEvents(events.filter(event => event.deptSchNo !== deptSchNo));
         }).catch((error) => {
-            console.error("deleteDeptScheduleOne Errrrror " + error);
+            console.log("deleteDeptScheduleOne Errrrror " + error);
         });
     };
 
@@ -62,15 +62,16 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
 
     return (
         <>
-            <h2>[DEPT] Todo List</h2><br />
+            <div className="text-center m-8">
+            <h2 className="text-3xl font-semibold">[DEPT] Todo List</h2><br />
             {events && events.length > 0 ? (
                 events.map((evt) => (
                     <div key={evt.deptSchNo}>
                         <p>{evt.scheduleText}</p>
                         <p>시작 시간: {new Date(evt.startDate).toLocaleString()}</p>
                         <p>끝나는 시간: {new Date(evt.endDate).toLocaleString()}</p>
-                        <button onClick={() => modDeptSchedule(evt.deptSchNo)} type="button">부서 일정 수정하기</button><br />
-                        <button onClick={() => deleteDeptSchedule(evt.deptSchNo)} type="button">부서 일정 삭제하기</button><br />
+                        <button onClick={() => modDeptSchedule(evt.deptSchNo)} type="button">부서 일정 수정</button><br />
+                        <button onClick={() => deleteDeptSchedule(evt.deptSchNo)} type="button">부서 일정 삭제</button><br />
                         -----------------------------------------<br/>
                     </div>
                 ))
@@ -78,7 +79,8 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
                 "일정X" 
             )}
             <br />
-            <button onClick={addSchedule}>일정 추가하기</button>
+            <button onClick={addSchedule} type="button" className="border border-blue-200 rounded-md px-2">부서 일정 추가</button>
+            </div>
         </>
     );
 };

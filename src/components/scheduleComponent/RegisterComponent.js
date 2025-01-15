@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { postEmpScheule } from "../../api/scheduleAPi/empScheduleApi";
+import { useNavigate } from "react-router-dom";
 
 //empSchedule register component.
 const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
+
+    const navigate = useNavigate();
 
     const [newEvent, setNewEvent] = useState({
         scheduleText:scheduleText,
@@ -30,37 +33,35 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
     
     return (
         <>
-            <div class="modal" tabindex="-1">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">{startDate} 일정 입력</h5>
-                          
-                            <button type="button" class="btn-close"></button>
-                             
-                        </div>
-                        <div class="modal-body">
-                            <div class="form-group">
-                                <input type="text" class="form-control" name="scheduleText" placeholder="scheduleText" value={newEvent.scheduleText} onChange={handleClickChangeInput}/>
-                            </div>
-        
-                            <div class="form-group">
-                                <input type="datetime-local" class="form-control" name="startDate" placeholder="start" value={newEvent.startDate} onChange={handleClickChangeInput}/>
-                            </div>
-        
-                            <div class="form-group">
-                                <input type="datetime-local" class="form-control" name="endDate" placeholder="end" value={newEvent.endDate} onChange={handleClickChangeInput}/>
-                            </div>
-        
-                            <input type="hidden" name="empSchNo" />
-                        </div>
-                            
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-warning replySave" onClick={handleSaveEvent}>Save</button>
-                        </div>
+
+            <div className="flex justify-center items-center min-h-screen bg-gray-100 bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+                    <h2 className="text-2xl font-semibold text-center mb-6">일정 입력</h2>
+                    
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">일정 제목</label>
+                        <input type="text" className="form-control" name="scheduleText" placeholder="scheduleText" value={newEvent.scheduleText} onChange={handleClickChangeInput}/>
                     </div>
+                    
+                    <div className="mb-4">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">시작 날짜</label>
+                        <input type="datetime-local" className="form-control" name="startDate" placeholder="start" value={newEvent.startDate} onChange={handleClickChangeInput}/>
+                    </div>
+                    
+                    <div className="mb-6">
+                        <label className="block text-gray-700 text-sm font-medium mb-2">종료 날짜</label>
+                        <input type="datetime-local" className="form-control" name="endDate" placeholder="end" value={newEvent.endDate} onChange={handleClickChangeInput}/>
+                    </div>
+
+                    <button
+                        type="button"
+                        onClick={handleSaveEvent}
+                        className="w-full bg-sky-300 text-white py-2 rounded-md "
+                    >
+                        등록
+                    </button>
                 </div>
-            </div>     
+            </div>
         </>
     )
 }

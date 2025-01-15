@@ -1,22 +1,18 @@
-import UseCustomMove from "../../useCustom/UseCustomMove";
+import { NavItem } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
-const LoginComponent = () => {
+const LoginComponent = ({empNo, deptNo}) => {
 
-    const {moveToDdt} = UseCustomMove();
 
-    const goMainPage = (e) => {
-        e.preventDefault();
-        moveToDdt();
+    const navigate = useNavigate();
+    const goToMain = () => {
+        navigate(`/ddt/${empNo}/${deptNo}`);
     }
 
     return (
         <div className="flex flex-col items-center justify-center bg-blue-200 max-w-sm w-full">
-            <div>
-                {/* 회사 로고 들어가면 됨. */}
-                <img />
-            </div>
-            <div className="bg-blue-200 ">
-                <form onSubmit={goMainPage}>
+            <div className="bg-blue-200" onSubmit={goToMain}>
+                <form >
                     <div>
                         아이디 : <div className="border border-black flex shadow-md"><input type="text" name="id"/></div>
                     </div>

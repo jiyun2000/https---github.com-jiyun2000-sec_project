@@ -5,7 +5,7 @@ import { getTodayList } from "../../api/scheduleAPi/empDeptScheduleApi";
 const formatSelectDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) {
-        console.error("dateString" + dateString);
+        console.log("dateString" + dateString);
         return null;
     }
     return date.toISOString().split('T')[0]; 
@@ -36,7 +36,7 @@ const TodayListComponent = ({ deptNo, empNo, selectDate: initialSelectDate }) =>
 
         const formattedDate = formatSelectDate(selectDate);
         if (!formattedDate) {
-            console.error("formatErrorrrr");
+            console.log("formatErrorrrr");
             return;
         }
         console.log("formattedDate " + formattedDate);
@@ -45,14 +45,14 @@ const TodayListComponent = ({ deptNo, empNo, selectDate: initialSelectDate }) =>
             console.log("data" + data);
             console.log(JSON.stringify(data));
              
-            const allSchedule = [...data.deptSchedule, ...data.empSchedule]; //두개 한번에 묶는 변수
+            const allSchedule = [...data.deptSchedule, ...data.empSchedule]; //두개 한번에 묶기
             console.log("allSchedule" + allSchedule);
         
             const validEvents = allSchedule.filter(evt => {
                 if (isValidDate(evt.startDate) && isValidDate(evt.endDate)) {
                     return true;
                 } else {
-                    console.error(evt.startDate, evt.endDate);
+                    console.log(evt.startDate, evt.endDate);
                     return false;
                 }
             });
@@ -60,7 +60,7 @@ const TodayListComponent = ({ deptNo, empNo, selectDate: initialSelectDate }) =>
             validEvents.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
             setEvents(validEvents);
         }).catch((error) => {
-            console.error("errrr:", error);
+            console.log("errrr:", error);
         });
     }, [deptNo, empNo, selectDate]); 
 

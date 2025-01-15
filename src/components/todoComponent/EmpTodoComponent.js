@@ -6,13 +6,15 @@ import { deleteScheduleOne } from "../../api/scheduleAPi/empScheduleApi";
 const formatSelectDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) { //날짜 유효 검사
-        console.error("dateString" + dateString);
+        console.log("dateString" + dateString);
         return null;
     }
     return date.toISOString().split('T')[0]; //yyyy-mm-dd
 };
 
 const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
+    console.log(empNo);
+    
     const [events, setEvents] = useState([]);
     const [selectDate, setSelectDate] = useState(initialSelectDate || new Date().toISOString().split('T')[0]);
     const navigate = useNavigate();
@@ -24,7 +26,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
     useEffect(() => {
         const formattedDate = formatSelectDate(selectDate);
         if (!formattedDate) {
-            console.error("formattedDate error");
+            console.log("formattedDate error");
             return;
         }
 
@@ -36,7 +38,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
                 setEvents([]);
             }
         }).catch((error) => {
-            console.error("getEmpTodo Error: " + error);
+            console.log("getEmpTodo Error: " + error);
         });
     }, [empNo, selectDate]);
 
@@ -55,7 +57,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
         deleteScheduleOne(empNo, empSchNo).then(() => {
             setEvents(events.filter(event => event.empSchNo !== empSchNo));
         }).catch((error) => {
-            console.error("deleteScheduleErr" + error);
+            console.log("deleteScheduleErr" + error);
         });
     };
 
@@ -69,15 +71,16 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
 
     return (
         <>
-            <h2>Todo List</h2> <br />
+            <div className="text-center m-8  bg-gray-100 bg-opacity-50 ">
+            <h2 className="text-3xl font-semibold">Todo List</h2> <br />
             {events && events.length > 0 ? (
                 events.map((evt) => (
-                    <div key={evt.empSchNo}>
-                        <p>{evt.scheduleText}</p>
-                        <p>시작 시간: {formatDate(evt.startDate)}</p>
-                        <p>끝나는 시간: {formatDate(evt.endDate)}</p>
-                        <button onClick={() => modSchedule(evt.empSchNo)} type="button">일정 수정하기</button><br />
-                        <button onClick={() => deleteSchedule(evt.empSchNo)} type="button">일정 삭제하기</button><br />
+                    <div key={evt.empSchNo} >
+                        <p className="text-2xl font-medium m-4">{evt.scheduleText}</p>
+                        <p className="font-light">시작 시간 : {formatDate(evt.startDate)}</p>
+                        <p className="font-light">끝난 시간 : {formatDate(evt.endDate)}</p>
+                        <button onClick={() => modSchedule(evt.empSchNo)} type="button" className="border border-blue-200 rounded-md px-2 mr-2">수정</button>
+                        <button onClick={() => deleteSchedule(evt.empSchNo)} type="button" className="border border-blue-200 rounded-md px-2">삭제</button><br />
                         ---------------------------------------------------
                         <br />
                     </div>
@@ -85,7 +88,8 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
             ) : (
                 "일정X"
             )}
-            <button onClick={empTodoAdd} type="button">일정 추가하기</button>
+            <button onClick={empTodoAdd} type="button" className="border border-blue-200 rounded-md px-2">일정 추가</button>
+            </div>
         </>
     );
 };

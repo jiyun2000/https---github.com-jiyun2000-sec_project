@@ -3,7 +3,8 @@ import { Client } from "@stomp/stompjs";
 import { useState, useEffect } from "react";
 import SockJS from "sockjs-client";
 import axios from 'axios';
-import ExcelJS from 'exceljs'; 
+import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
+import { jwtAxios } from '../../util/JWTutil';
 
 const StompComponent = () => {
     const navigate = useNavigate();
@@ -13,7 +14,7 @@ const StompComponent = () => {
     const [isEnterChat, setIsEnterChat] = useState(false); //채팅창 입장 여부
     const [messages, setMessages] = useState([]);  //채팅 메시지지
     const [userId, setUserId] = useState(senderEmpNo); 
-    
+
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
@@ -24,7 +25,7 @@ const StompComponent = () => {
         try {
             const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
             
-            const response = await axios.get(`http://localhost:8080/chat/chat-history/${chatRoomId}`);
+            const response = await jwtAxios.get(`http://localhost:8080/chat/chat-history/${chatRoomId}`);
 
         if(Array.isArray(response.data)){
             const formattedMessages = response.data.map(([sender, message, timestamp]) => ({
@@ -38,12 +39,11 @@ const StompComponent = () => {
             setMessages([]);
         }
         }catch (error) {
-                console.error(error);
+                console.log(error);
                 setMessages([]);
         }
     };
     
-
     //senderEmpNo & receiverEmpNo 둘 다 있다면면 소켓 연결
     useEffect(() => { 
         if (senderEmpNo && receiverEmpNo) {
@@ -101,11 +101,11 @@ const StompComponent = () => {
             },
             //소켓 연결 에러
             onWebSocketError: (error) => {
-                console.error("onWebSocketError " + error);
+                console.log("onWebSocketError " + error);
             },
             //stomp 에러러
             onStompError: (frame) => {
-                console.error("onStompError " + frame);
+                console.log("onStompError " + frame);
             },
         });
 
@@ -132,7 +132,7 @@ const StompComponent = () => {
             });
     
             // Spring Boot 서버로 메시지 저장
-            axios.post(`http://localhost:8080/chat/${senderEmpNo}/${receiverEmpNo}`, messageWithTime, {
+            jwtAxios.post(`http://localhost:8080/chat/${senderEmpNo}/${receiverEmpNo}`, messageWithTime, {
                 headers: {
                     'Content-Type': 'application/json; charset=utf-8',
                 }
@@ -141,13 +141,13 @@ const StompComponent = () => {
                 console.log("Message saved in DB:", response.data);
             })
             .catch(error => {
-                console.error("Error saving message:", error);
+                console.log("Error saving message:", error);
             });
     
             // 메시지 입력 필드 초기화
             setMessageObj({ ...messageObj, content: '' });
         } else {
-            console.error("Message content is empty");
+            console.log("Message content is empty");
         }
     },
     
@@ -170,6 +170,13 @@ const StompComponent = () => {
     //채팅방 나가기
     const outChatRoom = () => {
         console.log("outChatRoom");
+        alert("채팅방에 나가시겠습니까?")
+        console.log("senderEmpNo" + senderEmpNo);
+        console.log("receiverEmpNo" + receiverEmpNo);
+        leaveChatRoom(senderEmpNo,receiverEmpNo);
+        console.log("senderEmpNo 2 " + senderEmpNo);
+        console.log("receiverEmpNo 2 " + receiverEmpNo);
+        navigate(`/chat/empList/${receiverEmpNo}`);
     }
 
     return ( 
@@ -182,8 +189,17 @@ const StompComponent = () => {
                     </button>
                 </div>
             ) : (
+                <div style={{ 
+                    display: 'flex', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                    minHeight: '100vh',
+                    flexDirection: 'column',
+                    width: '100%',
+                    textAlign: 'center'
+                }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2>{receiverEmpNo}</h2>
+                    <h2>{receiverEmpNo} </h2>
                     <div >
                         <input
                             type="text"
@@ -198,7 +214,17 @@ const StompComponent = () => {
                             전송
                         </button>
                     </div>
-                    <div style={{ display: 'flex', flexDirection: 'column', height: 300, backgroundColor: '#B4E5FF', border: '1px solid black', margin: 20, overflowY: 'scroll' }}>
+                    </div>
+                    <div style={{ 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        width: '60%', 
+                        height: '700px', 
+                        backgroundColor: '#B4E5FF', 
+                        border: '1px solid black', 
+                        margin: '20px', 
+                        overflowY: 'scroll' 
+                    }}>
                         {messages.length > 0 && messages.map((item, index) => {
                             if (!item.sender || !item.content || isNaN(Number(item.sender))) {
                                 return null;}
@@ -210,13 +236,13 @@ const StompComponent = () => {
                         return (
                             <div key={index} style={{ 
                             textAlign: isUserMessage ? 'right' : 'left', 
-                            marginBottom: '10px'}}>
+                            marginBottom: '10px' }}>
                             <h1 style={{
                             fontSize: 13,
                             padding: '5px 10px',
                             borderRadius: '10px',
                             display: 'inline-block'}}>
-                            {isUserMessage ? `[ME] ${item.content}${item.sendTime}` : `[${sender}] ${item.content}${item.sendTime}`}
+                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${sender}] ${item.content} (${item.sendTime})`}
                             </h1>
                             </div>
                         );
@@ -234,5 +260,4 @@ const StompComponent = () => {
         </div>
     );
 };
-
 export default StompComponent;
