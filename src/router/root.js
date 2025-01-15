@@ -9,10 +9,14 @@ import RegisterDeptPage  from "../pages/schedulePage/RegisterDeptPage";
 import ModDeptSchedulePage  from "../pages/schedulePage/ModDeptSchedulePage";
 import EmpTodoPage from "../pages/todoPage/EmpTodoPage";
 import DeptTodoPage from "../pages/todoPage/DeptTodoPage";
-import StompComponent from "../components/chatComponent/StompComponent";
 import ChatEmpListPage from "../pages/chatPage/ChatEmpListPage";
 import StompPage from "../pages/chatPage/StompPage";
-
+import jobRouter from "./jobRouter";
+import deptInfoRouter from "./deptInfoRouter";
+import roomListRouter from "./roomListRouter";
+import bookingRouter from "./bookingRouter";
+import dayOffRouter from "./dayOffRouter";
+import employeesRouter from "./employeesRouter";
 
 
 
@@ -64,6 +68,30 @@ const root = createBrowserRouter([
     {
         path : 'chat/:senderEmpNo/:receiverEmpNo',
         element : <StompPage />
+    },
+    {
+        path : 'job',
+        children : jobRouter()
+    },
+    {
+        path : 'deptinfo',
+        children : deptInfoRouter()
+    },
+    {
+        path : 'room',
+        children : roomListRouter()
+    },
+    {
+        path : 'booking',
+        children : bookingRouter()
+    },
+    {
+        path : 'dayoff',
+        children : dayOffRouter()
+    },
+    {
+        path : 'employees',
+        children : employeesRouter()
     }
 
     

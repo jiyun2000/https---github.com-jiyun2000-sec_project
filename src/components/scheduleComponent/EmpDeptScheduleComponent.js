@@ -149,12 +149,13 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo, empSchNo, deptSchNo }) => {
                         <p>{evt.title}</p>
                         <p>시작 시간: {evt.start ? evt.start.toLocaleString() : ' '}</p>
                         <p>끝나는 시간: {evt.end ? evt.end.toLocaleString() : ' '}</p>
-                        <button onClick={modSchedule} type="button">일정 수정하기</button><br />
-                        <button onClick={deleteSchedule} type="button">일정 삭제하기</button><br />
+                        <button onClick={modSchedule} type="button" className="border border-sky-400 rounded-sm p-2 m-4">일정 수정하기</button>
+                        <button onClick={deleteSchedule} type="button" className="border border-blue-400 rounded-sm p-2 m-4">일정 삭제하기</button>
                     </div>
                     ))}
-                <button onClick={closeModal} type="button">Close</button><br />
-                <button onClick={addSchedule} type="button">일정 추가하기</button><br />
+                <button onClick={addSchedule} type="button" className="border border-blue-400 rounded-sm p-2 m-4">일정 추가하기</button>
+                <button onClick={closeModal} type="button0" className="border border-sky-400 rounded-sm p-2 m-4">Close</button><br />
+               
                 </div>
             ) : selectDepState.length > 0 ? ( // 부서 스케줄 창
                 <div className="bg-blue-50">

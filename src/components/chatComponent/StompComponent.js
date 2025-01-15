@@ -216,7 +216,7 @@ const StompComponent = () => {
                             padding: '5px 10px',
                             borderRadius: '10px',
                             display: 'inline-block'}}>
-                            {isUserMessage ? `[ME] ${item.content}${item.sendTime}` : `[${sender}] ${item.content}${item.sendTime}`}
+                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${sender}] ${item.content} (${item.sendTime})`}
                             </h1>
                             </div>
                         );
