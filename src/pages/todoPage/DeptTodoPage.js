@@ -1,8 +1,6 @@
 import DeptTodoComponent from "../../components/todoComponent/DeptTodoComponent"
-import { useParams } from "react-router-dom"
 
-const DeptTodoPage = () => {
-    const {empNo, deptNo, selectDate} = useParams();
+const DeptTodoPage = ({empNo, deptNo, selectDate}) => {
 
     return (
         <>

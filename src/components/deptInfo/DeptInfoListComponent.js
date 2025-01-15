@@ -48,9 +48,9 @@ const DeptInfoListComponent = () => {
 
         <div className="flex justify-center p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
         onClick={handleClickAdd}>
-            부서 추가
+            추가
         </button>
         </div>
         </>

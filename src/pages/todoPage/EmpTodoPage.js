@@ -1,8 +1,7 @@
-import { useParams } from "react-router-dom";
 import EmpTodoComponent from "../../components/todoComponent/EmpTodoComponent";
 
-const EmpTodoPage = () => {
-    const {empNo, selectDate} = useParams();
+const EmpTodoPage = ({empNo, selectDate}) => {
+
 
     return (
         <>

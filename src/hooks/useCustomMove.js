@@ -22,6 +22,14 @@ const useCustomMove = () => {
         navigate({pathname:`../read/${num}`, search:queryDefault});
     }
 
+    const moveToReceivedReportRead = (num) => {
+        navigate({pathname:`../read/received/${num}`, search:queryDefault});
+    }
+
+    const moveToSentReportRead = (num) => {
+        navigate({pathname:`../read/sent/${num}`, search:queryDefault});
+    }
+
     const moveToJobRead = (num) => {
         navigate({pathname:`../read/${num}`});
     }
@@ -29,6 +37,56 @@ const useCustomMove = () => {
     const moveToModify = (num) => {
         navigate({pathname:`../modify/${num}`,search:queryDefault});
     }
+
+    const moveToModifyCommute = (num) => {
+        navigate({pathname:`../commute/modify/${num}`,search:queryDefault});
+    }
+
+    const moveToReportReceived = (num) => {
+        navigate({pathname:`../../report/list/received/${num}`,search:queryDefault});
+    }
+
+    const moveToReportSent = (num) => {
+        navigate({pathname:`../../report/list/sent/${num}`,search:queryDefault});
+    }
+
+    const moveToReportSentPage = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page,1);
+            const sizeNum = getNum(pageParam.size,10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname:`../../report/list/sent/${pageParam.empNo}`,search:queryStr})
+    
+    };
+
+    const moveToReportReceivedPage = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page,1);
+            const sizeNum = getNum(pageParam.size,10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname:`../../report/list/received/${pageParam.empNo}`,search:queryStr})
+    
+    };
 
     const moveToList = (pageParam) => {
         let queryStr = '';
@@ -64,6 +122,24 @@ const useCustomMove = () => {
         }
 
         navigate({pathname:`../read/${pageParam.jobNo}`,search:queryStr})
+    };
+
+    const moveToCommuteList = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page,1);
+            const sizeNum = getNum(pageParam.size,10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname:`../commute/${pageParam.empNo}`,search:queryStr})
     };
 
     const moveToDeptInfoList = (pageParam) => {
@@ -106,7 +182,29 @@ const useCustomMove = () => {
         navigate({pathname:`../add`});
     }
 
-    return {page, size, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd};
+    const moveToAddReport = (num) => {
+        navigate({pathname:`../add/${num}`,search:queryDefault});
+    }
+
+    const moveToAnnualLeave = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page,1);
+            const sizeNum = getNum(pageParam.size,10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname : `../annualleave/${pageParam.empNo}`})
+    }
+
+    return {page, size,moveToReceivedReportRead, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd};
 }
 
 export default useCustomMove;

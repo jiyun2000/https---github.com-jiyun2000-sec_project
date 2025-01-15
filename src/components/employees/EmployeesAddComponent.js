@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/employeesApi";
+import { setALOne } from "../../api/annualLeaveApi";
 
 const initState = {
     empNo : 0 ,
@@ -15,7 +16,8 @@ const initState = {
     address : '',
     phoneNum : '',
     gender : '',
-    citizenId : ''
+    citizenId : '',
+    password : ''
 }
 
 const EmployeesAddComponent = () => {
@@ -24,8 +26,11 @@ const EmployeesAddComponent = () => {
     const {moveToList} = useCustomMove();
 
     const handleClickAdd = () => {
-        addOne(employees).then(()=>moveToList());
+        addOne(employees).then((data)=>{
+            setALOne(data).then(()=>moveToList());
+        });
     }
+    
 
     const handleChangeEmployees = (evt) => {
         employees[evt.target.name] = evt.target.value;
@@ -33,10 +38,12 @@ const EmployeesAddComponent = () => {
     }
 
     return (
-        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+        <div className="flex flex-col items-center py-10 px-4">
+        <h1 className="text-3xl font-semibold mb-6">직원 등록</h1>
+        <div className="bg-white p-4 rounded-xl shadow-md w-3/4 mb-2">
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">First Name</div>
+                    <div className="w-1/5 p-6 font-bold">성</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="firstName"
                     type={'text'} 
@@ -47,7 +54,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Last Name</div>
+                    <div className="w-1/5 p-6 font-bold">이름</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="lastName"
                     type={'text'} 
@@ -58,7 +65,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Mail Address</div>
+                    <div className="w-1/5 p-6 font-bold">메일 주소</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="mailAddress"
                     type={'text'} 
@@ -69,7 +76,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Salary</div>
+                    <div className="w-1/5 p-6 font-bold">연봉</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="salary"
                     type={'number'} 
@@ -80,7 +87,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">부서 번호</div>
+                    <div className="w-1/5 p-6 font-bold">부서 번호</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deptNo"
                     type={'number'} 
@@ -91,7 +98,7 @@ const EmployeesAddComponent = () => {
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">직무 번호</div>
+                    <div className="w-1/5 p-6 font-bold">직책 번호</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="jobNo"
                     type={'number'} 
@@ -102,7 +109,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Birthday</div>
+                    <div className="w-1/5 p-6 font-bold">생년월일</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="birthday"
                     type={'date'} 
@@ -113,7 +120,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Address</div>
+                    <div className="w-1/5 p-6 font-bold">주소</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="address"
                     type={'text'} 
@@ -124,7 +131,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Phone Number</div>
+                    <div className="w-1/5 p-6 font-bold">전화번호</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="phoneNum"
                     type={'text'} 
@@ -135,7 +142,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Gender</div>
+                    <div className="w-1/5 p-6 font-bold">성별</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="gender"
                     type={'text'} 
@@ -147,7 +154,7 @@ const EmployeesAddComponent = () => {
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">CitizenId</div>
+                    <div className="w-1/5 p-6 font-bold">주민등록번호</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="citizenId"
                     type={'text'} 
@@ -156,13 +163,25 @@ const EmployeesAddComponent = () => {
                 </div>
             </div>
 
-            <div className="flex justify-end p-4">
+            <div className="flex justify-center">
+                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+                    <div className="w-1/5 p-6 font-bold">비밀번호</div>
+                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="password"
+                    type={'password'} 
+                    value={employees.password} 
+                    onChange={handleChangeEmployees}></input>
+                </div>
+            </div>
+
+            <div className="flex justify-center p-4">
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
                 onClick={handleClickAdd}>
                     Add
                 </button>
             </div>
+        </div>
         </div>
     )
 }

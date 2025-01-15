@@ -33,21 +33,22 @@ const EmployeesListComponent = () => {
     }
     
     return (<>
-    <h1 className='text-center mt-10 font-bold text-3xl'>전체 직원 목록</h1>
-    <div>
-        <div className='flex flex-wrap mx-auto p-6 items-center justify-center'> 
+    <div className="flex flex-col items-center py-10 px-4">
+    <h1 className='text-3xl font-semibold mb-6 border-b border-b-slate-600'>직원 목록</h1>
+    <div className="flex flex-col items-center">
+        <div className='flex flex-col w-[80%] items-center justify-center '>
             {employees.dtoList.map((data)=>{
                 return(
                 <div 
                 key = {data.empNo} 
-                className='flex w-2/5 p-2 m-2 rounded-md border border-blue-300' 
+                className="bg-slate-50 p-4 rounded-xl shadow-md w-[60%] mb-2 text-center" 
                 onClick = {() => moveToRead(data.empNo)}
                 >
-                    사원번호 : {data.empNo} <br/>
-                    이름 : {data.firstName}{data.lastName} <br/>
-                    입사일 : {data.hireDate} <br/>
-                    메일주소 : {data.mailAddress} <br/>
-                    성별 : {data.gender} <br/>
+                    사원 번호 : {data.empNo} <br/> 
+                    이름 : {data.firstName} {data.lastName} <br/> 
+                    입사일 : {data.hireDate}  <br/> 
+                    메일주소 : {data.mailAddress}  <br/> 
+                    성별 : {employees.gender === 'm'?'남성':'여성'}  <br/> 
                     전화번호 : {data.phoneNum}
                 </div>)
             })}
@@ -59,12 +60,13 @@ const EmployeesListComponent = () => {
             />
         </div>
 
-        <div className="flex justify-end p-4">
+        <div className="flex justify-center p-4">
         <button type="button"
-        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
         onClick={handleClickAdd}>
-            add
+            추가
         </button>
+        </div>
         </div>
         </>
     )
