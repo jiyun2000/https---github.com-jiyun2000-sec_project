@@ -45,7 +45,9 @@ const root = createBrowserRouter([
       {
         path: 'mail',
         element: <ProtectedRoute />,
-        children: [
+        children: [{ path: '/mail', element: <MailPage />, children: MailRoute() }],
+                },
+
 
                 {
                     path: 'main',
