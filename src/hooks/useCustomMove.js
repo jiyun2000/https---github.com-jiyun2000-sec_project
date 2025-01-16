@@ -42,12 +42,40 @@ const useCustomMove = () => {
         navigate({pathname:`../commute/modify/${num}`,search:queryDefault});
     }
 
-    const moveToReportReceived = (num) => {
-        navigate({pathname:`../../report/list/received/${num}`,search:queryDefault});
+    const moveToReportReceived = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page,1);
+            const sizeNum = getNum(pageParam.size,10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname:`../../report/list/received/${pageParam}`,search:queryStr});
     }
 
-    const moveToReportSent = (num) => {
-        navigate({pathname:`../../report/list/sent/${num}`,search:queryDefault});
+    const moveToReportSent = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page,1);
+            const sizeNum = getNum(pageParam.size,10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname:`../../report/list/sent/${pageParam}`,search:queryStr});
     }
 
     const moveToReportSentPage = (pageParam) => {

@@ -55,7 +55,7 @@ const DayOffListComponent = () => {
 
         <div className="flex justify-end p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
             add
         </button>

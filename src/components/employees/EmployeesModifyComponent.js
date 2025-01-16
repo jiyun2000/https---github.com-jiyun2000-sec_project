@@ -42,17 +42,15 @@ const EmployeesModifyComponent = ({empNo}) => {
     }
 
     return (
-        <div className="flex flex-col items-center py-10 px-4">
-        <h1 className="text-3xl font-semibold mb-6">{employees.firstName} {employees.lastName} 님 사원정보 수정</h1>
-        <div className="bg-white p-4 rounded-xl shadow-md w-3/4 mb-2">
+        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
             <div className="flex justify-center mt-10 mb-4">
-                <div className="w-1/5 p-6 text-right font-bold">사원번호</div>
+                <div className="w-1/5 p-6 text-right font-bold">EmployeesNo</div>
                 <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{employees.empNo}</div>
             </div>
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">성</div>
+                    <div className="w-1/5 p-6 text-right font-bold">First Name</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="firstName"
                     type={'text'} 
@@ -63,7 +61,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">이름</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Last Name</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="lastName"
                     type={'text'} 
@@ -74,7 +72,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">메일주소</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Mail Address</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="mailAddress"
                     type={'text'} 
@@ -85,7 +83,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">연봉</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Salary</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="salary"
                     type={'number'} 
@@ -107,7 +105,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">직책책 번호</div>
+                    <div className="w-1/5 p-6 text-right font-bold">직무 번호</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="jobNo"
                     type={'number'} 
@@ -118,7 +116,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">생년월일</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Birthday</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="birthday"
                     type={'date'} 
@@ -129,7 +127,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">주소</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Address</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="address"
                     type={'text'} 
@@ -140,7 +138,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">전화번호</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Phone Number</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="phoneNum"
                     type={'text'} 
@@ -151,7 +149,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">성별</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Gender</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="gender"
                     type={'text'} 
@@ -163,7 +161,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">주민등록번호</div>
+                    <div className="w-1/5 p-6 text-right font-bold">CitizenId</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="citizenId"
                     type={'text'} 
@@ -174,19 +172,18 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-end p-4">
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
                 onClick={handleClickModify}>
-                    수정
+                    Modify
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
                 onClick={handleClickDelete}
                 >
-                    삭제
+                    Delete
                 </button>
             </div>
-        </div>
         </div>
     )
 }

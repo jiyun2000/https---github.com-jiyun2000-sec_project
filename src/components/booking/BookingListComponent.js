@@ -78,20 +78,18 @@ const BookingListComponent = () => {
 
     
     return (<>
-    <h2 className='text-2xl text-center m-10'>회의실(화장실) 예약하기</h2>
-    <div className="text-1xl">
+    <div className="text-3xl">
         <div className="flex justify-center">
-            <div className="relative mb-4 flex w-full flex-wrap  flex-col items-center ">
-                <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
+            <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+                <div className="w-1/2 p-6 text-center rounded-r border border-solid border-neutral-300 shadow-md" 
                 id="cr"
                 onClick={handleChangeBooking}>회의실</div>
-                <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
+                <div className="w-1/2 p-6 text-center rounded-r border border-solid border-neutral-300 shadow-md" 
                 id='wr'
                 onClick={handleChangeBooking}>화장실</div>
             </div>
         </div>
 
-        <h2>예약 내역</h2>
         <div className='flex flex-wrap mx-auto p-6'>
             {booking.dtoList.map((data)=>{
                 return(
@@ -111,11 +109,11 @@ const BookingListComponent = () => {
             />
         </div>
 
-        <div className="flex justify-center p-4">
+        <div className="flex justify-end p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
-            추가하기
+            add
         </button>
         </div>
         </>

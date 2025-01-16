@@ -4,7 +4,7 @@ const PageComponent = ({serverData, movePage}) => {
         {
         serverData.prev?(
             <div 
-            className="m-2 p-2 w-16 text-center font-bold text-[#596fbd]" 
+            className="m-2 p-2 w-16 text-center font-bold text-blue-400" 
             onClick={()=>{movePage({page:serverData.prevPage})}}>
                 prev
             </div>
@@ -16,7 +16,7 @@ const PageComponent = ({serverData, movePage}) => {
     {
         serverData.pageNumList.map(pageNum=>
             <div 
-            className={`m-2 p-2 w-16 text-center rounded-lg shadow-md text-[#354ea7] ${serverData.current === pageNum}?'bg-gray-500':'bg-blue-400'}`}
+            className={`m-2 p-2 w-16 text-center rounded shadow-md text-blue ${serverData.current === pageNum}?'bg-gray-500':'bg-blue-400'}`}
             onClick={()=>movePage({page:pageNum})}
             key={pageNum}
             >
@@ -28,7 +28,7 @@ const PageComponent = ({serverData, movePage}) => {
     {
         serverData.next?(
             <div 
-            className="m-2 p-2 w-16 text-center font-bold text-[#596fbd]"
+            className="m-2 p-2 w-16 text-center font-bold text-blue-400"
             onClick={()=>movePage({page:serverData.nextPage})}>
                 next
             </div>

@@ -28,29 +28,26 @@ const DeptInfoListComponent = () => {
     }
     
     return (<>
-    <h1 className='text-center mt-10 font-bold text-3xl'>부서 안내</h1>
-    <div className="text-1xl">
-            <div className='flex flex-wrap mx-auto p-6 mt-8 justify-center text-center'>
+    <div className="text-3xl">
+            <div className='flex flex-wrap mx-auto p-6'>
                 {deptInfo.map((res)=>{
                     return(
                     <div 
                     key = {res.deptNo} 
-                    className='flex w-1/4 p-6 m-2 border border-blue-300 rounded-md justify-center ' 
+                    className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
                     onClick = {() => moveToRead(res.deptNo)}
                     >
-                        부서명 : {res.deptName} <br /> 
-                        부서 주소 : {res.deptAddress} <br /> 
-                        대표 번호 : {res.phoneNo} <br /> 
+                        {res.deptNo} / {res.deptName} / {res.deptAddress} / {res.phoneNo}
                     </div>)
                 })}
             </div>
         </div>
 
-        <div className="flex justify-center p-4">
+        <div className="flex justify-end p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
-            추가
+            add
         </button>
         </div>
         </>

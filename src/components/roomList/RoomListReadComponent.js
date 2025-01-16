@@ -42,61 +42,62 @@ const RoomListReadComponent = ({roomNo})=>{
     },[page]);
 
     return <>
-    <h1 className="text-center mt-8 text-3xl">{roomList.roomName} 안내</h1>
-        <div className="border-2 border-blue-300 mt-10 m-2 p-4 ">
+        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">회의실(화장실) 번호</div>
-                    <div className="w-2/3 p-6 rounded-md border border-blue-300">{roomList.roomNo}</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Room No</div>
+                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{roomList.roomNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">회의실(화장실) 이름</div>
-                    <div className="w-2/3 p-6 rounded-md border border-blue-300">{roomList.roomName}</div>
+                    <div className="w-1/5 p-6 text-right font-bold">RoomName</div>
+                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{roomList.roomName}</div>
                 </div>
             </div>
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">회의실(화장실) 위치</div>
-                    <div className="w-4/5 p-6 rounded-md border border-blue-300">{roomList.location}</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Location</div>
+                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{roomList.location}</div>
                 </div>
             </div>
 
-            <div className="flex justify-center p-4">
+            <div className="flex justify-end p-4">
                 <button type="button" 
-                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
                 onClick={()=>moveToModify(roomNo)}>
-                    수정
+                    Modify
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
                 onClick={moveToList}>
-                    리스트
+                    List
                 </button>
             </div>
         </div>
 
-        <h1 className="text-center mt-8 text-3xl">{roomList.roomName} 예약 목록</h1>
-        <div className="border-2 border-blue-300 mt-10 m-2 p-4">
+        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
             <div className='flex flex-wrap mx-auto p-6'>
                 {booking.dtoList.map((res)=>{
                     return(
                     <div 
                     key = {res.bookNo} 
-                    className='flex w-full min-w-[400px] p-2 m-2 rounded-md border border-blue-300' 
+                    className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
                     >
-                        <div className="w-1/5 p-6 font-bold">날짜</div>
-                        <div className="w-4/5 p-6 rounded-md border border-blue-300">{res.bookDate}</div>
+                        <div className="w-1/5 p-6 text-right font-bold">BookNo</div>
+                        <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{res.bookNo}</div>
 
-                        <div className="w-1/5 p-6 font-bold">시작 시간</div>
-                        <div className="w-4/5 p-6 rounded-md border border-blue-300">{res.start}</div>
+                        <div className="w-1/5 p-6 text-right font-bold">Date</div>
+                        <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{res.bookDate}</div>
 
-                        <div className="w-1/5 p-6 font-bold">끝난 시간</div>
-                        <div className="w-4/5 p-6 rounded-md border border-blue-300">{res.end}</div>
+                        <div className="w-1/5 p-6 text-right font-bold">Start</div>
+                        <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{res.start}</div>
+
+                        <div className="w-1/5 p-6 text-right font-bold">End</div>
+                        <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{res.end}</div>
                     </div>)
                 })}
             </div>

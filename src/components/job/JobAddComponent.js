@@ -22,22 +22,20 @@ const JobAddComponent = () => {
     }
 
     return (
-        <>
-        <h1 className="text-center mt-8 text-3xl">직책 추가하기</h1>
-        <div className="border border-blue-300 rounded-md mt-8 m-2 p-4 ">
-            <div className="flex justify-center mt-10  flex-col items-center" >
-                <div className="w-1/5 p-6 font-bold text-center">직책 번호</div>
-                <input className="w-2/4 p-6 rounded-md border border-blue-300 m-3" 
+        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+            <div className="flex justify-center mt-10">
+                <div className="w-1/5 p-6 text-right font-bold">JobNo</div>
+                <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="jobNo"
                     type={'number'} 
                     value={job.jobNo}
                     onChange={handleChangeJob}></input>
             </div>
 
-            <div className="flex justify-center  mt-10  flex-col">
-            <div className="flex justify-center mt-10  flex-col items-center" >
-                    <div className="w-1/5 p-6 font-bold text-center">직책명</div>
-                    <input className="w-2/4 p-6 rounded-md border  border-blue-300 m-3" 
+            <div className="flex justify-center">
+                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+                    <div className="w-1/5 p-6 text-right font-bold">JobTitle</div>
+                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="jobTitle"
                     type={'text'} 
                     value={job.jobTitle} 
@@ -45,15 +43,14 @@ const JobAddComponent = () => {
                 </div>
             </div>
 
-            <div className="flex justify-end p-4 ">
+            <div className="flex justify-end p-4">
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-28 h-18 text-white bg-blue-300"
+                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
                 onClick={handleClickAdd}>
-                    추가
+                    Add
                 </button>
             </div>
         </div>
-        </>
     )
 }
 

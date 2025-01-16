@@ -5,6 +5,7 @@ import { API_SERVER_HOST } from './finalValue';
 export const jwtAxios = axios.create();
 
 const refreshJWTToken = async () => {
+
   const refreshToken = {
     refreshToken: getCookie('member').refreshToken,
   };
@@ -23,6 +24,7 @@ const beforeReq = (config) => {
 const requestFail = (err) => {
   console.log('fail request');
   console.log(err);
+  
   return err;
 };
 
@@ -50,8 +52,6 @@ const responseFail = (err) => {
   console.log('fail request');
   return err;
 };
-
-
 
 jwtAxios.interceptors.request.use(beforeReq, requestFail);
 jwtAxios.interceptors.response.use(beforeRes, responseFail);

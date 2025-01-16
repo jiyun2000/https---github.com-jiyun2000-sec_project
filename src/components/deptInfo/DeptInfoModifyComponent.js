@@ -31,20 +31,18 @@ const DeptInfoModifyComponent = ({deptNo}) => {
     }
 
     return (
-        <>
-        <h1 className="text-center mt-10 font-bold text-3xl">{deptInfo.deptName} 부서 수정하기 </h1>
-        <div className="border-2 border-blue-300 mt-10 m-2 p-4">
+        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">부서 번호</div>
-                    <div className="w-4/5 p-6 rounded-md border border-blue-300">{deptInfo.deptNo}</div>
+                    <div className="w-1/5 p-6 text-right font-bold">Dept No</div>
+                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{deptInfo.deptNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">부서 이름</div>
-                    <input className="w-4/5 p-6 rounded-md border border-blue-300" 
+                    <div className="w-1/5 p-6 text-left font-bold">DeptName</div>
+                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deptName"
                     type={'text'} 
                     value={deptInfo.deptName} 
@@ -54,8 +52,8 @@ const DeptInfoModifyComponent = ({deptNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">부서 주소</div>
-                    <input className="w-4/5 p-6 rounded-md border border-blue-300" 
+                    <div className="w-1/5 p-6 text-left font-bold">Dept Address</div>
+                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deptAddress"
                     type={'text'} 
                     value={deptInfo.deptAddress} 
@@ -65,8 +63,8 @@ const DeptInfoModifyComponent = ({deptNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">대표 번호</div>
-                    <input className="w-4/5 p-6 rounded-md border border-blue-300" 
+                    <div className="w-1/5 p-6 text-left font-bold">Dept PhoneNo</div>
+                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="phoneNo"
                     type={'text'} 
                     value={deptInfo.phoneNo} 
@@ -76,20 +74,19 @@ const DeptInfoModifyComponent = ({deptNo}) => {
 
             <div className="flex justify-end p-4">
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
                 onClick={handleClickModify}>
-                    수정
+                    Modify
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
                 onClick={handleClickDelete}
                 >
-                    삭제
+                    Delete
                 </button>
             </div>
         </div>
-        </>
     )
 }
 

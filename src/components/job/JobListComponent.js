@@ -26,27 +26,27 @@ const JobListComponent = () => {
     }
     
     return (<>
-    <div>
-            <div className='flex flex-wrap mx-auto flex-col p-6 items-center '>
-                <h2 className='py-2 text-3xl'>직책 안내</h2>
+    <div className="text-3xl">
+            <div className='flex flex-wrap mx-auto p-6'>
                 {job.map((res)=>{
                     return(
                     <div 
                     key = {res.jobNo} 
-                    className='flex w-80  p-2 m-2 rounded shadow-md border border-blue-300 items-center justify-center font-light' 
+                    className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
                     onClick = {() => moveToJobRead(res.jobNo)}
                     >
+                        {res.jobNo} 
                         {res.jobTitle}
                     </div>)
                 })}
             </div>
         </div>
 
-        <div className="flex p-4 justify-center">
+        <div className="flex justify-end p-4">
         <button type="button"
-        className="rounded p-4 m-2 text-xl w-28 h-18 text-white bg-blue-300"
+        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
-            추가
+            add
         </button>
         </div>
         </>

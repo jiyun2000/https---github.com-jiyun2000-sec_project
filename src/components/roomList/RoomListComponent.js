@@ -27,28 +27,26 @@ const RoomListComponent = () => {
     }
     
     return (<>
-    <div>
-            <h2 className='text-center mt-8 text-3xl'>회의실(화장실) 안내</h2>
-            <div className='flex flex-wrap mx-auto p-6 items-start justify-center text-center'>
+    <div className="text-3xl">
+            <div className='flex flex-wrap mx-auto p-6'>
                 {roomList.map((res)=>{
                     return(
                     <div 
                     key = {res.roomNo} 
-                    className='flex w-2/4 p-2 m-2 rounded-md font-light items-center text-center border border-blue-300 justify-center' 
+                    className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
                     onClick = {() => moveToRead(res.roomNo)}
                     >
-                        {res.roomName} <br />
-                        위치 : {res.location}
+                        {res.roomNo} / {res.roomName} / {res.location}
                     </div>)
                 })}
             </div>
         </div>
 
-        <div className="flex p-4 justify-center">
+        <div className="flex justify-end p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer "
+        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
-            추가
+            add
         </button>
         </div>
         </>

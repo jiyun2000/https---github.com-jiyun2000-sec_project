@@ -31,11 +31,20 @@ const ReceivedReportReadComponent = ({reportNo}) => {
   }, [reportNo]);
 
   const handleClickApprove = () => {
-    report["sender"] = report.receiver;
-    report["receiver"] = newReceiver;
-    putOne(reportNo, report).then(()=>{
-      moveToReportReceived(report.sender);
-    })
+    if(report.receiver !== 1){
+      report["sender"] = report.receiver;
+      report["receiver"] = newReceiver;
+      putOne(reportNo, report).then(()=>{
+        moveToReportReceived(report.sender);
+      })
+    }else{
+      report["sender"] = report.receiver;
+      report["reportStatus"] = "완료";
+      putOne(reportNo, report).then(()=>{
+        moveToReportReceived(report.receiver);
+      })
+    }
+    
   }
 
   const handleClickReturn = () => {
@@ -115,12 +124,12 @@ const ReceivedReportReadComponent = ({reportNo}) => {
       </div>
 
       <div className="flex justify-end p-4">
-        <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+      {report.receiver !== 1?<input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
           name="newReceiver"
           type={'number'} 
           value={newReceiver}
-          onChange={handleChangeNewReceiver}/>
-        <button type="button" 
+          onChange={handleChangeNewReceiver}/>:<></>}
+        {report.reportStatus === "진행중"?<><button type="button" 
           className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
           onClick={handleClickApprove}
         >
@@ -132,7 +141,8 @@ const ReceivedReportReadComponent = ({reportNo}) => {
           onClick={handleClickReturn}
         >
           반려
-        </button>
+        </button></>:<></>}
+        
 
         <button type="button" 
           className="rounded p-4 m-2 text-xl w-32 text-white bg-sky-200"

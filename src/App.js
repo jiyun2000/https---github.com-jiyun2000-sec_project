@@ -1,12 +1,9 @@
-import logo from './logo.svg';
-import './App.css';
+
 import { RouterProvider } from 'react-router-dom';
-import root from './router/root';
+import root from './Router/root';
 
 function App() {
-  return (
-    <RouterProvider router={root} />
-  );
+  return <RouterProvider router={root} />;
 }
 
 export default App;

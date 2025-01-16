@@ -33,23 +33,16 @@ const EmployeesListComponent = () => {
     }
     
     return (<>
-    <div className="flex flex-col items-center py-10 px-4">
-    <h1 className='text-3xl font-semibold mb-6 border-b border-b-slate-600'>직원 목록</h1>
-    <div className="flex flex-col items-center">
-        <div className='flex flex-col w-[80%] items-center justify-center '>
+    <div className="text-2xl">
+        <div className='flex flex-wrap mx-auto p-6'>
             {employees.dtoList.map((data)=>{
                 return(
                 <div 
                 key = {data.empNo} 
-                className="bg-slate-50 p-4 rounded-xl shadow-md w-[60%] mb-2 text-center" 
+                className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
                 onClick = {() => moveToRead(data.empNo)}
                 >
-                    사원 번호 : {data.empNo} <br/> 
-                    이름 : {data.firstName} {data.lastName} <br/> 
-                    입사일 : {data.hireDate}  <br/> 
-                    메일주소 : {data.mailAddress}  <br/> 
-                    성별 : {employees.gender === 'm'?'남성':'여성'}  <br/> 
-                    전화번호 : {data.phoneNum}
+                    {data.empNo} / {data.firstName} {data.lastName} / {data.hireDate} / {data.mailAddress} / {data.gender} / {data.phoneNum}
                 </div>)
             })}
         </div>
@@ -60,13 +53,12 @@ const EmployeesListComponent = () => {
             />
         </div>
 
-        <div className="flex justify-center p-4">
+        <div className="flex justify-end p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
-            추가
+            add
         </button>
-        </div>
         </div>
         </>
     )
