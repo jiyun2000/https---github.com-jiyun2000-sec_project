@@ -25,9 +25,10 @@ const DayOffAddComponent = () => {
 
     return (
         <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+            <h2>휴일 신청</h2>
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">DayOffDate</div>
+                    <div className="w-1/5 p-6 text-right font-bold">날짜</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="dayOffDate"
                     type={'date'} 
@@ -38,7 +39,7 @@ const DayOffAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">OffHours</div>
+                    <div className="w-1/5 p-6 text-right font-bold">시간</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="offHours"
                     type={'number'} 
@@ -49,7 +50,7 @@ const DayOffAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">EmpNo</div>
+                    <div className="w-1/5 p-6 text-right font-bold">사원번호</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="empNo"
                     type={'number'} 
@@ -62,7 +63,7 @@ const DayOffAddComponent = () => {
                 <button type="button"
                 className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
                 onClick={handleClickAdd}>
-                    Add
+                    추가
                 </button>
             </div>
         </div>

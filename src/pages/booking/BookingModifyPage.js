@@ -4,10 +4,8 @@ import BookingModifyComponent from "../../components/booking/BookingModifyCompon
 const BookingModifyPage = () => {
     const {bookNo} = useParams();
     return (
-        <div className="p-4 w-full bg-white">
-            <div className="text-3xl font-extrabold">
-                Booking Modify {bookNo}
-            </div>
+        <div >
+           
             <BookingModifyComponent bookNo = {bookNo}/>
         </div>
     )

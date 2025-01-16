@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 //deptSchedule register component
 const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
-
+    const navigate = useNavigate();
     const { deptNo, empNo, deptSchNo } = useParams();
     const [newEvent, setNewEvent] = useState({
         scheduleText: scheduleText ,
@@ -30,6 +30,8 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
         if (!deptSchNo) { //일정이 없다면
             postDeptSchedule(deptNoSave, empNo, deptNo).then((data) => { //register
                 console.log(JSON.stringify(data));
+                alert("등록되었습니다.");
+                navigate(`/main`);
             }).catch((error) => {
                 console.log("postDeptSchedule errrror" + error);
             });

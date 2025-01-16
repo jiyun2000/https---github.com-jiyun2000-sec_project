@@ -25,7 +25,9 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
         postEmpScheule(empNoSave, empNo).then((data) => {
             console.log(empNo);
             console.log("ttttttttttt"  +  scheduleText);
-        console.log("저장 ??????" + data);}).catch((error) => {
+            alert("등록되었습니다.");
+            navigate(`/main`);
+        console.log(data);}).catch((error) => {
             console.log("errrrrrrr" + error);
         });
     };

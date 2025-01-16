@@ -24,6 +24,7 @@ import ChatEmpListPage from "../pages/chatPage/ChatEmpListPage";
 import StompPage from "../pages/chatPage/StompPage";
 import ChatListPage from "../pages/chatPage/ChatListPage";
 import Layout from "../layouts/Layout";
+import boardRouter from "./boardRouter";
 
 const root = createBrowserRouter([
     {
@@ -115,7 +116,11 @@ const root = createBrowserRouter([
                 {
                     path : 'chat/chatList/:senderEmpNo',
                     element: <ChatListPage />
-                }
+                },
+                {
+                    path: 'board',
+                    children: boardRouter(),
+                  }
             ]
         }
 ])

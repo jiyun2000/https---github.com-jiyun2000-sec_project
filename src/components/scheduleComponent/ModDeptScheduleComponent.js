@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { getDeptScheduleById, putDeptSchedule } from "../../api/scheduleAPi/deptScheduleApi";
+import { useNavigate } from "react-router-dom";
 
 // deptSchedule modify component
 const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
-
+    const navigate = useNavigate();
     const initState = { //초기화
         getDeptScheNo : 0,
         scheduleText: '',
@@ -39,6 +40,8 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
     const modifySchedule = () => { //수정
         putDeptSchedule(scheduleModData, deptNo, empNo, deptSchNo).then(response => {
             console.log("Resss" + response);
+            alert("수정되었습니다.");
+            navigate(`/main`);
         }).catch((error) => {console.log("Errrrr" + error)})};
         
     const handleChangeDeptSchedule = (evt) => {

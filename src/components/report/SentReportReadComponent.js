@@ -28,54 +28,54 @@ const SentReportReadComponent = ({reportNo}) => {
     
   }, [reportNo]);
   return (  
-
-    <div className = "border-2 border-sky-200 mt-10 m-2 p-4"> 
-
+    <div className="flex justify-center m-3">
+    <div className = "shadow-xl p-4"> 
+      <h2 className="text-center text-3xl font-semibold">{report.receiver}님께 보낸 보고서</h2>
       <div className="flex justify-center mt-10">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Report No</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+      <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">보고서 번호</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.reportNo}        
           </div>  
         </div>
       </div>
 
         <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Deadline</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+        <div className="mb-4 flex w-full justify-center">
+          <div className="p-6 font-bold">마감일</div>
+          <div className="p-6 rounded-r border border-solid shadow-md">
             {report.deadLine}        
           </div>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Status</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+        <div className="mb-4 flex w-full justify-center">
+          <div className="p-6 font-bold">진행 상태</div>
+          <div className="p-6 rounded-r border border-solid shadow-md">
             {report.reportStatus}        
           </div>
         </div>  
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Reported Date</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+        <div className="mb-4 flex w-full justify-center">
+          <div className="p-6 font-bold">작성 날짜</div>
+          <div className="p-6 rounded-r border border-solid shadow-md">
             {report.reportingDate}        
           </div>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">receiver</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+        <div className="mb-4 flex w-full justify-center">
+          <div className="p-6 font-bold">받는 사람</div>
+          <div className="p-6 rounded-r border border-solid shadow-md">
             {report.receiver}        
           </div>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Sender</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+        <div className="mb-4 flex w-full justify-center">
+          <div className="p-6 font-bold">보낸 사람</div>
+          <div className="p-6 rounded-r border border-solid shadow-md">
             {report.sender}        
           </div>
         </div>
@@ -85,23 +85,23 @@ const SentReportReadComponent = ({reportNo}) => {
           <a 
           alt ="report"
           key={i}
-          className="w-1/2 p-6 rounded-r border border-solid shadow-md mt-4" 
+          className="w-1/2 p-6 rounded-lg border border-solid shadow-md mt-4" 
           href={`${API_SERVER_HOST}/api/report/view/${fileName}`}>
                 {fileName}
             </a>
         )}
       </div>
       
-      <div className="flex justify-end p-4">
+      <div className="flex justify-center p-4">
         <button type="button" 
-          className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+          className="mt-4 bg-blue-300 text-white py-2 px-4 rounded-md w-2/5 text-sm "
           onClick={()=>moveToReportSent(report.sender)}
         >
-          List
+          리스트
         </button>  
       </div>
     </div>
-      
+    </div>
   );
 };
 

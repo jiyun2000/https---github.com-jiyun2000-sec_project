@@ -73,7 +73,7 @@ const ReceivedReportListComponent = ({empNo}) => {
         <button type="button"
         className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
         onClick={handleClickAdd}>
-            add
+            등록
         </button>
         </div>
         </>

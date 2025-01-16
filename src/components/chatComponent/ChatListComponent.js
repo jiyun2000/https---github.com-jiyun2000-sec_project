@@ -17,6 +17,7 @@ const ChatListComponent = ({ senderEmpNo }) => {
                 console.log(error);
             });
     }, [senderEmpNo]);
+    
 
     useEffect(()=>{
         empList(senderEmpNo,page).then((data) => {

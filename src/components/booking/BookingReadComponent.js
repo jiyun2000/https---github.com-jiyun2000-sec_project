@@ -25,62 +25,65 @@ const BookingReadComponent = ({bookNo})=>{
     },[cnt]);
 
     return <>
-        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-            <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Book No</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.bookNo}</div>
+    <div className="flex flex-col items-center">
+        <div className="shadow-xl mt-10 m-2 p-4 w-2/3 flex flex-col items-center ">
+            <h2 className="text-center text-3xl font-semibold">예약 상세 페이지</h2>
+            <div className="flex  mt-10">
+                <div className="relative mb-4 flex w-full flex-row items-stretch">
+                    <div className=" p-6 font-bold">예약번호</div>
+                    <div className="p-6 rounded-r border border-solid shadow-md">{booking.bookNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Date</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.bookDate}</div>
+                <div className="relative mb-4 flex w-full flex-row items-stretch">
+                    <div className="p-6 font-bold">예약 날짜/</div>
+                    <div className="p-6 rounded-r border border-solid shadow-md">{booking.bookDate}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Start</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.start}</div>
+                <div className="relative mb-4 flex w-full flex-row items-stretch">
+                    <div className="p-6 font-bold">시작 시간</div>
+                    <div className="p-6 rounded-r border border-solid shadow-md">{booking.start}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">End</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.end}</div>
+                <div className="relative mb-4 flex w-full flex-row items-stretch">
+                    <div className="p-6 font-bold">끝난 시간</div>
+                    <div className="p-6 rounded-r border border-solid shadow-md">{booking.end}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Room No</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.roomNo}</div>
+                <div className="relative mb-4 flex w-full flex-row items-stretch">
+                    <div className="p-6 font-bold">방 번호</div>
+                    <div className="p-6 rounded-r border border-solid shadow-md">{booking.roomNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Emp No</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.empNo}</div>
+                <div className="relative mb-4 flex w-full flex-row items-stretch">
+                    <div className="p-6 font-bold">사원 번호</div>
+                    <div className="p-6 rounded-r border border-solid shadow-md">{booking.empNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center p-4">
                 <button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
                 onClick={()=>moveToModify(bookNo)}>
                     수정
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
                 onClick={moveToList}>
                     리스트
                 </button>
             </div>
+        </div>
         </div>
     </>
 }

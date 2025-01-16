@@ -8,6 +8,8 @@ const ChatEmpListComponent = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const navigate = useNavigate(); 
+    console.log("empNo:", empNo); 
+    
 
     useEffect(() => {
         //리스트 가져오기
@@ -62,12 +64,16 @@ const ChatEmpListComponent = () => {
 
 
 
-    const goToChatList = (senderEmpNo) => {
-        console.log("goToChatList");
-        console.log(senderEmpNo);
-        navigate(`/chat/chatList/${senderEmpNo}`);  
-    }
+    // const goToChatList = (senderEmpNo) => {
+    //     console.log("goToChatList");
+    //     console.log(senderEmpNo); //잘받음
+    //     navigate(`/chat/chatList/${senderEmpNo}`);  
+    // }
     
+ 
+    
+
+
     return (
         <>
             <h2 className='text-center text-3xl mt-8'>Employee List</h2>
@@ -111,7 +117,7 @@ const ChatEmpListComponent = () => {
                 </div>
             </div>
     
-            <div className="fixed bottom-10 left-0 right-0 flex justify-center mb-4">
+            {/* <div className="fixed bottom-10 left-0 right-0 flex justify-center mb-4">
                 <button 
                     type="button" 
                     className="bg-sky-300 text-white py-2 px-6 rounded-full text-lg "
@@ -119,7 +125,7 @@ const ChatEmpListComponent = () => {
                 >
                     채팅목록
                 </button>
-            </div>
+            </div> */}
         </>
     );
     

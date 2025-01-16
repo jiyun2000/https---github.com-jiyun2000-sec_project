@@ -13,7 +13,7 @@ const NavigationComponent = () => {
                     {name:'직원 현황', path:`/employees`},
                     {name:'부서 현황', path:`/deptinfo`},
                     {name:'직책 현황', path:`/job`},
-                    {name:'게시판', path : ``},
+                    {name:'게시판', path : `/board`},
                     {name:'전자우편', path:`/mail`},
                     {name:'스케줄', path:`/empDeptSchedule/read/${deptNo}/${empNo}`},
                     {name:'예약', path:`/booking`},

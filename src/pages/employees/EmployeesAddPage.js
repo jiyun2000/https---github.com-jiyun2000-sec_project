@@ -2,7 +2,7 @@ import EmployeesAddComponent from "../../components/employees/EmployeesAddCompon
 
 const EmployeesAddPage = () => {
     return (
-        <div className="p-4 w-full bg-white">
+        <div>
             <EmployeesAddComponent/>
         </div>
     )
