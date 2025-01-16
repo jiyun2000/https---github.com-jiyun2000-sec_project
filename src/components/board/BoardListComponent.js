@@ -49,28 +49,34 @@ const BoardListComponent = () => {
         </div>
         
         <div className="flex flex-wrap mx-auto p-6 text-center ">
+
           {board.dtoList.map((data) => {
             return (
               <div
                 key={data.boardNo}
+
                 className="flex w-2/3 min-w-[400px] p-2 m-2 rounded shadow-md text-center justify-center"
                 onClick={() => moveToRead(data.boardNo)}
               >
                 번호 : {data.boardNo}
+
               </div>
             );
           })}
         </div>
+
         <PageComponent serverData={board} movePage={moveToList} />
       </div>
 
       <div className="flex justify-center p-4">
         <button
           type="button"
+
           className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
           onClick={handleClickAdd}
         >
           추가
+
         </button>
       </div>
     </>

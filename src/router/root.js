@@ -1,4 +1,5 @@
 
+
 import { createBrowserRouter } from "react-router-dom";
 import MainPage from "../pages/MainPage";
 import jobRouter from "./jobRouter";
@@ -26,15 +27,26 @@ import ChatListPage from "../pages/chatPage/ChatListPage";
 import Layout from "../layouts/Layout";
 import boardRouter from "./boardRouter";
 
+
 const root = createBrowserRouter([
-    {
-        path: '',
-        element: <LoginPage />,
-    },
-    {
-        path:'',
-        element:<Layout />,
+  {
+    path: '',
+    element: <LoginPage />,
+  },
+  {
+    path: '',
+    element: <Layout />,
+    children: [
+      {
+        path: 'main',
+        element: <ProtectedRoute />,
+        children: [{ path: '/main', element: <MainPage /> }],
+      },
+      {
+        path: 'mail',
+        element: <ProtectedRoute />,
         children: [
+
                 {
                     path: 'main',
                     element: <ProtectedRoute />,
@@ -124,5 +136,6 @@ const root = createBrowserRouter([
             ]
         }
 ])
+
 
 export default root;
