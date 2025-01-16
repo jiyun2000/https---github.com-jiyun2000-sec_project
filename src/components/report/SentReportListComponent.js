@@ -48,15 +48,20 @@ const SentReportListComponent = ({empNo}) => {
             </div>
         </div>
 
-        <div className='flex flex-wrap mx-auto p-6'>
+        <div className='flex flex-wrap mx-auto p-6 justify-center'>
             {report.dtoList.map((data)=>{
                 return(
                 <div 
                 key = {data.reportNo} 
-                className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
+                className='flex w-3/4 p-2 m-2 rounded shadow-md justify-center ' 
                 onClick = {() => moveToSentReportRead(data.reportNo)}
                 >
-                    {data.reportNo} / {data.deadLine} / {data.reportStatus} / {data.sender} / {data.receiver}
+                    <div className='flex flex-col p-2 text-center'>
+                        <div>마감일 : {data.deadLine}</div>
+                        <div>진행 상태 : {data.reportStatus}</div>
+                        <div>보낸 사람 : {data.sender}</div>
+                        <div>받은 사람 : {data.receiver}</div>
+                    </div>
                 </div>)
             })}
         </div>
@@ -68,11 +73,11 @@ const SentReportListComponent = ({empNo}) => {
             />
         </div>
 
-        <div className="flex justify-end p-4">
+        <div className="flex justify-center p-4">
         <button type="button"
-        className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+         className="mt-4 bg-blue-300 text-white py-2 px-4 rounded-md w-2/5 text-sm "
         onClick={handleClickAdd}>
-            add
+            등록
         </button>
         </div>
         </>

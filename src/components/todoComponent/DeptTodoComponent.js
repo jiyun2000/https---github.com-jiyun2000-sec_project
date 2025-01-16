@@ -62,24 +62,25 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
 
     return (
         <>
-            <div className="text-center m-8">
-            <h2 className="text-3xl font-semibold">[DEPT] Todo List</h2><br />
+            <div className="text-center m-8 bg-[#abcaef] rounded-md bg-opacity-50 h-[35vh] overflow-y-scroll">
+            <h2 className="text-3xl font-semibold p-2">오늘의 부서 일정</h2><br />
             {events && events.length > 0 ? (
                 events.map((evt) => (
                     <div key={evt.deptSchNo}>
-                        <p>{evt.scheduleText}</p>
-                        <p>시작 시간: {new Date(evt.startDate).toLocaleString()}</p>
-                        <p>끝나는 시간: {new Date(evt.endDate).toLocaleString()}</p>
-                        <button onClick={() => modDeptSchedule(evt.deptSchNo)} type="button">부서 일정 수정</button><br />
-                        <button onClick={() => deleteDeptSchedule(evt.deptSchNo)} type="button">부서 일정 삭제</button><br />
+                        <p className="text-2xl font-medium m-4">{evt.scheduleText}</p>
+                        <p className="font-light">시작 시간: {new Date(evt.startDate).toLocaleString()}</p>
+                        <p className="font-light">끝나는 시간: {new Date(evt.endDate).toLocaleString()}</p>
+                        <button onClick={() => modDeptSchedule(evt.deptSchNo)} type="button" className="border border-blue-200 rounded-md px-2 mr-2">수정</button>
+                        <button onClick={() => deleteDeptSchedule(evt.deptSchNo)} type="button" className="border border-blue-200 rounded-md px-2 mr-2">삭제</button><br />
                         -----------------------------------------<br/>
+                        <br />
                     </div>
                 ))
             ) : (
                 "일정X" 
             )}
             <br />
-            <button onClick={addSchedule} type="button" className="border border-blue-200 rounded-md px-2">부서 일정 추가</button>
+            <button onClick={addSchedule} type="button" className="border border-blue-200 rounded-md p-2">추가</button>
             </div>
         </>
     );

@@ -57,7 +57,7 @@ const DayOffListComponent = () => {
         <button type="button"
         className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
         onClick={handleClickAdd}>
-            add
+            추가
         </button>
         </div>
         </>

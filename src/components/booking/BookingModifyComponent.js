@@ -35,16 +35,18 @@ const BookingModifyComponent = ({bookNo}) => {
     }
 
     return (
-        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-            <div className="flex justify-center mt-10">
-                <div className="w-1/5 p-6 text-right font-bold">BookNo</div>
-                <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{booking.bookNo}</div>
+        <div className="flex flex-row justify-center">
+        <div className="shadow-2xl mt-10 m-2 p-4">
+            <h2 className="text-center font-semibold text-3xl">{booking.roomNo} 호 예약 수정 </h2>
+            <div className="flex mt-10 justify-center">
+                <div className="p-6 font-bold">예약번호</div>
+                <div className="p-6 rounded-md border border-solid shadow-md">{booking.bookNo}</div>
             </div>
 
-            <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">BookingDate</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+            <div className="flex mt-10" justify-center>
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">예약 날짜</div>
+                    <input className="p-6 rounded-md border border-solid shadow-md" 
                     name="bookDate"
                     type={'date'} 
                     value={booking.bookDate}
@@ -52,10 +54,10 @@ const BookingModifyComponent = ({bookNo}) => {
                 </div>
             </div>
 
-            <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Start</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+            <div className="flex  mt-10 justify-center">
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">Start</div>
+                    <input className="p-6 rounded-md border border-solid shadow-md" 
                     name="start"
                     type={'time'} 
                     value={booking.start}
@@ -64,9 +66,9 @@ const BookingModifyComponent = ({bookNo}) => {
             </div>
 
             <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">End</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">End</div>
+                    <input className="p-6 rounded-md border border-solid shadow-md" 
                     name="end"
                     type={'time'} 
                     value={booking.end} 
@@ -75,9 +77,9 @@ const BookingModifyComponent = ({bookNo}) => {
             </div>
 
             <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">RoomNo</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">RoomNo</div>
+                    <input className="p-6 rounded-md border border-solid shadow-md" 
                     name="roomNo"
                     type={'number'} 
                     value={booking.roomNo} 
@@ -86,9 +88,9 @@ const BookingModifyComponent = ({bookNo}) => {
             </div>
 
             <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">EmpNo</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">EmpNo</div>
+                    <input className="p-6 rounded-md border border-solid shadow-md" 
                     name="empNo"
                     type={'number'} 
                     value={booking.empNo} 
@@ -96,20 +98,21 @@ const BookingModifyComponent = ({bookNo}) => {
                 </div>
             </div>
 
-            <div className="flex justify-end p-4">
+            <div className="flex p-4 justify-center">
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
                 onClick={handleClickModify}>
-                    Modify
+                    수정
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
                 onClick={handleClickDelete}
                 >
-                    Delete
+                    삭제
                 </button>
             </div>
+        </div>
         </div>
     )
 }

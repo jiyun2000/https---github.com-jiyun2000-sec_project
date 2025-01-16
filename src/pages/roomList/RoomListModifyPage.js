@@ -4,7 +4,7 @@ import RoomListModifyComponent from "../../components/roomList/RoomListModifyCom
 const RoomListModifyPage = () => {
     const {roomNo} = useParams();
     return (
-        <div className="p-4 w-full bg-white">
+        <div>
             <RoomListModifyComponent roomNo = {roomNo}/>
         </div>
     )

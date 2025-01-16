@@ -30,12 +30,16 @@ const BoardAddComponent = () => {
   };
 
   return (
-    <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-      <div className="flex justify-center mt-10">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Title</div>
+
+    <div className='flex flex-col justify-center items-center w-full m-3'>
+    <div className='w-2/3 shadow-lg p-5 pr-5'>
+      <h2 className='text-center text-3xl font-semibold my-5'>공지사항 등록</h2>
+      <div className="flex justify-center">
+        <div className="relative mb-4 flex flex-row items-center">
+          <div className="p-6 font-bold">제목</div>
           <input
-            className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="title"
             type={'text'}
             value={board.title}
@@ -44,11 +48,13 @@ const BoardAddComponent = () => {
         </div>
       </div>
 
-      <div className="flex justify-center mt-10">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">contents</div>
+
+      <div className="flex justify-center">
+        <div className="relative mb-4 flex flex-row items-center">
+          <div className="p-6 font-bold">내용</div>
           <input
-            className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="contents"
             type={'text'}
             value={board.contents}
@@ -58,10 +64,12 @@ const BoardAddComponent = () => {
       </div>
 
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">mailAddress</div>
+
+        <div className="relative mb-4 flex flex-row items-center">
+          <div className="p-6 font-bold">메일 주소</div>
           <input
-            className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="mailAddress"
             type={'text'}
             value={board.mailAddress}
@@ -71,10 +79,12 @@ const BoardAddComponent = () => {
       </div>
 
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">catecory</div>
+
+        <div className="relative mb-4 flex flex-row items-center">
+          <div className="p-6 font-bold">분류</div>
           <input
-            className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="catecory"
             type={'text'}
             value={board.catecory}
@@ -83,16 +93,19 @@ const BoardAddComponent = () => {
         </div>
       </div>
 
-      <div className="flex justify-end p-4">
+
+      <div className="flex justify-center p-4">
         <button
           type="button"
-          className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+          className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
           onClick={handleClickAdd}
         >
-          Add
+          추가
         </button>
       </div>
     </div>
+    </div>
+
   );
 };
 

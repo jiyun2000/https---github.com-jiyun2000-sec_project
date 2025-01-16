@@ -78,7 +78,7 @@ const DeptInfoAddComponent = () => {
                 <button type="button"
                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
                 onClick={handleClickAdd}>
-                    추가하기
+                    추가
                 </button>
             </div>
         </div>

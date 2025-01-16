@@ -5,6 +5,7 @@ import mail from "../assets/icon/mail.png";
 import chat from "../assets/icon/chat.png";
 import {  useState } from 'react';
 import { getCookie } from '../util/cookieUtil';
+import TodayCommutePage from './employees/TodayCommutePage';
 
 const MainPage = () => {
 
@@ -27,7 +28,7 @@ const MainPage = () => {
             <p className='text-3xl ml-4'>공지사항</p>
             <div className='flex'>
               <Link to={'/mail'}><img src={mail} className='w-12 ml-4'/></Link>
-              <Link to={'/chat/empList/{empNo}?page=1'}><img src={chat} className='w-12 ml-4'/></Link>
+              <Link to={`/chat/empList/${empNo}?page=1`}><img src={chat} className='w-12 ml-4'/></Link>
             </div>
           </div>
           <div className='flex flex-row w-full mt-8'>
@@ -41,7 +42,9 @@ const MainPage = () => {
           <div className='flex flex-row'>
             <div className='m-5 text-2xl shadow-2xl bg-[#eae5e5] w-[50%] text-center h-[100%]'><p>생일자</p></div>
             <div className='m-5 text-2xl shadow-2xl bg-[#eae5e5] w-[50%] text-center h-[100%]'><p>report</p></div>
-            <div className='m-5 text-2xl shadow-2xl bg-[#eae5e5] w-[50%] text-center h-[100%]'><p>오늘의 출퇴근 시간</p></div>
+            <div className='m-5 text-2xl shadow-2xl bg-[#eae5e5] w-[50%] text-center h-[100%]'>
+              <TodayCommutePage empNo={empNo} />
+            </div>
           </div>
           <div className='flex flex-row'>
             <div  className='m-5 text-2xl shadow-2xl bg-[#eae5e5] w-[50%] text-center h-[100%]'><p>입사한지 ♥ + 999day</p></div>

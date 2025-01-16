@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { getEmpScheduleById, putEmpScheduleOne } from "../../api/scheduleAPi/empScheduleApi";
+import { useNavigate } from "react-router-dom";
 
 //empSchedule modify component
 const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
+    const navigate = useNavigate();
     const initState = {
         getEmpScheNo: 0,
         scheduleText: '',
@@ -33,6 +35,8 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
     const modifySchedule = () => {
         putEmpScheduleOne(scheduleModData, empNo, empSchNo).then(response => {
             console.log("response " + response);
+            alert("수정되었습니다.");
+            navigate(`/main`);
         }).catch((error) => {console.log(error)});
     };
 

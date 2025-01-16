@@ -8,6 +8,7 @@ const host = `${API_SERVER_HOST}/empDeptSchedule`;
 //empSchedule + deptSchedule 전체 list 가져오기
 export const getList = async(deptNo,empNo) => {
     const res = await jwtAxios.get(`${host}/read/${deptNo}/${empNo}`);
+    console.log(JSON.stringify(res));//잘받아옴
     return res.data;
 }
 
