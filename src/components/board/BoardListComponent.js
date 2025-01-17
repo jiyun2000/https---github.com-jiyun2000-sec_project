@@ -50,7 +50,7 @@ const BoardListComponent = () => {
                 className="flex w-full min-w-[400px] p-2 m-2 rounded shadow-md"
                 onClick={() => moveToRead(data.boardNo)}
               >
-                {data.boardNo}
+                {data.boardNo} {data.title}
               </div>
             );
           })}

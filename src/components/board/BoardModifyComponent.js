@@ -80,13 +80,20 @@ const BoardModifyComponent = ({ boardNo }) => {
       <div className="flex justify-center">
         <div className="relative mb-4 flex w-full flex-wrap items-stretch">
           <div className="w-1/5 p-6 text-right font-bold">catecory</div>
-          <input
+          <select
+            id="catecory"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
             name="catecory"
             type={'text'}
             value={board.catecory}
             onChange={handleChangeBoard}
-          ></input>
+          >
+            <option value="선택">선택해주세요</option>
+            <option value="공지사항">공지사항</option>
+            <option value="긴급공지">긴급공지사항</option>
+            <option value="완료">완료</option>
+          </select>
         </div>
       </div>
 
@@ -96,7 +103,7 @@ const BoardModifyComponent = ({ boardNo }) => {
           className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
           onClick={handleClickModify}
         >
-          Modify
+          수정완료
         </button>
 
         <button
@@ -104,7 +111,7 @@ const BoardModifyComponent = ({ boardNo }) => {
           className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
           onClick={handleClickDelete}
         >
-          Delete
+          완료처리
         </button>
       </div>
     </div>
