@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { addOne } from '../../api/boardApi';
+import { getOne } from '../../api/employeesApi';
+import { getCookie } from '../../util/cookieUtil';
 
 const initState = {
   boardNo: 0,
@@ -19,8 +21,11 @@ const BoardAddComponent = () => {
   const { moveToList } = useCustomMove();
 
   const handleClickAdd = () => {
-    addOne(board).then(() => {
-      moveToList();
+    getOne(getCookie("member").empNo).then((data)=>{
+      board["mailAddress"] = data.mailAddress;
+      addOne(board).then(() => {
+        moveToList();
+      });
     });
   };
 
@@ -66,30 +71,18 @@ const BoardAddComponent = () => {
       <div className="flex justify-center">
 
         <div className="relative mb-4 flex flex-row items-center">
-          <div className="p-6 font-bold">메일 주소</div>
-          <input
-            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
-
-            name="mailAddress"
-            type={'text'}
-            value={board.mailAddress}
-            onChange={handleChangeBoard}
-          ></input>
-        </div>
-      </div>
-
-      <div className="flex justify-center">
-
-        <div className="relative mb-4 flex flex-row items-center">
           <div className="p-6 font-bold">분류</div>
-          <input
+          <select
             className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
-
             name="catecory"
             type={'text'}
             value={board.catecory}
             onChange={handleChangeBoard}
-          ></input>
+          >
+            <option value={""}></option>
+            <option value={"긴급"}>긴급</option>
+            <option value={"중요"}>중요</option>
+          </select>
         </div>
       </div>
 
