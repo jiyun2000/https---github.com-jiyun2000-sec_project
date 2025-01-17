@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
 import { getALOne } from "../../api/annualLeaveApi";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const initState = {
     annualId : 0 ,
@@ -14,13 +14,19 @@ const AnnualLeaveReadComponent = ({empNo})=>{
     const [annualLeave, setAnnualLeave] = useState(initState);
     let cnt = 0;
 
-    const {page,moveToList, moveToModify, moveToRead} = useCustomMove();
+    const navigate = useNavigate();
+
+    const {page,moveToList, moveToRead} = useCustomMove();
 
     useEffect(()=>{
         getALOne(empNo).then(res => {
             setAnnualLeave(res);
         });
     },[cnt]);
+
+    const moveToAdd = () =>{
+        navigate({pathname:`../../dayoff/add`});
+    }
 
     return <>
         <div className="border-2 border-sky-200 mt-10 m-2 p-4">
@@ -53,6 +59,12 @@ const AnnualLeaveReadComponent = ({empNo})=>{
             </div>
 
             <div className="flex justify-end p-4">
+
+                <button type="button" 
+                className="inline-block rounded p-4 m-2 text-xl w-40 text-white bg-black"
+                onClick={moveToAdd}>
+                    연차 사용
+                </button>
 
                 <button type="button" 
                 className="inline-block rounded p-4 m-2 text-xl w-40 text-white bg-black"

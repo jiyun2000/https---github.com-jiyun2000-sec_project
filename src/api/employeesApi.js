@@ -36,3 +36,8 @@ export const addOne = async(employees)=>{
     const res = await jwtAxios.post(`${prefix}/add`,employees);
     return res.data;
 }
+
+export const getAllList = async()=>{
+    const res = await jwtAxios.get(`${prefix}/list/all`);
+    return res.data;
+}

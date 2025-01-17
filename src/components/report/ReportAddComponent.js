@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addReport } from "../../api/reportApi";
+import { getAllList } from "../../api/employeesApi";
 
 const initState = {
     deadLine : '',
@@ -10,10 +11,34 @@ const initState = {
     files : []
 }
 
+const initStateEmp = {
+    empNo : 0 ,
+    firstName : '',
+    lastName : '',
+    hireDate : '',
+    mailAddress : '',
+    salary : 0,
+    deptNo : 0,
+    jobNo : 0,
+    birthday : '',
+    address : '',
+    phoneNum : '',
+    gender : '',
+    citizenId : ''
+}
+
 const ReportAddComponent = ({empNo}) => {
     const [report, setReport] = useState({...initState});
 
     const {moveToReportReceived} = useCustomMove();
+
+    const [employees, setEmployees] = useState([initStateEmp]);
+
+    useEffect(()=>{
+        getAllList().then((data)=>{
+            setEmployees(data);
+        });
+    },[report]);
 
     //업로드 되는 파일을 Ref 하는 hook.
     const uploadRef = useRef();
@@ -65,11 +90,18 @@ const ReportAddComponent = ({empNo}) => {
             <div className="flex justify-center">
                 <div className="mb-4 flex w-full justify-center">
                     <div className="p-6 font-bold">받는 사람</div>
-                    <input className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    <select className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="receiver"
                     type={'number'} 
                     value={report.receiver}
-                    onChange={handleChangeReport}></input>
+                    onChange={handleChangeReport}>
+                        <option value={0}></option>
+                        {employees.map((res)=>{
+                            return(
+                                <option value={res.empNo}>{res.firstName} {res.lastName}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
 

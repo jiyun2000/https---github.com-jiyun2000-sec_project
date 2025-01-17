@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/bookingApi";
+import { getCookie } from "../../util/cookieUtil";
+import { getList } from "../../api/roomListApi";
 
 const initState = {
     bookNo : 0 ,
@@ -11,13 +13,28 @@ const initState = {
     empNo : 0
 }
 
+const initStateRL = {
+    roomNo : 0,
+    roomName : '',
+    location : ''
+}
+
 const BookingAddComponent = () => {
     const [booking, setBooking] = useState({...initState});
 
+    const [roomList, setRoomList] = useState([initStateRL]);
+
     const {moveToList} = useCustomMove();
 
+    useEffect(()=>{
+        getList().then(res=>setRoomList(res));
+    },[booking]);
+
     const handleClickAdd = () => {
-        addOne(booking).then(()=>moveToList());
+        booking["empNo"] = getCookie("member").empNo;
+        addOne(booking).then(()=>{
+            moveToList()
+        });
     }
 
     const handleChangeBooking = (evt) => {
@@ -65,22 +82,19 @@ const BookingAddComponent = () => {
             <div className="flex justify-center mt-10 ">
                 <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
                     <div className="p-6 font-bold">방번호</div>
-                    <input className=" p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    
+                    <select className=" p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="roomNo"
                     type={'number'} 
                     value={booking.roomNo} 
-                    onChange={handleChangeBooking}></input>
-                </div>
-            </div>
-
-            <div className="flex justify-center mt-10 ">
-                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
-                    <div className="p-6 font-bold">사원번호</div>
-                    <input className=" p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="empNo"
-                    type={'number'} 
-                    value={booking.empNo} 
-                    onChange={handleChangeBooking}></input>
+                    onChange={handleChangeBooking}>
+                        <option value={0}></option>
+                        {roomList.map((res)=>{
+                            return(
+                                <option value={res.roomNo}>{res.roomName}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
 
