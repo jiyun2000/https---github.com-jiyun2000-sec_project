@@ -78,8 +78,9 @@ const BookingListComponent = () => {
 
     
     return (<>
-    <h2 className='text-2xl text-center m-10'>회의실(화장실) 예약하기</h2>
-    <div className="text-1xl">
+    <div>
+    <h2 className='text-3xl font-semibold text-center m-10'>회의실 예약하기</h2>
+    <div className="text-2xl">
         <div className="flex justify-center">
             <div className="relative mb-4 flex w-full flex-wrap  flex-col items-center ">
                 <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
@@ -91,16 +92,20 @@ const BookingListComponent = () => {
             </div>
         </div>
 
-        <h2>예약 내역</h2>
-        <div className='flex flex-wrap mx-auto p-6'>
+        <h2 className='text-3xl font-semibold text-center m-10'>예약 내역</h2>
+        <div className='flex flex-wrap mx-auto p-6 justify-center'>
             {booking.dtoList.map((data)=>{
+                
                 return(
                 <div 
                 key = {data.bookNo} 
-                className='flex w-full min-w-[400px] p-2 m-2 rounded shadow-md' 
+                className='flex flex-col min-w-[400px] p-2 m-2 rounded shadow-md font-light text-center ' 
                 onClick = {() => moveToRead(data.bookNo)}
                 >
-                    {data.bookNo} / {data.roomNo} / {data.bookDate} / {data.start} / {data.end}
+                    <div>방번호 : {data.roomNo}</div>
+                    <div>예약 날짜 : {data.bookDate}</div>
+                    <div>시작 시간 : {data.start}</div>
+                    <div>끝난 시간 : {data.end}</div>
                 </div>)
             })}
         </div>
@@ -113,10 +118,11 @@ const BookingListComponent = () => {
 
         <div className="flex justify-center p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
         onClick={handleClickAdd}>
             추가하기
         </button>
+        </div>
         </div>
         </>
     )

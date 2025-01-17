@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import DeptInfoListComponent from "../../components/deptInfo/DeptInfoListComponent";
-import { getList } from "../../api/deptInfoApi";
+import { getDeptList } from "../../api/deptInfoApi";
 
 
 const DeptInfoListPage = () => {
     const [deptInfoList,setDeptInfoList] = useState();
     useEffect(()=>{
-        getList().then(res =>{
+        getDeptList().then(res =>{
             setDeptInfoList(res);
         })
     },[]);

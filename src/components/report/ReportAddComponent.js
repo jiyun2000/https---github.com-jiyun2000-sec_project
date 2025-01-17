@@ -1,6 +1,7 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addReport } from "../../api/reportApi";
+import { getAllList } from "../../api/employeesApi";
 
 const initState = {
     deadLine : '',
@@ -10,10 +11,34 @@ const initState = {
     files : []
 }
 
+const initStateEmp = {
+    empNo : 0 ,
+    firstName : '',
+    lastName : '',
+    hireDate : '',
+    mailAddress : '',
+    salary : 0,
+    deptNo : 0,
+    jobNo : 0,
+    birthday : '',
+    address : '',
+    phoneNum : '',
+    gender : '',
+    citizenId : ''
+}
+
 const ReportAddComponent = ({empNo}) => {
     const [report, setReport] = useState({...initState});
 
     const {moveToReportReceived} = useCustomMove();
+
+    const [employees, setEmployees] = useState([initStateEmp]);
+
+    useEffect(()=>{
+        getAllList().then((data)=>{
+            setEmployees(data);
+        });
+    },[report]);
 
     //업로드 되는 파일을 Ref 하는 hook.
     const uploadRef = useRef();
@@ -49,11 +74,12 @@ const ReportAddComponent = ({empNo}) => {
 
 
     return (
-        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+        <div className="shadow-2xl mt-10 m-2 p-4 rounded-md">
+            <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
             <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Deadline</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">마감일</div>
+                    <input className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deadLine"
                     type={'date'} 
                     value={report.deadLine}
@@ -62,33 +88,40 @@ const ReportAddComponent = ({empNo}) => {
             </div>
 
             <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">Receiver</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                <div className="mb-4 flex w-full justify-center">
+                    <div className="p-6 font-bold">받는 사람</div>
+                    <select className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="receiver"
                     type={'number'} 
                     value={report.receiver}
-                    onChange={handleChangeReport}></input>
+                    onChange={handleChangeReport}>
+                        <option value={0}></option>
+                        {employees.map((res)=>{
+                            return(
+                                <option value={res.empNo}>{res.firstName} {res.lastName}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
 
             <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">files</div>
+                <div className="mb-4 flex w-full justify-center">   
+                    <div className="p-6 font-bold">파일</div>
                     <input 
                     ref={uploadRef} 
-                    className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     type={'file'} multiple={true}
                     >    
                     </input>
                 </div>
             </div>
 
-            <div className="flex justify-end p-4">
+            <div className="flex justify-center p-4">
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                className="mt-4 bg-blue-300 text-white py-2 px-4 rounded-md w-2/5 text-sm "
                 onClick={handleClickAdd}>
-                    Add
+                    등록
                 </button>
             </div>
         </div>

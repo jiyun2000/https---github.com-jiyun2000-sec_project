@@ -36,3 +36,8 @@ export const getOneCommute = async(commNo) => {
 
     return res.data;
 }
+
+export const todayCommute = async(empNo) => {
+    const res = await jwtAxios.get(`${prefix}/todayCommute/${empNo}`);
+    return res;
+}

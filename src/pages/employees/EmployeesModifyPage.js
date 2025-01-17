@@ -4,8 +4,7 @@ import EmployeesModifyComponent from "../../components/employees/EmployeesModify
 const EmployeesModifyPage = () => {
     const {empNo} = useParams();
     return (
-        <div className="p-4 w-full bg-white">
-            
+        <div>
             <EmployeesModifyComponent empNo = {empNo}/>
         </div>
     )

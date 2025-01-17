@@ -28,65 +28,69 @@ const BoardReadComponent = ({ boardNo }) => {
 
   return (
     <>
-      <div className="border-2 border-sky-200 mt-10 m-2 p-4">
-        <div className="flex justify-center mt-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-            <div className="w-1/5 p-6 text-right font-bold">Book No</div>
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+
+    <div className='flex flex-col justify-center items-center w-full m-3'>
+      <div  className='w-2/3 shadow-lg p-5 pr-5'>
+        <h2 className='text-center text-3xl font-semibold'> {board.title} </h2>
+        <div className="flex justify-center">
+        <div className="relative mb-4 flex flex-row items-center">
+            <div className="p-6 font-bold">게시글 번호</div>
+            <div className="p-6 rounded-r border border-solid shadow-md">
+
               {board.boardNo}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-            <div className="w-1/5 p-6 text-right font-bold">catecory</div>
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+
+        <div className='flex flex-col justify-center items-center w-full m-3'>
+          <div  className='w-2/3 shadow-lg p-5 pr-5'>
+            <div className="p-6 font-bold">분류</div>
+            <div className="p-6 rounded-r border border-solid shadow-md">
+
               {board.catecory}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-            <div className="w-1/5 p-6 text-right font-bold">regdate</div>
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+
+        <div className='flex flex-col justify-center items-center w-full m-3'>
+          <div  className='w-2/3 shadow-lg p-5 pr-5'>
+            <div className="p-6 font-bold">등록일</div>
+            <div className="p-6 rounded-r border border-solid shadow-md">
+
               {board.regdate}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-            <div className="w-1/5 p-6 text-right font-bold">title</div>
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+
+        <div className='flex flex-col justify-center items-center w-full m-3'>
+          <div  className='w-2/3 shadow-lg p-5 pr-5'>
+            <div className="p-6 font-bold">제목</div>
+            <div className="p-6 rounded-r border border-solid shadow-md">
+
               {board.title}
             </div>
           </div>
         </div>
 
-        <div className="flex justify-center mt-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-            <div className="w-1/5 p-6 text-right font-bold">contents</div>
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+
+        <div className='flex flex-col justify-center items-center w-full m-3'>
+          <div  className='w-2/3 shadow-lg p-5 pr-5'>
+            <div className="p-6 font-bold">내용</div>
+            <div className="p-6 rounded-r border border-solid shadow-md">
+
               {board.contents}
             </div>
           </div>
         </div>
 
-        {/* <div className="flex justify-center mt-10">
-          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-            <div className="w-1/5 p-6 text-right font-bold">replyCount</div>
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-              {board.replyCount}
-            </div>
-          </div>
-        </div> */}
-
         <div className="flex justify-center p-4">
           <button
             type="button"
-            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+
             onClick={() => moveToModify(boardNo)}
           >
             수정
@@ -94,13 +98,18 @@ const BoardReadComponent = ({ boardNo }) => {
 
           <button
             type="button"
-            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+
+            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+
             onClick={moveToList}
           >
             리스트
           </button>
         </div>
       </div>
+
+      </div>
+
     </>
   );
 };

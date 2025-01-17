@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/dayOffApi";
+import { getCookie } from "../../util/cookieUtil";
+import { useNavigate } from "react-router-dom";
 
 const initState = {
     dayOffNo : 0 ,
@@ -12,10 +14,13 @@ const initState = {
 const DayOffAddComponent = () => {
     const [dayOff, setDayOff] = useState({...initState});
 
-    const {moveToList} = useCustomMove();
+    const navigate = useNavigate();
 
     const handleClickAdd = () => {
-        addOne(dayOff).then(()=>moveToList());
+        dayOff["empNo"] = getCookie("member").empNo;
+        addOne(dayOff).then(()=>{
+            navigate({pathname:`../../employees/annualleave/${dayOff.empNo}`});
+        });
     }
 
     const handleChangeDayOff = (evt) => {
@@ -25,9 +30,10 @@ const DayOffAddComponent = () => {
 
     return (
         <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+            <h2>휴일 신청</h2>
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">DayOffDate</div>
+                    <div className="w-1/5 p-6 text-right font-bold">날짜</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="dayOffDate"
                     type={'date'} 
@@ -38,7 +44,7 @@ const DayOffAddComponent = () => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">OffHours</div>
+                    <div className="w-1/5 p-6 text-right font-bold">시간</div>
                     <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="offHours"
                     type={'number'} 
@@ -47,22 +53,11 @@ const DayOffAddComponent = () => {
                 </div>
             </div>
 
-            <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">EmpNo</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="empNo"
-                    type={'number'} 
-                    value={dayOff.empNo} 
-                    onChange={handleChangeDayOff}></input>
-                </div>
-            </div>
-
             <div className="flex justify-end p-4">
                 <button type="button"
                 className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
                 onClick={handleClickAdd}>
-                    Add
+                    추가
                 </button>
             </div>
         </div>

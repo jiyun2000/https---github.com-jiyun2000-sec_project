@@ -26,8 +26,8 @@ const JobListComponent = () => {
     }
     
     return (<>
-    <div>
-            <div className='flex flex-wrap mx-auto flex-col p-6 items-center '>
+    <div className='m-5'>
+            <div className='flex flex-col p-6 items-center '>
                 <h2 className='py-2 text-3xl'>직책 안내</h2>
                 {job.map((res)=>{
                     return(

@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/employeesApi";
 import { setALOne } from "../../api/annualLeaveApi";
+import { getList } from "../../api/jobApi";
+import { getDeptList } from "../../api/deptInfoApi";
 
 const initState = {
     empNo : 0 ,
@@ -20,10 +22,35 @@ const initState = {
     password : ''
 }
 
+const initStateJob = {
+    jobNo : 0,
+    jobTitle : ''
+}
+
+const initStateDeptinfo = {
+    deptNo : 0,
+    deptName : '',
+    deptAddress : '',
+    phoneNo : ''
+}
+
 const EmployeesAddComponent = () => {
     const [employees, setEmployees] = useState({...initState});
 
+    const [job,setJob] = useState([initStateJob]);
+    
+    const [deptInfo,setDeptInfo] = useState([initStateDeptinfo]);
+
     const {moveToList} = useCustomMove();
+
+    useEffect(()=>{
+        getList().then(res => {
+            setJob(res);
+        });
+        getDeptList().then(res => {
+            setDeptInfo(res);
+        });
+    },[employees]);
 
     const handleClickAdd = () => {
         addOne(employees).then((data)=>{
@@ -88,22 +115,37 @@ const EmployeesAddComponent = () => {
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 font-bold">부서 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+
+                    <select className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deptNo"
                     type={'number'} 
                     value={employees.deptNo} 
-                    onChange={handleChangeEmployees}></input>
+                    onChange={handleChangeEmployees}>
+                        <option value={0}></option>
+                        {deptInfo.map((data)=>{
+                            return(
+                                <option value={data.deptNo}>{data.deptName}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 font-bold">직책 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    <select className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="jobNo"
                     type={'number'} 
                     value={employees.jobNo} 
-                    onChange={handleChangeEmployees}></input>
+                    onChange={handleChangeEmployees}>
+                        <option value={0}></option>
+                        {job.map((data)=>{
+                            return(
+                                <option value={data.jobNo}>{data.jobTitle}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
 

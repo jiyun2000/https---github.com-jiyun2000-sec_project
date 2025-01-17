@@ -31,11 +31,20 @@ const ReceivedReportReadComponent = ({reportNo}) => {
   }, [reportNo]);
 
   const handleClickApprove = () => {
-    report["sender"] = report.receiver;
-    report["receiver"] = newReceiver;
-    putOne(reportNo, report).then(()=>{
-      moveToReportReceived(report.sender);
-    })
+    if(report.receiver === 1){
+      report["sender"] = report.receiver;
+      report["reportStatus"] = "완료"
+      putOne(reportNo, report).then(()=>{
+        moveToReportReceived(report.sender);
+      })
+    }else{
+      report["sender"] = report.receiver;
+      report["receiver"] = newReceiver;
+      putOne(reportNo, report).then(()=>{
+        moveToReportReceived(report.sender);
+      })
+    }
+    
   }
 
   const handleClickReturn = () => {
@@ -50,54 +59,54 @@ const ReceivedReportReadComponent = ({reportNo}) => {
   }
 
   return (  
-
-    <div className = "border-2 border-sky-200 mt-10 m-2 p-4"> 
-
+<div className="flex justify-center m-3">
+    <div className = "shadow-xl p-4"> 
+      <h2 className="text-center text-3xl font-semibold">{report.sender}님께 받은 보고서</h2>
       <div className="flex justify-center mt-10">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Report No</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+      <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">Report No</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.reportNo}        
           </div>  
         </div>
       </div>
 
         <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Deadline</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+        <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">Deadline</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.deadLine}        
           </div>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Status</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+      <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">Status</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.reportStatus}        
           </div>
         </div>  
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Reported Date</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+      <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">Reported Date</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.reportingDate}        
           </div>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">receiver</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+      <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">receiver</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.receiver}        
           </div>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">Sender</div>
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+      <div className="mb-4 flex w-full justify-center">
+          <div className=" p-6 font-bold">Sender</div>
+          <div className="p-6 rounded-md border border-solid shadow-md">
             {report.sender}        
           </div>
         </div>
@@ -107,7 +116,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
           <a 
           alt ="report"
           key={i}
-          className="w-1/2 p-6 rounded-r border border-solid shadow-md mt-4" 
+          className="w-1/2 p-6 rounded-lg border border-solid shadow-md mt-4" 
           href={`${API_SERVER_HOST}/api/report/view/${fileName}`}>
                 {fileName}
             </a>
@@ -115,11 +124,13 @@ const ReceivedReportReadComponent = ({reportNo}) => {
       </div>
 
       <div className="flex justify-end p-4">
-        <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+        
+        <input className="w-4/5 p-6 border border-solid border-neutral-300 shadow-md" 
           name="newReceiver"
           type={'number'} 
           value={newReceiver}
           onChange={handleChangeNewReceiver}/>
+        
         <button type="button" 
           className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
           onClick={handleClickApprove}
@@ -142,7 +153,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
         </button>  
       </div>
     </div>
-      
+    </div>
   );
 };
 

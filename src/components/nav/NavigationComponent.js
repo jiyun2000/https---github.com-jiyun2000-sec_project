@@ -5,23 +5,37 @@ import { useEffect, useState } from 'react';
 import { getCookie, removeCookie } from '../../util/cookieUtil';
 
 const NavigationComponent = () => {
-  const [empNo, setEmpNo] = useState(getCookie('member').empNo);
-  const [deptNo, setDeptNo] = useState(getCookie('member').deptNo);
 
-  const menu = [
-    { name: '마이페이지', path: `/employees/read/${empNo}` },
-    { name: '직원 현황', path: `/employees` },
-    { name: '부서 현황', path: `/deptinfo` },
-    { name: '직책 현황', path: `/job` },
-    { name: '공지사항', path: `/board/list` },
-    { name: '전자우편', path: `/mail` },
-    { name: '스케줄', path: `/empDeptSchedule/read/${deptNo}/${empNo}` },
-    { name: '예약', path: `/booking` },
-    { name: '서류 작성', path: `/report/list/received/${empNo}` },
-    { name: '채팅', path: `/chat/empList/${empNo}?page=1` },
-  ];
+    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
 
-  const [loc, setLoc] = useState('');
+    const menu = [ 
+                    {name:'마이페이지',path:`/employees/read/${empNo}` },
+                    {name:'직원 현황', path:`/employees`},
+                    {name:'부서 현황', path:`/deptinfo`},
+                    {name:'직책 현황', path:`/job`},
+                    {name:'게시판', path : `/board`},
+                    {name:'전자우편', path:`/mail`},
+                    {name:'스케줄', path:`/empDeptSchedule/read/${deptNo}/${empNo}`},
+                    {name:'예약', path:`/booking`},
+                    {name:'서류 작성', path:`/report/list/received/${empNo}`},
+                    {name:'채팅', path:`/chat/empList/${empNo}?page=1`}
+                ];
+
+    const [loc, setLoc] = useState('');
+
+    const navigate = useNavigate();
+
+    useEffect(()=>{
+        if(loc!==''){
+            navigate(loc);
+        }
+        
+    },[loc]);
+
+    const openMenu = (path) => {
+        setLoc(path);
+    }
 
   const navigate = useNavigate();
 
