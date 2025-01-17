@@ -58,7 +58,7 @@ const BoardListComponent = () => {
                 className="flex w-2/3 min-w-[400px] p-2 m-2 rounded shadow-md text-center justify-center"
                 onClick={() => moveToRead(data.boardNo)}
               >
-                번호 : {data.boardNo}
+                번호 : {data.boardNo} {data.title}
 
               </div>
             );

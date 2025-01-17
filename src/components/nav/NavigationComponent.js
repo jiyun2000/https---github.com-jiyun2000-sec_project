@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getCookie, removeCookie } from '../../util/cookieUtil';
 
 const NavigationComponent = () => {
+
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
 
@@ -36,28 +37,54 @@ const NavigationComponent = () => {
         setLoc(path);
     }
 
-    const logOut = () => {
-        console.log("로그아웃");
-        removeCookie("member");
-        navigate("/");
-    }
+  const navigate = useNavigate();
 
-    return <nav className='flex flex-col items-center w-[260px] h-[100vh] bg-white font-medium text-[var(--color-light-black)] shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]'>
-        <div className="py-10 flex justify-center w-14">
-            <a href='/main'><Logo className='w-full cursor-pointer' /></a>
-        </div>
-        <ul className="w-full border-t border-gray-300">
-            {menu.map((menu, index) => (
-                <li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[var(--color-faint-gray)]">
-                    <span>{menu.name}</span>
-                    <CaretRight className='w-[6px] fill-[var(--color-light-black)]' />
-                </li>
-            ))}
-        </ul>
-        <div className='mt-4 w-full px-3'>
-            <button className='w-full rounded-lg py-3 bg-[var(--color-red)] text-white hover:bg-[var(--color-dark-red)]' onClick={logOut}>로그아웃</button>
-        </div>
-    </nav>;
+  useEffect(() => {
+    if (loc !== '') {
+      navigate(loc);
+    }
+  }, [loc]);
+
+  const openMenu = (path) => {
+    setLoc(path);
+  };
+
+  const logOut = () => {
+    console.log('로그아웃');
+    removeCookie('member');
+    navigate('/');
+  };
+
+  return (
+    <nav className="flex flex-col items-center w-[260px] h-[100vh] bg-white font-medium text-[var(--color-light-black)] shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]">
+      <div className="py-10 flex justify-center w-14">
+        <a href="/main">
+          <Logo className="w-full cursor-pointer" />
+        </a>
+      </div>
+      <ul className="w-full border-t border-gray-300">
+        {menu.map((menu, index) => (
+          <li
+            key={index}
+            id={menu}
+            onClick={() => openMenu(menu.path)}
+            className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[var(--color-faint-gray)]"
+          >
+            <span>{menu.name}</span>
+            <CaretRight className="w-[6px] fill-[var(--color-light-black)]" />
+          </li>
+        ))}
+      </ul>
+      <div className="mt-4 w-full px-3">
+        <button
+          className="w-full rounded-lg py-3 bg-[var(--color-red)] text-white hover:bg-[var(--color-dark-red)]"
+          onClick={logOut}
+        >
+          로그아웃
+        </button>
+      </div>
+    </nav>
+  );
 };
 
 export default NavigationComponent;
