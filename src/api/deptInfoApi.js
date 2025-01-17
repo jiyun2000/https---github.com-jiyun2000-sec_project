@@ -4,7 +4,7 @@ export const API_SERVER_HOST = 'http://localhost:8080';
 
 const prefix = `${API_SERVER_HOST}/api/deptinfo`;
 
-export const getList = async () => {
+export const getDeptList = async () => {
     const res = await jwtAxios.get(`${prefix}/list`);
 
     return res.data;

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/dayOffApi";
+import { getCookie } from "../../util/cookieUtil";
+import { useNavigate } from "react-router-dom";
 
 const initState = {
     dayOffNo : 0 ,
@@ -12,10 +14,13 @@ const initState = {
 const DayOffAddComponent = () => {
     const [dayOff, setDayOff] = useState({...initState});
 
-    const {moveToList} = useCustomMove();
+    const navigate = useNavigate();
 
     const handleClickAdd = () => {
-        addOne(dayOff).then(()=>moveToList());
+        dayOff["empNo"] = getCookie("member").empNo;
+        addOne(dayOff).then(()=>{
+            navigate({pathname:`../../employees/annualleave/${dayOff.empNo}`});
+        });
     }
 
     const handleChangeDayOff = (evt) => {
@@ -44,17 +49,6 @@ const DayOffAddComponent = () => {
                     name="offHours"
                     type={'number'} 
                     value={dayOff.offHours} 
-                    onChange={handleChangeDayOff}></input>
-                </div>
-            </div>
-
-            <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">사원번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="empNo"
-                    type={'number'} 
-                    value={dayOff.empNo} 
                     onChange={handleChangeDayOff}></input>
                 </div>
             </div>

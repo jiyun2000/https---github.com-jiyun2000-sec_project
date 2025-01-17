@@ -41,10 +41,10 @@ const ReceivedReportListComponent = ({empNo}) => {
     <div className="text-2xl">
 
         <div className="flex justify-center">
-            <div className="mb-4 flex w-full ">
-                <div className="w-1/2 p-6 text-center rounded-r border border-solid border-neutral-300 shadow-md" 
+        <div className="justify-center relative mb-4 flex w-full flex-wrap items-stretch">
+                <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
                 >받은 결재문서</div>
-                <div className="w-1/2 p-6 text-center rounded-r border border-solid border-neutral-300 shadow-md" 
+                <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
                 onClick={handleClickMove}>작성한 결재문서</div>
             </div>
         </div>
@@ -58,10 +58,12 @@ const ReceivedReportListComponent = ({empNo}) => {
                 onClick = {() => moveToReceivedReportRead(data.reportNo)}
                 >
                     <div className='flex flex-col p-2 text-center'>
-                        <div>마감일 : {data.deadLine}</div>
+                        <div>마감기한 : {data.deadLine}</div>
                         <div>진행 상태 : {data.reportStatus}</div>
+                        {data.reportStatus!=="완료"?<>
                         <div>보낸 사람 :  {data.sender}</div>
                         <div>받는 사람 : {data.receiver}</div>
+                        </>:<></>}
                     </div>
                 </div>)
             })}

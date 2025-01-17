@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getList } from '../../api/deptInfoApi';
+import { getDeptList } from '../../api/deptInfoApi';
 import useCustomMove from '../../hooks/useCustomMove';
 
 const initState = {
@@ -17,7 +17,7 @@ const DeptInfoListComponent = () => {
     const { moveToRead, moveToAdd } = useCustomMove();
 
     useEffect(() => {
-      getList().then(res => {
+        getDeptList().then(res => {
         //console.log(res); //서버에서 받아오는지 확인 ok
         setDeptInfo(res);
       });

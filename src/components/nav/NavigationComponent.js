@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getCookie, removeCookie } from '../../util/cookieUtil';
 
 const NavigationComponent = () => {
-     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
 
     const menu = [ 
