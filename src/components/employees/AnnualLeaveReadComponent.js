@@ -72,7 +72,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
                 </div>
             </div> */}
         <div>
-           <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName} 님 연차 </h2>
+           <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 연차 </h2>
         </div>
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
@@ -98,13 +98,13 @@ const AnnualLeaveReadComponent = ({empNo})=>{
             <div className="flex justify-center p-4">
 
                 <button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-40 text-white bg-black"
+                className="inline-block  p-4 m-2 text-xl w-40 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
                 onClick={moveToAdd}>
                     연차 사용
                 </button>
 
                 <button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-40 text-white bg-black"
+                className="inline-block  p-4 m-2 text-xl w-40 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
                 onClick={()=>moveToRead(empNo)}>
                     이전
                 </button>
@@ -116,7 +116,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
                 </button> */}
 
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                className=" p-4 m-2 text-xl w-32 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
                 onClick={()=>moveToList({page})}>
                     리스트
                 </button>

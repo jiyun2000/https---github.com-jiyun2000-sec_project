@@ -37,10 +37,10 @@ const MailNavComponent = () => {
   const newTotals = Math.ceil(mailData.totalCnt / size);
   return (
     <div className="h-48">
-      <div
+      {/* <div
         className=" bg-blue-400 fixed h-48 w-[85%] flex flex-row
       "
-      >
+      > */}
         <div className="h-full w-[30%]">
           <MailWriteModal />
         </div>
@@ -77,7 +77,7 @@ const MailNavComponent = () => {
           </div>
         </div>
       </div>
-    </div>
+    // </div>
   );
 };
 export default MailNavComponent;
