@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addReport } from "../../api/reportApi";
 import { getAllList } from "../../api/employeesApi";
+import { getCookie } from "../../util/cookieUtil";
 
 const initState = {
     deadLine : '',
@@ -27,10 +28,13 @@ const initStateEmp = {
     citizenId : ''
 }
 
-const ReportAddComponent = ({empNo}) => {
+const ReportAddComponent = () => {
+    
+    const [empNo, setEmpNo] = useState(getCookie('member').empNo);
+    
     const [report, setReport] = useState({...initState});
 
-    const {moveToReportReceived} = useCustomMove();
+    const {moveToReportReceivedPage} = useCustomMove();
 
     const [employees, setEmployees] = useState([initStateEmp]);
 
@@ -66,8 +70,8 @@ const ReportAddComponent = ({empNo}) => {
         formData.append('sender',report.sender);
         formData.append('receiver',report.receiver);
 
-        addReport(empNo,formData).then(data=>{
-            moveToReportReceived(empNo);
+        addReport(empNo,formData).then(()=>{
+            moveToReportReceivedPage();
         });
     };
     

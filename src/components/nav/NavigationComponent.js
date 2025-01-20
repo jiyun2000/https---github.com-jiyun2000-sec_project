@@ -17,7 +17,7 @@ const NavigationComponent = () => {
     { name: '전자우편', path: `/mail` },
     { name: '스케줄', path: `/empDeptSchedule/read/${deptNo}/${empNo}` },
     { name: '예약', path: `/booking` },
-    { name: '서류 작성', path: `/report/list/received/${empNo}` },
+    { name: '서류 작성', path: `/report/list/received` },
     { name: '채팅', path: `/chat/empList/${empNo}?page=1` },
   ];
 
