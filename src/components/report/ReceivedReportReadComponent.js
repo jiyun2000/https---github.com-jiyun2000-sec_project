@@ -45,17 +45,22 @@ const ReceivedReportReadComponent = ({reportNo}) => {
   const {moveToReportReceivedPage} = useCustomMove();
 
   useEffect(() => {
-    //서버에 데이터 요청 보내기
-    getOne(reportNo).then(data =>{
-      setReport(data);
-    });
-    getOneEmp(report.receiver).then(data=>{
-      setReceiver(data);
-    });
-    getOneEmp(report.sender).then(data=>{
-      setSender(data);
-    });
-  }, [reportNo]);
+      //서버에 데이터 요청 보내기
+      getOne(reportNo).then(data =>{
+        setReport(data);
+      });
+    }, [reportNo]);
+    
+    useEffect(()=>{
+      if(report!==initState){
+        getOneEmp(report.receiver).then(data=>{
+          setReceiver(data);
+        });
+        getOneEmp(report.sender).then(data=>{
+          setSender(data);
+        });
+      }
+    },[report]);
 
   const handleClickApprove = () => {
     if(report.receiver === 1){
@@ -139,6 +144,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
         </div>
       </div>
       <div className="w-full justify-center flex  flex-col m-auto items-center">
+      <div className="w-1/5 p-6 font-bold">관련 문서</div>
         {report.uploadFileNames.map( (fileName, i) => 
           <a 
           alt ="report"

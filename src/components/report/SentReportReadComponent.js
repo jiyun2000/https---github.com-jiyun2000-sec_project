@@ -47,13 +47,17 @@ const SentReportReadComponent = ({reportNo}) => {
     getOne(reportNo).then(data =>{
       setReport(data);
     });
-    getOneEmp(report.receiver).then(data=>{
-      setReceiver(data);
-    });
-    getOneEmp(report.sender).then(data=>{
-      setSender(data);
-    });
   }, [reportNo]);
+  useEffect(()=>{
+    if(report!==initState){
+      getOneEmp(report.receiver).then(data=>{
+        setReceiver(data);
+      });
+      getOneEmp(report.sender).then(data=>{
+        setSender(data);
+      });
+    }
+  },[report]);
   return (  
     <div className="flex justify-center m-3">
     <div className = "w-full shadow-xl p-4"> 
@@ -108,6 +112,7 @@ const SentReportReadComponent = ({reportNo}) => {
         </div>
       </div>
       <div className="w-full justify-center flex  flex-col m-auto items-center">
+      <div className="w-1/5 p-6 font-bold">관련 문서</div>
         {report.uploadFileNames.map( (fileName, i) => 
           <a 
           alt ="report"
