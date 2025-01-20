@@ -204,7 +204,26 @@ const useCustomMove = () => {
         navigate({pathname : `../annualleave/${pageParam.empNo}`})
     }
 
-    return {page, size,moveToReceivedReportRead, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd};
+    const moveToMenuList = (pageParam) => {
+        let queryStr = '';
+
+        if(pageParam){
+            const pageNum = getNum(pageParam.page, 1);
+            const sizeNum = getNum(pageParam.size, 10);
+
+            queryStr = createSearchParams({
+                page : pageNum,
+                size : sizeNum
+            }).toString();
+        }else{
+            queryStr = queryDefault;
+        }
+
+        navigate({pathname: `../menu/list`, search: queryStr});
+    };
+
+
+    return {page, size,moveToReceivedReportRead, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd, moveToMenuList};
 }
 
 export default useCustomMove;

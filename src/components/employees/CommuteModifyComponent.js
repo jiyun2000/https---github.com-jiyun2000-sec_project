@@ -35,6 +35,10 @@ const CommuteModifyComponent = ({commNo}) => {
     }
 
     return (
+        <div>
+            
+
+
         <div className="border-2 border-sky-200 mt-10 m-2 p-4">
             <div className="flex justify-center mt-10 mb-4">
                 <div className="w-1/5 p-6 text-right font-bold">CommuteNo</div>
@@ -87,6 +91,7 @@ const CommuteModifyComponent = ({commNo}) => {
                 </button>
             </div>
         </div>
+    </div>
     )
 }
 

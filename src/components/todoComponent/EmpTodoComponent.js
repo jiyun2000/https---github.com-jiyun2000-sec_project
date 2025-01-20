@@ -71,7 +71,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
 
     return (
         <>
-            <div className="text-center m-8  bg-[#abcaef] rounded-md bg-opacity-50 h-[35vh] overflow-y-scroll">
+            <div className="text-center bg-[#d5e7fc] bg-opacity-50 h-[35vh] overflow-y-scroll p-2 rounded-md">
             <h2 className="text-3xl font-semibold p-2">오늘의 일정</h2> <br />
             {events && events.length > 0 ? (
                 events.map((evt) => (
@@ -88,7 +88,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
             ) : (
                 "일정X"
             )}
-            <button onClick={empTodoAdd} type="button" className="border border-blue-200 rounded-md p-2">일정 추가</button>
+            <button onClick={empTodoAdd} type="button" className="border border-blue-200 rounded-md p-2">추가</button>
             </div>
         </>
     );

@@ -10,7 +10,7 @@ const TodayCommuteComponent = ({empNo}) => {
                 .then((response) => {
                     console.log(JSON.stringify(response)); 
                     const { data } = response; 
-                    if (data) {
+                    if (data) {console.log("ddd" + JSON.stringify(data))
                         setCommuteData(data);
                     }
                 })

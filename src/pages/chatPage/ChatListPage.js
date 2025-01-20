@@ -1,8 +1,10 @@
 
+import { useParams } from "react-router-dom";
 import ChatListComponent from "../../components/chatComponent/ChatListComponent";
 
-const ChatListPage = ({empNo}) => {
+const ChatListPage = () => {
 
+    const {empNo} = useParams();
 
     return(
         <>

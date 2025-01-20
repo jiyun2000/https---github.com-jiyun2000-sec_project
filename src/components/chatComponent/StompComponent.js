@@ -1,10 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Client } from "@stomp/stompjs";
 import { useState, useEffect } from "react";
 import SockJS from "sockjs-client";
-import axios from 'axios';
 import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
+import { getOne } from '../../api/employeesApi';
+import BoardTitleComponent from '../board/BoardTitleComponent';
+import mail from "../../assets/icon/mail.png";
+import chat from "../../assets/icon/chat.png";
 
 const StompComponent = () => {
     const navigate = useNavigate();
@@ -14,11 +17,21 @@ const StompComponent = () => {
     const [isEnterChat, setIsEnterChat] = useState(false); //채팅창 입장 여부
     const [messages, setMessages] = useState([]);  //채팅 메시지지
     const [userId, setUserId] = useState(senderEmpNo); 
-
+    const [empData, setEmpData] = useState(null);
+ 
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
     });
+
+    useEffect(()=>{
+        getOne(receiverEmpNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[])
 
     //과거 기록 가져오기
     const loadChatHistory = async () => {
@@ -180,6 +193,26 @@ const StompComponent = () => {
     }
 
     return ( 
+        <>
+        <div>
+        <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+                <div className="flex items-center space-x-8">
+                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                        [공지사항]
+                    </div>
+                    <div className="w-64 text-2xl font-semibold cursor-pointer">
+                        <BoardTitleComponent />
+                    </div>
+                </div>
+                <div className="flex space-x-4">
+                    <Link to="/mail" className="w-12 cursor-pointer">
+                        <img src={mail} alt="Mail" className="w-full" />
+                    </Link>
+                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer">
+                        <img src={chat} alt="Chat" className="w-full" />
+                    </Link>
+                </div>
+            </div>
         <div>
             {!isEnterChat ? (
                 <div style={{ textAlign: 'center' }}>
@@ -199,7 +232,7 @@ const StompComponent = () => {
                     textAlign: 'center'
                 }}>
                 <div style={{ textAlign: 'center' }}>
-                    <h2>{receiverEmpNo} </h2>
+                    <h2>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
                     <div >
                         <input
                             type="text"
@@ -258,6 +291,8 @@ const StompComponent = () => {
                 </div>
             )}
         </div>
+        </div>
+        </>
     );
 };
 export default StompComponent;

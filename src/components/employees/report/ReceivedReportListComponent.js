@@ -3,6 +3,10 @@ import { getReceivedList } from '../../api/reportApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
 import CommutePageComponent from '../common/CommutePageComponent';
+import { Link } from 'react-router-dom';
+import BoardTitleComponent from "../../board/BoardTitleComponent";
+import mail from "../../../assets/icon/mail.png";
+import chat from "../../../assets/icon/chat.png";
 
 const initState = {
     dtoList : [],
@@ -38,6 +42,27 @@ const ReceivedReportListComponent = ({empNo}) => {
     }
     
     return (<>
+    <div>
+        <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
+            <div className="flex items-center space-x-8">
+                <div className="text-2xl font-semibold text-blue-800 select-none">
+                    [공지사항]
+                </div>
+                <div className="w-64 text-2xl font-semibold cursor-pointer">
+                    <BoardTitleComponent />
+                </div>
+            </div>
+            <div className="flex space-x-4">
+                <Link to="/mail" className="w-12 cursor-pointer">
+                    <img src={mail} alt="Mail" className="w-full" />
+                </Link>
+                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <img src={chat} alt="Chat" className="w-full" />
+                </Link>
+            </div>
+        </div>
+
+
     <div className="text-2xl">
 
         <div className="flex justify-center">
@@ -75,6 +100,7 @@ const ReceivedReportListComponent = ({empNo}) => {
         onClick={handleClickAdd}>
             등록
         </button>
+        </div>
         </div>
         </>
     )

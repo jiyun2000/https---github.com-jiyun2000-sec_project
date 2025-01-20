@@ -25,6 +25,13 @@ import StompPage from "../pages/chatPage/StompPage";
 import ChatListPage from "../pages/chatPage/ChatListPage";
 import Layout from "../layouts/Layout";
 import boardRouter from "./boardRouter";
+import MenuPage from "../pages/menu/MenuPage";
+import MenuAddPage from "../pages/menu/MenuAddPage";
+import MenuListPage from "../pages/menu/MenuListPage";
+import MenuReadPage from "../pages/menu/MenuReadPage";
+import MenuModPage from "../pages/menu/MenuModpage";
+import BirthEmpPage from "../pages/BirthEmpPage";
+import AnnualLeaveCountPage from "../pages/employees/AnnualLeaveCountPage";
 
 const root = createBrowserRouter([
     {
@@ -81,10 +88,10 @@ const root = createBrowserRouter([
                     path :'empDeptSchedule/read/:deptNo/:empNo',
                     element:<EmpDeptSchedulePage />
                 },
-                {   // eploysees & departments schedule 에 해당 날짜에 리스트만 불러오기
-                    path :'empDeptSchedule/list/:deptNo/:empNo/:selectDate',
-                    element:<TodayListPage />
-                },
+                // {   // eploysees & departments schedule 에 해당 날짜에 리스트만 불러오기
+                //     path :'empDeptSchedule/list/:deptNo/:empNo/:selectDate',
+                //     element:<TodayListPage />
+                // },
                 {   // employees schedule 해당 일정 수정하기
                     path :'empSchedule/mod/:empNo/:empSchNo',
                     element:<ModEmpSChedulePage />
@@ -120,7 +127,35 @@ const root = createBrowserRouter([
                 {
                     path: 'board',
                     children: boardRouter(),
-                  }
+                },
+                {
+                    path : 'menu/read/:menuDate',
+                    element : <MenuPage />
+                },
+                {
+                    path : 'menu/add',
+                    element : <MenuAddPage />
+                },
+                {
+                    path : 'menu/list',
+                    element : <MenuListPage />
+                },
+                {
+                    path : 'menu/readMenu/:menuNo',
+                    element : <MenuReadPage />
+                },
+                {
+                    path : 'menu/:menuNo',
+                    element : <MenuModPage />
+                },
+                {
+                    path : 'employees/birth',
+                    element : <BirthEmpPage />
+                },
+                {
+                    path : 'employees/annualleave/count/:empNo',
+                    element : <AnnualLeaveCountPage />
+                }
             ]
         }
 ])

@@ -42,20 +42,20 @@ const NavigationComponent = () => {
         navigate("/");
     }
 
-    return <nav className='flex flex-col items-center w-[260px] h-[100vh] bg-white font-medium text-[var(--color-light-black)] shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]'>
+    return <nav className='flex flex-col items-center w-[260px] h-[100vh] bg-white font-medium text-[#333333] shadow-[4px_0_6px_-1px_rgba(0,0,0,0.1)]'>
         <div className="py-10 flex justify-center w-14">
             <a href='/main'><Logo className='w-full cursor-pointer' /></a>
         </div>
         <ul className="w-full border-t border-gray-300">
             {menu.map((menu, index) => (
-                <li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[var(--color-faint-gray)]">
+                <li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
                     <span>{menu.name}</span>
-                    <CaretRight className='w-[6px] fill-[var(--color-light-black)]' />
+                    <CaretRight className='w-[6px] fill-[#333333]' />
                 </li>
             ))}
         </ul>
         <div className='mt-4 w-full px-3'>
-            <button className='w-full rounded-lg py-3 bg-[var(--color-red)] text-white hover:bg-[var(--color-dark-red)]' onClick={logOut}>로그아웃</button>
+            <button className='w-full rounded-lg py-3 bg-[#FF7F7F] text-white hover:bg-[#cf6363] ' onClick={logOut}>로그아웃</button>
         </div>
     </nav>;
 };

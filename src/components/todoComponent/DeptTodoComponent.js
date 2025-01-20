@@ -62,7 +62,7 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
 
     return (
         <>
-            <div className="text-center m-8 bg-[#abcaef] rounded-md bg-opacity-50 h-[35vh] overflow-y-scroll">
+            <div className="text-center p-2 bg-[#d5e7fc] rounded-md bg-opacity-50 h-[35vh] overflow-y-scroll">
             <h2 className="text-3xl font-semibold p-2">오늘의 부서 일정</h2><br />
             {events && events.length > 0 ? (
                 events.map((evt) => (
@@ -71,15 +71,14 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
                         <p className="font-light">시작 시간: {new Date(evt.startDate).toLocaleString()}</p>
                         <p className="font-light">끝나는 시간: {new Date(evt.endDate).toLocaleString()}</p>
                         <button onClick={() => modDeptSchedule(evt.deptSchNo)} type="button" className="border border-blue-200 rounded-md px-2 mr-2">수정</button>
-                        <button onClick={() => deleteDeptSchedule(evt.deptSchNo)} type="button" className="border border-blue-200 rounded-md px-2 mr-2">삭제</button><br />
-                        -----------------------------------------<br/>
+                        <button onClick={() => deleteDeptSchedule(evt.deptSchNo)} type="button" className="border border-blue-200 rounded-md px-2">삭제</button><br />
+                        -----------------------------------------
                         <br />
                     </div>
                 ))
             ) : (
                 "일정X" 
             )}
-            <br />
             <button onClick={addSchedule} type="button" className="border border-blue-200 rounded-md p-2">추가</button>
             </div>
         </>
