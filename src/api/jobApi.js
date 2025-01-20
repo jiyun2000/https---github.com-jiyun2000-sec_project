@@ -6,7 +6,7 @@ const prefix = `${API_SERVER_HOST}/api/job`;
 
 export const getList = async () => {
     const res = await jwtAxios.get(`${prefix}/list`);
-
+    
     return res.data;
 }
 

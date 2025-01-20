@@ -30,6 +30,7 @@ const BoardAddComponent = () => {
   };
 
   return (
+
     <div className='flex flex-col justify-center items-center w-full m-3'>
     <div className='w-2/3 shadow-lg p-5 pr-5'>
       <h2 className='text-center text-3xl font-semibold my-5'>공지사항 등록</h2>
@@ -38,6 +39,7 @@ const BoardAddComponent = () => {
           <div className="p-6 font-bold">제목</div>
           <input
             className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="title"
             type={'text'}
             value={board.title}
@@ -46,11 +48,13 @@ const BoardAddComponent = () => {
         </div>
       </div>
 
+
       <div className="flex justify-center">
         <div className="relative mb-4 flex flex-row items-center">
           <div className="p-6 font-bold">내용</div>
           <input
             className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="contents"
             type={'text'}
             value={board.contents}
@@ -60,10 +64,12 @@ const BoardAddComponent = () => {
       </div>
 
       <div className="flex justify-center">
+
         <div className="relative mb-4 flex flex-row items-center">
           <div className="p-6 font-bold">메일 주소</div>
           <input
             className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="mailAddress"
             type={'text'}
             value={board.mailAddress}
@@ -73,10 +79,12 @@ const BoardAddComponent = () => {
       </div>
 
       <div className="flex justify-center">
+
         <div className="relative mb-4 flex flex-row items-center">
           <div className="p-6 font-bold">분류</div>
           <input
             className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+
             name="catecory"
             type={'text'}
             value={board.catecory}
@@ -84,6 +92,7 @@ const BoardAddComponent = () => {
           ></input>
         </div>
       </div>
+
 
       <div className="flex justify-center p-4">
         <button
@@ -96,6 +105,7 @@ const BoardAddComponent = () => {
       </div>
     </div>
     </div>
+
   );
 };
 
