@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { addOne } from '../../api/boardApi';
 import { getOne } from '../../api/employeesApi';
@@ -9,7 +9,7 @@ const initState = {
   title: '',
   contents: '',
   mailAddress: '',
-  catecory: '',
+  category: '',
   regdate: '',
   moddate: '',
   replyCount: 0,
@@ -21,11 +21,9 @@ const BoardAddComponent = () => {
   const { moveToList } = useCustomMove();
 
   const handleClickAdd = () => {
-    getOne(getCookie("member").empNo).then((data)=>{
-      board["mailAddress"] = data.mailAddress;
-      addOne(board).then(() => {
-        moveToList();
-      });
+    board['mailAddress'] = getCookie('member').email;
+    addOne(board).then(() => {
+      moveToList();
     });
   };
 
@@ -244,72 +242,67 @@ const BoardAddComponent = () => {
     </button>
   </form>;
   return (
-
-    <div className='flex flex-col justify-center items-center w-full m-3'>
-    <div className='w-2/3 shadow-lg p-5 pr-5'>
-      <h2 className='text-center text-3xl font-semibold my-5'>공지사항 등록</h2>
-      <div className="flex justify-center">
-        <div className="relative mb-4 flex flex-row items-center">
-          <div className="p-6 font-bold">제목</div>
-          <input
-            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
-
-            name="title"
-            type={'text'}
-            value={board.title}
-            onChange={handleChangeBoard}
-          ></input>
+    <div className="flex flex-col justify-center items-center w-full m-3">
+      <div className="w-2/3 shadow-lg p-5 pr-5">
+        <h2 className="text-center text-3xl font-semibold my-5">
+          공지사항 등록
+        </h2>
+        <div className="flex justify-center">
+          <div className="relative mb-4 flex flex-row items-center">
+            <div className="p-6 font-bold">제목</div>
+            <input
+              className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+              name="title"
+              type={'text'}
+              value={board.title}
+              onChange={handleChangeBoard}
+            ></input>
+          </div>
         </div>
-      </div>
 
-
-      <div className="flex justify-center">
-        <div className="relative mb-4 flex flex-row items-center">
-          <div className="p-6 font-bold">내용</div>
-          <input
-            className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
-
-            name="contents"
-            type={'text'}
-            value={board.contents}
-            onChange={handleChangeBoard}
-          ></input>
+        <div className="flex justify-center">
+          <div className="relative mb-4 flex flex-row items-center">
+            <div className="p-6 font-bold">내용</div>
+            <input
+              className="p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+              name="contents"
+              type={'text'}
+              value={board.contents}
+              onChange={handleChangeBoard}
+            ></input>
+          </div>
         </div>
-      </div>
 
-      <div className="flex justify-center">
-        <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-          <div className="w-1/5 p-6 text-right font-bold">catecory</div>
-          <select
-            id="catecory"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
-            name="catecory"
-            type={'text'}
-            value={board.catecory}
-            onChange={handleChangeBoard}
+        <div className="flex justify-center">
+          <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+            <div className="w-1/5 p-6 text-right font-bold">category</div>
+            <select
+              id="category"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+              name="category"
+              type={'text'}
+              value={board.category}
+              onChange={handleChangeBoard}
+            >
+              <option value="">선택해주세요</option>
+              <option value="공지">공지</option>
+              <option value="긴급">긴급</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="flex justify-center p-4">
+          <button
+            type="button"
+            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+            onClick={handleClickAdd}
           >
-            <option value="">선택해주세요</option>
-            <option value="공지사항">공지사항</option>
-            <option value="긴급공지">긴급공지사항</option>
-          </select>
+            추가
+          </button>
         </div>
       </div>
-
-
-
-      <div className="flex justify-center p-4">
-        <button
-          type="button"
-          className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
-          onClick={handleClickAdd}
-        >
-          추가
-        </button>
-      </div>
     </div>
-    </div>
-
   );
 };
 

@@ -10,7 +10,7 @@
 }
 
 body {
-  font-family: "Noto Sans KR", serif;
+  font-family: 'Noto Sans KR', serif;
 }
 
 ::-webkit-scrollbar {
@@ -19,7 +19,7 @@ body {
 }
 
 .isScrolling::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
 }
 
 ::-webkit-scrollbar-button {
@@ -28,9 +28,13 @@ body {
 
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  background: rgba(0,0,0,0);
+  background: rgba(0, 0, 0, 0);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.cate {
+  color: red;
 }

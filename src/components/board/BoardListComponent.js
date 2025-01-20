@@ -39,44 +39,41 @@ const BoardListComponent = () => {
 
   return (
     <>
-    <div className="text-3xl font-semibold text-center m-10">
-      <h2>공지사항</h2>
-    </div>
-      
-      <div className='flex justify-center flex-col text-center'>
-        <div className="text-2xl font-semibold text-center">
-          <h2>목록</h2>
-        </div>
-        
-        <div className="flex flex-wrap mx-auto p-6 text-center ">
-
-          {board.dtoList.map((data) => {
-            return (
-              <div
-                key={data.boardNo}
-
-                className="flex w-2/3 min-w-[400px] p-2 m-2 rounded shadow-md text-center justify-center"
-                onClick={() => moveToRead(data.boardNo)}
-              >
-                번호 : {data.boardNo} {data.title}
-
-              </div>
-            );
-          })}
+      <div>
+        <div className="text-3xl font-semibold text-center m-10">
+          <h2>공지사항</h2>
         </div>
 
-        <PageComponent serverData={board} movePage={moveToList} />
+        <div className="flex justify-center flex-col text-center">
+          <div className="text-2xl font-semibold text-center">
+            <h2>목록</h2>
+          </div>
+
+          <div className="flex-wrap mx-auto p-6 text-center ">
+            {board.dtoList.map((data) => {
+              return (
+                <div
+                  key={data.boardNo}
+                  className="flex w-2/3 min-w-[400px] p-2 m-2 rounded shadow-md text-center justify-center"
+                  onClick={() => moveToRead(data.boardNo)}
+                >
+                  No: {data.boardNo}{' '}
+                  <div className="cate">[{data.category}]</div> {data.title}
+                </div>
+              );
+            })}
+          </div>
+
+          <PageComponent serverData={board} movePage={moveToList} />
+        </div>
       </div>
-
       <div className="flex justify-center p-4">
         <button
           type="button"
-
           className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
           onClick={handleClickAdd}
         >
           추가
-
         </button>
       </div>
     </>
