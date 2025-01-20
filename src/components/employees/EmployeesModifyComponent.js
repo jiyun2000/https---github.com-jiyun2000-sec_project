@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { delOne, getOne, putOne } from "../../api/employeesApi";
+import { delOne, getOneEmp, putOne } from "../../api/employeesApi";
 
 const initState = {
     empNo : 0 ,
@@ -24,7 +24,7 @@ const EmployeesModifyComponent = ({empNo}) => {
     const {moveToList, moveToRead} = useCustomMove();
 
     useEffect(()=>{
-        getOne(empNo).then(data=>setEmployees(data));
+        getOneEmp(empNo).then(data=>setEmployees(data));
     },[empNo]);
 
     const handleClickDelete = () => {

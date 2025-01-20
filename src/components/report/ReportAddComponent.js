@@ -81,9 +81,9 @@ const ReportAddComponent = () => {
         <div className="shadow-2xl mt-10 m-2 p-4 rounded-md">
             <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
             <div className="flex justify-center">
+            <div className="w-1/5 p-6 font-bold">마감일</div>
                 <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">마감일</div>
-                    <input className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deadLine"
                     type={'date'} 
                     value={report.deadLine}
@@ -92,9 +92,9 @@ const ReportAddComponent = () => {
             </div>
 
             <div className="flex justify-center">
+            <div className="w-1/5 p-6 font-bold">받는 사람</div>
                 <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">받는 사람</div>
-                    <select className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="receiver"
                     type={'number'} 
                     value={report.receiver}
@@ -102,7 +102,7 @@ const ReportAddComponent = () => {
                         <option value={0}></option>
                         {employees.map((res)=>{
                             return(
-                                <option value={res.empNo}>{res.firstName} {res.lastName}</option>
+                                <option value={res.empNo}> {res.firstName} {res.lastName}</option>
                             )
                         })}
                     </select>
@@ -110,11 +110,11 @@ const ReportAddComponent = () => {
             </div>
 
             <div className="flex justify-center">
+            <div className="w-1/5 p-6 font-bold">파일</div>
                 <div className="mb-4 flex w-full justify-center">   
-                    <div className="p-6 font-bold">파일</div>
                     <input 
                     ref={uploadRef} 
-                    className="p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     type={'file'} multiple={true}
                     >    
                     </input>

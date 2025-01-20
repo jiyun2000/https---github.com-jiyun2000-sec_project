@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { getOne } from "../../api/employeesApi";
+import {  getOneEmp } from "../../api/employeesApi";
 
 
 const initState = {
@@ -26,7 +26,7 @@ const EmployeesReadComponent = ({empNo})=>{
     const {page, moveToReportReceived, moveToList, moveToModify, moveToCommuteList, moveToAnnualLeave} = useCustomMove();
 
     useEffect(()=>{
-        getOne(empNo).then(res => {
+        getOneEmp(empNo).then(res => {
             setEmployees(res);
         });
     },[cnt]);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { addOne } from '../../api/boardApi';
-import { getOne } from '../../api/employeesApi';
+import {  getOneEmp } from '../../api/employeesApi';
 import { getCookie } from '../../util/cookieUtil';
 
 const initState = {
@@ -21,7 +21,7 @@ const BoardAddComponent = () => {
   const { moveToList } = useCustomMove();
 
   const handleClickAdd = () => {
-    getOne(getCookie("member").empNo).then((data)=>{
+    getOneEmp(getCookie("member").empNo).then((data)=>{
       board["mailAddress"] = data.mailAddress;
       addOne(board).then(() => {
         moveToList();

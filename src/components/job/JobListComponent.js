@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getList } from '../../api/jobApi';
+import { getJobList } from '../../api/jobApi';
 import useCustomMove from '../../hooks/useCustomMove';
 
 const initState = {
@@ -15,7 +15,7 @@ const JobListComponent = () => {
     const { moveToJobRead, moveToAdd } = useCustomMove();
 
     useEffect(() => {
-      getList().then(res => {
+      getJobList().then(res => {
         //console.log(res); 서버에서 받아오는지 확인 ok
         setJob(res);
       });
