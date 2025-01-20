@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { delOne, getOne, putOne } from "../../api/roomListApi";
+import { delOne, getOne, getOneRoom, putOne } from "../../api/roomListApi";
 
 const initState = {
     roomNo : 0,
@@ -14,7 +14,7 @@ const RoomListModifyComponent = ({roomNo}) => {
     const {moveToList, moveToRead} = useCustomMove();
 
     useEffect(()=>{
-        getOne(roomNo).then(data=>setRoomList(data));
+        getOneRoom(roomNo).then(data=>setRoomList(data));
     },[roomNo]);
 
     const handleClickDelete = () => {
