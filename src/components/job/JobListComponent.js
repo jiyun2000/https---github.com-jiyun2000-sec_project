@@ -51,13 +51,13 @@ const JobListComponent = () => {
             </div>
         </div>
     <div className='m-5'>
-            <div className='flex flex-col p-6 items-center '>
-                <h2 className='py-2 text-3xl'>직책 안내</h2>
+            <div className='flex flex-col p-6 items-center h-[60vh] '>
+                <h2 className='m-4 text-3xl font-semibold'>직책 안내</h2>
                 {job.map((res)=>{
                     return(
                     <div 
                     key = {res.jobNo} 
-                    className='flex w-80  p-2 m-2 rounded shadow-md border border-blue-300 items-center justify-center font-light' 
+                    className='flex w-80 p-2 m-6 text-2xl rounded shadow-md border border-[#a9b8d0] items-center justify-center font-light' 
                     onClick = {() => moveToJobRead(res.jobNo)}
                     >
                         {res.jobTitle}
@@ -68,7 +68,7 @@ const JobListComponent = () => {
 
         <div className="flex p-4 justify-center">
         <button type="button"
-        className="rounded p-4 m-2 text-xl w-28 h-18 text-white bg-blue-300"
+        className=" p-4 m-2 text-xl w-28 h-18 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
         onClick={handleClickAdd}>
             추가
         </button>

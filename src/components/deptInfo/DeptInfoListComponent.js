@@ -35,7 +35,7 @@ const DeptInfoListComponent = () => {
     
     return (<>
     <div>
-        <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
+        <div className="flex justify-between items-center w-full bg-white shadow-lg  rounded-md mb-8 px-6 py-4">
             <div className="flex items-center space-x-8">
                 <div className="text-2xl font-semibold text-blue-800 select-none">
                   [공지사항]
@@ -54,19 +54,21 @@ const DeptInfoListComponent = () => {
             </div>
         </div>
 
-    <h1 className='text-center mt-10 font-bold text-3xl'>부서 안내</h1>
+    <div className='flex justify-center items-center flex-col w-full'>
+    <h1 className='text-center m-10 font-bold text-3xl'>부서 안내</h1>
     <div className="text-1xl">
-            <div className='flex flex-wrap mx-auto p-6 mt-8 justify-center text-center'>
+            <div className='flex flex-row mt-8 justify-center text-center'>
                 {deptInfo.map((res)=>{
                     return(
                     <div 
                     key = {res.deptNo} 
-                    className='flex w-1/4 p-6 m-2 border border-blue-300 rounded-md justify-center ' 
+                    className='flex p-5 m-4 border border-[#aaaaaa] rounded-md justify-center text-2xl' 
                     onClick = {() => moveToRead(res.deptNo)}
                     >
                         부서명 : {res.deptName} <br /> 
                         부서 주소 : {res.deptAddress} <br /> 
                         대표 번호 : {res.phoneNo} <br /> 
+                        
                     </div>)
                 })}
             </div>
@@ -74,13 +76,14 @@ const DeptInfoListComponent = () => {
 
         <div className="flex justify-center p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+        className="inline-block  p-4 m-5 text-xl w-32 text-white   bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
         onClick={handleClickAdd}>
             추가
         </button>
         </div>
-        </div>
-        </>
+    </div>
+    </div>
+    </>
     )
 }
 

@@ -23,7 +23,7 @@ const initState = {
 
 const BoardListComponent = () => {
   const [board, setBoard] = useState(initState);
-   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+  const [empNo, setEmpNo] = useState(getCookie("member").empNo);
   const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
 
   useEffect(() => {

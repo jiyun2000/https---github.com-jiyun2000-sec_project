@@ -16,6 +16,12 @@ export const getOne = async (deptNo) => {
     return res.data;
 }
 
+export const deptOne = async(deptNo) => {
+    const res = await jwtAxios.get(`${prefix}/read/${deptNo}`);
+    
+    return res.data;
+}
+
 export const getEmpList = async(deptNo,pageParam) => {
     const [page, size] = pageParam;
     const res = await jwtAxios.get(`${prefix}/list/${deptNo}`,{

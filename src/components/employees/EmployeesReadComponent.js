@@ -5,6 +5,10 @@ import { Link } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
+import { getCookie } from "../../util/cookieUtil";
+import {deptOne} from "../../api/deptInfoApi";
+import { jobOne } from "../../api/jobApi";
+
 
 const initState = {
     empNo: 0,
@@ -24,14 +28,29 @@ const initState = {
 
 const EmployeesReadComponent = ({ empNo }) => {
     const [employees, setEmployees] = useState(initState);
-
+    const [cookieDeptNo, setCookieDeptNo] = useState(getCookie("member").deptNo);
     const { page, moveToReportReceived, moveToList, moveToModify, moveToCommuteList, moveToAnnualLeave } = useCustomMove();
+    const [deptData, setDeptData] = useState("");
+    const [jobData, setJobData] = useState("");
+   
 
     useEffect(() => {
         getOne(empNo).then(res => {
             setEmployees(res);
+            console.log(res)
         });
     }, [empNo]);
+
+    useEffect(()=>{
+        deptOne(cookieDeptNo).then((data) => {
+            console.log(cookieDeptNo);
+            console.log(data);
+            setDeptData(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }, [])
+
 
     return (
         <>
@@ -59,18 +78,18 @@ const EmployeesReadComponent = ({ empNo }) => {
                 <div className="bg-white p-6 rounded-xl shadow-xl w-3/4  border-2 border-[#c6e4ec]">
                     <h1 className="text-3xl font-semibold m-6 text-center text-[#3d3d3d]">{employees.firstName} {employees.lastName} 님</h1>
                     <div className="space-y-6 text-2xl ">
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">사원 번호 : {employees.empNo}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">이름 : {employees.firstName} {employees.lastName}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">입사일 : {employees.hireDate}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">메일주소 : {employees.mailAddress}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">연봉 : {employees.salary}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">부서번호 : {employees.deptNo}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">직책번호 : {employees.jobNo}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">생년월일 : {employees.birthday}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">주소 : {employees.address}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2" >전화번호 : {employees.phoneNum}</div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">성별 : {employees.gender === 'm' ? '남성' : '여성'} </div>
-                        <div className="m-3 border-b-2 border-[#9dafe1] p-2">주빈등록번호 : {employees.citizenId}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">사원 번호 : {employees.empNo}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">이름 : {employees.firstName} {employees.lastName}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">입사일 : {employees.hireDate}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">메일주소 : {employees.mailAddress}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">연봉 : {employees.salary}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">부서번호 : {employees.deptNo} ({deptData.deptName})</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">직책번호 : {employees.jobNo}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">생년월일 : {employees.birthday}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">주소 : {employees.address}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2" >전화번호 : {employees.phoneNum}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">성별 : {employees.gender === 'm' ? '남성' : '여성'} </div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">주빈등록번호 : {employees.citizenId}</div>
                     </div>
 
                     <div className="flex justify-center mt-6 space-x-4">

@@ -231,18 +231,18 @@ const StompComponent = () => {
                     width: '100%',
                     textAlign: 'center'
                 }}>
-                <div style={{ textAlign: 'center' }}>
-                    <h2>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
-                    <div >
+                <div className='text-center w-full items-center justify-center'>
+                    <h2 className='text-center font-semibold text-2xl m-2'>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
+                    <div className='flex flex-row '>
                         <input
                             type="text"
                             value={messageObj.content}
                             onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
-                            className='border border-blue-200 rounded-md p-1'
+                            className='border-2 border-[#7793df] rounded-md p-1 w-2/5 '
                         />
                         <button type="submit" 
                             onClick={stompHandler.sendMessage}
-                            className='border border-blue-200 rounded-md mx-2 p-1 font-thin'
+                            className='border border-[#7793df] rounded-md mx-2 p-1 w-1/5'
                         >
                             전송
                         </button>
@@ -271,11 +271,11 @@ const StompComponent = () => {
                             textAlign: isUserMessage ? 'right' : 'left', 
                             marginBottom: '10px' }}>
                             <h1 style={{
-                            fontSize: 13,
+                            fontSize: 16,
                             padding: '5px 10px',
                             borderRadius: '10px',
                             display: 'inline-block'}}>
-                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${sender}] ${item.content} (${item.sendTime})`}
+                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${empData.firstName}${empData.lastName}] ${item.content} (${item.sendTime})`}
                             </h1>
                             </div>
                         );

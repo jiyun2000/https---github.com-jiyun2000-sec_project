@@ -25,6 +25,7 @@ const BirthEmpComponent = () => {
         console.log(error);
       });
     }, [page, size]);
+    
   
     return (
     <div className="h-[20vh] w-full flex flex-col">

@@ -24,7 +24,7 @@ const initState = {
 
 const CommuteListComponent = ({empNo})=>{
     const [commute, setCommute] = useState(initState);
-    const [empData, setEmpData] = useState(null);
+    const [empData, setEmpData] = useState("");
 
     const {page,size, moveToList,moveToCommuteList,moveToRead,moveToModifyCommute} = useCustomMove();
 
@@ -79,7 +79,7 @@ const CommuteListComponent = ({empNo})=>{
 
         <div className="border-2 border-sky-200 mt-10 m-2 p-4">
             <div>
-                {/* <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 출퇴근 목록</h2> */}
+                <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 출퇴근 목록</h2>
             </div>
             <div className='flex flex-wrap mx-auto p-6'>
                 {commute.dtoList.map((data)=>{

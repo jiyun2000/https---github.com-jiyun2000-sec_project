@@ -16,6 +16,9 @@ export const getOne = async (jobNo) => {
     return res.data;
 }
 
+
+
+
 export const getEmpList = async(jobNo,pageParam) => {
     const [page, size] = pageParam;
     const res = await jwtAxios.get(`${prefix}/list/${jobNo}`,{

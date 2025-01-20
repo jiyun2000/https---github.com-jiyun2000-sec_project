@@ -17,7 +17,7 @@ const initState = {
 
 const AnnualLeaveReadComponent = ({empNo})=>{
     const [annualLeave, setAnnualLeave] = useState(initState);
-    const [empData, setEmpData] = useState(null);
+    const [empData, setEmpData] = useState("");
     let cnt = 0;
 
     const {page,moveToList, moveToModify, moveToRead} = useCustomMove();

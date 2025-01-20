@@ -2,6 +2,11 @@ import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/employeesApi";
 import { setALOne } from "../../api/annualLeaveApi";
+import { getCookie } from '../../util/cookieUtil';
+import mail from "../../assets/icon/mail.png";
+import chat from "../../assets/icon/chat.png";
+import BoardTitleComponent from '../board/BoardTitleComponent';
+import { Link } from 'react-router-dom';
 
 const initState = {
     empNo : 0 ,
@@ -22,7 +27,7 @@ const initState = {
 
 const EmployeesAddComponent = () => {
     const [employees, setEmployees] = useState({...initState});
-
+    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {moveToList} = useCustomMove();
 
     const handleClickAdd = () => {
@@ -38,6 +43,27 @@ const EmployeesAddComponent = () => {
     }
 
     return (
+        <div>
+            <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+                <div className="flex items-center space-x-8">
+                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                        [공지사항]
+                    </div>
+                <div className="w-64 text-2xl font-semibold cursor-pointer">
+                    <BoardTitleComponent />
+                </div>
+            </div>
+            <div className="flex space-x-4">
+                <Link to="/mail" className="w-12 cursor-pointer">
+                    <img src={mail} alt="Mail" className="w-full" />
+                </Link>
+                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <img src={chat} alt="Chat" className="w-full" />
+                </Link>
+            </div>
+        </div>
+
+
         <div className="flex flex-col items-center py-10 px-4">
         <h1 className="text-3xl font-semibold mb-6">직원 등록</h1>
         <div className="bg-white p-4 rounded-xl shadow-md w-3/4 mb-2">
@@ -88,22 +114,28 @@ const EmployeesAddComponent = () => {
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 font-bold">부서 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="deptNo"
-                    type={'number'} 
-                    value={employees.deptNo} 
-                    onChange={handleChangeEmployees}></input>
+                    <select name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
+                        <option value={100}>100(GA)</option>
+                        <option value={200}>200(HR)</option>
+                        <option value={300}>300(ACC)</option>
+
+                    </select>
                 </div>
             </div>
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 font-bold">직책 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="jobNo"
-                    type={'number'} 
-                    value={employees.jobNo} 
-                    onChange={handleChangeEmployees}></input>
+                    <select name="jobNo" value={employees.jobNo} onClick={handleChangeEmployees}>
+                        <option value={100}>100(디렉터)</option>
+                        <option value={200}>200(매니저)</option>
+                        <option value={300}>300(시니어)</option>
+                        <option value={400}>400(사원)</option>
+                        <option value={500}>500(인턴)</option>
+                    </select>
+
+
+
                 </div>
             </div>
 
@@ -183,6 +215,7 @@ const EmployeesAddComponent = () => {
             </div>
         </div>
         </div>
+    </div>
     )
 }
 

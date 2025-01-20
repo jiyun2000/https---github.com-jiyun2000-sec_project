@@ -123,22 +123,31 @@ const EmployeesModifyComponent = ({empNo}) => {
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 text-right font-bold">부서 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    {/* <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deptNo"
                     type={'number'} 
                     value={employees.deptNo} 
-                    onChange={handleChangeEmployees}></input>
+                    onChange={handleChangeEmployees}></input> */}
+                    <select name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
+                        <option value={100}>100(GA)</option>
+                        <option value={200}>200(HR)</option>
+                        <option value={300}>300(ACC)</option>
+
+                    </select>
                 </div>
             </div>
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 text-right font-bold">직책 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="jobNo"
-                    type={'number'} 
-                    value={employees.jobNo} 
-                    onChange={handleChangeEmployees}></input>
+                    
+                    <select name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
+                    <option value={100}>100(디렉터)</option>
+                        <option value={200}>200(매니저)</option>
+                        <option value={300}>300(시니어)</option>
+                        <option value={400}>400(사원)</option>
+                        <option value={500}>500(인턴)</option>
+                    </select>
                 </div>
             </div>
 

@@ -34,7 +34,7 @@ const DayOffListComponent = () => {
     
     return (<>
     <div className="text-3xl">
-        <div className='flex flex-wrap mx-auto p-6'>
+        <div className='flex flex-wrap mx-auto p-6 '>
             {dayOff.dtoList.map((data)=>{
                 return(
                 <div 
@@ -55,7 +55,7 @@ const DayOffListComponent = () => {
 
         <div className="flex justify-end p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+        className="inline-block  p-4 m-2 text-xl w-32 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
         onClick={handleClickAdd}>
             추가
         </button>
