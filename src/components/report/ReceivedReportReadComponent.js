@@ -20,7 +20,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
 
   const [newReceiver,setNewReceiver] = useState();
 
-  const {moveToReportReceived} = useCustomMove();
+  const {moveToReportReceivedPage} = useCustomMove();
 
   useEffect(() => {
     //서버에 데이터 요청 보내기
@@ -35,13 +35,13 @@ const ReceivedReportReadComponent = ({reportNo}) => {
       report["sender"] = report.receiver;
       report["reportStatus"] = "완료"
       putOne(reportNo, report).then(()=>{
-        moveToReportReceived(report.sender);
+        moveToReportReceivedPage();
       })
     }else{
       report["sender"] = report.receiver;
       report["receiver"] = newReceiver;
       putOne(reportNo, report).then(()=>{
-        moveToReportReceived(report.sender);
+        moveToReportReceivedPage();
       })
     }
     
@@ -50,7 +50,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
   const handleClickReturn = () => {
     report["reportStatus"] = "반려";
     putOne(reportNo, report).then(()=>{
-      moveToReportReceived(report.receiver);
+      moveToReportReceivedPage();
     })
   }
 
@@ -147,7 +147,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
 
         <button type="button" 
           className="rounded p-4 m-2 text-xl w-32 text-white bg-sky-200"
-          onClick={()=>moveToReportReceived(report.receiver)}
+          onClick={()=>moveToReportReceivedPage()}
         >
           List
         </button>  

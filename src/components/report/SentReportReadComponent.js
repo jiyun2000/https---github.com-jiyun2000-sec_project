@@ -18,7 +18,7 @@ const SentReportReadComponent = ({reportNo}) => {
   //useState 를 이용한 상태값 제어 선언
   const [report, setReport] = useState(initState);
 
-  const {moveToReportSent, moveToModify} = useCustomMove();
+  const {moveToReportSentPage, moveToModify} = useCustomMove();
 
   useEffect(() => {
     //서버에 데이터 요청 보내기
@@ -95,7 +95,7 @@ const SentReportReadComponent = ({reportNo}) => {
       <div className="flex justify-center p-4">
         <button type="button" 
           className="mt-4 bg-blue-300 text-white py-2 px-4 rounded-md w-2/5 text-sm "
-          onClick={()=>moveToReportSent(report.sender)}
+          onClick={()=>moveToReportSentPage()}
         >
           리스트
         </button>  
