@@ -233,7 +233,7 @@ const StompComponent = () => {
                 }}>
                 <div className='text-center w-full items-center justify-center'>
                     <h2 className='text-center font-semibold text-2xl m-2'>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
-                    <div className='flex flex-row '>
+                    <div className='flex flex-row justify-center gap-2'>
                         <input
                             type="text"
                             value={messageObj.content}
@@ -242,7 +242,7 @@ const StompComponent = () => {
                         />
                         <button type="submit" 
                             onClick={stompHandler.sendMessage}
-                            className='border border-[#7793df] rounded-md mx-2 p-1 w-1/5'
+                            className='border border-[#7793df] rounded-md mx-2 p-1 w-1/6 hover:bg-[#7793df]'
                         >
                             전송
                         </button>
@@ -283,10 +283,10 @@ const StompComponent = () => {
                 </div>
 
                     <div style={{ marginTop: 10 }}>
-                        <button type="button" onClick={stompHandler.disconnect} className='border border-blue-200 rounded-md p-1 font-thin'>
+                        <button type="button" onClick={stompHandler.disconnect} className=' text-[#303030] border border-[#7793df] hover:bg-[#7793df] rounded-md p-1 '>
                             닫기
                         </button> 
-                        <button type='button' onClick={outChatRoom} className='border border-blue-200 rounded-md p-1 mx-1 font-thin'>채팅방 나가기</button>
+                        <button type='button' onClick={outChatRoom} className=' text-[#303030] border border-[#7793df] hover:bg-[#7793df] p-1 mx-1 rounded-md '>채팅방 나가기</button>
                     </div>
                 </div>
             )}
