@@ -51,7 +51,7 @@ const JobListComponent = () => {
             </div>
         </div>
     <div className='m-5'>
-            <div className='flex flex-col p-6 items-center h-[60vh] '>
+            <div className='flex flex-col p-6 items-center  '>
                 <h2 className='m-4 text-3xl font-semibold'>직책 안내</h2>
                 {job.map((res)=>{
                     return(

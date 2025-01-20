@@ -7,32 +7,27 @@ import '../css/mainMailBox.css';
 import MailNavComponent from './MailNavComponent';
 import useCustomSearchParam from '../hooks/CustomSearchParam';
 
-const initState = {
-  dtoList: [],
-  pageNumList: [],
-  requestDTO: null,
-  prev: false,
-  next: false,
-  totalCount: 0,
-  prevPage: 0,
-  nextPage: 0,
-  totalPageL: 0,
-  current: 0,
-};
 const MailListComponent = () => {
   const { moveToMailDetail } = useCustomPageMove();
-  const {page,size, cat,mailNo,setPage,setSize,setCat,setMailNo} = useOutletContext();
-  const [mailData, setMailData] = useState(initState);
-  const temp = 'border-blue-400';
-  useEffect(() => {
-    getMailList([page, size, cat, getCookie('member').email]).then((data) => {
-      setMailData(data);
-    });
-  }, [page, size, cat]);
+  const {
+    page,
+    size,
+    cat,
+    mailNo,
+    mailData,
+    setPage,
+    setSize,
+    setCat,
+    setMailNo,
+    setMailData,
+  } = useOutletContext();
+  //const [mailData, setMailData] = useState(initState);
 
   const chgCat = (param) => {
+    setPage(1);
     setCat(param);
-  }
+  };
+  
 
   return (
     <div className="h-full w-full flex flex-col">
@@ -114,7 +109,7 @@ const MailListComponent = () => {
                   </div>
                   <div className="w-full m-auto ml-8 max-w-full truncate bg-gray-100">
                     {mail.title} - {mail.contents}{' '}
-                    어쩌구저쩌구쫑알쫑알재잘재잘옹알왱알
+                    
                   </div>
                   <div className="min-w-48 m-auto">{mail.sendDate}</div>
                 </div>

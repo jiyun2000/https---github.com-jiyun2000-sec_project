@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import {  getOneEmp } from "../../api/employeesApi";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
@@ -32,6 +32,7 @@ const EmployeesReadComponent = ({ empNo }) => {
     const { page, moveToReportReceived, moveToList, moveToModify, moveToCommuteList, moveToAnnualLeave } = useCustomMove();
     const [deptData, setDeptData] = useState("");
     const [jobData, setJobData] = useState("");
+    const navigate = useNavigate();
    
 
     useEffect(() => {
@@ -50,6 +51,10 @@ const EmployeesReadComponent = ({ empNo }) => {
             console.log(error);
         })
     }, [])
+
+    const goToReport = (empNo) => {
+        navigate(`/report/list/received`)
+    }
 
 
     return (
@@ -95,7 +100,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                     <div className="flex justify-center mt-6 space-x-4">
                         <button type="button"
                             className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
-                            onClick={() => moveToReportReceived(empNo)}>
+                            onClick={() => goToReport(empNo)}>
                             리포트
                         </button>
 

@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { delOne, getOne, putOne } from '../../api/boardApi';
+import { getCookie } from '../../util/cookieUtil';
+import mail from "../../assets/icon/mail.png";
+import chat from "../../assets/icon/chat.png";
+import BoardTitleComponent from '../board/BoardTitleComponent';
+import { Link } from 'react-router-dom';
+
 
 const initState = {
   boardNo: 0,
@@ -15,7 +21,7 @@ const initState = {
 
 const BoardModifyComponent = ({ boardNo }) => {
   const [board, setBoard] = useState({ ...initState });
-
+  const [empNo, setEmpNo] = useState(getCookie("member").empNo);
   const { moveToList, moveToRead } = useCustomMove();
 
   useEffect(() => {
@@ -43,6 +49,26 @@ const BoardModifyComponent = ({ boardNo }) => {
   };
 
   return (
+    <div>
+      <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+        <div className="flex items-center space-x-8">
+          <div className="text-2xl font-semibold text-blue-800 select-none">
+            [공지사항]
+          </div>
+          <div className="w-64 text-2xl font-semibold cursor-pointer">
+            <BoardTitleComponent />
+          </div>
+        </div>
+        <div className="flex space-x-4">
+          <Link to="/mail" className="w-12 cursor-pointer">
+            <img src={mail} alt="Mail" className="w-full" />
+          </Link>
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+            <img src={chat} alt="Chat" className="w-full" />
+          </Link>
+        </div>
+      </div>
+
     <div className="flex flex-col justify-center items-center w-full m-3">
       <div className="w-2/3 shadow-lg p-5 pr-5">
         <h2 className="text-center text-3xl font-semibold">
@@ -120,6 +146,7 @@ const BoardModifyComponent = ({ boardNo }) => {
         </div>
       </div>
     </div>
+  </div>
   );
 };
 

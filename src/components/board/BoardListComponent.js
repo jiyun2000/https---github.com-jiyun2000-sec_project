@@ -74,37 +74,42 @@ const BoardListComponent = () => {
       </div>
 
     
-      <div className='flex flex-col p-5 m-10 border border-slate-400 rounded-md'>
-        <div className="text-3xl font-semibold text-center">
+      <div className='flex flex-col p-5 m-10  justify-center rounded-md'>
+        <div className="text-3xl font-semibold text-center m-5">
           <h2>공지사항</h2>
         </div>
 
-        <div className='flex justify-center flex-col text-center mb-6'>
-          <div className="flex flex-col w-full mx-auto p-6 text-center ">
-            {board.dtoList.map((data) => {
-              return (
-                <div
-                  key={data.boardNo}
-                  className="flex w-2/3 min-w-[400px] p-2 m-2 rounded shadow-md text-center justify-center"
-                  onClick={() => moveToRead(data.boardNo)}
-                >
-                  <div className="w-1/5 text-left">{data.boardNo}</div>
-                  
-                  <div className="w-3/5 text-center">{data.title}</div>
 
-                  <div className="w-1/5 text-right">{formatDate(data.regdate)}</div>
+        <div className="overflow-x-auto w-full">
+                    <table className="w-full ">
+                        <thead className="bg-gray-200 sticky top-0 z-10">
+                            <tr>
+                                <th className="px-6 py-4 text-center">번호</th>
+                                <th className="px-6 py-4 text-center">제목</th>
+                                <th className="px-6 py-4 text-center">등록일</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {board.dtoList.map((data) => (
+                                <tr
+                                key={data.boardNo}
+                                className="bg-gray-50 cursor-pointer text-center" 
+                                onClick={() => moveToRead(data.boardNo)}
+                                >
+                                    <td className="px-6 py-4 text-center">{data.boardNo}</td>
+                                    <td className="px-6 py-4 text-center">{data.title}</td>
+                                    <td className="px-6 py-4 text-center">{formatDate(data.regdate)}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
-              );
-            })}
-          </div>
 
-          <PageComponent serverData={board} movePage={moveToList} />
-        </div>
       </div>
       <div className="flex justify-center p-4">
         <button
           type="button"
-          className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+          className="inline-block  p-4 m-2 text-xl w-32 text-white  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
           onClick={handleClickAdd}
         >
           추가
@@ -112,18 +117,6 @@ const BoardListComponent = () => {
       </div>
           <PageComponent serverData={board} movePage={moveToList} />
         </div>
-
-        {/* <div className="flex justify-center p-4">
-          <button
-            type="button"
-            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
-            onClick={handleClickAdd}
-          >
-            추가
-          </button>
-        </div> */}
-
-
     </>
   );
 };
