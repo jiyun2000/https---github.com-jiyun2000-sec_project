@@ -13,7 +13,7 @@ import AnnualLeaveCountPage from './employees/AnnualLeaveCountPage';
 import BoardTitleComponent from '../components/board/BoardTitleComponent';
 import menu from "../assets/icon/menu.png";
 import birth from "../assets/icon/birth.png";
-import { getList, getOne } from '../api/employeesApi';
+import { getList, getOneEmp } from '../api/employeesApi';
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ const MainPage = () => {
   
 
   useEffect(()=>{
-    getOne(empNo).then((data)=>{
+    getOneEmp(empNo).then((data)=>{
       console.log(data);
       setEmpData(data);
     }).catch((error)=>{

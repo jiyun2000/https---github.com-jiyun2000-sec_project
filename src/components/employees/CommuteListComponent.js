@@ -3,7 +3,7 @@ import useCustomMove from "../../hooks/useCustomMove";
 import { getCommuteList, putCheckOut, setCheckIn } from "../../api/commuteApi";
 import { useParams } from "react-router-dom";
 import CommutePageComponent from "../common/CommutePageComponent";
-import { getOne } from "../../api/employeesApi";
+import { getOneEmp } from "../../api/employeesApi";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
@@ -44,7 +44,7 @@ const CommuteListComponent = ({empNo})=>{
     }
     
     useEffect(()=>{
-        getOne(empNo).then((data)=>{
+        getOneEmp(empNo).then((data)=>{
             console.log(data);
             setEmpData(data);
         }).catch((error)=>{

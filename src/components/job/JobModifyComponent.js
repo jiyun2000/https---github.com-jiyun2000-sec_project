@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
 import { delOne, getJob, getOne, putOne } from "../../api/jobApi";
-import { delOne, getOne, putOne } from "../../api/jobApi";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';

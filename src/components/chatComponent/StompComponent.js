@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import SockJS from "sockjs-client";
 import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
-import { getOne } from '../../api/employeesApi';
+import { getOneEmp } from '../../api/employeesApi';
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
@@ -25,7 +25,7 @@ const StompComponent = () => {
     });
 
     useEffect(()=>{
-        getOne(receiverEmpNo).then((data)=>{
+        getOneEmp(receiverEmpNo).then((data)=>{
             console.log(data);
             setEmpData(data);
         }).catch((error)=>{

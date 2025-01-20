@@ -16,9 +16,9 @@ export const getList = async (pageParam) => {
     return res.data;
 }
 
+
 export const getOneEmp = async (empNo) => {
     const res = await jwtAxios.get(`${prefix}/read/${empNo}`);
-    
     return res.data;
 }
 

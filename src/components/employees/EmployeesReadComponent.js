@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import {  getOneEmp } from "../../api/employeesApi";
-import { getOne } from "../../api/employeesApi";
 import { Link } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
@@ -36,7 +35,7 @@ const EmployeesReadComponent = ({ empNo }) => {
    
 
     useEffect(() => {
-        getOne(empNo).then(res => {
+        getOneEmp(empNo).then(res => {
             setEmployees(res);
             console.log(res)
         });

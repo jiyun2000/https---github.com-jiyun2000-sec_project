@@ -30,6 +30,11 @@ const useCustomMove = () => {
         navigate({pathname:`../read/sent/${num}`, search:queryDefault});
     }
 
+    const moveToReportSent = (num) => {
+        navigate({pathname:`../../report/list/sent/${num}`,search:queryDefault});
+    }
+
+
     const moveToJobRead = (num) => {
         navigate({pathname:`../read/${num}`});
     }
@@ -40,6 +45,14 @@ const useCustomMove = () => {
 
     const moveToModifyCommute = (num) => {
         navigate({pathname:`../commute/modify/${num}`,search:queryDefault});
+    }
+
+    const moveToAddReport = (num) => {
+        navigate({pathname:`../add/${num}`,search:queryDefault});
+    }
+
+    const moveToReportReceived = (num) => {
+        navigate({pathname:`../../report/list/received/${num}`,search:queryDefault});
     }
 
     const moveToReportSentPage = (pageParam) => {

@@ -3,7 +3,6 @@ import useCustomMove from "../../hooks/useCustomMove";
 import { delOne, getOneEmp, putOne } from "../../api/employeesApi";
 import { getJobList } from "../../api/jobApi";
 import { getDeptList } from "../../api/deptInfoApi";
-import { delOne, getOne, putOne } from "../../api/employeesApi";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';

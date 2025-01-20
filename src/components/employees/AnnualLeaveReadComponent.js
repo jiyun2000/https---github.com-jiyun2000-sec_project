@@ -6,7 +6,7 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
-import { getOne } from "../../api/employeesApi";
+import { getOneEmp } from "../../api/employeesApi";
 
 
 const initState = {
@@ -35,7 +35,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
         navigate({pathname:`../../dayoff/add`});
     }
     useEffect(()=>{
-        getOne(empNo).then((data)=>{
+        getOneEmp(empNo).then((data)=>{
             console.log(data);
             setEmpData(data);
         }).catch((error)=>{

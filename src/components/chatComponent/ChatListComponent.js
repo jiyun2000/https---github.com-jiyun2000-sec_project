@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { empList, getChatList } from "../../api/chatAPi/chatAPi";
-import { getOne } from "../../api/employeesApi";
+import { getOneEmp } from "../../api/employeesApi";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
@@ -40,7 +40,7 @@ const ChatListComponent = () => {
     
         empData.forEach(empNo => {
             if (!userNames[empNo]) {
-                getOne(empNo)
+                getOneEmp(empNo)
                     .then((data) => {
                         setUserNames(prevNames => ({
                             ...prevNames,
