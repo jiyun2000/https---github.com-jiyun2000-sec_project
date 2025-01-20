@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { delOne, getOne, putOne } from "../../api/employeesApi";
+import { delOne, getOneEmp, putOne } from "../../api/employeesApi";
+import { getJobList } from "../../api/jobApi";
+import { getDeptList } from "../../api/deptInfoApi";
 
 const initState = {
     empNo : 0 ,
@@ -18,16 +20,43 @@ const initState = {
     citizenId : ''
 }
 
+const initStateJob = {
+    jobNo : 0,
+    jobTitle : ''
+}
+
+const initStateDeptinfo = {
+    deptNo : 0,
+    deptName : '',
+    deptAddress : '',
+    phoneNo : ''
+}
+
+
 const EmployeesModifyComponent = ({empNo}) => {
     const [employees, setEmployees] = useState({...initState});
+
+    const [job,setJob] = useState([initStateJob]);
+    
+    const [deptInfo,setDeptInfo] = useState([initStateDeptinfo]);
 
     const {moveToList, moveToRead} = useCustomMove();
 
     useEffect(()=>{
-        getOne(empNo).then(data=>setEmployees(data));
+        getOneEmp(empNo).then(data=>setEmployees(data));
     },[empNo]);
 
+    useEffect(()=>{
+        getJobList().then(res => {
+            setJob(res);
+        });
+        getDeptList().then(res => {
+            setDeptInfo(res);
+        });
+    },[employees]);
+
     const handleClickDelete = () => {
+
         delOne(empNo).then(()=>moveToList());
     }
 
@@ -96,23 +125,38 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">부서 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    <div className="w-1/5 p-6 font-bold">부서 번호</div>
+
+                    <select className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deptNo"
                     type={'number'} 
                     value={employees.deptNo} 
-                    onChange={handleChangeEmployees}></input>
+                    onChange={handleChangeEmployees}>
+                        <option value={0}></option>
+                        {deptInfo.map((data)=>{
+                            return(
+                                <option value={data.deptNo}>{data.deptName}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
             
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">직책책 번호</div>
-                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    <div className="w-1/5 p-6 font-bold">직책 번호</div>
+                    <select className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="jobNo"
                     type={'number'} 
                     value={employees.jobNo} 
-                    onChange={handleChangeEmployees}></input>
+                    onChange={handleChangeEmployees}>
+                        <option value={0}></option>
+                        {job.map((data)=>{
+                            return(
+                                <option value={data.jobNo}>{data.jobTitle}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
 

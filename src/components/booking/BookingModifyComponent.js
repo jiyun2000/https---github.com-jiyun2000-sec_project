@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
 import { delOne, getOne, putOne } from "../../api/bookingApi";
+import { getList } from "../../api/roomListApi";
 
 const initState = {
     bookNo : 0 ,
@@ -11,10 +12,22 @@ const initState = {
     empNo : 0
 }
 
+const initStateRL = {
+    roomNo : 0,
+    roomName : '',
+    location : ''
+}
+
 const BookingModifyComponent = ({bookNo}) => {
     const [booking, setBooking] = useState({...initState});
 
+    const [roomList, setRoomList] = useState([initStateRL]);
+
     const {moveToList, moveToRead} = useCustomMove();
+
+    useEffect(()=>{
+        getList().then(res=>setRoomList(res));
+    },[booking]);
 
     useEffect(()=>{
         getOne(bookNo).then(data=>setBooking(data));
@@ -35,18 +48,13 @@ const BookingModifyComponent = ({bookNo}) => {
     }
 
     return (
-        <div className="flex flex-row justify-center">
-        <div className="shadow-2xl mt-10 m-2 p-4">
-            <h2 className="text-center font-semibold text-3xl">{booking.roomNo} 호 예약 수정 </h2>
-            <div className="flex mt-10 justify-center">
-                <div className="p-6 font-bold">예약번호</div>
-                <div className="p-6 rounded-md border border-solid shadow-md">{booking.bookNo}</div>
-            </div>
-
-            <div className="flex mt-10" justify-center>
-                <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">예약 날짜</div>
-                    <input className="p-6 rounded-md border border-solid shadow-md" 
+        <div className="flex justify-center w-full">
+        <div className="shadow-lg w-2/3 mt-10 m-2 p-4">
+            <h2 className="text-center text-3xl font-semibold">예약</h2>
+            <div className="flex justify-center mt-10 ">
+            <div className="w-1/5 p-6 font-bold">예약날짜</div>
+                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
+                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="bookDate"
                     type={'date'} 
                     value={booking.bookDate}
@@ -54,10 +62,10 @@ const BookingModifyComponent = ({bookNo}) => {
                 </div>
             </div>
 
-            <div className="flex  mt-10 justify-center">
-                <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">Start</div>
-                    <input className="p-6 rounded-md border border-solid shadow-md" 
+            <div className="flex justify-center mt-10 ">
+            <div className="w-1/5 p-6 font-bold">시작시간</div>
+                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
+                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="start"
                     type={'time'} 
                     value={booking.start}
@@ -65,10 +73,10 @@ const BookingModifyComponent = ({bookNo}) => {
                 </div>
             </div>
 
-            <div className="flex justify-center">
-                <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">End</div>
-                    <input className="p-6 rounded-md border border-solid shadow-md" 
+            <div className="flex justify-center mt-10 ">
+            <div className="w-1/5 p-6 font-bold">끝난시간</div>
+                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
+                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="end"
                     type={'time'} 
                     value={booking.end} 
@@ -76,25 +84,22 @@ const BookingModifyComponent = ({bookNo}) => {
                 </div>
             </div>
 
-            <div className="flex justify-center">
-                <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">RoomNo</div>
-                    <input className="p-6 rounded-md border border-solid shadow-md" 
+            <div className="flex justify-center mt-10 ">
+                    <div className="w-1/5 p-6 font-bold">방번호</div>
+                    
+                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
+                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="roomNo"
                     type={'number'} 
                     value={booking.roomNo} 
-                    onChange={handleChangeBooking}></input>
-                </div>
-            </div>
-
-            <div className="flex justify-center">
-                <div className="mb-4 flex w-full justify-center">
-                    <div className="p-6 font-bold">EmpNo</div>
-                    <input className="p-6 rounded-md border border-solid shadow-md" 
-                    name="empNo"
-                    type={'number'} 
-                    value={booking.empNo} 
-                    onChange={handleChangeBooking}></input>
+                    onChange={handleChangeBooking}>
+                        <option value={0}></option>
+                        {roomList.map((res)=>{
+                            return(
+                                <option value={res.roomNo}>{res.roomName}</option>
+                            )
+                        })}
+                    </select>
                 </div>
             </div>
 

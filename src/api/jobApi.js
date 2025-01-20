@@ -4,13 +4,13 @@ export const API_SERVER_HOST = 'http://localhost:8080';
 
 const prefix = `${API_SERVER_HOST}/api/job`;
 
-export const getList = async () => {
+export const getJobList = async () => {
     const res = await jwtAxios.get(`${prefix}/list`);
     
     return res.data;
 }
 
-export const getOne = async (jobNo) => {
+export const getJob = async (jobNo) => {
     const res = await jwtAxios.get(`${prefix}/read/${jobNo}`);
     
     return res.data;

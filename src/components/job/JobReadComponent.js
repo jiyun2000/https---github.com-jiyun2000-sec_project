@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { getEmpList, getOne } from "../../api/jobApi";
+import { getEmpList, getJob } from "../../api/jobApi";
 import JobPageComponent from "../common/JobPageComponent";
 import { useParams } from "react-router-dom";
 
@@ -29,7 +29,7 @@ const JobReadComponent = ({jobNo})=>{
     const {page, size, moveToJobList, moveToList, moveToModify} = useCustomMove();
 
     useEffect(()=>{
-        getOne(jobNo).then(res => {
+        getJob(jobNo).then(res => {
             setJob(res);
         });
     },[page]);

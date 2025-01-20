@@ -42,14 +42,6 @@ const useCustomMove = () => {
         navigate({pathname:`../commute/modify/${num}`,search:queryDefault});
     }
 
-    const moveToReportReceived = (num) => {
-        navigate({pathname:`../../report/list/received/${num}`,search:queryDefault});
-    }
-
-    const moveToReportSent = (num) => {
-        navigate({pathname:`../../report/list/sent/${num}`,search:queryDefault});
-    }
-
     const moveToReportSentPage = (pageParam) => {
         let queryStr = '';
 
@@ -65,7 +57,7 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
-        navigate({pathname:`../../report/list/sent/${pageParam.empNo}`,search:queryStr})
+        navigate({pathname:`../../report/list/sent`,search:queryStr})
     
     };
 
@@ -84,7 +76,7 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
-        navigate({pathname:`../../report/list/received/${pageParam.empNo}`,search:queryStr})
+        navigate({pathname:`../../report/list/received`,search:queryStr})
     
     };
 
@@ -182,10 +174,6 @@ const useCustomMove = () => {
         navigate({pathname:`../add`});
     }
 
-    const moveToAddReport = (num) => {
-        navigate({pathname:`../add/${num}`,search:queryDefault});
-    }
-
     const moveToAnnualLeave = (pageParam) => {
         let queryStr = '';
 
@@ -204,7 +192,7 @@ const useCustomMove = () => {
         navigate({pathname : `../annualleave/${pageParam.empNo}`})
     }
 
-    return {page, size,moveToReceivedReportRead, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd};
+    return {page, size,moveToReceivedReportRead, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd};
 }
 
 export default useCustomMove;

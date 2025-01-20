@@ -10,7 +10,7 @@ export const getList = async () => {
     return res.data;
 }
 
-export const getOne = async (roomNo) => {
+export const getOneRoom = async (roomNo) => {
     const res = await jwtAxios.get(`${prefix}/read/${roomNo}`);
     
     return res.data;

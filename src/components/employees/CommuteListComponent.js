@@ -30,13 +30,11 @@ const CommuteListComponent = ({empNo})=>{
     },[page]);
 
     const handleCheckIn = () =>{
-        setCheckIn(empNo).then(()=>moveToCommuteList({empNo}))
-        .catch(() => moveToRead(empNo));
+        setCheckIn(empNo).then(()=>moveToRead(empNo));
     }
 
     const handleCheckOut = () =>{
-        putCheckOut(empNo).then(()=>moveToCommuteList({empNo}))
-        .catch(() => moveToRead(empNo));
+        putCheckOut(empNo).then(()=>moveToRead(empNo));
     }
 
     return <>

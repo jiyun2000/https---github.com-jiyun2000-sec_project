@@ -9,19 +9,19 @@ import ReceivedReportReadPage from "../pages/report/ReceivedReportReadPage";
 const reportRouter = () => {
     return [
         {
-            path : "list/received/:empNo",
+            path : "list/received",
             element : <ReceivedReportListPage/>
         },
         {
             path : '',
-            element : <Navigate replace to={'../list/received/:empNo'}/>
+            element : <Navigate replace to={'../list/received'}/>
         },
         {
-            path : 'add/:empNo',
+            path : 'add',
             element : <ReportAddPage/>
         },
         {
-            path : "list/sent/:empNo",
+            path : "list/sent",
             element : <SentReportListPage/>
         },
         {

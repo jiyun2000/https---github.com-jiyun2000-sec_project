@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/employeesApi";
 import { setALOne } from "../../api/annualLeaveApi";
-import { getList } from "../../api/jobApi";
+import { getJobList } from "../../api/jobApi";
 import { getDeptList } from "../../api/deptInfoApi";
 
 const initState = {
@@ -44,7 +44,7 @@ const EmployeesAddComponent = () => {
     const {moveToList} = useCustomMove();
 
     useEffect(()=>{
-        getList().then(res => {
+        getJobList().then(res => {
             setJob(res);
         });
         getDeptList().then(res => {

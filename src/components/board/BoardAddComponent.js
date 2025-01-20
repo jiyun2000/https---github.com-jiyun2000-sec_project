@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { addOne } from '../../api/boardApi';
-import { getOne } from '../../api/employeesApi';
+import {  getOneEmp } from '../../api/employeesApi';
 import { getCookie } from '../../util/cookieUtil';
 
 const initState = {

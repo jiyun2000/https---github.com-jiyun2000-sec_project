@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getReceivedList } from '../../api/reportApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
-import CommutePageComponent from '../common/CommutePageComponent';
+import { getCookie } from '../../util/cookieUtil';
 
 const initState = {
     dtoList : [],
@@ -17,11 +17,13 @@ const initState = {
     current : 0
 }
 
-const ReceivedReportListComponent = ({empNo}) => {
+const ReceivedReportListComponent = () => {
+    
+    const [empNo, setEmpNo] = useState(getCookie('member').empNo);
 
     const [report,setReport] = useState(initState);
 
-    const { page, size, moveToReceivedReportRead, moveToAddReport, moveToReportSent, moveToReportReceivedPage } = useCustomMove();
+    const { page, size, moveToReceivedReportRead, moveToAdd, moveToReportSentPage, moveToReportReceivedPage } = useCustomMove();
 
     useEffect(() => {
         getReceivedList(empNo,[page,size]).then(data => {
@@ -30,11 +32,11 @@ const ReceivedReportListComponent = ({empNo}) => {
     }, [page,size]);
 
     const handleClickAdd = () =>{
-        moveToAddReport(empNo);
+        moveToAdd();
     }
     
     const handleClickMove = () => {
-        moveToReportSent(empNo);
+        moveToReportSentPage();
     }
     
     return (<>
@@ -69,9 +71,8 @@ const ReceivedReportListComponent = ({empNo}) => {
             })}
         </div>
 
-        <CommutePageComponent
+        <PageComponent
             serverData={report} 
-            empNo={empNo} 
             movePage={moveToReportReceivedPage}
             />
         </div>

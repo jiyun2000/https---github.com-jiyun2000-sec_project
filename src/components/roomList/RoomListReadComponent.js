@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { getBookList, getOne } from "../../api/roomListApi";
+import { getBookList, getOne, getOneRoom } from "../../api/roomListApi";
 import { useParams } from "react-router-dom";
 import RoomListPageComponent from "../common/RoomListPageComponent";
 
@@ -30,7 +30,7 @@ const RoomListReadComponent = ({roomNo})=>{
     const {page, size, moveToRoomList, moveToList, moveToModify} = useCustomMove();
 
     useEffect(()=>{
-        getOne(roomNo).then(res => {
+        getOneRoom(roomNo).then(res => {
             setRoomList(res);
         });
     },[page]);
