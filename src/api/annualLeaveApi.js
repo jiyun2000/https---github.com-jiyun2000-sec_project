@@ -36,3 +36,9 @@ export const setALOne = async(empNo)=>{
     const res = await jwtAxios.post(`${prefix}/set`,empNo);
     return res.data;
 }
+
+export const countRead = async(empNo) => {
+    const res = await jwtAxios.get(`${prefix}/count/${empNo}`);
+    console.log(res)
+    return res.data;
+}

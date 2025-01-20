@@ -2,6 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { getList } from '../../api/boardApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
+import { getCookie } from '../../util/cookieUtil';
+import mail from "../../assets/icon/mail.png";
+import chat from "../../assets/icon/chat.png";
+import BoardTitleComponent from '../board/BoardTitleComponent';
+import { Link } from 'react-router-dom';
 
 const initState = {
   dtoList: [],
@@ -18,7 +23,7 @@ const initState = {
 
 const BoardListComponent = () => {
   const [board, setBoard] = useState(initState);
-
+  const [empNo, setEmpNo] = useState(getCookie("member").empNo);
   const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
 
   useEffect(() => {
@@ -37,19 +42,45 @@ const BoardListComponent = () => {
     setBoard({ ...board });
   };
 
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString();
+  }
+
+  useEffect(()=>{
+
+  })
+
   return (
     <>
-      <div>
-        <div className="text-3xl font-semibold text-center m-10">
+    <div>
+      <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+        <div className="flex items-center space-x-8">
+          <div className="text-2xl font-semibold text-blue-800 select-none">
+            [공지사항]
+          </div>
+          <div className="w-64 text-2xl font-semibold cursor-pointer">
+            <BoardTitleComponent />
+          </div>
+        </div>
+        <div className="flex space-x-4">
+          <Link to="/mail" className="w-12 cursor-pointer">
+            <img src={mail} alt="Mail" className="w-full" />
+          </Link>
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+            <img src={chat} alt="Chat" className="w-full" />
+          </Link>
+        </div>
+      </div>
+
+    
+      <div className='flex flex-col p-5 m-10 border border-slate-400 rounded-md'>
+        <div className="text-3xl font-semibold text-center">
           <h2>공지사항</h2>
         </div>
 
-        <div className="flex justify-center flex-col text-center">
-          <div className="text-2xl font-semibold text-center">
-            <h2>목록</h2>
-          </div>
-
-          <div className="flex-wrap mx-auto p-6 text-center ">
+        <div className='flex justify-center flex-col text-center mb-6'>
+          <div className="flex flex-col w-full mx-auto p-6 text-center ">
             {board.dtoList.map((data) => {
               return (
                 <div
@@ -57,8 +88,11 @@ const BoardListComponent = () => {
                   className="flex w-2/3 min-w-[400px] p-2 m-2 rounded shadow-md text-center justify-center"
                   onClick={() => moveToRead(data.boardNo)}
                 >
-                  No: {data.boardNo}{' '}
-                  <div className="cate">[{data.category}]</div> {data.title}
+                  <div className="w-1/5 text-left">{data.boardNo}</div>
+                  
+                  <div className="w-3/5 text-center">{data.title}</div>
+
+                  <div className="w-1/5 text-right">{formatDate(data.regdate)}</div>
                 </div>
               );
             })}
@@ -76,6 +110,20 @@ const BoardListComponent = () => {
           추가
         </button>
       </div>
+          <PageComponent serverData={board} movePage={moveToList} />
+        </div>
+
+        {/* <div className="flex justify-center p-4">
+          <button
+            type="button"
+            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+            onClick={handleClickAdd}
+          >
+            추가
+          </button>
+        </div> */}
+
+
     </>
   );
 };

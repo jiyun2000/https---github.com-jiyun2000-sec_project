@@ -41,3 +41,19 @@ export const getAllList = async()=>{
     const res = await jwtAxios.get(`${prefix}/list/all`);
     return res.data;
 }
+
+export const getDDay = async(empNo) => {
+    const res = await jwtAxios.get(`${prefix}/dday/${empNo}`);
+    return res.data;
+}
+
+export const getBirth = async(pageParam) => {
+    const [page, size] = pageParam;
+    const res = await jwtAxios.get(`${prefix}/birth`,{
+        params : {
+            page : page,
+            size : size
+        }
+    });
+    return res.data;
+}

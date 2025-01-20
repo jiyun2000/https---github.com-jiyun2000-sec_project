@@ -1,10 +1,13 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Client } from "@stomp/stompjs";
 import { useState, useEffect } from "react";
 import SockJS from "sockjs-client";
-import axios from 'axios';
 import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
+import { getOne } from '../../api/employeesApi';
+import BoardTitleComponent from '../board/BoardTitleComponent';
+import mail from "../../assets/icon/mail.png";
+import chat from "../../assets/icon/chat.png";
 
 const StompComponent = () => {
     const navigate = useNavigate();
@@ -14,11 +17,21 @@ const StompComponent = () => {
     const [isEnterChat, setIsEnterChat] = useState(false); //채팅창 입장 여부
     const [messages, setMessages] = useState([]);  //채팅 메시지지
     const [userId, setUserId] = useState(senderEmpNo); 
-
+    const [empData, setEmpData] = useState(null);
+ 
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
     });
+
+    useEffect(()=>{
+        getOne(receiverEmpNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    },[])
 
     //과거 기록 가져오기
     const loadChatHistory = async () => {
@@ -180,6 +193,26 @@ const StompComponent = () => {
     }
 
     return ( 
+        <>
+        <div>
+        <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+                <div className="flex items-center space-x-8">
+                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                        [공지사항]
+                    </div>
+                    <div className="w-64 text-2xl font-semibold cursor-pointer">
+                        <BoardTitleComponent />
+                    </div>
+                </div>
+                <div className="flex space-x-4">
+                    <Link to="/mail" className="w-12 cursor-pointer">
+                        <img src={mail} alt="Mail" className="w-full" />
+                    </Link>
+                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer">
+                        <img src={chat} alt="Chat" className="w-full" />
+                    </Link>
+                </div>
+            </div>
         <div>
             {!isEnterChat ? (
                 <div style={{ textAlign: 'center' }}>
@@ -198,18 +231,18 @@ const StompComponent = () => {
                     width: '100%',
                     textAlign: 'center'
                 }}>
-                <div style={{ textAlign: 'center' }}>
-                    <h2>{receiverEmpNo} </h2>
-                    <div >
+                <div className='text-center w-full items-center justify-center'>
+                    <h2 className='text-center font-semibold text-2xl m-2'>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
+                    <div className='flex flex-row justify-center gap-2'>
                         <input
                             type="text"
                             value={messageObj.content}
                             onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
-                            className='border border-blue-200 rounded-md p-1'
+                            className='border-2 border-[#7793df] rounded-md p-1 w-2/5 '
                         />
                         <button type="submit" 
                             onClick={stompHandler.sendMessage}
-                            className='border border-blue-200 rounded-md mx-2 p-1 font-thin'
+                            className='border border-[#7793df] rounded-md mx-2 p-1 w-1/6 hover:bg-[#7793df]'
                         >
                             전송
                         </button>
@@ -238,11 +271,11 @@ const StompComponent = () => {
                             textAlign: isUserMessage ? 'right' : 'left', 
                             marginBottom: '10px' }}>
                             <h1 style={{
-                            fontSize: 13,
+                            fontSize: 16,
                             padding: '5px 10px',
                             borderRadius: '10px',
                             display: 'inline-block'}}>
-                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${sender}] ${item.content} (${item.sendTime})`}
+                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${empData.firstName}${empData.lastName}] ${item.content} (${item.sendTime})`}
                             </h1>
                             </div>
                         );
@@ -250,14 +283,16 @@ const StompComponent = () => {
                 </div>
 
                     <div style={{ marginTop: 10 }}>
-                        <button type="button" onClick={stompHandler.disconnect} className='border border-blue-200 rounded-md p-1 font-thin'>
+                        <button type="button" onClick={stompHandler.disconnect} className=' text-[#303030] border border-[#7793df] hover:bg-[#7793df] rounded-md p-1 '>
                             닫기
                         </button> 
-                        <button type='button' onClick={outChatRoom} className='border border-blue-200 rounded-md p-1 mx-1 font-thin'>채팅방 나가기</button>
+                        <button type='button' onClick={outChatRoom} className=' text-[#303030] border border-[#7793df] hover:bg-[#7793df] p-1 mx-1 rounded-md '>채팅방 나가기</button>
                     </div>
                 </div>
             )}
         </div>
+        </div>
+        </>
     );
 };
 export default StompComponent;
