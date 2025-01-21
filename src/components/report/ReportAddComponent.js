@@ -9,6 +9,7 @@ const initState = {
     reportStatus : '',
     sender : 0,
     receiver : 0,
+    finalReceiver: 0,
     files : []
 }
 
@@ -69,6 +70,7 @@ const ReportAddComponent = () => {
         formData.append('reportStatus',report.reportStatus);
         formData.append('sender',report.sender);
         formData.append('receiver',report.receiver);
+        formData.append('finalReceiver',report.finalReceiver);
 
         addReport(empNo,formData).then(()=>{
             moveToReportReceivedPage();
@@ -98,6 +100,24 @@ const ReportAddComponent = () => {
                     name="receiver"
                     type={'number'} 
                     value={report.receiver}
+                    onChange={handleChangeReport}>
+                        <option value={0}></option>
+                        {employees.map((res)=>{
+                            return(
+                                <option value={res.empNo}> {res.firstName} {res.lastName}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+            </div>
+
+            <div className="flex justify-center">
+            <div className="w-1/5 p-6 font-bold">최종 결재</div>
+                <div className="mb-4 flex w-full justify-center">
+                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="finalReceiver"
+                    type={'number'} 
+                    value={report.finalReceiver}
                     onChange={handleChangeReport}>
                         <option value={0}></option>
                         {employees.map((res)=>{

@@ -26,9 +26,9 @@ const SentReportListComponent = () => {
     const { page, size, moveToSentReportRead, moveToAdd,moveToReportReceivedPage,moveToReportSentPage } = useCustomMove();
 
     useEffect(() => {
-            getSentList(empNo,[page,size]).then(data => {
-                setReport(data);
-            });
+        getSentList(empNo,[page,size]).then(data => {
+            setReport(data);
+        });
     }, [page,size]);
 
     const handleClickAdd = () =>{
@@ -61,8 +61,9 @@ const SentReportListComponent = () => {
                     <div className='flex flex-col p-2 text-center'>
                         <div>마감기한 : {data.deadLine}</div>
                         <div>진행 상태 : {data.reportStatus}</div>
-                        <div>보낸 사람 : {data.sender}</div>
-                        <div>받은 사람 : {data.receiver}</div>
+                        <div>보낸 사람 사원번호 : {data.sender}</div>
+                        <div>받은 사람 사원번호 : {data.receiver}</div>
+                        <div>최종 결재 : {data.finalReceiver}</div>
                     </div>
                 </div>)
             })}

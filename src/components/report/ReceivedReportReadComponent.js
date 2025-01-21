@@ -11,6 +11,7 @@ const initState = {//초기화 상대 객체 선언
     reportingDate : '',
     sender : 0,
     receiver : 0,
+    finalReceiver: 0,
     files : [],
     uploadFileNames : []
 };
@@ -41,6 +42,8 @@ const ReceivedReportReadComponent = ({reportNo}) => {
   const [sender, setSender] = useState(initStateEmp);
   
   const [receiver, setReceiver] = useState(initStateEmp);
+  
+  const [finalReceiver, setFinalReceiver] = useState(initStateEmp);
 
   const {moveToReportReceivedPage} = useCustomMove();
 
@@ -59,11 +62,14 @@ const ReceivedReportReadComponent = ({reportNo}) => {
         getOneEmp(report.sender).then(data=>{
           setSender(data);
         });
+        getOneEmp(report.finalReceiver).then(data=>{
+          setFinalReceiver(data);
+        });
       }
     },[report]);
 
   const handleClickApprove = () => {
-    if(report.receiver === 1){
+    if(report.receiver === report.finalReceiver){
       report["sender"] = report.receiver;
       report["reportStatus"] = "완료"
       putOne(reportNo, report).then(()=>{
@@ -143,6 +149,14 @@ const ReceivedReportReadComponent = ({reportNo}) => {
           </div>
         </div>
       </div>
+      <div className="flex justify-center">
+      <div className="w-1/5 p-6 font-bold">최종 결재</div>
+        <div className="mb-4 flex w-full justify-center">
+          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+          {finalReceiver.firstName} {finalReceiver.lastName}        
+          </div>
+        </div>
+      </div>
       <div className="w-full justify-center flex  flex-col m-auto items-center">
       <div className="w-1/5 p-6 font-bold">관련 문서</div>
         {report.uploadFileNames.map( (fileName, i) => 
@@ -157,7 +171,7 @@ const ReceivedReportReadComponent = ({reportNo}) => {
       </div>
 
       <div className="flex justify-end p-4">
-        {report.receiver===1?<></>:<input className="w-4/5 p-6 border border-solid border-neutral-300 shadow-md" 
+        {report.finalReceiver===report.receiver?<></>:<input className="w-4/5 p-6 border border-solid border-neutral-300 shadow-md" 
           name="newReceiver"
           type={'number'} 
           value={newReceiver}
