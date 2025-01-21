@@ -43,11 +43,15 @@ const AnnualLeaveReadComponent = ({empNo})=>{
         })
     },[])
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
     return <>
     <div>
     <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
             <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                         [공지사항]
                     </div>
                     <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -64,7 +68,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
                 </div>
             </div>
 
-        <div className="border-2 border-sky-200 mt-10 m-2 p-4">
+        <div className=" mt-10 m-2 p-4">
             {/* <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 text-right font-bold">Annual Id</div>
@@ -75,23 +79,23 @@ const AnnualLeaveReadComponent = ({empNo})=>{
            <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 연차 </h2>
         </div>
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">사원번호</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{annualLeave.empNo}</div>
+                <div className="relative mb-4 flex w-full flex-row items-center justify-center">
+                    <div className="w-[10%] p-6 font-bold">사원번호</div>
+                    <div className="w-[20%] p-6 rounded-md border border-slate-400 text-center">{annualLeave.empNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">연차</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{annualLeave.antecedent}</div>
+                <div className="relative mb-4 flex w-full flex-row items-center justify-center">
+                    <div className="w-[10%] p-6 font-bold">연차</div>
+                    <div className="w-[20%] p-6 rounded-md border border-slate-400 text-center">{annualLeave.antecedent}</div>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
-                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">남은 시간</div>
-                    <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{annualLeave.hours}</div>
+                <div className="relative mb-4 flex w-full flex-row items-center justify-center">
+                    <div className="w-[10%] p-6 font-bold">남은 시간</div>
+                    <div className="w-[20%] p-6 rounded-md border border-slate-400 text-center">{annualLeave.hours}</div>
                 </div>
             </div>
 

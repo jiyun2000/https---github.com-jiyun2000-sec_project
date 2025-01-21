@@ -6,7 +6,7 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const initState = {
   dtoList: [],
@@ -25,6 +25,7 @@ const BoardListComponent = () => {
   const [board, setBoard] = useState(initState);
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
   const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getList([page, size]).then((data) => {
@@ -51,12 +52,16 @@ const BoardListComponent = () => {
 
   })
 
+  const goToBoardList = () => {
+    navigate(`/board/list`)
+  }
+
   return (
     <>
     <div>
       <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
         <div className="flex items-center space-x-8">
-          <div className="text-2xl font-semibold text-blue-800 select-none">
+          <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
             [공지사항]
           </div>
           <div className="w-64 text-2xl font-semibold cursor-pointer">

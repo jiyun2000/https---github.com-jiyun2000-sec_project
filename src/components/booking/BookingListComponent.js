@@ -6,7 +6,7 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const initState = {
     dtoList : [],
@@ -31,6 +31,7 @@ const BookingListComponent = () => {
     const [booking,setBooking] = useState(initState);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [res, setRes] = useState(initRes);
+    const navigate = useNavigate();
 
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
 
@@ -81,12 +82,15 @@ const BookingListComponent = () => {
         setRes({...res});
     }
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
     
     return (<>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
             <div className="flex items-center space-x-8">
-                <div className="text-2xl font-semibold text-blue-800 select-none">
+                <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                   [공지사항]
                 </div>
                 <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -102,37 +106,38 @@ const BookingListComponent = () => {
                 </Link>
             </div>
         </div>
-    <div>
-    <h2 className='text-3xl font-semibold text-center m-10'>회의실 예약하기</h2>
-    <div className="text-2xl">
-        <div className="flex justify-center">
-            <div className="relative mb-4 flex w-full flex-wrap  flex-col items-center ">
-                <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
-                id="cr"
-                onClick={handleChangeBooking}>회의실</div>
-                <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-10" 
-                id='wr'
-                onClick={handleChangeBooking}>화장실</div>
-            </div>
-        </div>
 
-        <h2 className='text-3xl font-semibold text-center m-10'>예약 내역</h2>
-        <div className='flex flex-wrap mx-auto p-6 justify-center'>
-            {booking.dtoList.map((data)=>{
-                
-                return(
-                <div 
-                key = {data.bookNo} 
-                className='flex flex-col min-w-[400px] p-2 m-2 rounded shadow-md font-light text-center ' 
-                onClick = {() => moveToRead(data.bookNo)}
-                >
-                    <div>방번호 : {data.roomNo}</div>
-                    <div>예약 날짜 : {data.bookDate}</div>
-                    <div>시작 시간 : {data.start}</div>
-                    <div>끝난 시간 : {data.end}</div>
-                </div>)
-            })}
-        </div>
+     <div className="container mx-auto p-6">
+                <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약하기</h2>
+                <div className="text-2xl">
+                    <div className="flex justify-center space-x-10">
+                        <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-4 cursor-pointer hover:bg-blue-100"
+                            id="cr"
+                            onClick={handleChangeBooking}>
+                            회의실
+                        </div>
+                        <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-4 cursor-pointer hover:bg-blue-100"
+                            id="wr"
+                            onClick={handleChangeBooking}>
+                            화장실
+                        </div>
+                    </div>
+                </div>
+
+                <h2 className="text-3xl font-semibold text-center mt-10 mb-6">예약 내역</h2>
+                <div className="flex flex-wrap justify-center">
+                    {booking.dtoList.map((data) => {
+                        return (
+                            <div key={data.bookNo} className="flex flex-col min-w-[400px] p-6 m-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-100"
+                                onClick={() => moveToRead(data.bookNo)}>
+                                <div>방번호 : {data.roomNo}</div>
+                                <div>예약 날짜 : {data.bookDate}</div>
+                                <div>시작 시간 : {data.start}</div>
+                                <div>끝난 시간 : {data.end}</div>
+                            </div>
+                        )
+                    })}
+                </div>
 
         <PageComponent
             serverData={booking} 
@@ -148,7 +153,7 @@ const BookingListComponent = () => {
         </button>
         </div>
         </div>
-    </div>
+
     </>
     )
 }

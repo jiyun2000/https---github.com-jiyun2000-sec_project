@@ -6,7 +6,7 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 
-const ChatListComponent = () => {
+const ChatListComponent = ({newMsg, setNewMsg}) => {
     const { senderEmpNo } = useParams();
     const [chatList, setChatList] = useState([]);
     const [userNames, setUserNames] = useState({});  
@@ -56,6 +56,7 @@ const ChatListComponent = () => {
     
 
     const goToChatRoom = (chatNo) => {
+        setNewMsg(false);
         const [emp1, emp2] = chatNo.split('_');
         const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
 
@@ -66,11 +67,15 @@ const ChatListComponent = () => {
         navigate(`/chat/empList/${senderEmpNo}?page=1`);
     };
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
     return (
         <div>
             <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
                 <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                         [공지사항]
                     </div>
                     <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -82,7 +87,12 @@ const ChatListComponent = () => {
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
                     <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer">
-                        <img src={chat} alt="Chat" className="w-full" />
+                        <img src={chat} alt="Chat" className="w-full"  />
+                        {newMsg && (
+                            <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
+                                    ★
+                            </div>
+                        )}
                     </Link>
                 </div>
             </div>

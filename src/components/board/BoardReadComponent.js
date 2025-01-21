@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { getBookList, getOne } from '../../api/boardApi';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
@@ -23,6 +23,7 @@ const BoardReadComponent = ({ boardNo }) => {
   const [board, setBoard] = useState(initState);
   let cnt = 0;
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+  const navigate = useNavigate();
 
 
   const { moveToList, moveToModify } = useCustomMove();
@@ -38,12 +39,16 @@ const BoardReadComponent = ({ boardNo }) => {
     return date.toLocaleDateString();
   }
 
+  const goToBoardList = () => {
+    navigate(`/board/list`)
+  }
+
   return (
     <>
     <div>
     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
         <div className="flex items-center space-x-8">
-          <div className="text-2xl font-semibold text-blue-800 select-none">
+          <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
             [공지사항]
           </div>
           <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -60,41 +65,39 @@ const BoardReadComponent = ({ boardNo }) => {
         </div>
       </div>
 
-      <div className='flex flex-col text-center '>
-        <div>
-          <h2 className='text-3xl text-center font-semibold m-10'>{board.title}</h2>
+      <div className="max-w-3xl mx-auto mt-10 bg-white  rounded-md p-6">
+        <div className="text-3xl font-semibold text-center text-gray-800 mb-6">
+          {board.title}
         </div>
 
-        <div className='flex flex-row justify-between items-center text-2xl'>
-          <div className='justify-start ml-10'>{board.category}</div>
-          <div className='justify-end mr-10'>{formatDate(board.regdate)}</div>
+        <div className="flex justify-between items-center text-lg text-gray-500 mb-6">
+          <span className="font-semibold">{board.category}</span>
+          <span>{formatDate(board.regdate)}</span>
         </div>
-        
-        <div className='flex text-2xl text-center justify-center m-10'>
+
+        <div className="text-lg text-gray-700 leading-relaxed text-center mb-8">
           {board.contents}
         </div>
-      </div>
 
-          <div className="flex justify-center p-4">
-            <button
-              type="button"
-              className="inline-block  p-4 m-2 text-xl w-[8%] text-white  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
-              onClick={() => moveToModify(boardNo)}
-            >
-              수정
-            </button>
+        <div className="flex justify-center gap-6 mt-8">
+          <button
+            type="button"
+            className="px-6 py-3 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer "
+            onClick={() => moveToModify(boardNo)}
+          >
+            수정
+          </button>
 
-            <button
-              type="button"
-              className="inline-block  p-4 m-2 text-xl w-[9%] text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
-              onClick={moveToList}
-            >
-              리스트
-            </button>
+          <button
+            type="button"
+            className="px-6 py-3 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+            onClick={moveToList}
+          >
+            리스트
+          </button>
           </div>
         </div>
-      {/* </div>
-    </div> */}
+        </div>
     </>
   );
 };

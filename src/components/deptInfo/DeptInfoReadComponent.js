@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
 import { getEmpList, getOne } from "../../api/deptInfoApi";
 import DeptInfoPageComponent from "../common/DeptInfoPageComponent";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
@@ -34,6 +34,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
     const [employees, setEmployees] = useState(initStateEmp);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {page, size, moveToDeptInfoList, moveToList, moveToModify} = useCustomMove();
+    const navigate = useNavigate();
 
     useEffect(()=>{
         getOne(deptNo).then(res => {
@@ -47,11 +48,15 @@ const DeptInfoReadComponent = ({deptNo})=>{
         })
     },[page]);
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
     return <>
     <div>
     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
         <div className="flex items-center space-x-8">
-          <div className="text-2xl font-semibold text-blue-800 select-none">
+          <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
             [공지사항]
           </div>
           <div className="w-64 text-2xl font-semibold cursor-pointer">

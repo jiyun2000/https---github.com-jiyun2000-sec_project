@@ -144,12 +144,17 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo, empSchNo, deptSchNo }) => {
         navigate(`/deptSchedule/register/${deptNo}/${empNo}`);
     };
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
+
     return (
         <>
         <div>
             <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
                 <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                         [공지사항]
                     </div>
                     <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -183,67 +188,121 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo, empSchNo, deptSchNo }) => {
                 /> 
 
         <Modal
-        isOpen={modalForm} 
-        onRequestClose={closeModal}  
+        isOpen={modalForm}
+        onRequestClose={closeModal}
         contentLabel="Schedule Modal"
-        style={{ content: {
-            width: '20%',
-            height: '40%',
-            background: 'white',
-            zIndex:99999,
-            boxShadow:'2px',
-            overflowY:'auto',
-            borderRadius : '8px',
-            padding : '2rem'
-        }}}
+        className="fixed inset-0 flex items-center justify-center z-50 p-4"
+        overlayClassName="fixed inset-0 bg-gray-500 bg-opacity-50 z-40"
         >
-
-        {(selectState && selectState.length > 0) || (selectDepState && selectDepState.length > 0) ? (
-        <div className="text-center">
-            <h3 className="text-3xl mb-2">일정</h3>
-            {selectState && selectState.length > 0 && (
+        <div className="bg-white rounded-lg shadow-lg overflow-y-auto w-4/5 md:w-1/3 lg:w-1/4 p-6 z-50">
+            {(selectState && selectState.length > 0) || (selectDepState && selectDepState.length > 0) ? (
+            <div className="text-center">
+                <h3 className="text-3xl mb-4">일정</h3>
+                {selectState && selectState.length > 0 && (
                 <>
-                <h4 className="text-xl">개인 일정</h4>
-                {selectState.map((evt, index) => (
+                    <h4 className="text-xl mb-2">개인 일정</h4>
+                    {selectState.map((evt, index) => (
                     <div key={index}>
-                        <p className="text-2xl m-4">{evt.scheduleText}</p> 
-                        <p>시작 시간 : {evt.startDate ? new Date(evt.startDate).toLocaleString() : ' '}</p> 
-                        <p>끝난 시간 : {evt.endDate ? new Date(evt.endDate).toLocaleString() : ' '}</p> 
-                        <button onClick={modSchedule} type="button" className="border border-blue-200 rounded-md px-2 mr-2 mb-2 mt-2">수정</button>
-                        <button onClick={deleteSchedule} type="button" className="border border-blue-200 rounded-md px-2">삭제</button><br />
+                        <p className="text-2xl m-4">{evt.scheduleText}</p>
+                        <p>시작 시간: {evt.startDate ? new Date(evt.startDate).toLocaleString() : ' '}</p>
+                        <p>끝난 시간: {evt.endDate ? new Date(evt.endDate).toLocaleString() : ' '}</p>
+                        <button
+                        onClick={modSchedule}
+                        type="button"
+                        className="border border-blue-200 rounded-md px-4 py-2 mr-2 mb-2 mt-2 hover:bg-blue-100"
+                        >
+                        수정
+                        </button>
+                        <button
+                        onClick={deleteSchedule}
+                        type="button"
+                        className="border border-blue-200 rounded-md px-4 py-2 hover:bg-blue-100"
+                        >
+                        삭제
+                        </button>
                     </div>
-                ))}
+                    ))}
                 </>
-            )}
+                )}
 
-            {selectDepState && selectDepState.length > 0 && (
+                {selectDepState && selectDepState.length > 0 && (
                 <>
-                <h4 className="text-xl">부서 일정</h4>
-                {selectDepState.map((evt, index) => (
+                    <h4 className="text-xl mb-2">부서 일정</h4>
+                    {selectDepState.map((evt, index) => (
                     <div key={index}>
-                        <p className="text-2xl m-4">{evt.scheduleText}</p> 
+                        <p className="text-2xl m-4">{evt.scheduleText}</p>
                         <p>시작 시간: {evt.startDate ? new Date(evt.startDate).toLocaleString() : ' '}</p>
                         <p>끝나는 시간: {evt.endDate ? new Date(evt.endDate).toLocaleString() : ' '}</p>
-                        <button onClick={modDeptSchedule} type="button" className="border border-blue-200 rounded-md px-2 mr-2 mb-2 mt-2">수정</button>
-                        <button onClick={deleteDeptSchedule} type="button" className="border border-blue-200 rounded-md px-2">삭제</button><br />
+                        <button
+                        onClick={modDeptSchedule}
+                        type="button"
+                        className="border border-blue-200 rounded-md px-4 py-2 mr-2 mb-2 mt-2 hover:bg-blue-100"
+                        >
+                        수정
+                        </button>
+                        <button
+                        onClick={deleteDeptSchedule}
+                        type="button"
+                        className="border border-blue-200 rounded-md px-4 py-2 hover:bg-blue-100"
+                        >
+                        삭제
+                        </button>
                     </div>
-                ))}
+                    ))}
                 </>
-            )}
-            ------------------------- <br />
-            <button onClick={addSchedule} type="button" className="border border-blue-200 rounded-md px-2 mr-2">개인 일정 추가</button>
-            <button onClick={addDeptSchedule} type="button" className="border border-blue-200 rounded-md px-2 mr-2">부서 일정 추가</button>
-            <button onClick={closeModal} type="button" className="border border-blue-200 rounded-md px-2">닫기</button>
-        </div>
-        ) : (
-        addRes && addRes === true ? (
-            <div className="flex flex-col items-center">
-                <button onClick={addSchedule} type="button" className="border border-blue-200 rounded-md px-2 2/5 m-4">개인 일정 추가</button>
-                <button onClick={addDeptSchedule} type="button"  className="border border-blue-200 rounded-md px-2 2/5 m-4">부서 일정 추가</button>
-                <button onClick={closeModal} type="button" className="border border-blue-200 rounded-md px-2 ">닫기</button>
+                )}
+
+                <hr className="my-4" />
+                <button
+                onClick={addSchedule}
+                type="button"
+                className="border border-blue-200 rounded-md px-4 py-2 mr-2 mb-2 hover:bg-blue-100"
+                >
+                개인 일정 추가
+                </button>
+                <button
+                onClick={addDeptSchedule}
+                type="button"
+                className="border border-blue-200 rounded-md px-4 py-2 mr-2 mb-2 hover:bg-blue-100"
+                >
+                부서 일정 추가
+                </button>
+                <button
+                onClick={closeModal}
+                type="button"
+                className="border border-blue-200 rounded-md px-4 py-2 hover:bg-blue-100"
+                >
+                닫기
+                </button>
             </div>
-        ) : null
-        )}
+            ) : (
+            addRes && addRes === true ? (
+                <div className="flex flex-col items-center">
+                <button
+                    onClick={addSchedule}
+                    type="button"
+                    className="border border-blue-200 rounded-md px-4 py-2 w-4/5 md:w-2/5 m-4 hover:bg-blue-100"
+                >
+                    개인 일정 추가
+                </button>
+                <button
+                    onClick={addDeptSchedule}
+                    type="button"
+                    className="border border-blue-200 rounded-md px-4 py-2 w-4/5 md:w-2/5 m-4 hover:bg-blue-100"
+                >
+                    부서 일정 추가
+                </button>
+                <button
+                    onClick={closeModal}
+                    type="button"
+                    className="border border-blue-200 rounded-md px-4 py-2 hover:bg-blue-100"
+                >
+                    닫기
+                </button>
+                </div>
+            ) : null
+            )}
+        </div>
         </Modal>
     </div>
     </div>

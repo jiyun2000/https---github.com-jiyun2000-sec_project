@@ -5,7 +5,7 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const initState = {
     deptNo : 0,
@@ -21,6 +21,7 @@ const DeptInfoListComponent = () => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
 
     const { moveToRead, moveToAdd } = useCustomMove();
+    const navigate = useNavigate();
 
     useEffect(() => {
         getDeptList().then(res => {
@@ -32,12 +33,15 @@ const DeptInfoListComponent = () => {
     const handleClickAdd = () =>{
         moveToAdd();
     }
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
     
     return (<>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg  rounded-md mb-8 px-6 py-4">
             <div className="flex items-center space-x-8">
-                <div className="text-2xl font-semibold text-blue-800 select-none">
+                <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                   [공지사항]
                 </div>
                 <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -54,32 +58,36 @@ const DeptInfoListComponent = () => {
             </div>
         </div>
 
-    <div className='flex justify-center items-center flex-col w-full'>
-    <h1 className='text-center m-10 font-bold text-3xl'>부서 안내</h1>
-    <div className="text-1xl">
-            <div className='flex flex-row mt-8 justify-center text-center'>
-                {deptInfo.map((res)=>{
-                    return(
-                    <div 
-                    key = {res.deptNo} 
-                    className='flex p-5 m-4 border border-[#aaaaaa] rounded-md justify-center text-2xl' 
-                    onClick = {() => moveToRead(res.deptNo)}
-                    >
-                        부서명 : {res.deptName} <br /> 
-                        부서 주소 : {res.deptAddress} <br /> 
-                        대표 번호 : {res.phoneNo} <br /> 
-                        
-                    </div>)
+        <div className="container mx-auto p-6">
+            <h1 className="text-center text-3xl font-bold text-gray-900 mb-8">부서 안내</h1>
+
+            <div className="flex flex-col items-center gap-6 mt-8">
+                {deptInfo.map((res) => {
+                    return (
+                        <div
+                            key={res.deptNo}
+                            className="flex flex-col p-6 bg-white rounded-lg shadow-lg hover:shadow-xl cursor-pointer w-[350px] mx-auto"
+                            onClick={() => moveToRead(res.deptNo)}>
+                            <div className="text-xl font-semibold text-blue-700">
+                                부서명: {res.deptName}
+                            </div>
+                            <div className="text-gray-600 mt-2">
+                                부서 주소: {res.deptAddress}
+                            </div>
+                            <div className="text-gray-600 mt-2">
+                                대표 번호: {res.phoneNo}
+                            </div>
+                        </div>
+                            )
                 })}
             </div>
-        </div>
 
-        <div className="flex justify-center p-4">
-        <button type="button"
-        className="inline-block  p-4 m-5 text-xl w-32 text-white   bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
-        onClick={handleClickAdd}>
-            추가
-        </button>
+            <div className="flex justify-center p-6">
+                <button type="button"
+                    className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] "
+                    onClick={handleClickAdd}>
+                    추가
+                </button>
         </div>
     </div>
     </div>

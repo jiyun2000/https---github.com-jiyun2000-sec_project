@@ -9,6 +9,7 @@ import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 
+
 const initState = {
     dtoList: [],
     pageNumList: [],
@@ -27,25 +28,35 @@ const MenuListComponent = () => {
     const { page, size, moveToMenuList } = useCustomMove();
     const navigate = useNavigate();
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [menuDateExist, setMenuDateExist] = useState(false);
+    const [menuDate, setMenuDate] = useState('')
 
     useEffect(() => {
         listMenu([page, size]).then((data) => {
             setMenuList(data);
+
+            const menuDateFormat = data.dtoList.find((menu)=>menu.menuDate === menuDate);
+            setMenuDateExist(!!menuDateFormat)
         });
     }, [page, size]);
 
-const goToMenu = (menuNo) => {
-    navigate(`/menu/readMenu/${menuNo}`)
-}
+    const goToMenu = (menuNo) => {
+        navigate(`/menu/readMenu/${menuNo}`)
+    }
 
+    const goToMenuAdd = () => navigate(`/menu/add`);
+
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
 
     return (
         <>
         <div>
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
                 <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none">
-                    [공지사항]
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
+                        [공지사항]
                     </div>
                     <div className="w-64 text-2xl font-semibold cursor-pointer">
                         <BoardTitleComponent />
@@ -84,6 +95,12 @@ const goToMenu = (menuNo) => {
             </div>
 
             <PageComponent serverData={menuList} movePage={moveToMenuList} />
+            <div className="flex justify-center items-center">
+                <button type="button" className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] mb-8" onClick={goToMenuAdd}>
+                    메뉴 등록
+                </button>
+            </div>
+              
         </div>
         </>
     );

@@ -5,7 +5,7 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const initState = {
     deptNo : 0,
@@ -18,6 +18,7 @@ const DeptInfoAddComponent = () => {
     const [deptInfo, setDeptInfo] = useState({...initState});
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {moveToList} = useCustomMove();
+    const navigate = useNavigate();
 
     const handleClickAdd = () => {
         addOne(deptInfo).then(()=>moveToList());
@@ -28,11 +29,15 @@ const DeptInfoAddComponent = () => {
         setDeptInfo({...deptInfo});
     }
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
     return (
         <div>
             <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
                 <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                         [공지사항]
                     </div>
                 <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -49,14 +54,14 @@ const DeptInfoAddComponent = () => {
             </div>
         </div>
 
-        <div className=" m-2 p-4">
+        <div >
             <div>
-                <h2 className="text-3xl font-semibold text-center m-4">부서 등록</h2>
+                <h2 className="text-center mt-10 font-bold text-3xl">부서 등록</h2>
             </div>
-        <div className="flex justify-center w-full m-5 text-2xl">
-            <div className=" mb-4 flex w-full flex-row justify-center">
-                <div className="p-6 font-bold">부서번호</div>
-                <input className="p-6 rounded-md border border-slate-500" 
+        <div className="flex justify-center mt-10 m-2">
+            <div className="mb-4 flex w-full flex-row items-center justify-center">
+                <div className="w-[10%] p-6 font-bold">부서번호</div>
+                <input className="w-[30%] p-6 rounded-md border border-slate-400 text-center" 
                     name="deptNo"
                     type={'number'} 
                     value={deptInfo.deptInfoNo}
@@ -65,10 +70,10 @@ const DeptInfoAddComponent = () => {
                 </div>
             </div>
 
-            <div className="flex justify-center w-full m-5 text-2xl">
-                <div className=" mb-4 flex w-full flex-row justify-center">
-                    <div className="p-6 font-bold">부서명</div>
-                    <input className="p-6 rounded-md border border-slate-500" 
+            <div className="flex justify-center m-2">
+                <div className=" mb-4 flex w-full flex-row items-center justify-center">
+                    <div className="w-[10%] p-6 font-bold">부서명</div>
+                    <input className="w-[30%] p-6 rounded-md border border-slate-400 text-center" 
                     name="deptName"
                     type={'text'} 
                     value={deptInfo.deptName} 
@@ -77,10 +82,10 @@ const DeptInfoAddComponent = () => {
                 </div>
             </div>
 
-            <div className="flex justify-center w-full m-5 text-2xl">
-                <div className=" mb-4 flex w-full flex-row justify-center">
-                    <div className="p-6 text-left font-bold">부서 주소</div>
-                    <input className="p-6 rounded-md border border-slate-500" 
+            <div className="flex justify-center m-2">
+                <div className=" mb-4 flex w-full flex-row items-center justify-center">
+                    <div className="w-[10%] p-6 font-bold">부서 주소</div>
+                    <input className="w-[30%] p-6 rounded-md border border-slate-400 text-center" 
                     name="deptAddress"
                     type={'text'} 
                     value={deptInfo.deptAddress} 
@@ -88,10 +93,10 @@ const DeptInfoAddComponent = () => {
                 </div>
             </div>
 
-            <div className="flex justify-center w-full m-5 text-2xl">
-                <div className=" mb-4 flex w-full flex-row justify-center">
-                    <div className="p-6 font-bold">대표 번호</div>
-                    <input className="p-6 rounded-md border border-slate-500" 
+            <div className="flex justify-center m-2">
+                <div className="mb-4 flex w-full flex-row items-center justify-center">
+                    <div className="w-[10%] p-6 font-bold">대표 번호</div>
+                    <input className="w-[30%] p-6 rounded-md border border-slate-400 text-center" 
                     name="phoneNo"
                     type={'text'} 
                     value={deptInfo.phoneNo} 
@@ -102,7 +107,7 @@ const DeptInfoAddComponent = () => {
 
             <div className="flex justify-center p-4">
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
                 onClick={handleClickAdd}>
                     추가
                 </button>

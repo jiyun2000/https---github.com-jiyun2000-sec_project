@@ -40,11 +40,15 @@ const MainPage = () => {
     })
   },[])
 
+  const goToBoardList = () => {
+    navigate(`/board/list`)
+  }
+
   return (
     <div className="min-h-screen bg-white pb-5">
       <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
         <div className="flex items-center space-x-8">
-          <div className="text-2xl font-semibold text-blue-800 select-none">
+          <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
             [공지사항]
           </div>
           <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -110,9 +114,9 @@ const MainPage = () => {
             <img src={menu} alt="Menu" className="w-24 mb-2" />
             <MenuPage menuDate={selectDate} />
             <div className="mt-4">
-              <button type="button" className="text-sm mr-3 text-blue-600 hover:underline" onClick={goToMenu}>
+              {/* <button type="button" className="text-sm mr-3 text-blue-600 hover:underline" onClick={goToMenu}>
                 메뉴 등록
-              </button>
+              </button> */}
               <button type="button" className="text-sm text-blue-600 hover:underline" onClick={goToMenuList}>
                 메뉴 리스트
               </button>

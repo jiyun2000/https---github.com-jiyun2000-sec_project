@@ -3,7 +3,7 @@ import { getList } from "../../api/boardApi";
 import { useNavigate } from "react-router-dom";
 
 const BoardTitleComponent = () => {
-    const [BoardData, setBoardData] = useState(null);
+    const [BoardData, setBoardData] = useState([]);
     const [showBoard, setShowBoard] = useState(null);
     const [cyc, setCyc] = useState(0);
     const navigate = useNavigate();
@@ -11,7 +11,6 @@ const BoardTitleComponent = () => {
     useEffect(() => {
         getList([1, 5]).then((data) => {
             setBoardData(data.dtoList);  
-            console.log(BoardData);
             setShowBoard(data.dtoList[0]);  
         });
     }, []);
@@ -44,13 +43,9 @@ const BoardTitleComponent = () => {
 
     return (
         <>
-            { BoardData ? 
-                <>
-                <div onClick={()=>goToBoardContent(showBoard.boardNo)}>
-                    {showBoard.title}
-                </div></>
-                :<></>
-              } 
+           <div onClick={() => goToBoardContent(showBoard?.boardNo)}>
+                {showBoard ? showBoard.title : ""}
+            </div>
         </>
     );
 };

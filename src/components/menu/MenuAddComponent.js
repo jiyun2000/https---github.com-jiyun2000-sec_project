@@ -1,11 +1,12 @@
 import {useState } from "react";
-import { addMenu } from "../../api/menuApi";
+import { addMenu, listMenu } from "../../api/menuApi";
 import { useNavigate } from "react-router-dom";
 import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
+import useCustomMove from "../../hooks/useCustomMove";
 
 const initState = {
     empNo : 0,
@@ -21,29 +22,50 @@ const MenuAddComponent = () => {
     const navigate = useNavigate();
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [menuDTO, setMenuDTO] = useState({...initState});
+    const [menuDateExist, setMenuDateExist] = useState(false);
+    const { page, size } = useCustomMove();
 
     const handleClickChangeInput = (e) => {;
         menuDTO[e.target.name] = e.target.value;
         setMenuDTO({...menuDTO});
     }
 
-    const handleSaveEvent = () =>{
-        addMenu(menuDTO).then((data)=>{ 
-            console.log(data)
-            alert("등록되었습니다.");
-            navigate(`/main`);
-        }).catch((error) => {
-            console.log(error);
-        })
-
-    }
+    const handleSaveEvent = () => {
+        if (!menuDTO.mainMenu || !menuDTO.firSideDish || !menuDTO.secSideDish || !menuDTO.thirdSideDish || !menuDTO.dessert || !menuDTO.menuDate || !menuDTO.empNo) {
+            alert("빈칸이 있네요");
+            return;
+        }
+    
+        listMenu([page, size]).then((data) => {
+            const existingMenuDate = data.dtoList.filter((menu) => menu.menuDate === menuDTO.menuDate);
+    
+            if (existingMenuDate.length > 0) {
+                alert("해당 날짜에는 이미 메뉴가 있습니다.");
+                return;
+            }
+    
+            addMenu(menuDTO).then((data) => { 
+                console.log(data);
+                alert("등록되었습니다.");
+                navigate(`/main`);
+            }).catch((error) => {
+                console.log(error);
+            });
+        });
+    };
+    
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+    
+    
 
     return (
         <>
         <div>
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
                 <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none">
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                     [공지사항]
                     </div>
                     <div className="w-64 text-2xl font-semibold cursor-pointer">

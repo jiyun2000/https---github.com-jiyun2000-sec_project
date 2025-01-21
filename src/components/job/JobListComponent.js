@@ -5,7 +5,7 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const initState = {
     jobNo : 0,
@@ -16,7 +16,7 @@ const JobListComponent = () => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [job,setJob] = useState([initState]);
     let cnt = 0;
-
+    const navigate = useNavigate();
     const { moveToJobRead, moveToAdd } = useCustomMove();
 
     useEffect(() => {
@@ -29,12 +29,16 @@ const JobListComponent = () => {
     const handleClickAdd = () =>{
         moveToAdd();
     }
+
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
     
     return (<>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
             <div className="flex items-center space-x-8">
-                <div className="text-2xl font-semibold text-blue-800 select-none">
+                <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                   [공지사항]
                 </div>
                 <div className="w-64 text-2xl font-semibold cursor-pointer">

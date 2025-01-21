@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { delOne, getOne, putOne } from "../../api/menuApi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { getCookie } from '../../util/cookieUtil';
+import mail from "../../assets/icon/mail.png";
+import chat from "../../assets/icon/chat.png";
+import BoardTitleComponent from "../board/BoardTitleComponent";
 
 const initState = {
     empNo : 0,
@@ -15,6 +19,7 @@ const initState = {
 const MenuModComponent = ({menuNo}) => {
     const [menu, setMenu] = useState({...initState});
     const navigate = useNavigate();
+        const [empNo, setEmpNo] = useState(getCookie("member").empNo);
 
     useEffect(() => {
         getOne(menuNo).then((data) => {
@@ -38,8 +43,32 @@ const MenuModComponent = ({menuNo}) => {
         });
     }
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
     return (
         <>
+        <div>
+            <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
+                <div className="flex items-center space-x-8">
+                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
+                    [공지사항]
+                    </div>
+                    <div className="w-64 text-2xl font-semibold cursor-pointer">
+                        <BoardTitleComponent/>
+                    </div>
+                </div>
+                <div className="flex space-x-4">
+                    <Link to="/mail" className="w-12 cursor-pointer">
+                        <img src={mail} alt="Mail" className="w-full" />
+                    </Link>
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                        <img src={chat} alt="Chat" className="w-full" />
+                    </Link>
+                </div>
+            </div>
+
              <div className="w-full flex flex-col p-8">
                 <div className="flex mb-6">
                     <div className="w-1/5 text-xl font-semibold text-gray-700">메뉴 번호</div>
@@ -133,6 +162,7 @@ const MenuModComponent = ({menuNo}) => {
                     </button>
                 </div>
             </div>
+        </div>
         </>
     )
 }

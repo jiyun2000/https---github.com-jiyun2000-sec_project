@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
 import { getEmpList, getJob } from "../../api/jobApi";
 import JobPageComponent from "../common/JobPageComponent";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
@@ -31,6 +31,7 @@ const JobReadComponent = ({jobNo})=>{
     const [job, setJob] = useState(initState);
     const [employees, setEmployees] = useState(initStateEmp);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const navigate = useNavigate();
 
 
     const {page, size, moveToJobList, moveToList, moveToModify} = useCustomMove();
@@ -47,11 +48,15 @@ const JobReadComponent = ({jobNo})=>{
         })
     },[page]);
 
+    const goToBoardList = () => {
+        navigate(`/board/list`)
+      }
+
     return <>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
             <div className="flex items-center space-x-8">
-                <div className="text-2xl font-semibold text-blue-800 select-none">
+                <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
                     [공지사항]
                 </div>
                 <div className="w-64 text-2xl font-semibold cursor-pointer">
@@ -73,27 +78,27 @@ const JobReadComponent = ({jobNo})=>{
         <div className="m-4 p-4 text-2xl">
             <div className="flex justify-center flex-col">
                 <div className="relative mb-4 flex w-full flex-row text-center justify-center">
-                    <div className="p-6 font-bold">직책 번호  </div>
-                    <div className="p-6 rounded-md 0 ">{job.jobNo}</div>
+                    <div className="w-[15%] p-6 font-bold">직책 번호  </div>
+                    <div className="w-[20%] p-6 rounded-md 0 ">{job.jobNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-row text-center justify-center">
-                    <div className=" p-6 font-bold">직책 이름  </div>
-                    <div className="p-6 rounded-md  ">{job.jobTitle}</div>
+                    <div className="w-[15%] p-6 font-bold">직책 이름  </div>
+                    <div className="w-[20%] p-6 rounded-md  ">{job.jobTitle}</div>
                 </div>
             </div>
 
-            <div className="flex justify-center p-4">
+            <div className="flex justify-center p-4 gap-4">
                 <button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+                className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
                 onClick={()=>moveToModify(jobNo)}>
                     수정
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+                className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
                 onClick={moveToList}>
                     리스트
                 </button>
