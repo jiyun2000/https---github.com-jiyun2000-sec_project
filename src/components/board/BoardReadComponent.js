@@ -23,6 +23,8 @@ const BoardReadComponent = ({ boardNo }) => {
   const [board, setBoard] = useState(initState);
   let cnt = 0;
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+  const [email, setEmail] = useState(getCookie("member").email);
+  const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
   const navigate = useNavigate();
 
   let formatted = board.regdate
@@ -88,13 +90,14 @@ const BoardReadComponent = ({ boardNo }) => {
           </div>
 
           <div className="flex justify-center p-4">
-            <button
+            {deptNo===999||email===board.mailAddress?<button
               type="button"
               className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#9bb5bd] hover:text-white hover:bg-[#8daad8] cursor-pointer"
               onClick={() => moveToModify(boardNo)}
             >
               수정
-            </button>
+            </button>:<></>}
+            
 
             <button
               type="button"

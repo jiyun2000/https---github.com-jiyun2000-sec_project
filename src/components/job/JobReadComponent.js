@@ -31,6 +31,7 @@ const JobReadComponent = ({jobNo})=>{
     const [job, setJob] = useState(initState);
     const [employees, setEmployees] = useState(initStateEmp);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
     const navigate = useNavigate();
 
 
@@ -91,11 +92,12 @@ const JobReadComponent = ({jobNo})=>{
             </div>
 
             <div className="flex justify-center p-4 gap-4">
-                <button type="button" 
+                {deptNo===999?<button type="button" 
                 className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
                 onClick={()=>moveToModify(jobNo)}>
                     수정
-                </button>
+                </button>:<></>}
+                
 
                 <button type="button"
                 className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"

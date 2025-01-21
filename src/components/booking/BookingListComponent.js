@@ -116,11 +116,6 @@ const BookingListComponent = () => {
                             onClick={handleChangeBooking}>
                             회의실
                         </div>
-                        <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-4 cursor-pointer hover:bg-blue-100"
-                            id="wr"
-                            onClick={handleChangeBooking}>
-                            화장실
-                        </div>
                     </div>
                 </div>
 

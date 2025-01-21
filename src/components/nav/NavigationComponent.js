@@ -19,7 +19,7 @@ const NavigationComponent = () => {
     { name: '예약', path: `/booking` },
     { name: '서류 작성', path: `/report/list/received` },
     { name: '채팅', path: `/chat/empList/${empNo}?page=1` },
-    { name: '회의실(화장실) 추가', path: `/room` }
+    { name: '회의실 추가', path: `/room` }
   ];
 
   const [loc, setLoc] = useState('');
@@ -83,7 +83,7 @@ const NavigationComponent = () => {
                     <span>{menu.name}</span>
                     <CaretRight className='w-[6px] fill-[#333333]' />
                 </li>:<>
-                  {menu.name!=='회의실(화장실) 추가'?<li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
+                  {menu.name!=='회의실 추가'?<li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
                     <span>{menu.name}</span>
                     <CaretRight className='w-[6px] fill-[#333333]' />
                 </li>:<></>}
