@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getOneEmp } from "../../api/employeesApi";
+import { getCookie } from "../../util/cookieUtil";
 
 
 const initState = {
@@ -16,7 +17,8 @@ const initState = {
     hours : 0
 }
 
-const AnnualLeaveReadComponent = ({empNo})=>{
+const AnnualLeaveReadComponent = ()=>{
+    const [empNo,setEmpNo] = useState(getCookie("member").empNo);
     const [annualLeave, setAnnualLeave] = useState(initState);
     const [empData, setEmpData] = useState("");
     let cnt = 0;
@@ -83,7 +85,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
 
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 text-right font-bold">연차</div>
+                    <div className="w-1/5 p-6 text-right font-bold">근속년수</div>
                     <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">{annualLeave.antecedent}</div>
                 </div>
             </div>

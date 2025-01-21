@@ -144,7 +144,7 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
-        navigate({pathname:`../commute/${pageParam.empNo}`,search:queryStr})
+        navigate({pathname:`../commute`,search:queryStr})
     };
 
     const moveToDeptInfoList = (pageParam) => {
@@ -202,7 +202,7 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
-        navigate({pathname : `../annualleave/${pageParam.empNo}`})
+        navigate({pathname : `../annualleave`})
     }
 
     const moveToMenuList = (pageParam) => {

@@ -8,6 +8,7 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
+import { getCookie } from "../../util/cookieUtil";
 
 const initState = {
     dtoList : [],
@@ -22,7 +23,8 @@ const initState = {
     current : 0
 }
 
-const CommuteListComponent = ({empNo})=>{
+const CommuteListComponent = ()=>{
+    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [commute, setCommute] = useState(initState);
     const [empData, setEmpData] = useState("");
 

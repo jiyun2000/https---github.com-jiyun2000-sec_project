@@ -2,7 +2,6 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import AnnualLeaveReadComponent from "../../components/employees/AnnualLeaveReadComponent";
 
 const AnnualLeaveReadPage = () => {
-    const {empNo} = useParams();
 
     const navigate = useNavigate();
 
@@ -12,7 +11,7 @@ const AnnualLeaveReadPage = () => {
     const size = queryString.get('size')?parseInt(queryString.get('size')):10;
 
     return <>
-        <div><AnnualLeaveReadComponent empNo = {empNo}/></div>
+        <div><AnnualLeaveReadComponent /></div>
     </>
 }
 

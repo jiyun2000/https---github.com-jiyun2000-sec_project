@@ -106,13 +106,13 @@ const EmployeesReadComponent = ({ empNo }) => {
 
                         <button type="button"
                             className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
-                            onClick={() => moveToCommuteList({ empNo })}>
+                            onClick={moveToCommuteList}>
                             출퇴근
                         </button>
 
                         <button type="button"
                             className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
-                            onClick={() => moveToAnnualLeave({ empNo })}>
+                            onClick={moveToAnnualLeave}>
                             연차
                         </button>
 

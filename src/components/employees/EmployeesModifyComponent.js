@@ -22,7 +22,8 @@ const initState = {
     address : '',
     phoneNum : '',
     gender : '',
-    citizenId : ''
+    citizenId : '',
+    password : ''
 }
 
 const initStateJob = {
@@ -157,10 +158,10 @@ const EmployeesModifyComponent = ({empNo}) => {
                     type={'number'} 
                     value={employees.deptNo} 
                     onChange={handleChangeEmployees}></input> */}
-                    <select name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
-                        <option value={100}>100(GA)</option>
-                        <option value={200}>200(HR)</option>
-                        <option value={300}>300(ACC)</option>
+                    <select className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
+                        {deptInfo.map((data)=>{
+                            return(<option value={data.deptNo}>{data.deptName}</option>)
+                        })}
 
                     </select>
                 </div>
@@ -170,12 +171,10 @@ const EmployeesModifyComponent = ({empNo}) => {
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 text-right font-bold">직책 번호</div>
                     
-                    <select name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
-                    <option value={100}>100(디렉터)</option>
-                        <option value={200}>200(매니저)</option>
-                        <option value={300}>300(시니어)</option>
-                        <option value={400}>400(사원)</option>
-                        <option value={500}>500(인턴)</option>
+                    <select className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
+                    {job.map((data)=>{
+                            return(<option value={job.jobNo}>{data.jobTitle}</option>)
+                        })}
                     </select>
                 </div>
             </div>
@@ -235,6 +234,17 @@ const EmployeesModifyComponent = ({empNo}) => {
                     onChange={handleChangeEmployees}></input>
                 </div>
             </div>
+
+            {employees.mailAddress==="admin"?<div className="flex justify-center">
+                <div className="relative mb-4 flex w-full flex-wrap items-stretch">
+                    <div className="w-1/5 p-6 text-right font-bold">비밀번호 변경</div>
+                    <input className="w-4/5 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="password"
+                    type={'password'} 
+                    value={employees.password} 
+                    onChange={handleChangeEmployees}></input>
+                </div>
+            </div>:<></>}
 
             <div className="flex justify-center p-4">
                 <button type="button"
