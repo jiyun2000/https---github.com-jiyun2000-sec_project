@@ -18,6 +18,7 @@ const LoginComponent = () => {
   };
 
   const handleClickLogin = (evt) => {
+    
     doLogin(loginParam).then((value) => {
       if (!value.error) {
         moveToMain();

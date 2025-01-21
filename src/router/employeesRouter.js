@@ -31,11 +31,11 @@ const employeesRouter = () => {
             element : <EmployeesAddPage/>
         },
         {
-            path : 'annualleave/:empNo',
+            path : 'annualleave',
             element : <AnnualLeaveReadPage/>
         },
         {
-            path : 'commute/:empNo',
+            path : 'commute',
             element : <CommuteListPage/>
         },
         {

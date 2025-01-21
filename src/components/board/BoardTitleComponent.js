@@ -9,10 +9,13 @@ const BoardTitleComponent = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        getList([1, 5]).then((data) => {
-            setBoardData(data.dtoList);  
-            setShowBoard(data.dtoList[0]);  
-        });
+        if(BoardData!==null){
+            getList([1, 5]).then((data) => {
+                setBoardData(data.dtoList);  
+                console.log(BoardData);
+                setShowBoard(data.dtoList[0]);  
+            });
+        }
     }, []);
 
     useEffect(() => {

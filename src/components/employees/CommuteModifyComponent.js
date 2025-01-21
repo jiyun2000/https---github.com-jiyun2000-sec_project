@@ -69,7 +69,7 @@ const CommuteModifyComponent = ({commNo}) => {
                 <Link to="/mail" className="w-12 cursor-pointer">
                     <img src={mail} alt="Mail" className="w-full" />
                 </Link>
-                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                <Link to={`/chat/empList/${commute.empNo}?page=1`} className="w-12 cursor-pointer">
                     <img src={chat} alt="Chat" className="w-full" />
                 </Link>
             </div>

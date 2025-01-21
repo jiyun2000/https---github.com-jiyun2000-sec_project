@@ -22,7 +22,8 @@ const initState = {
     address : '',
     phoneNum : '',
     gender : '',
-    citizenId : ''
+    citizenId : '',
+    password : ''
 }
 
 const initStateJob = {

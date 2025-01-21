@@ -16,6 +16,7 @@ const initState = {//초기화 상대 객체 선언
     reportingDate : '',
     sender : 0,
     receiver : 0,
+    finalReceiver: 0,
     files : [],
     uploadFileNames : []
 };
@@ -44,6 +45,8 @@ const SentReportReadComponent = ({reportNo}) => {
   const [sender, setSender] = useState(initStateEmp);
   
   const [receiver, setReceiver] = useState(initStateEmp);
+  
+  const [finalReceiver, setFinalReceiver] = useState(initStateEmp);
 
   const {moveToReportSentPage, moveToModify} = useCustomMove();
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
@@ -62,6 +65,9 @@ const SentReportReadComponent = ({reportNo}) => {
       });
       getOneEmp(report.sender).then(data=>{
         setSender(data);
+      });
+      getOneEmp(report.finalReceiver).then(data=>{
+        setFinalReceiver(data);
       });
     }
   },[report]);
@@ -141,6 +147,14 @@ const SentReportReadComponent = ({reportNo}) => {
         <div className="mb-4 flex w-full justify-center">
           <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
           {sender.firstName} {sender.lastName}        
+          </div>
+        </div>
+      </div>
+      <div className="flex justify-center">
+      <div className="w-1/5 p-6 font-bold">최종 결재</div>
+        <div className="mb-4 flex w-full justify-center">
+          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+          {finalReceiver.firstName} {finalReceiver.lastName}        
           </div>
         </div>
       </div>

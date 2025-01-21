@@ -58,7 +58,7 @@ const JobListComponent = () => {
             <div className='flex flex-col p-6 items-center  '>
                 <h2 className='m-4 text-3xl font-semibold'>직책 안내</h2>
                 {job.map((res)=>{
-                    return(
+                   return res.jobNo===999?<></>:(
                     <div 
                     key = {res.jobNo} 
                     className='flex w-80 p-2 m-6 text-2xl rounded shadow-md border border-[#a9b8d0] items-center justify-center font-light' 
