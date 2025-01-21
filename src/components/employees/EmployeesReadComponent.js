@@ -32,6 +32,7 @@ const EmployeesReadComponent = ({ empNo }) => {
     const { page, moveToReportReceived, moveToList, moveToModify, moveToCommuteList, moveToAnnualLeave } = useCustomMove();
     const [deptData, setDeptData] = useState("");
     const [jobData, setJobData] = useState("");
+    const [employeeNo,setEmployeeNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
    
 
@@ -119,11 +120,12 @@ const EmployeesReadComponent = ({ empNo }) => {
                             연차
                         </button>
 
-                        <button type="button"
+                        {employeeNo === empNo || employeeNo===1?<button type="button"
                             className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
                             onClick={() => moveToModify(empNo)}>
                             수정
-                        </button>
+                        </button>:<></>}
+                        
 
                         <button type="button"
                             className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"

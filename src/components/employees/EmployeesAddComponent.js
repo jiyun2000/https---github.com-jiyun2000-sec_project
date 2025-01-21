@@ -22,7 +22,7 @@ const initState = {
     birthday : '',
     address : '',
     phoneNum : '',
-    gender : '',
+    gender : 'm',
     citizenId : '',
     password : ''
 }
@@ -61,7 +61,9 @@ const EmployeesAddComponent = () => {
 
     const handleClickAdd = () => {
         addOne(employees).then((data)=>{
-            setALOne(data).then(()=>moveToList());
+            setALOne(data).then(()=>{
+                moveToList();
+            });
         });
     }
     
@@ -139,9 +141,10 @@ const EmployeesAddComponent = () => {
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">부서</div>
-                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
+                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="deptNo" onClick={handleChangeEmployees}>
+                        <option value={0}></option>
                         {deptInfo.map((data)=>{
-                            return (data.deptNo===999?<></>:(<option value={data.deptNo}>{data.deptName}</option>))
+                            return (<option value={data.deptNo}>{data.deptName}</option>)
                         })}
 
                     </select>
@@ -149,9 +152,10 @@ const EmployeesAddComponent = () => {
             
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">직책</div>
-                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
+                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="jobNo" onChange={handleChangeEmployees}>
+                    <option value={0}></option>
                     {job.map((data)=>{
-                           return (data.jobNo===999?<></>:(<option value={job.jobNo}>{data.jobTitle}</option>))
+                           return (<option value={data.jobNo}>{data.jobTitle}</option>)
                         })}
                     </select>
             </div>
@@ -185,7 +189,7 @@ const EmployeesAddComponent = () => {
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">성별</div>
-                    <select name="gender" value={employees.gender} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
+                    <select name="gender" onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
                         <option value={"m"}>남성</option>
                         <option value={"y"}>여성</option>
                     </select>
