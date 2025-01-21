@@ -78,7 +78,7 @@ const BoardReadComponent = ({ boardNo }) => {
           <div className="flex justify-center p-4">
             <button
               type="button"
-              className="inline-block rounded p-4 m-2 text-xl w-[8%] text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+              className="inline-block  p-4 m-2 text-xl w-[8%] text-white  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
               onClick={() => moveToModify(boardNo)}
             >
               수정
@@ -86,7 +86,7 @@ const BoardReadComponent = ({ boardNo }) => {
 
             <button
               type="button"
-              className="inline-block rounded p-4 m-2 text-xl w-[9%] text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+              className="inline-block  p-4 m-2 text-xl w-[9%] text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
               onClick={moveToList}
             >
               리스트

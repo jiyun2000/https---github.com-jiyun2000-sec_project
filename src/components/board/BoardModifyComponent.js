@@ -70,7 +70,25 @@ const BoardModifyComponent = ({ boardNo }) => {
       </div>
 
     <div className="flex flex-col justify-center items-center w-full m-3">
-      <div className="w-2/3 shadow-lg p-5 pr-5">
+
+    <div className='flex flex-col justify-center w-full'>
+      <div>
+        <h2 className='text-3xl font-semibold text-center'>{board.title} 수정</h2>
+      </div>
+
+      <div className='flex flex-row justify-between text-2xl '>
+        <div className='justify-start m-10'>{board.boardNo}</div>
+        <div className='justify-end m-10'>{board.category}</div>
+      </div>
+
+      <div className='text-2xl text-center justify-center '>
+        {board.contents}
+      </div>
+
+    </div>
+
+
+      {/* <div className="w-2/3 shadow-lg p-5 pr-5">
         <h2 className="text-center text-3xl font-semibold">
           {board.title} 내용 수정
         </h2>
@@ -125,12 +143,12 @@ const BoardModifyComponent = ({ boardNo }) => {
               <option value="완료">완료</option>
             </select>
           </div>
-        </div>
+        </div> */}
 
-        <div className="flex justify-center p-4">
+        <div className="flex justify-center p-4 m-10">
           <button
             type="button"
-            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+            className="inline-block  p-4 m-2 text-xl w-32 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
             onClick={handleClickModify}
           >
             수정완료
@@ -138,7 +156,7 @@ const BoardModifyComponent = ({ boardNo }) => {
 
           <button
             type="button"
-            className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+            className="inline-block  p-4 m-2 text-xl w-32 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
             onClick={handleClickDelete}
           >
             완료처리
@@ -146,7 +164,7 @@ const BoardModifyComponent = ({ boardNo }) => {
         </div>
       </div>
     </div>
-  </div>
+  // </div>
   );
 };
 
