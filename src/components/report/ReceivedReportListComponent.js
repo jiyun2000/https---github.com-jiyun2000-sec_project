@@ -53,7 +53,7 @@ const ReceivedReportListComponent = () => {
 
         <div className='flex flex-wrap mx-auto p-6 justify-center'>
             {report.dtoList.map((data)=>{
-                return(
+                return data.reportStatus==="진행중"?(
                 <div 
                 key = {data.reportNo} 
                 className='flex w-3/4 p-2 m-2 rounded shadow-md justify-center ' 
@@ -67,7 +67,7 @@ const ReceivedReportListComponent = () => {
                         <div>받는 사람 사원번호 : {data.receiver}</div>
                         </>:<></>}
                     </div>
-                </div>)
+                </div>):<></>
             })}
         </div>
 

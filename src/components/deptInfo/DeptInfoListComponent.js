@@ -59,7 +59,7 @@ const DeptInfoListComponent = () => {
     <div className="text-1xl">
             <div className='flex flex-row mt-8 justify-center text-center'>
                 {deptInfo.map((res)=>{
-                    res.deptNo===999?<></>:(
+                    return res.deptNo===999?<></>:(
                     <div 
                     key = {res.deptNo} 
                     className='flex p-5 m-4 border border-[#aaaaaa] rounded-md justify-center text-2xl' 
