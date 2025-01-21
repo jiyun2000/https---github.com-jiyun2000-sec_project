@@ -63,7 +63,7 @@ const DeptInfoListComponent = () => {
 
             <div className="flex flex-col items-center gap-6 mt-8">
                 {deptInfo.map((res) => {
-                    return (
+                    return res.deptNo===999?<></>:(
                         <div
                             key={res.deptNo}
                             className="flex flex-col p-6 bg-white rounded-lg shadow-lg hover:shadow-xl cursor-pointer w-[350px] mx-auto"

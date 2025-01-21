@@ -83,7 +83,7 @@ const ReceivedReportListComponent = () => {
 
             <div className="flex flex-col items-center justify-center gap-4">
                 {report.dtoList.map((data) => {
-                    return (
+                    return  data.reportStatus==="진행중"?(
                         <div 
                             key={data.reportNo}
                             className="w-2/4 p-6 bg-white rounded-lg shadow-lg  cursor-pointer"
@@ -94,14 +94,13 @@ const ReceivedReportListComponent = () => {
                             <div className="text-sm mb-2 text-gray-600">
                                 진행 상태 : {data.reportStatus}
                             </div>
-                            {data.reportStatus !== "완료" && (
-                                <>
+                            {data.reportStatus !== "완료" ?<>
                                     <div className="text-sm mb-2 text-gray-600">보낸 사람 : {data.sender}</div>
                                     <div className="text-sm text-gray-600">받는 사람 : {data.receiver}</div>
-                                </>
-                            )}
+                                </>:<></>
+                            }
                         </div>
-                    )
+                    ):<></>
                 })}
             </div>
 
