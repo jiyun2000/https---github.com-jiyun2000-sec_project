@@ -81,11 +81,11 @@ const NavigationComponent = () => {
             {menu.map((menu, index) => (
                 deptNo===999?<li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
                     <span>{menu.name}</span>
-                    <CaretRight className='w-[6px] fill-[#333333]' />
+                    {/* <CaretRight className='w-[6px] fill-[#333333]' /> */}
                 </li>:<>
                   {menu.name!=='회의실 추가'?<li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
                     <span>{menu.name}</span>
-                    <CaretRight className='w-[6px] fill-[#333333]' />
+                    {/* <CaretRight className='w-[6px] fill-[#333333]' /> */}
                 </li>:<></>}
                 </>
             ))}
