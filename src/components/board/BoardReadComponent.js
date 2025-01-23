@@ -23,8 +23,13 @@ const BoardReadComponent = ({ boardNo }) => {
   const [board, setBoard] = useState(initState);
   let cnt = 0;
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+  const [email, setEmail] = useState(getCookie("member").email);
+  const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
   const navigate = useNavigate();
 
+  let formatted = board.regdate
+    .replace('T', ' ')
+    .slice(0, board.regdate.lastIndexOf('.'));
 
   const { moveToList, moveToModify } = useCustomMove();
 
@@ -75,29 +80,35 @@ const BoardReadComponent = ({ boardNo }) => {
           <span>{formatDate(board.regdate)}</span>
         </div>
 
-        <div className="text-lg text-gray-700 leading-relaxed text-center mb-8">
-          {board.contents}
-        </div>
+          <div className="flex flex-col justify-center items-center w-full m-3">
+            <div className="w-2/3 shadow-lg p-5 pr-5">
+              <div className="p-6 font-bold">내용</div>
+              <div className="p-6 rounded-r border border-solid shadow-md">
+                {board.contents}
+              </div>
+            </div>
+          </div>
 
-        <div className="flex justify-center gap-6 mt-8">
-          <button
-            type="button"
-            className="px-6 py-3 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer "
-            onClick={() => moveToModify(boardNo)}
-          >
-            수정
-          </button>
+          <div className="flex justify-center p-4">
+            {deptNo===999||email===board.mailAddress?<button
+              type="button"
+              className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#9bb5bd] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+              onClick={() => moveToModify(boardNo)}
+            >
+              수정
+            </button>:<></>}
+            
 
-          <button
-            type="button"
-            className="px-6 py-3 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
-            onClick={moveToList}
-          >
-            리스트
-          </button>
+            <button
+              type="button"
+              className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#9bb5bd] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+              onClick={moveToList}
+            >
+              리스트
+            </button>
           </div>
         </div>
-        </div>
+       </div>
     </>
   );
 };

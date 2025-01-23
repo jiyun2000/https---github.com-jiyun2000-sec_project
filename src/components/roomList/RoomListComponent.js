@@ -59,7 +59,7 @@ const RoomListComponent = () => {
                 </div>
         </div>
 
-            <h2 className='text-center mt-8 text-3xl'>회의실(화장실) 안내</h2>
+            <h2 className='text-center mt-8 text-3xl'>회의실 안내</h2>
             <div className='flex flex-wrap mx-auto p-6 items-start justify-center text-center'>
                 {roomList.map((res)=>{
                     return(

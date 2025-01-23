@@ -3,8 +3,8 @@ import { getList } from '../../api/boardApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
 import { getCookie } from '../../util/cookieUtil';
-import mail from "../../assets/icon/mail.png";
-import chat from "../../assets/icon/chat.png";
+import mail from '../../assets/icon/mail.png';
+import chat from '../../assets/icon/chat.png';
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ const initState = {
 
 const BoardListComponent = () => {
   const [board, setBoard] = useState(initState);
-  const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+  const [empNo, setEmpNo] = useState(getCookie('member').empNo);
   const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
   const navigate = useNavigate();
 
@@ -46,82 +46,87 @@ const BoardListComponent = () => {
   const formatDate = (dateStr) => {
     const date = new Date(dateStr);
     return date.toLocaleDateString();
-  }
+  };
 
-  useEffect(()=>{
-
-  })
+  useEffect(() => {});
 
   const goToBoardList = () => {
-    navigate(`/board/list`)
-  }
+    navigate(`/board/list`);
+  };
 
   return (
     <>
-    <div>
-      <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
-        <div className="flex items-center space-x-8">
-          <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
-            [공지사항]
+      <div>
+        <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+          <div className="flex items-center space-x-8">
+            <div
+              className="text-2xl font-semibold text-blue-800 select-none cursor-pointer"
+              onClick={goToBoardList}
+            >
+              [공지사항]
+            </div>
+            <div className="w-64 text-2xl font-semibold cursor-pointer">
+              <BoardTitleComponent />
+            </div>
           </div>
-          <div className="w-64 text-2xl font-semibold cursor-pointer">
-            <BoardTitleComponent />
+          <div className="flex space-x-4">
+            <Link to="/mail" className="w-12 cursor-pointer">
+              <img src={mail} alt="Mail" className="w-full" />
+            </Link>
+            <Link
+              to={`/chat/empList/${empNo}?page=1`}
+              className="w-12 cursor-pointer"
+            >
+              <img src={chat} alt="Chat" className="w-full" />
+            </Link>
           </div>
         </div>
-        <div className="flex space-x-4">
-          <Link to="/mail" className="w-12 cursor-pointer">
-            <img src={mail} alt="Mail" className="w-full" />
-          </Link>
-          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
-            <img src={chat} alt="Chat" className="w-full" />
-          </Link>
+
+        <div className="flex flex-col p-5 m-10  justify-center rounded-md">
+          <div className="text-3xl font-semibold text-center m-5">
+            <h2>공지사항</h2>
+          </div>
+
+          <div className="overflow-x-auto w-full">
+            <table className="w-full ">
+              <thead className="bg-gray-200 sticky top-0 z-10">
+                <tr>
+                  <th className="px-6 py-4 text-center">번호</th>
+                  <th className="px-6 py-4 text-center">분류</th>
+                  <th className="px-6 py-4 text-center">제목</th>
+                  <th className="px-6 py-4 text-center">등록일</th>
+                </tr>
+              </thead>
+              <tbody>
+                {board.dtoList.map((data) => (
+                  <tr
+                    key={data.boardNo}
+                    className="bg-gray-50 cursor-pointer text-center"
+                    onClick={() => moveToRead(data.boardNo)}
+                  >
+                    <td className="px-6 py-4 text-center">{data.boardNo}</td>
+                    <td className="px-6 py-4 text-center">{data.category}</td>
+                    <td className="px-6 py-4 text-center">{data.title}</td>
+                    <td className="px-6 py-4 text-center">
+                      {formatDate(data.regdate)}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-
-    
-      <div className='flex flex-col p-5 m-10  justify-center rounded-md'>
-        <div className="text-3xl font-semibold text-center m-5">
-          <h2>공지사항</h2>
+        <div className="flex justify-center p-4">
+          <button
+            type="button"
+            className="inline-block  p-4 m-2 text-xl w-32 text-white  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+            onClick={handleClickAdd}
+          >
+            추가
+          </button>
         </div>
-
-
-        <div className="overflow-x-auto w-full">
-                    <table className="w-full ">
-                        <thead className="bg-gray-200 sticky top-0 z-10">
-                            <tr>
-                                <th className="px-6 py-4 text-center">번호</th>
-                                <th className="px-6 py-4 text-center">제목</th>
-                                <th className="px-6 py-4 text-center">등록일</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {board.dtoList.map((data) => (
-                                <tr
-                                key={data.boardNo}
-                                className="bg-gray-50 cursor-pointer text-center" 
-                                onClick={() => moveToRead(data.boardNo)}
-                                >
-                                    <td className="px-6 py-4 text-center">{data.boardNo}</td>
-                                    <td className="px-6 py-4 text-center">{data.title}</td>
-                                    <td className="px-6 py-4 text-center">{formatDate(data.regdate)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-
+        <PageComponent serverData={board} movePage={moveToList} />
       </div>
-      <div className="flex justify-center p-4">
-        <button
-          type="button"
-          className="inline-block  p-4 m-2 text-xl w-32 text-white  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
-          onClick={handleClickAdd}
-        >
-          추가
-        </button>
-      </div>
-          <PageComponent serverData={board} movePage={moveToList} />
-        </div>
     </>
   );
 };

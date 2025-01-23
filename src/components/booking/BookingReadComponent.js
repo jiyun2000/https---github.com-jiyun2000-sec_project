@@ -30,6 +30,8 @@ const BookingReadComponent = ({bookNo})=>{
     const [roomList, setRoomList] = useState(initStateRL);
 
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    
+    const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
 
     const navigate = useNavigate();
 
@@ -125,11 +127,12 @@ const BookingReadComponent = ({bookNo})=>{
             </div>
 
             <div className="w-full flex justify-center p-4">
-                <button type="button" 
+                {deptNo===999||empNo===booking.empNo?<button type="button" 
                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
                 onClick={()=>moveToModify(bookNo)}>
                     수정
-                </button>
+                </button>:<></>}
+                
 
                 <button type="button"
                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"

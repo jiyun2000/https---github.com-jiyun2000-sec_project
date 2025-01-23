@@ -67,14 +67,14 @@ const RoomListModifyComponent = ({roomNo}) => {
         <div className="border-2 border-blue-300 mt-10 m-2 p-4">
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">회의실(화장실) 번호</div>
+                    <div className="w-1/5 p-6 font-bold">회의실 번호</div>
                     <div className="w-4/5 p-6 rounded-md border border-blue-300 ">{roomList.roomNo}</div>
                 </div>
             </div>
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">회의실(화장실) 이름</div>
+                    <div className="w-1/5 p-6 font-bold">회의실 이름</div>
                     <input className="w-4/5 p-6  rounded-md border border-blue-300" 
                     name="roomName"
                     type={'text'} 
@@ -85,7 +85,7 @@ const RoomListModifyComponent = ({roomNo}) => {
 
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
-                    <div className="w-1/5 p-6 font-bold">회의실(화장실) 주소</div>
+                    <div className="w-1/5 p-6 font-bold">회의실 주소</div>
                     <input className="w-4/5 p-6  rounded-md border border-blue-300" 
                     name="location"
                     type={'text'} 

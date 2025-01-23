@@ -34,6 +34,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
     const [employees, setEmployees] = useState(initStateEmp);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {page, size, moveToDeptInfoList, moveToList, moveToModify} = useCustomMove();
+    const [deptInfoNo, setDeptInfoNo] = useState(getCookie("member").deptNo);
     const navigate = useNavigate();
 
     useEffect(()=>{
@@ -99,13 +100,14 @@ const DeptInfoReadComponent = ({deptNo})=>{
         </div>
   
         <div className="mt-8 flex justify-center gap-4">
-            <button
+            {deptInfoNo===999?<button
                 type="button"
                 className="px-6 py-2 text-xl font-medium text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
                 onClick={() => moveToModify(deptNo)}
             >
             수정
-            </button>
+            </button>:<></>}
+            
             <button
                 type="button"
                 className="px-6 py-2 text-xl font-medium text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"

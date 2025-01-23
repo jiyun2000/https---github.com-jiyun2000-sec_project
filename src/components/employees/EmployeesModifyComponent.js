@@ -108,7 +108,7 @@ const EmployeesModifyComponent = ({empNo}) => {
         <h1 className="text-3xl font-semibold mb-6">{employees.firstName} {employees.lastName} 님 사원정보 수정</h1>
         <div className="bg-white p-4  mb-2 w-full">
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                <div className="w-[12%] p-6 font-bold">사원번호</div>
+                <div className="w-[12%] p-6 text-right font-bold">사원번호</div>
                 <div className="w-[25%] p-6 rounded-md border border-slate-400 text-center">{employees.empNo}</div>
             </div>
 
@@ -122,7 +122,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6  font-bold">이름</div>
+                    <div className="w-[12%] p-6 text-right font-bold">이름</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
                     name="lastName"
                     type={'text'} 
@@ -140,7 +140,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6  font-bold">연봉</div>
+                    <div className="w-[12%] p-6 text-right font-bold">연봉</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
                     name="salary"
                     type={'number'} 
@@ -149,28 +149,26 @@ const EmployeesModifyComponent = ({empNo}) => {
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6t font-bold">부서 번호</div>
-                    <select name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
-                        <option value={100}>100(GA)</option>
-                        <option value={200}>200(HR)</option>
-                        <option value={300}>300(ACC)</option>
+                    <div className="w-[12%] p-6 text-right font-bold">부서</div>
+                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
+                        {deptInfo.map((data)=>{
+                            return data.deptNo===999?<></>:(<option value={data.deptNo}>{data.deptName}</option>)
+                        })}
 
                     </select>
             </div>
             
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 font-bold">직책 번호</div>
-                    <select name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
-                    <option value={100}>100(디렉터)</option>
-                        <option value={200}>200(매니저)</option>
-                        <option value={300}>300(시니어)</option>
-                        <option value={400}>400(사원)</option>
-                        <option value={500}>500(인턴)</option>
+                    <div className="w-[12%] p-6 text-right font-bold">직책</div>
+                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
+                    {job.map((data)=>{
+                            return data.jobNo===999?<></>:(<option value={job.jobNo}>{data.jobTitle}</option>)
+                        })}
                     </select>
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 font-bold">생년월일</div>
+                    <div className="w-[12%] p-6 text-right font-bold">생년월일</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
                     name="birthday"
                     type={'date'} 
@@ -179,7 +177,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 font-bold">주소</div>
+                    <div className="w-[12%] p-6 text-right font-bold">주소</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
                     name="address"
                     type={'text'} 
@@ -188,7 +186,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 font-bold">전화번호</div>
+                    <div className="w-[12%] p-6 text-right font-bold">전화번호</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
                     name="phoneNum"
                     type={'text'} 
@@ -197,7 +195,7 @@ const EmployeesModifyComponent = ({empNo}) => {
             </div>
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 font-bold">성별</div>
+                    <div className="w-[12%] p-6 text-right font-bold">성별</div>
                     {/* <select name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
                     <option value={100}>100(디렉터)</option>
                         <option value={200}>200(매니저)</option>
@@ -213,11 +211,20 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 font-bold">주민등록번호</div>
+                    <div className="w-[12%] p-6 text-right font-bold">주민등록번호</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
                     name="citizenId"
                     type={'text'} 
                     value={employees.citizenId} 
+                    onChange={handleChangeEmployees}></input>
+            </div>
+
+            <div className="flex flex-row items-center justify-center mt-10 mb-4">
+                    <div className="w-[12%] p-6 text-right font-bold">비밀번호</div>
+                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+                    name="password"
+                    type={'password'} 
+                    value={employees.password} 
                     onChange={handleChangeEmployees}></input>
             </div>
 
