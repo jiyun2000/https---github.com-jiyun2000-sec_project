@@ -79,6 +79,7 @@ const ReportAddComponent = () => {
         formData.append('finalReceiver',report.finalReceiver);
 
         addReport(empNo,formData).then(()=>{
+            alert("등록되었습니다.");
             moveToReportReceivedPage();
         });
     };
@@ -132,7 +133,7 @@ const ReportAddComponent = () => {
                     onChange={handleChangeReport}>
                         <option value={0}></option>
                         {employees.map((res)=>{
-                            return(
+                            return res.empNo===empNo?<></>:(
                                 <option value={res.empNo}> {res.firstName} {res.lastName}</option>
                             )
                         })}
@@ -150,7 +151,7 @@ const ReportAddComponent = () => {
                     onChange={handleChangeReport}>
                         <option value={0}></option>
                         {employees.map((res)=>{
-                            return(
+                            return res.empNo===empNo?<></>:(
                                 <option value={res.empNo}> {res.firstName} {res.lastName}</option>
                             )
                         })}
