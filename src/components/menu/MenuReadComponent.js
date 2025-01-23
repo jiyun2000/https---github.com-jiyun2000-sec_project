@@ -107,14 +107,14 @@ const MenuReadComponent = () => {
 
                 <div className="flex justify-center space-x-6">
                     <button
-                        className="w-1/3 bg-sky-300 text-white py-3 rounded-md hover:bg-sky-400 text-xl"
+                        className="w-1/3 bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white py-3 rounded-md text-xl"
                         type="button"
                         onClick={() => modMenu(menuRead.menuNo)}
                     >
                         수정
                     </button>
                     <button
-                        className="w-1/3 bg-red-400 text-white py-3 rounded-md hover:bg-red-500 text-xl"
+                        className="w-1/3 bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white py-3 rounded-md text-xl"
                         type="button"
                         onClick={() => delMenu(menuRead.menuNo)}
                     >

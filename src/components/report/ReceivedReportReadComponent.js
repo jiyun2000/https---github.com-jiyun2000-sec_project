@@ -211,21 +211,21 @@ const ReceivedReportReadComponent = ({reportNo}) => {
         
         
         <button type="button" 
-          className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+          className="rounded p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
           onClick={handleClickApprove}
         >
           승인
         </button>
 
         <button type="button" 
-          className="rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
+          className="rounded p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
           onClick={handleClickReturn}
         >
           반려
         </button>
 
         <button type="button" 
-          className="rounded p-4 m-2 text-xl w-32 text-white bg-sky-200"
+          className="rounded p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
           onClick={()=>moveToReportReceivedPage()}
         >
           List

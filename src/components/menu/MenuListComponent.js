@@ -96,7 +96,7 @@ const MenuListComponent = () => {
 
             <PageComponent serverData={menuList} movePage={moveToMenuList} />
             <div className="flex justify-center items-center">
-                <button type="button" className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] mb-8" onClick={goToMenuAdd}>
+                <button type="button" className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-lg mb-8" onClick={goToMenuAdd}>
                     메뉴 등록
                 </button>
             </div>

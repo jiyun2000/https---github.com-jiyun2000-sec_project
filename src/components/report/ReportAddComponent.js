@@ -172,7 +172,7 @@ const ReportAddComponent = () => {
 
             <div className="flex justify-center p-4">
                 <button type="button"
-                className="mt-4 bg-blue-300 text-white py-2 px-4 rounded-md w-2/5 text-sm "
+                className="mt-4 bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white py-2 px-4 rounded-md w-2/5 text-sm "
                 onClick={handleClickAdd}>
                     등록
                 </button>

@@ -72,7 +72,7 @@ const JobListComponent = () => {
 
         <div className="flex p-4 justify-center">
         <button type="button"
-        className=" p-4 m-2 text-xl w-28 h-18 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+        className=" p-4 m-2 text-xl w-28 h-18 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
         onClick={handleClickAdd}>
             추가
         </button>

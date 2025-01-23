@@ -75,7 +75,7 @@ const SentReportListComponent = () => {
         <div className="flex justify-center mb-6 space-x-4">
                 <div className="flex-1 text-center py-4  text-white  bg-gray-300 rounded-lg shadow-md cursor-pointer hover:bg-gray-400 " 
                 onClick={handleClickMove}>받은 결재문서</div>
-                <div className="flex-1 text-center py-4  bg-[#aacbd5] text-white rounded-lg shadow-md cursor-pointer hover:bg-[#9bb5bd] " 
+                <div className="flex-1 text-center py-4   text-white rounded-lg shadow-md cursor-pointer bg-[#8ba7cd]  hover:bg-[#6f8cb4] " 
                 >작성한 결재문서</div>
             </div>
         </div>
@@ -134,7 +134,7 @@ const SentReportListComponent = () => {
 
         <div className="flex justify-center mt-8">
         <button type="button"
-         className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+         className="text-white py-2 px-6 text-lg  bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
         onClick={handleClickAdd}>
             등록
         </button>

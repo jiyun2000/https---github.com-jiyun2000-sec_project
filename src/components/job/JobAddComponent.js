@@ -80,7 +80,7 @@ const JobAddComponent = () => {
 
             <div className="flex justify-end p-4 ">
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-28 h-18 text-white bg-blue-300"
+                className="rounded p-4 m-2 text-xl w-28 h-18 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
                 onClick={handleClickAdd}>
                     추가
                 </button>

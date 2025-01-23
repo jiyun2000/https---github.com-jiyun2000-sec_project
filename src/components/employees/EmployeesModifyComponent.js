@@ -230,13 +230,13 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex justify-center p-4">
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+                className="inline-block  p-4 m-2 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md cursor-pointer"
                 onClick={handleClickModify}>
                     수정
                 </button>
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+                className="inline-block  p-4 m-2 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md cursor-pointer"
                 onClick={handleClickDelete}
                 >
                     삭제

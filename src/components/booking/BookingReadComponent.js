@@ -128,14 +128,14 @@ const BookingReadComponent = ({bookNo})=>{
 
             <div className="w-full flex justify-center p-4">
                 {deptNo===999||empNo===booking.empNo?<button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={()=>moveToModify(bookNo)}>
                     수정
                 </button>:<></>}
                 
 
                 <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={moveToList}>
                     리스트
                 </button>

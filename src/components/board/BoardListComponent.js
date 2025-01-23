@@ -119,7 +119,7 @@ const BoardListComponent = () => {
         <div className="flex justify-center p-4">
           <button
             type="button"
-            className="inline-block  p-4 m-2 text-xl w-32 text-white  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+            className="inline-block  p-4 m-2 text-xl w-32 text-white  rounded-md bg-[#8ba7cd]  hover:bg-[#6f8cb4]  cursor-pointer"
             onClick={handleClickAdd}
           >
             추가

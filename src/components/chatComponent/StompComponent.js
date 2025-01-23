@@ -189,7 +189,7 @@ const StompComponent = () => {
         leaveChatRoom(senderEmpNo,receiverEmpNo);
         console.log("senderEmpNo 2 " + senderEmpNo);
         console.log("receiverEmpNo 2 " + receiverEmpNo);
-        navigate(`/chat/empList/${receiverEmpNo}`);
+        navigate(`/chat/empList/${senderEmpNo}`);
     }
 
     const goToBoardList = () => {
@@ -241,11 +241,11 @@ const StompComponent = () => {
                             type="text"
                             value={messageObj.content}
                             onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
-                            className='border-2 border-[#7793df] rounded-md p-1 w-2/5 '
+                            className='border-2 border-[#6f8cb4] rounded-md p-1 w-2/5 '
                         />
                         <button type="submit" 
                             onClick={stompHandler.sendMessage}
-                            className='border border-[#7793df] rounded-md mx-2 p-1 w-1/6 hover:bg-[#7793df]'
+                            className='bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mx-2 p-1 w-1/6 '
                         >
                             전송
                         </button>
@@ -256,7 +256,7 @@ const StompComponent = () => {
                         flexDirection: 'column', 
                         width: '60%', 
                         height: '700px', 
-                        backgroundColor: '#B4E5FF', 
+                        backgroundColor: '#b3c1d6', 
                         border: '1px solid black', 
                         margin: '20px', 
                         overflowY: 'scroll' 
@@ -286,10 +286,10 @@ const StompComponent = () => {
                 </div>
 
                     <div style={{ marginTop: 10 }}>
-                        <button type="button" onClick={stompHandler.disconnect} className=' text-[#303030] border border-[#7793df] hover:bg-[#7793df] rounded-md p-1 '>
+                        <button type="button" onClick={stompHandler.disconnect} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md p-1 '>
                             닫기
                         </button> 
-                        <button type='button' onClick={outChatRoom} className=' text-[#303030] border border-[#7793df] hover:bg-[#7793df] p-1 mx-1 rounded-md '>채팅방 나가기</button>
+                        <button type='button' onClick={outChatRoom} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4]] p-1 mx-1 rounded-md '>채팅방 나가기</button>
                     </div>
                 </div>
             )}

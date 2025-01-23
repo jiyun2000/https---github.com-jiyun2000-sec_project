@@ -102,7 +102,7 @@ const CommuteListComponent = ()=>{
                     <div className="flex p-4 w-[15%] justify-center">
                         <button 
                             type="button" 
-                            className="inline-block px-6 py-3 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                            className="inline-block px-6 py-3 text-xl text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
                             onClick={() => moveToModifyCommute(data.commNo)}
                         >
                             수정
@@ -125,19 +125,19 @@ const CommuteListComponent = ()=>{
             <div className="flex justify-center p-4 gap-4">
 
                 <button type="button" 
-                className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
                 onClick={()=>handleCheckIn()}>
                     출근
                 </button>
                 
                 <button type="button" 
-                className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
                 onClick={()=>handleCheckOut()}>
                     퇴근
                 </button>
 
                 <button type="button"  
-                className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
                 onClick={()=>moveToRead(empNo)}>
                     이전
                 </button>
@@ -149,7 +149,7 @@ const CommuteListComponent = ()=>{
                 </button> */}
 
                 <button type="button"
-                className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
                 onClick={()=>moveToList({page})}>
                     직원목록
                 </button>

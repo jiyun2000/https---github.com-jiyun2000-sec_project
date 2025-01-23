@@ -93,14 +93,14 @@ const JobReadComponent = ({jobNo})=>{
 
             <div className="flex justify-center p-4 gap-4">
                 {deptNo===999?<button type="button" 
-                className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+                className="py-2 px-6 text-lg  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={()=>moveToModify(jobNo)}>
                     수정
                 </button>:<></>}
                 
 
                 <button type="button"
-                className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+                className="py-2 px-6 text-lg  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={moveToList}>
                     리스트
                 </button>

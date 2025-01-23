@@ -71,7 +71,7 @@ const ReceivedReportListComponent = () => {
 
     <div className=" mx-auto p-6">
             <div className="flex justify-center mb-6 space-x-4">
-                <div className="flex-1 text-center py-4 bg-[#aacbd5] text-white rounded-lg shadow-md cursor-pointer hover:bg-[#9bb5bd]"
+                <div className="flex-1 text-center py-4  text-white rounded-lg shadow-md cursor-pointer bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
                     onClick={() => moveToReportReceivedPage()}>
                     받은 결재문서
                 </div>
@@ -108,7 +108,7 @@ const ReceivedReportListComponent = () => {
 
             <div className="flex justify-center mt-8">
                 <button 
-                    className=" text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                    className=" text-white py-2 px-6 text-lg  bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
                     onClick={handleClickAdd}>
                     등록
                 </button>

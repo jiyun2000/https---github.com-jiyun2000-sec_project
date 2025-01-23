@@ -84,7 +84,7 @@ const DeptInfoListComponent = () => {
 
             <div className="flex justify-center p-6">
                 <button type="button"
-                    className="inline-block px-6 py-3 text-xl font-medium text-white bg-[#7C9BCA] rounded-lg hover:bg-[#5A82A7] "
+                    className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md "
                     onClick={handleClickAdd}>
                     추가
                 </button>
