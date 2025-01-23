@@ -79,6 +79,7 @@ const ReportAddComponent = () => {
         formData.append('finalReceiver',report.finalReceiver);
 
         addReport(empNo,formData).then(()=>{
+            alert("등록되었습니다.");
             moveToReportReceivedPage();
         });
     };

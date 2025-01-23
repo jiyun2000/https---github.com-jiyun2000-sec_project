@@ -27,7 +27,9 @@ const JobModifyComponent = ({jobNo}) => {
     }
 
     const handleClickModify = () => {
-        putOne(jobNo,job).then(()=>moveToRead(jobNo));
+        putOne(jobNo,job).then(()=>{
+            alert("수정되었습니다.");
+            moveToRead(jobNo);});
     }
 
     const handleChangeJob = (evt) => {

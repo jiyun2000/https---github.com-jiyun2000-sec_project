@@ -21,7 +21,9 @@ const JobAddComponent = () => {
     const {moveToList} = useCustomMove();
 
     const handleClickAdd = () => {
-        addOne(job).then(()=>moveToList());
+        addOne(job).then(()=>{
+            alert("등록되었습니다.");
+            moveToList();});
     }
 
     const handleChangeJob = (evt) => {

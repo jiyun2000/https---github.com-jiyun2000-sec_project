@@ -69,7 +69,9 @@ const EmployeesModifyComponent = ({empNo}) => {
     }
 
     const handleClickModify = () => {
-        putOne(empNo,employees).then(()=>moveToRead(empNo));
+        putOne(empNo,employees).then(()=>{
+            alert("수정되었습니다.");
+            moveToRead(empNo);});
     }
 
     const handleChangeEmployees = (evt) => {
