@@ -207,7 +207,7 @@ const MailWriteModal = () => {
     <>
       <div className="size-full flex justify-center items-end">
         <button
-          className="w-[80%] rounded-lg mb-2 text-3xl bg-blue-700 text-gray-100"
+          className="w-[80%] rounded-lg mb-2 text-3xl bg-slate-300 text-slate-800"
           onClick={() => setModalOpen(true)}
         >
           메일 쓰기
@@ -233,11 +233,11 @@ const MailWriteModal = () => {
                 <div className="h-12 min-h-12 w-full bg-blue-400 border-b-2 border-b-gray-600 text-3xl flex items-center text-gray-800 rounded-t-lg">
                   메일 작성
                   <div
-                    className="fixed right-0 top-0 size-12 bg-red-500 rounded-tr-lg"
+                    className="fixed right-0 top-0 size-12 bg-red-500 rounded-tr-lg text-center cursor-pointer"
                     onClick={() => {
                       setModalOpen(false);
                     }}
-                  ></div>
+                  >X</div>
                 </div>
                 <div className="h-[100%] max-h-full min-h[172px] w-full border-4 border-white flex flex-col justify-stretch">
                   <div className="w-full flex flex-wrap">
@@ -374,8 +374,8 @@ const MailWriteModal = () => {
                 <div className="h-[100%] max-h-20 min-h-20 w-full border-t-2 border-b-gray-600 bg-gray-100 flex flex-wrap items-center">
                   <div className="w-[70%] flex">
                     <div className="size-20 bg-pink-400">
-                      <label className="fixed size-20" ref={dndRef}>
-                        file
+                      <label className="fixed size-20 text-center cursor-pointer" ref={dndRef}>
+                      파일첨부
                         <input
                           type="file"
                           hidden="true"
@@ -387,24 +387,24 @@ const MailWriteModal = () => {
                       </label>
                     </div>
                     <div className="size-20 bg-red-300">
-                      <label className="fixed size-20">
-                        file
+                      <label className="fixed size-20 text-center cursor-pointer">
+                        파일첨부
                         <input type="file" hidden="true"></input>
                       </label>
                     </div>
                     <div
-                      className="size-20 bg-green-300"
+                      className="size-20 "
                       onClick={() => {
                         setIsExtraShow(true);
                       }}
                     >
-                      3
+                      
                     </div>
-                    <div className="size-20 bg-blue-300">4</div>
+                    <div className="size-20 "></div>
                   </div>
                   <div className="w-[30%] h-full flex flex-wrap items-center">
                     <div
-                      className="bg-blue-700 w-[90%] h-[85%] flex rounded-full m-auto items-center justify-around text-gray-100 text-2xl"
+                      className="bg-blue-700 w-[90%] h-[85%] flex rounded-full m-auto items-center justify-around text-gray-100 text-2xl cursor-pointer"
                       onClick={() => {
                         sendMail({
                           selectedEmail: selectedEmailList,
