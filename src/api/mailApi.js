@@ -25,7 +25,7 @@ export const sendMail = async (pageParam) => {
   console.log(content);
   console.log(getCookie('member'));
 
-  form.append('sendEmpNo', getCookie("member").email);
+  form.append('sendEmpNo', getCookie('member').email);
   form.append('contents', content);
   form.append('title', title);
   form.append('mailCategory', 'std');
@@ -91,5 +91,27 @@ export const findReceivers = async (pageParam) => {
       email: email,
     },
   });
+  return res.data;
+};
+export const changeCat = async (mailNo, modCat) => {
+  const res = await jwtAxios.put(`${host}/m`, null, {
+    params: {
+      category: modCat,
+      mailNo: mailNo,
+    },
+  });
+};
+
+export const deleteMail = async (mailNo) => {
+  let cat = 'isDelete';
+  const res = await jwtAxios.put(`${host}/m`, null, {
+    params: {
+      category: cat,
+      mailNo: mailNo,
+    },
+  });
+};
+export const getAttached = async ({ mailNo }) => {
+  const res = await jwtAxios.get(`${host}/${mailNo}/attcfile`);
   return res.data;
 };

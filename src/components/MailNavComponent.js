@@ -36,47 +36,41 @@ const MailNavComponent = () => {
   };
   const newTotals = Math.ceil(mailData.totalCnt / size);
   return (
-    <div className="h-48">
-      {/* <div
-        className=" bg-blue-400 fixed h-48 w-[85%] flex flex-row
-      "
-      > */}
-        <div className="h-full w-[30%]">
-          <MailWriteModal />
+    <div className="h-20 flex flex-row shadow-lg">
+      <div className=" w-[30%]">
+        <MailWriteModal />
+      </div>
+      <div className=" w-[70%] flex flex-row">
+        <div>
+          {page} of {newTotals ? newTotals : 1}
         </div>
-        <div className="h-full w-[70%] flex flex-row">
-          <div>
-            {page} of {newTotals}
-          </div>
 
-          <div>
-            {page < newTotals ? (
-              <button
-                type="button"
-                onClick={() => {
-                  pageMove(1);
-                }}
-              >
-                up
-              </button>
-            ) : (
-              <></>
-            )}
-            {page > 1 ? (
-              <button
-                type="button"
-                onClick={() => {
-                  pageMove(-1);
-                }}
-              >
-                down
-              </button>
-            ) : (
-              <></>
-            )}
-          </div>
+        <div>
+          {page < newTotals ? (
+            <img
+              className="size-5 cursor-pointer"
+              onClick={() => {
+                pageMove(1);
+              }}
+              src={require('../assets/icon/angle-right.png')}
+            ></img>
+          ) : (
+            <></>
+          )}
+          {page > 1 ? (
+            <img
+              className="size-5 cursor-pointer"
+              onClick={() => {
+                pageMove(-1);
+              }}
+              src={require('../assets/icon/angle-left.png')}
+            ></img>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
+    </div>
     // </div>
   );
 };
