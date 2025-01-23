@@ -62,6 +62,7 @@ const EmployeesAddComponent = () => {
     const handleClickAdd = () => {
         addOne(employees).then((data)=>{
             setALOne(data).then(()=>{
+                alert("등록되었습니다.");
                 moveToList();
             });
         });

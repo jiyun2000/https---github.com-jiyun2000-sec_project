@@ -28,6 +28,7 @@ const BoardAddComponent = () => {
   const handleClickAdd = () => {
     board['mailAddress'] = getCookie('member').email;
     addOne(board).then(() => {
+      alert("등록되었습니다.");
       moveToList();
     });
   };

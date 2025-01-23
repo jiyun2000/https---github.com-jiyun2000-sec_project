@@ -44,11 +44,15 @@ const BookingModifyComponent = ({bookNo}) => {
     },[bookNo]);
 
     const handleClickDelete = () => {
-        delOne(bookNo).then(()=>moveToList());
+        delOne(bookNo).then(()=>{
+            alert("삭제되었습니다.");
+            moveToList();});
     }
 
     const handleClickModify = () => {
-        putOne(bookNo,booking).then(()=>moveToRead(bookNo));
+        putOne(bookNo,booking).then(()=>{
+            alert("수정되었습니다.");
+            moveToRead(bookNo);});
     }
 
     const handleChangeBooking = (evt) => {

@@ -30,12 +30,16 @@ const DayOffModifyComponent = ({dayOffNo}) => {
         dayOff['offHours'] = 0;
         setDayOff({...dayOff});
         putOne(dayOffNo,dayOff).then(()=>{
-            delOne(dayOffNo).then(()=>moveToList());
+            delOne(dayOffNo).then(()=>{
+                alert("삭제되었습니다.");
+                moveToList();});
         });
     }
 
     const handleClickModify = () => {
-        putOne(dayOffNo,dayOff).then(()=>moveToRead(dayOffNo));
+        putOne(dayOffNo,dayOff).then(()=>{
+            alert("수정정되었습니다.");
+            moveToRead(dayOffNo)});
     }
 
     const handleChangeDayOff = (evt) => {

@@ -33,12 +33,14 @@ const BoardModifyComponent = ({ boardNo }) => {
     setBoard({ ...board });
 
     putOne(boardNo, board).then(() => {
+      alert("처리되었습니다.");
       moveToList();
     });
   };
-
+  
   const handleClickModify = () => {
     putOne(boardNo, board).then(() => {
+      alert("수정되었습니다.");
       moveToRead(boardNo);
     });
   };

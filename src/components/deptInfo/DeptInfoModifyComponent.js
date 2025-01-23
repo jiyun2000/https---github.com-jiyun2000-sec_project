@@ -29,7 +29,9 @@ const DeptInfoModifyComponent = ({deptNo}) => {
     }
 
     const handleClickModify = () => {
-        putOne(deptNo,deptInfo).then(()=>moveToRead(deptNo));
+        putOne(deptNo,deptInfo).then(()=>{
+            alert("삭제제되었습니다.");
+            moveToRead(deptNo);});
     }
 
     const handleChangeDeptInfo = (evt) => {

@@ -132,7 +132,7 @@ const ReportAddComponent = () => {
                     onChange={handleChangeReport}>
                         <option value={0}></option>
                         {employees.map((res)=>{
-                            return(
+                            return res.empNo===empNo?<></>:(
                                 <option value={res.empNo}> {res.firstName} {res.lastName}</option>
                             )
                         })}
@@ -150,7 +150,7 @@ const ReportAddComponent = () => {
                     onChange={handleChangeReport}>
                         <option value={0}></option>
                         {employees.map((res)=>{
-                            return(
+                            return res.empNo===empNo?<></>:(
                                 <option value={res.empNo}> {res.firstName} {res.lastName}</option>
                             )
                         })}

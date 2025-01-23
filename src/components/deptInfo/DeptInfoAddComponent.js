@@ -21,8 +21,11 @@ const DeptInfoAddComponent = () => {
     const navigate = useNavigate();
 
     const handleClickAdd = () => {
-        addOne(deptInfo).then(()=>moveToList());
-    }
+        addOne(deptInfo).then(()=>{
+            alert("등록되었습니다.");
+            moveToList();
+        }
+    )}
 
     const handleChangeDeptInfo = (evt) => {
         deptInfo[evt.target.name] = evt.target.value;

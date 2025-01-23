@@ -27,7 +27,7 @@ const DayOffAddComponent = () => {
     const handleClickAdd = () => {
         dayOff["empNo"] = getCookie("member").empNo;
         addOne(dayOff).then(()=>{
-            navigate({pathname:`../../employees/annualleave/${dayOff.empNo}`});
+            navigate({pathname:`../../employees/annualleave`});
         });
     }
 
