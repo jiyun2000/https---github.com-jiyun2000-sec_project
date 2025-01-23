@@ -18,6 +18,8 @@ export const putEmpScheduleOne = async (empScheObj, empNo, empSchNo) => {
 
 //empSchedule 삭제
 export const deleteScheduleOne = async (empNo, empSchNo) => {
+    console.log(empSchNo);
+    console.log(empSchNo)
     const res = await jwtAxios.delete(`${host}/${empNo}/${empSchNo}`);
     return res.data;
 }
