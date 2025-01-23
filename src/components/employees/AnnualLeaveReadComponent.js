@@ -132,6 +132,7 @@ const AnnualLeaveReadComponent = ()=>{
             </div>
         </div>
     </div>
+    </div>
     </>
 }
 
