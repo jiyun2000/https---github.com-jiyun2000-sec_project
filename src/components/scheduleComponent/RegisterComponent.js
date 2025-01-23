@@ -23,6 +23,14 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
     }
         
     const handleSaveEvent = () => {
+        const startDateObj = new Date(newEvent.start);
+        const endDateObj = new Date(newEvent.end);
+
+        if(endDateObj < startDateObj){
+            alert("끝나는 시간이 시작시간보다 이릅니다.")
+            return;
+        }
+
         console.log("!!!!!" + empNo);
         const empNoSave = {...newEvent, empNo :empNo};
         postEmpScheule(empNoSave, empNo).then((data) => {
