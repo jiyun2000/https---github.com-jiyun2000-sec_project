@@ -19,7 +19,7 @@ const initState = {
 const MailPage = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(50);
-  const [cat, setCat] = useState('cat1');
+  const [cat, setCat] = useState('std');
   const [mailNo, setMailNo] = useState(0);
   const [mailData, setMailData] = useState(initState);
   useEffect(() => {

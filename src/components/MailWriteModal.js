@@ -188,6 +188,9 @@ const MailWriteModal = () => {
     findReceivers(receiverEmail).then((data) => {
       let dataList = [];
       let cyc = 0;
+      if(!data){
+        return;
+      }
       for (let item of data) {
         dataList.push({ id: cyc++, item: item });
       }
