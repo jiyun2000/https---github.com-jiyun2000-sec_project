@@ -6,7 +6,7 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 
-const ChatListComponent = ({newMsg, setNewMsg}) => {
+const ChatListComponent = () => {
     const { senderEmpNo } = useParams();
     const [chatList, setChatList] = useState([]);
     const [userNames, setUserNames] = useState({});  
@@ -56,7 +56,6 @@ const ChatListComponent = ({newMsg, setNewMsg}) => {
     
 
     const goToChatRoom = (chatNo) => {
-        setNewMsg(false);
         const [emp1, emp2] = chatNo.split('_');
         const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
 
@@ -87,12 +86,7 @@ const ChatListComponent = ({newMsg, setNewMsg}) => {
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
                     <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer">
-                        <img src={chat} alt="Chat" className="w-full"  />
-                        {newMsg && (
-                            <div className="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                                    ★
-                            </div>
-                        )}
+                        <img src={chat} alt="Chat" className="w-full"  />  
                     </Link>
                 </div>
             </div>
@@ -118,7 +112,7 @@ const ChatListComponent = ({newMsg, setNewMsg}) => {
                                     </div>
                                     <button
                                         type="button"
-                                        className="w-full bg-blue-300 text-white py-2 px-4 rounded-md text-sm"
+                                        className="w-full bg-[#8ba7cd] hover:bg-[#6f8cb4] text-white py-2 px-4 rounded-md text-sm"
                                         onClick={() => goToChatRoom(chat.chatNo)}
                                     >
                                         채팅 시작
@@ -132,7 +126,7 @@ const ChatListComponent = ({newMsg, setNewMsg}) => {
             <div className="fixed bottom-10 left-0 right-0 flex justify-center mb-4">
                 <button
                     type="button"
-                    className="bg-sky-300 text-white py-2 px-6 rounded-full text-lg"
+                    className="bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] py-2 px-6 rounded-full text-lg"
                     onClick={goToEmpList}
                 >
                     친구목록

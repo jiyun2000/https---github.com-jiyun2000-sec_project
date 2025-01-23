@@ -97,7 +97,7 @@ const DayOffAddComponent = () => {
 
             <div className="flex justify-center p-4 m-8">
                 <button type="button"
-                className=" p-4 m-2 text-xl w-32 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                className=" p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
                 onClick={handleClickAdd}>
                     추가
                 </button>

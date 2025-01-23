@@ -86,13 +86,13 @@ const DayOffReadComponent = ({dayOffNo})=>{
 
             <div className="flex justify-end p-4">
                 <button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
                 onClick={()=>moveToModify(dayOffNo)}>
                     Modify
                 </button>
 
                 <button type="button"
-                className="rounded p-4 m-2 text-xl w-32 text-white bg-blue-500"
+                className="rounded p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
                 onClick={()=>moveToList({page})}>
                     List
                 </button>

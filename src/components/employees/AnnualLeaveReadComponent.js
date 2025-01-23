@@ -104,13 +104,13 @@ const AnnualLeaveReadComponent = ()=>{
             <div className="flex justify-center p-4">
 
                 <button type="button" 
-                className="inline-block  p-4 m-2 text-xl w-40 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                className="inline-block  p-4 m-2 text-xl w-40 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={moveToAdd}>
                     연차 사용
                 </button>
 
                 <button type="button" 
-                className="inline-block  p-4 m-2 text-xl w-40 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                className="inline-block  p-4 m-2 text-xl w-40 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={()=>moveToRead(empNo)}>
                     이전
                 </button>
@@ -122,13 +122,14 @@ const AnnualLeaveReadComponent = ()=>{
                 </button> */}
 
                 <button type="button"
-                className=" p-4 m-2 text-xl w-32 text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                className=" p-4 m-2 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={()=>moveToList({page})}>
                     리스트
                 </button>
             </div>
         </div>
     </div>
+
     </>
 }
 

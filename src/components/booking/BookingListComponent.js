@@ -111,7 +111,7 @@ const BookingListComponent = () => {
                 <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약하기</h2>
                 <div className="text-2xl">
                     <div className="flex justify-center space-x-10">
-                        <div className="w-1/2 p-6 text-center rounded-md border border-blue-300 m-4 cursor-pointer hover:bg-blue-100"
+                        <div className="w-1/2 p-6 text-center rounded-md bg-white border-2 border-[#8ba7cd] text-black  hover:bg-[#6f8cb4]  cursor-pointer hober:text-white"
                             id="cr"
                             onClick={handleChangeBooking}>
                             회의실
@@ -142,7 +142,7 @@ const BookingListComponent = () => {
 
         <div className="flex justify-center p-4">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#95bce8] hover:text-white hover:bg-[#8daad8] cursor-pointer"
+        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4]  cursor-pointer"
         onClick={handleClickAdd}>
             추가하기
         </button>

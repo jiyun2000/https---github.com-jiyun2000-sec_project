@@ -30,7 +30,6 @@ export const leaveChatRoom = async (senderEmpNo,receiverEmpNo) => {
 
 export const getChatList = async (senderEmpNo) => {
         const res = await jwtAxios.get(`${host}/chatList/${senderEmpNo}`);
-        console.log("getChatList API " + res)
         return res.data;
 }
 

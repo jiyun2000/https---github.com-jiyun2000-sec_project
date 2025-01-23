@@ -115,7 +115,7 @@ const EmployeesListComponent = () => {
                     <button
                         type="button"
                         onClick={handleFilter}
-                        className="inline-block px-6 py-2 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                        className="inline-block px-6 py-2 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                     >
                         검색
                     </button>
@@ -163,7 +163,7 @@ const EmployeesListComponent = () => {
                     <button
                         type="button"
                         onClick={handleClickAdd}
-                        className="inline-block px-6 py-3 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                        className="inline-block px-6 py-3 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                     >
                         추가
                     </button>

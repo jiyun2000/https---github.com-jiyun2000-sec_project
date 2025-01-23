@@ -96,13 +96,13 @@ const RoomListModifyComponent = ({roomNo}) => {
 
             <div className="flex justify-center p-4">
                 <button type="button"
-                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-sky-400 hover:text-white hover:bg-blue-500 cursor-pointer"
+                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={handleClickModify}>
                     수정
                 </button>
 
                 <button type="button"
-                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer"
+                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={handleClickDelete}
                 >
                     삭제

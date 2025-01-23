@@ -155,7 +155,7 @@ const MenuModComponent = ({menuNo}) => {
                 <div className="flex justify-center p-6">
                     <button
                         type="button"
-                        className="w-36 text-xl py-3 bg-sky-400 text-white rounded-md hover:bg-blue-500"
+                        className="w-36 text-xl py-3 bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white rounded-md"
                         onClick={handleClickModify}
                     >
                         수정

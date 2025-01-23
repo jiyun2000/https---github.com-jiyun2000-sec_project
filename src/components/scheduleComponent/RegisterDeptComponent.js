@@ -112,7 +112,7 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
                     <button
                         type="button"
                         onClick={handleSaveEvent}
-                        className="w-full bg-sky-300 text-white py-2 rounded-md "
+                        className="w-full bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white py-2 rounded-md "
                     >
                         등록
                     </button>

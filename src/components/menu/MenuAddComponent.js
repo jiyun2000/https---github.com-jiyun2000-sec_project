@@ -173,7 +173,7 @@ const MenuAddComponent = () => {
                     <button
                         type="button"
                         onClick={handleSaveEvent}
-                        className="w-full py-3 mt-4 text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none"
+                        className="w-full py-3 mt-4 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4]"
                     >
                         등록
                     </button>

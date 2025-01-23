@@ -120,7 +120,7 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
                     <button
                         type="button"
                         onClick={modifySchedule}
-                        className="w-full bg-sky-300 text-white py-2 rounded-md "
+                        className="w-full bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white py-2 rounded-md "
                     >
                         수정
                     </button>

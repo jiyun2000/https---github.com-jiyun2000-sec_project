@@ -106,13 +106,13 @@ const DeptInfoModifyComponent = ({deptNo}) => {
 
             <div className="flex justify-center p-4 gap-3 mt-8">
                 <button type="button"
-                className=" text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+                className=" py-2 px-6 text-lg  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md cursor-pointer"
                 onClick={handleClickModify}>
                     수정
                 </button>
 
                 <button type="button"
-                className="text-white py-2 px-6 text-lg  bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer"
+                className=" py-2 px-6 text-lg  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md cursor-pointer"
                 onClick={handleClickDelete}
                 >
                     삭제

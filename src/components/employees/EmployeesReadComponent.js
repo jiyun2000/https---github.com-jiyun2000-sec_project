@@ -103,32 +103,32 @@ const EmployeesReadComponent = ({ empNo }) => {
 
                     <div className="flex justify-center mt-6 space-x-4">
                         <button type="button"
-                            className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                            className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={() => goToReport(empNo)}>
                             리포트
                         </button>
 
                         <button type="button"
-                            className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                            className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={moveToCommuteList}>
                             출퇴근
                         </button>
 
                         <button type="button"
-                            className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                            className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={moveToAnnualLeave}>
                             연차
                         </button>
 
                         {employeeNo === empNo || employeeNo===1?<button type="button"
-                            className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                            className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={() => moveToModify(empNo)}>
                             수정
                         </button>:<></>}
                         
 
                         <button type="button"
-                            className="inline-block rounded p-4 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                            className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={() => moveToList({ page })}>
                             리스트
                         </button>

@@ -308,7 +308,7 @@ const BoardModifyComponent = ({ boardNo }) => {
         <div className="flex justify-center p-4">
           <button
             type="button"
-            className="inline-block p-4 m-2 w-32 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer transition duration-300"
+            className="inline-block p-4 m-2 w-32 text-xl text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md cursor-pointer transition duration-300"
             onClick={handleClickModify}
           >
             수정완료
@@ -316,7 +316,7 @@ const BoardModifyComponent = ({ boardNo }) => {
 
           <button
             type="button"
-            className="inline-block p-4 m-2  w-32 text-xl text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd] cursor-pointer transition duration-300"
+            className="inline-block p-4 m-2  w-32 text-xl text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md cursor-pointer transition duration-300"
             onClick={handleClickDelete}
           >
             완료처리

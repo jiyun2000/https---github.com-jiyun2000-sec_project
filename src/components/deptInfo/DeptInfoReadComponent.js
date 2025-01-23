@@ -53,6 +53,10 @@ const DeptInfoReadComponent = ({deptNo})=>{
         navigate(`/board/list`)
       }
 
+    const goToEmpRead = (empNo) => {
+        navigate(`/employees/read/${empNo}`)
+    }
+
     return <>
     <div>
     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -102,7 +106,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
         <div className="mt-8 flex justify-center gap-4">
             {deptInfoNo===999?<button
                 type="button"
-                className="px-6 py-2 text-xl font-medium text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                className="px-6 py-2 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={() => moveToModify(deptNo)}
             >
             수정
@@ -110,7 +114,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
             
             <button
                 type="button"
-                className="px-6 py-2 text-xl font-medium text-white bg-[#aacbd5] rounded-md hover:bg-[#9bb5bd]"
+                className="px-6 py-2 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={moveToList}
             >
             리스트
@@ -137,6 +141,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
                                 <tr
                                     key={data.empNo}
                                     className="bg-gray-50 cursor-pointer text-center"
+                                    onClick={()=>goToEmpRead(data.empNo)}
                                 >
                                     <td className="px-6 py-4">{data.empNo}</td>
                                     <td className="px-6 py-4">{data.firstName} {data.lastName}</td>

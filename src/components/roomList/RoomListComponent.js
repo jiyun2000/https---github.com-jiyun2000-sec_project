@@ -77,7 +77,7 @@ const RoomListComponent = () => {
 
         <div className="flex p-4 justify-center">
         <button type="button"
-        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-blue-400 hover:text-white hover:bg-sky-500 cursor-pointer "
+        className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer "
         onClick={handleClickAdd}>
             추가
         </button>

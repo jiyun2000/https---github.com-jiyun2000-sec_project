@@ -118,7 +118,7 @@ const ChatEmpListComponent = () => {
                 <div>
                     <button 
                         type="button" 
-                        className="inline-block rounded p-2 m-2 text-xl w-32 text-white bg-[#95bce8] hover:bg-[#8daad8] cursor-pointer"
+                        className="inline-block rounded p-2 m-2 text-xl w-32  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                     >
                         검색
                     </button>
@@ -140,7 +140,7 @@ const ChatEmpListComponent = () => {
                                     </div>
                                     <button
                                         type="button"
-                                        className="mt-4 bg-blue-300 text-white py-2 px-4 rounded-md w-full text-sm"
+                                        className="mt-4 bg-[#8ba7cd] hover:bg-[#6f8cb4] text-white py-2 px-4 rounded-md w-full text-sm"
                                         onClick={() => sendMessage(empNo, evt.empNo, { content: "" })}
                                     >
                                         채팅보내기
@@ -166,7 +166,7 @@ const ChatEmpListComponent = () => {
             <div className="fixed bottom-10 left-0 right-0 flex justify-center mb-4">
                 <button 
                     type="button" 
-                    className="bg-sky-300 text-white py-2 px-6 rounded-full text-lg"
+                    className="bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] py-2 px-6 rounded-full text-lg"
                     onClick={() => goToChatList(empNo)}
                 >
                     채팅목록
