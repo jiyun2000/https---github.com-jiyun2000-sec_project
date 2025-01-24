@@ -24,13 +24,28 @@ const BoardAddComponent = () => {
   const navigate = useNavigate();
   const { moveToList } = useCustomMove();
   const [empNo, setEmpNo] = useState(getCookie('member').empNo);
+  const [empData, setEmpData] = useState('');
+
+  useEffect(()=>{
+    getOneEmp(empNo).then((data) => {
+      setEmpData(data)
+    })
+  }, [])
 
   const handleClickAdd = () => {
-    board['mailAddress'] = getCookie('member').email;
-    addOne(board).then(() => {
-      moveToList();
-    });
+    if(empData.jobNo === 999){
+      board['mailAddress'] = getCookie('member').email;
+      addOne(board).then(() => {
+        moveToList();
+      });
+    }else{
+      alert("권한이 없습니다");
+      return;
+    }
+    
   };
+
+
 
   const handleChangeBoard = (evt) => {
     board[evt.target.name] = evt.target.value;

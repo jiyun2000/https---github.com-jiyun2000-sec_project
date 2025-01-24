@@ -28,7 +28,7 @@ const CommuteListComponent = ()=>{
     const [commute, setCommute] = useState(initState);
     const [empData, setEmpData] = useState("");
     const navigate  = useNavigate();
-
+    
     const {page,size, moveToList,moveToCommuteList,moveToRead,moveToModifyCommute} = useCustomMove();
 
     useEffect(() => {
@@ -57,6 +57,14 @@ const CommuteListComponent = ()=>{
 
     const goToBoardList = () => {
         navigate(`/board/list`)
+      }
+    
+      const goToModify = (commNo) => {
+        if(empData.jobNo === 999){
+            moveToModifyCommute(commNo);
+        }else{
+            alert("권한이 없습니다.")
+        }
       }
 
     return <>
@@ -103,7 +111,7 @@ const CommuteListComponent = ()=>{
                         <button 
                             type="button" 
                             className="inline-block px-6 py-3 text-xl text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
-                            onClick={() => moveToModifyCommute(data.commNo)}
+                            onClick={() => goToModify(data.commNo)}
                         >
                             수정
                         </button>

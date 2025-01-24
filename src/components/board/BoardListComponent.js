@@ -7,6 +7,7 @@ import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
+import { getOneEmp } from '../../api/employeesApi';
 
 const initState = {
   dtoList: [],
@@ -26,6 +27,7 @@ const BoardListComponent = () => {
   const [empNo, setEmpNo] = useState(getCookie('member').empNo);
   const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
   const navigate = useNavigate();
+  const [empData, setEmpData] = useState('');
 
   useEffect(() => {
     getList([page, size]).then((data) => {
@@ -34,8 +36,20 @@ const BoardListComponent = () => {
     });
   }, [page]);
 
+  useEffect(()=>{
+    getOneEmp(empNo).then((data) => {
+      setEmpData(data)
+    });
+  }, [])
+
   const handleClickAdd = () => {
-    moveToAdd();
+    if(empData.jobNo === 999){
+      moveToAdd();
+    }else{
+      alert("권한이 없습니다.");
+      return;
+    }
+
   };
 
   const handleChangeBoard = (evt) => {

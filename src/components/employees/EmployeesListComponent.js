@@ -28,7 +28,7 @@ const EmployeesListComponent = () => {
     const [search, setSearch] = useState('');
     const [filterEmployees, setFilterEmployees] = useState([]);
     const [searchType, setSearchType] = useState('empNo'); //
-    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [cookEmpNo, setCookEmpNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
 
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
@@ -47,7 +47,6 @@ const EmployeesListComponent = () => {
     const handleFilter = () => {
         const lowerSearch = search.toLowerCase();
         let filteredList = [];
-
         if (searchType === 'empNo') {
             filteredList = employees.dtoList.filter(employee =>
                 employee.empNo.toString().includes(lowerSearch)
@@ -70,6 +69,16 @@ const EmployeesListComponent = () => {
         navigate(`/board/list`)
       }
 
+    const goToEmpRead = (empNo) => {
+        const strEmp = empNo + '';
+        const strCook = cookEmpNo + '';
+        console.log(strEmp);
+        console.log(strCook);
+        if(strEmp === strCook){
+            moveToRead(cookEmpNo)
+        }
+    }
+
     return  (
         <div>
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -85,7 +94,7 @@ const EmployeesListComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${cookEmpNo}?page=1`} className="w-12 cursor-pointer">
                         <img src={chat} alt="Chat" className="w-full" />
                     </Link>
                 </div>
@@ -138,7 +147,7 @@ const EmployeesListComponent = () => {
                                 <tr
                                     key={data.empNo}
                                     className="bg-gray-50 cursor-pointer text-center"
-                                    onClick={() => moveToRead(data.empNo)}
+                                    onClick={() => goToEmpRead(data.empNo)}
                                 >
                                     <td className="px-6 py-4">{data.empNo}</td>
                                     <td className="px-6 py-4">{data.firstName} {data.lastName}</td>

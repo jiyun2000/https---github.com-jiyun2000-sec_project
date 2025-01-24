@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/jobApi";
 import BoardTitleComponent from '../board/BoardTitleComponent';
@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getCookie } from '../../util/cookieUtil';
+import { getOneEmp } from "../../api/employeesApi";
 
 const initState = {
     jobNo : 0,
@@ -16,12 +17,27 @@ const JobAddComponent = () => {
     const [job, setJob] = useState({...initState});
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
     
 
     const {moveToList} = useCustomMove();
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data) => {
+            setEmpData(data)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+
     const handleClickAdd = () => {
-        addOne(job).then(()=>moveToList());
+        if(empData.jobNo === 999){
+            addOne(job).then(()=>moveToList());
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+       
     }
 
     const handleChangeJob = (evt) => {
