@@ -135,7 +135,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
     const closeModal = () => {
         console.log(selectState); //null
         setModalForm(false);
-        // location.reload();
+        window.location.reload();
     };
 
     const addSchedule = () => {
@@ -171,6 +171,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
             alert("삭제하시겠습니까 ?");
             deleteScheduleOne(empNo, empSchNo).then(() => {
                 setEvents(events.filter(event => event.empSchNo !== getEmpScheNo));
+                window.location.reload();
             }).catch((error) => {
                 console.log("errrrr" + error);
             });
@@ -206,6 +207,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
                 alert("삭제하시겠습니까 ?");
                 deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
                     setEvents(events.filter(event => event.deptSchNo !== getDeptScheNo));
+                    window.location.reload();
                 }).catch((error) => {
                     console.log("Errrr" + error);
                 });
@@ -246,6 +248,8 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         }
         
     };
+
+
 
     const goToBoardList = () => {
         navigate(`/board/list`)

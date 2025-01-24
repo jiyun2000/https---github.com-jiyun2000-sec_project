@@ -23,12 +23,16 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
     useEffect(() => {
         if (empNo && empSchNo) {
             getEmpScheduleById(empNo, empSchNo).then((data) => { //일정 한개 가져오기
+                console.log(data);
+                
                 if (data && data.startDate && data.endDate) {
                     setScheduleModData({
                         getEmpScheNo: data.empSchNo,
                         scheduleText: data.scheduleText,
-                        startDate: new Date(data.startDate),
-                        endDate: new Date(data.endDate)
+                        // startDate: new Date(data.startDate),
+                        startDate : data.startDate,
+                        // endDate: new Date(data.endDate)
+                        endDate : data.endDate,
                     });
                 }
             }).catch((error) => {
