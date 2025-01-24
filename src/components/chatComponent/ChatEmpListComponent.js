@@ -4,6 +4,7 @@ import { empList, sendChat } from "../../api/chatAPi/chatAPi";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
+import { getCookie } from '../../util/cookieUtil';
 
 const ChatEmpListComponent = () => {
     const { empNo } = useParams();  
@@ -13,6 +14,7 @@ const ChatEmpListComponent = () => {
     const navigate = useNavigate(); 
     const [search, setSearch] = useState('');
     const [searchType] = useState('name');  // 이름 검색만
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     useEffect(() => {
         const awaitEmpList = async () => {
@@ -42,9 +44,20 @@ const ChatEmpListComponent = () => {
         }
     };
 
+    //로그인 한 당사자만 채팅 보낼 수 있게
     const sendMessage = (senderEmpNo, receiverEmpNo, chatMessageDTO) => {
-        navigate(`/chat/${empNo}/${receiverEmpNo}`);
-        sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
+        const strCook = cookieEmpNo + '';
+        const strSen = senderEmpNo + '';
+        console.log(strCook);
+        console.log(strSen);
+        if(strSen === strCook){
+            console.log(cookieEmpNo);
+            navigate(`/chat/${empNo}/${receiverEmpNo}`);
+            sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
+        }else{
+            alert("권한이 없습니다.")
+        }
+       
     };
 
     const handleFilter = () => {

@@ -8,6 +8,7 @@ import { getOneEmp } from '../../api/employeesApi';
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
+import { getCookie } from '../../util/cookieUtil';
 
 const StompComponent = () => {
     const navigate = useNavigate();
@@ -18,6 +19,7 @@ const StompComponent = () => {
     const [messages, setMessages] = useState([]);  //채팅 메시지지
     const [userId, setUserId] = useState(senderEmpNo); 
     const [empData, setEmpData] = useState(null);
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
  
     const [messageObj, setMessageObj] = useState({
         content: '',
@@ -127,40 +129,49 @@ const StompComponent = () => {
     },
 
     sendMessage: (e) => {  // 메시지 보내기
-        if (wsClient && wsClient.connected && messageObj.content.trim() !== '') {
-            const messageWithTime = {
-                ...messageObj,
-                sendTime: new Date().toISOString(),
-                receiver: receiverEmpNo,
-            };
-    
-            console.log("messageWithTime " + JSON.stringify(messageWithTime));  // 메시지 내용 확인
-    
-            const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
-            
-            // STOMP로 메시지 보내기
-            wsClient.publish({
-                destination: `/pub/chat/${chatRoomId}`,
-                body: JSON.stringify(messageWithTime),
-            });
-    
-            // Spring Boot 서버로 메시지 저장
-            jwtAxios.post(`http://localhost:8080/chat/${senderEmpNo}/${receiverEmpNo}`, messageWithTime, {
-                headers: {
-                    'Content-Type': 'application/json; charset=utf-8',
-                }
-            })
-            .then(response => {
-                console.log("Message saved in DB:", response.data);
-            })
-            .catch(error => {
-                console.log("Error saving message:", error);
-            });
-    
-            // 메시지 입력 필드 초기화
-            setMessageObj({ ...messageObj, content: '' });
-        } else {
-            console.log("Message content is empty");
+        const strCook = cookieEmpNo + '';
+        const strSen = senderEmpNo + '';
+        console.log(strCook);
+        console.log(strSen);
+        if(strSen === strCook){
+            if (wsClient && wsClient.connected && messageObj.content.trim() !== '') {
+                const messageWithTime = {
+                    ...messageObj,
+                    sendTime: new Date().toISOString(),
+                    receiver: receiverEmpNo,
+                };
+        
+                console.log("messageWithTime " + JSON.stringify(messageWithTime));  // 메시지 내용 확인
+        
+                const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+                
+                // STOMP로 메시지 보내기
+                wsClient.publish({
+                    destination: `/pub/chat/${chatRoomId}`,
+                    body: JSON.stringify(messageWithTime),
+                });
+        
+                // Spring Boot 서버로 메시지 저장
+                jwtAxios.post(`http://localhost:8080/chat/${senderEmpNo}/${receiverEmpNo}`, messageWithTime, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8',
+                    }
+                })
+                .then(response => {
+                    console.log("Message saved in DB:", response.data);
+                })
+                .catch(error => {
+                    console.log("Error saving message:", error);
+                });
+        
+                // 메시지 입력 필드 초기화
+                setMessageObj({ ...messageObj, content: '' });
+            } else {
+                console.log("Message content is empty");
+            }
+        }else{
+            alert("권한이 없습니다.")
+            return;
         }
     },
     
@@ -182,14 +193,23 @@ const StompComponent = () => {
     
     //채팅방 나가기
     const outChatRoom = () => {
-        console.log("outChatRoom");
-        alert("채팅방에 나가시겠습니까?")
-        console.log("senderEmpNo" + senderEmpNo);
-        console.log("receiverEmpNo" + receiverEmpNo);
-        leaveChatRoom(senderEmpNo,receiverEmpNo);
-        console.log("senderEmpNo 2 " + senderEmpNo);
-        console.log("receiverEmpNo 2 " + receiverEmpNo);
-        navigate(`/chat/empList/${senderEmpNo}`);
+        const strCook = cookieEmpNo + '';
+        const strSen = senderEmpNo + '';
+        console.log(strCook);
+        console.log(strSen);
+        if(strSen === strCook){
+            console.log("outChatRoom");
+            alert("채팅방에 나가시겠습니까?")
+            console.log("senderEmpNo" + senderEmpNo);
+            console.log("receiverEmpNo" + receiverEmpNo);
+            leaveChatRoom(senderEmpNo,receiverEmpNo);
+            console.log("senderEmpNo 2 " + senderEmpNo);
+            console.log("receiverEmpNo 2 " + receiverEmpNo);
+            navigate(`/chat/empList/${senderEmpNo}`);
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     }
 
     const goToBoardList = () => {

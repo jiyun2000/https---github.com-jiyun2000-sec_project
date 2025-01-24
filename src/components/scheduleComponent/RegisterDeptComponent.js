@@ -4,16 +4,20 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
+import { getOneEmp } from "../../api/employeesApi";
+import { getCookie } from "../../util/cookieUtil";
 
 //deptSchedule register component
 const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
     const { deptNo, empNo, deptSchNo } = useParams();
     const [newEvent, setNewEvent] = useState({
         scheduleText: scheduleText ,
         startDate: startDate, 
         endDate: endDate,  
     });
+     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     const handleClickChangeInput = (e) => {
         setNewEvent({
@@ -21,6 +25,15 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
             [e.target.name]: e.target.value
         });
     };
+
+    useEffect(()=>{
+        getOneEmp(empNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error)
+        })
+    },[]);
 
     const handleSaveEvent = () => {
         const startDateObj = new Date(newEvent.startDate).toISOString;
@@ -41,21 +54,35 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
             empNo, 
             deptNo
         };
-    
-        if (!deptSchNo) { //일정이 없다면
-            postDeptSchedule(deptNoSave, empNo, deptNo).then((data) => { //register
-                console.log(JSON.stringify(data));
-                alert("등록되었습니다.");
-                navigate(`/main`);
-            }).catch((error) => {
-                console.log("postDeptSchedule errrror" + error);
-            });
-        } else {
-            putDeptSchedule(deptNoSave, deptNo, empNo, deptSchNo).then((data) => {
-                console.log("일정 수정 성공:", data);
-            }).catch((error) => {
-                console.log("일정 수정 실패:", error);
-            })}};
+
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+                if(empData.jobNo === 999){
+                    if (!deptSchNo) { //일정이 없다면
+                        postDeptSchedule(deptNoSave, empNo, deptNo).then((data) => { //register
+                            console.log(JSON.stringify(data));
+                            alert("등록되었습니다.");
+                            navigate(`/main`);
+                        }).catch((error) => {
+                            console.log("postDeptSchedule errrror" + error);
+                        });
+                    } else {
+                        putDeptSchedule(deptNoSave, deptNo, empNo, deptSchNo).then((data) => {
+                            console.log("일정 수정 성공:", data);
+                        }).catch((error) => {
+                            console.log("일정 수정 실패:", error);
+                        })}
+                }else{
+                    alert("권한이 없습니다.");
+                    return;
+                }
+            }else{
+                alert("권한이 없습니다.");
+                return;
+            }   
+        };
 
     const goToBoardList = () => {
         navigate(`/board/list`)

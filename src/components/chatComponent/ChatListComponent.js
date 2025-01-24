@@ -5,6 +5,7 @@ import { getOneEmp } from "../../api/employeesApi";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
+import { getCookie } from "../../util/cookieUtil";
 
 const ChatListComponent = () => {
     const { senderEmpNo } = useParams();
@@ -12,6 +13,7 @@ const ChatListComponent = () => {
     const [userNames, setUserNames] = useState({});  
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
 
     useEffect(() => {
@@ -54,12 +56,22 @@ const ChatListComponent = () => {
         });
     }, [chatList, senderEmpNo, userNames]);
     
-
+    //로그인 당사자만 채팅 보낼 수 있음.
     const goToChatRoom = (chatNo) => {
-        const [emp1, emp2] = chatNo.split('_');
-        const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
-
-        navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
+        const strCook = cookieEmpNo + '';
+        const strSen = senderEmpNo + '';
+        console.log(strCook);
+        console.log(strSen);
+        if(strSen === strCook){
+            const [emp1, emp2] = chatNo.split('_');
+            const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
+    
+            navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
+        }else{
+            alert("권한이 없습니다")
+            return;
+        }
+       
     };
 
     const goToEmpList = () => {

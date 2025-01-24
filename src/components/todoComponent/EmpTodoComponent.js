@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getEmpTodo } from "../../api/todoApi/empTodoApi";
 import { useNavigate } from "react-router-dom";
 import { deleteScheduleOne } from "../../api/scheduleAPi/empScheduleApi";
+import { getCookie } from "../../util/cookieUtil";
 
 const formatSelectDate = (dateString) => {
     const date = new Date(dateString);
@@ -18,6 +19,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
     const [events, setEvents] = useState([]);
     const [selectDate, setSelectDate] = useState(initialSelectDate || new Date().toISOString().split('T')[0]);
     const navigate = useNavigate();
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     useEffect(() => {
         setSelectDate(initialSelectDate || new Date().toISOString().split('T')[0]);
@@ -44,21 +46,45 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
 
     //개인 일정 추가
     const empTodoAdd = () => {
-        navigate(`/empSchedule/register/${empNo}`);
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            navigate(`/empSchedule/register/${empNo}`);
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
-    //개인인 일정 수정
+    //개인 일정 수정
     const modSchedule = (empSchNo) => {
-        navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
     //개인 일정 삭제
     const deleteSchedule = (empSchNo) => {
-        deleteScheduleOne(empNo, empSchNo).then(() => {
-            setEvents(events.filter(event => event.empSchNo !== empSchNo));
-        }).catch((error) => {
-            console.log("deleteScheduleErr" + error);
-        });
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            deleteScheduleOne(empNo, empSchNo).then(() => {
+                setEvents(events.filter(event => event.empSchNo !== empSchNo));
+            }).catch((error) => {
+                console.log("deleteScheduleErr" + error);
+            });
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
     const formatDate = (dateString) => {

@@ -4,12 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
+import { getCookie } from "../../util/cookieUtil";
 
 //empSchedule register component.
 const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
 
     const navigate = useNavigate();
-  
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     const [newEvent, setNewEvent] = useState({
         scheduleText:scheduleText,
@@ -38,17 +39,24 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
             alert("끝나는 시간이 시작시간보다 이릅니다.")
             return;
         }
-
-        console.log("!!!!!" + empNo);
-        const empNoSave = {...newEvent, empNo :empNo};
-        postEmpScheule(empNoSave, empNo).then((data) => {
-            console.log(empNo);
-            console.log("ttttttttttt"  +  scheduleText);
-            alert("등록되었습니다.");
-            navigate(`/main`);
-        console.log(data);}).catch((error) => {
-            console.log("errrrrrrr" + error);
-        });
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            console.log("!!!!!" + empNo);
+            const empNoSave = {...newEvent, empNo :empNo};
+            postEmpScheule(empNoSave, empNo).then((data) => {
+                console.log(empNo);
+                console.log("ttttttttttt"  +  scheduleText);
+                alert("등록되었습니다.");
+                navigate(`/main`);
+            console.log(data);}).catch((error) => {
+                console.log("errrrrrrr" + error);
+            });
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
           
     const goToBoardList = () => {
