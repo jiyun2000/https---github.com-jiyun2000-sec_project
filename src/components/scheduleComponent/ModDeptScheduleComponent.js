@@ -41,6 +41,18 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
     }, [deptNo, deptSchNo, empNo]);
 
     const modifySchedule = () => { //수정
+        const startDateObj = new Date(scheduleModData.startDate).toISOString;
+        const endDateObj = new Date(scheduleModData.endDate).toISOString;
+        console.log(startDateObj)
+        console.log("dddddsad");
+        
+
+        if(scheduleModData.endDate<=scheduleModData.startDate){
+            alert("끝나는 시간이 시작시간보다 이릅니다.")
+            return;
+        }
+
+
         putDeptSchedule(scheduleModData, deptNo, empNo, deptSchNo).then(response => {
             console.log("Resss" + response);
             alert("수정되었습니다.");
