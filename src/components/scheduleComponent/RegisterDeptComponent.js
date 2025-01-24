@@ -23,6 +23,18 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
     };
 
     const handleSaveEvent = () => {
+        const startDateObj = new Date(newEvent.startDate).toISOString;
+        const endDateObj = new Date(newEvent.endDate).toISOString;
+        console.log(startDateObj)
+        console.log("dddddsad");
+        
+
+        if(newEvent.endDate<=newEvent.startDate){
+            alert("끝나는 시간이 시작시간보다 이릅니다.")
+            return;
+        }
+
+
         console.log("newEvent" + newEvent); 
         const deptNoSave = { 
             ...newEvent, 

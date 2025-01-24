@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { postEmpScheule } from "../../api/scheduleAPi/empScheduleApi";
 import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
@@ -9,24 +9,32 @@ import chat from "../../assets/icon/chat.png";
 const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
 
     const navigate = useNavigate();
+  
 
     const [newEvent, setNewEvent] = useState({
         scheduleText:scheduleText,
         start:startDate,
         end:endDate
     });
+    useEffect(()=>{
+        console.log(newEvent)
+    }, [newEvent])
      
     const handleClickChangeInput = (e) => {
         console.log(empNo);
         newEvent[e.target.name] = e.target.value;
+        console.log(newEvent[e.target.name])
         setNewEvent({...newEvent});
     }
         
     const handleSaveEvent = () => {
-        const startDateObj = new Date(newEvent.start);
-        const endDateObj = new Date(newEvent.end);
+        const startDateObj = new Date(newEvent.startDate).toISOString;
+        const endDateObj = new Date(newEvent.endDate).toISOString;
+        console.log(startDateObj)
+        console.log("dddddsad");
+        
 
-        if(endDateObj < startDateObj){
+        if(newEvent.endDate<=newEvent.startDate){
             alert("끝나는 시간이 시작시간보다 이릅니다.")
             return;
         }

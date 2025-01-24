@@ -199,7 +199,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     dateClick={(info) => handleDateClick(info.dateStr)}
-                    // eventClick={eventClick}
+                    // eventClick={eventClik}
                     events={events}
                     timeZone="Asia/Seoul"
                     businessHours={true}
