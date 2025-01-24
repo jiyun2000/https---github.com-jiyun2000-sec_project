@@ -10,6 +10,8 @@ import { getList } from "../../api/scheduleAPi/empDeptScheduleApi";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
+import { getOneEmp } from "../../api/employeesApi";
+import { getCookie } from "../../util/cookieUtil";
 
 Modal.setAppElement('#root');
 
@@ -28,6 +30,8 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
     const [empSchRealNo, setEmpSchRealNo] = useState('');
     const [deptSchRealNo, setDeptSchRealNo] = useState('');
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     useEffect(() => {
         getList([deptNo, empNo]).then((data) => {
@@ -135,37 +139,112 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
     };
 
     const addSchedule = () => {
-        navigate(`/empSchedule/register/${empNo}`);
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            navigate(`/empSchedule/register/${empNo}`);
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+        
     };
 
     const modSchedule = (empSchNo) => {
-        navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
     const deleteSchedule = (empSchNo) => {
-        alert("삭제하시겠습니까 ?");
-        deleteScheduleOne(empNo, empSchNo).then(() => {
-            setEvents(events.filter(event => event.empSchNo !== getEmpScheNo));
-        }).catch((error) => {
-            console.log("errrrr" + error);
-        });
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            alert("삭제하시겠습니까 ?");
+            deleteScheduleOne(empNo, empSchNo).then(() => {
+                setEvents(events.filter(event => event.empSchNo !== getEmpScheNo));
+            }).catch((error) => {
+                console.log("errrrr" + error);
+            });
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
     const modDeptSchedule = (deptSchNo) => {
-        navigate(`/deptSchedule/mod/${deptNo}/${empNo}/${deptSchNo}`);
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            if(empData.jobNo === 999){
+                navigate(`/deptSchedule/mod/${deptNo}/${empNo}/${deptSchNo}`);
+            }else{
+                alert("권한이 없습니다.");
+                return;
+            }
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
     const deleteDeptSchedule = (deptSchNo) => {
-        alert("삭제하시겠습니까 ?");
-        deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
-            setEvents(events.filter(event => event.deptSchNo !== getDeptScheNo));
-        }).catch((error) => {
-            console.log("Errrr" + error);
-        });
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            if(empData.jobNo === 999){
+                alert("삭제하시겠습니까 ?");
+                deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
+                    setEvents(events.filter(event => event.deptSchNo !== getDeptScheNo));
+                }).catch((error) => {
+                    console.log("Errrr" + error);
+                });
+            }else{
+                alert("권한이 없습니다.");
+                return;
+            }
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+            
     };
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data)=>{
+            console.log(data);
+            setEmpData(data)
+        }).catch((error)=>{
+            console.log(error)
+        })
+    },[])
+
     const addDeptSchedule = () => {
-        navigate(`/deptSchedule/register/${deptNo}/${empNo}`);
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            if(empData.jobNo === 999){
+                navigate(`/deptSchedule/register/${deptNo}/${empNo}`);
+            }else{
+                alert('권한이 없습니다.');
+                return;
+            }
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+        
     };
 
     const goToBoardList = () => {

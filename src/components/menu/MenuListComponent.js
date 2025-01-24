@@ -8,6 +8,7 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
+import { getOneEmp } from "../../api/employeesApi";
 
 
 const initState = {
@@ -30,6 +31,7 @@ const MenuListComponent = () => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [menuDateExist, setMenuDateExist] = useState(false);
     const [menuDate, setMenuDate] = useState('')
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         listMenu([page, size]).then((data) => {
@@ -44,7 +46,25 @@ const MenuListComponent = () => {
         navigate(`/menu/readMenu/${menuNo}`)
     }
 
-    const goToMenuAdd = () => navigate(`/menu/add`);
+    useEffect(()=>{
+        getOneEmp(empNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error)
+        })
+    },[])
+
+    const goToMenuAdd = () => {
+        console.log(empData.jobNo)
+        if(empData.jobNo === 999){
+            navigate(`/menu/add`)
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+      
+    };
 
     const goToBoardList = () => {
         navigate(`/board/list`)

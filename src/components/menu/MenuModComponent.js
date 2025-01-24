@@ -5,6 +5,7 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from "../board/BoardTitleComponent";
+import { getOneEmp } from "../../api/employeesApi";
 
 const initState = {
     empNo : 0,
@@ -19,7 +20,8 @@ const initState = {
 const MenuModComponent = ({menuNo}) => {
     const [menu, setMenu] = useState({...initState});
     const navigate = useNavigate();
-        const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         getOne(menuNo).then((data) => {
@@ -34,13 +36,28 @@ const MenuModComponent = ({menuNo}) => {
         setMenu({...menu});
     }
 
-    const handleClickModify = () => {
-        putOne(menuNo, menu).then((res) => {
-            console.log(res);
-            navigate(`/menu/list`);
-        }).catch((error) => {
+    useEffect(()=>{
+        getOneEmp(empNo).then((data) => {
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
             console.log(error);
-        });
+        })
+    }, []);
+
+    const handleClickModify = () => {
+        if(empData.jobNo === 999){
+            putOne(menuNo, menu).then((res) => {
+                console.log(res);
+                navigate(`/menu/list`);
+            }).catch((error) => {
+                console.log(error);
+            });
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+      
     }
 
     const goToBoardList = () => {

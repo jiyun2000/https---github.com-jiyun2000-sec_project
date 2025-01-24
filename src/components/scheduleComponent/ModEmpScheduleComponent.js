@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
+import { getOneEmp } from "../../api/employeesApi";
+import { getCookie } from "../../util/cookieUtil";
 
 //empSchedule modify component
 const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
@@ -16,6 +18,7 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
     };
 
     const [scheduleModData, setScheduleModData] = useState(initState);
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     useEffect(() => {
         if (empNo && empSchNo) {
@@ -34,6 +37,7 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
         }
     }, [empNo, empSchNo]);
 
+
     //수정
     const modifySchedule = () => {
         const startDateObj = new Date(scheduleModData.startDate).toISOString;
@@ -46,11 +50,20 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
             alert("끝나는 시간이 시작시간보다 이릅니다.")
             return;
         }
-        putEmpScheduleOne(scheduleModData, empNo, empSchNo).then(response => {
-            console.log("response " + response);
-            alert("수정되었습니다.");
-            navigate(`/main`);
-        }).catch((error) => {console.log(error)});
+
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            putEmpScheduleOne(scheduleModData, empNo, empSchNo).then(response => {
+                console.log("response " + response);
+                alert("수정되었습니다.");
+                navigate(`/main`);
+            }).catch((error) => {console.log(error)});
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
     };
 
     const handleChangeEmpSchedule = (evt) => {

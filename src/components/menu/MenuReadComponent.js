@@ -6,6 +6,7 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
+import { getOneEmp } from "../../api/employeesApi";
 
 const initState = {
     empNo: 0,
@@ -22,7 +23,16 @@ const MenuReadComponent = () => {
     const [menuRead, setMenuRead] = useState(initState);
     const navigate = useNavigate();
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
     
+    useEffect(()=>{
+        getOneEmp(empNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }, []);
 
     useEffect(() => {
         getOne(menuNo).then((data) => {
@@ -33,17 +43,29 @@ const MenuReadComponent = () => {
     }, [menuNo]);
 
     const modMenu = (menuNo) => {
-        navigate(`/menu/${menuNo}`);
+        if(empData.jobNo === 999){
+            navigate(`/menu/${menuNo}`);
+        }else{
+            alert("권한이 없습니다.")
+            return;
+        }
+        
     }
 
     const delMenu = (menuNo) => {
-        if (window.confirm("삭제하시겠습니까?")) {
-            delOne(menuNo).then((res) => {
-                navigate(`/menu/list`);
-            }).catch((error) => {
-                console.log(error);
-            })
+        if(empData.jobNo === 999){
+            if (window.confirm("삭제하시겠습니까?")) {
+                delOne(menuNo).then((res) => {
+                    navigate(`/menu/list`);
+                }).catch((error) => {
+                    console.log(error);
+                })
+            }
+        }else{
+            alert("권한이 없습니다.")
+            return;
         }
+            
     }
 
     const goToBoardList = () => {

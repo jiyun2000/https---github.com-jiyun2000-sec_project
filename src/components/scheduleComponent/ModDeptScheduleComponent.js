@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
+import { getOneEmp } from "../../api/employeesApi";
+import { getCookie } from "../../util/cookieUtil";
 
 // deptSchedule modify component
 const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
@@ -16,6 +18,8 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
     }
 
     const [scheduleModData, setScheduleModData] = useState(initState); 
+    const [empData, setEmpData] = useState('');
+    const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
     useEffect(() => {
         if (deptNo && deptSchNo && empNo ) {
@@ -40,6 +44,15 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
         }
     }, [deptNo, deptSchNo, empNo]);
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error)
+        })
+    },[])
+
     const modifySchedule = () => { //수정
         const startDateObj = new Date(scheduleModData.startDate).toISOString;
         const endDateObj = new Date(scheduleModData.endDate).toISOString;
@@ -52,12 +65,25 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
             return;
         }
 
-
-        putDeptSchedule(scheduleModData, deptNo, empNo, deptSchNo).then(response => {
-            console.log("Resss" + response);
-            alert("수정되었습니다.");
-            navigate(`/main`);
-        }).catch((error) => {console.log("Errrrr" + error)})};
+        const strEmpNo = empNo + '';
+        const strCookieEmpNo = cookieEmpNo + '';
+        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
+        if(strEmpNo === strCookieEmpNo){
+            if(empData.jobNo === 999){
+                putDeptSchedule(scheduleModData, deptNo, empNo, deptSchNo).then(response => {
+                    console.log("Resss" + response);
+                    alert("수정되었습니다.");
+                    navigate(`/main`);
+                }).catch((error) => {console.log("Errrrr" + error)})
+            }else{
+                alert("권한이 없습니다.")
+                return;
+            }
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+      };
         
     const handleChangeDeptSchedule = (evt) => {
         console.log("scheduleText" + scheduleModData.scheduleText + "startDate"  + scheduleModData.startDate)

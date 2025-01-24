@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getDeptTodo } from "../../api/todoApi/deptTodoApi";
 import { useNavigate } from "react-router-dom";
 import { deleteDeptScheduleOne } from "../../api/scheduleAPi/deptScheduleApi";
+import { getOneEmp } from "../../api/employeesApi";
 
 
 const formatSelectDate = (dateString) => {
@@ -17,6 +18,7 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
     const [events, setEvents] = useState([]);
     const [selectDate, setSelectDate] = useState(initialSelectDate || new Date().toISOString().split('T')[0]);
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         setSelectDate(initialSelectDate || new Date().toISOString().split('T')[0]);
@@ -40,23 +42,52 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
         });
     }, [empNo, deptNo, selectDate]);
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data)=>{
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }, []);
+
     //부서 일정 수정
     const modDeptSchedule = (deptSchNo) => {
-        navigate(`/deptSchedule/mod/${deptNo}/${empNo}/${deptSchNo}`);
+        if(empData.jobNo === 999){
+            navigate(`/deptSchedule/mod/${deptNo}/${empNo}/${deptSchNo}`);
+        }else{
+            alert("권한이 없습니다.");
+            console.log(empData.jobNo)
+            return;
+        }
+        
     };
 
     //부서 일정 삭제
     const deleteDeptSchedule = (deptSchNo) => {
-        deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
-            setEvents(events.filter(event => event.deptSchNo !== deptSchNo));
-        }).catch((error) => {
-            console.log("deleteDeptScheduleOne Errrrror " + error);
-        });
+        if(empData.jobNo === 999 ){
+            deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
+                setEvents(events.filter(event => event.deptSchNo !== deptSchNo));
+            }).catch((error) => {
+                console.log("deleteDeptScheduleOne Errrrror " + error);
+            });
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+        
     };
 
     //부서 일정 추가
     const addSchedule = () => {
-        navigate(`/deptSchedule/register/${deptNo}/${empNo}`); 
+        if(empData.jobNo === 999){
+            navigate(`/deptSchedule/register/${deptNo}/${empNo}`); 
+        }else{
+            alert("권한이 없습니다.");
+            console.log(empData.jobNo)
+            return;
+        }
+       
     };
     
 
