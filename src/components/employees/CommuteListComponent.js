@@ -27,6 +27,7 @@ const CommuteListComponent = ()=>{
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [commute, setCommute] = useState(initState);
     const [empData, setEmpData] = useState("");
+    const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
     const navigate  = useNavigate();
 
     const {page,size, moveToList,moveToCommuteList,moveToRead,moveToModifyCommute} = useCustomMove();
@@ -100,13 +101,14 @@ const CommuteListComponent = ()=>{
                         <div>퇴근 : {data.checkOutTime}</div>
                     </div>
                     <div className="flex p-4 w-[15%] justify-center">
-                        <button 
+                        {deptNo===999?<button 
                             type="button" 
                             className="inline-block px-6 py-3 text-xl text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
                             onClick={() => moveToModifyCommute(data.commNo)}
                         >
                             수정
-                        </button>
+                        </button>:<></>}
+                        
                     </div>
                 </div>
             </div>
