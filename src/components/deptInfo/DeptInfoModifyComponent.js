@@ -53,6 +53,7 @@ const DeptInfoModifyComponent = ({deptNo}) => {
             return;
         }
         
+
     }
 
     const handleChangeDeptInfo = (evt) => {

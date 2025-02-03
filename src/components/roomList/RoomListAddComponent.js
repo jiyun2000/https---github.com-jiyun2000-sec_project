@@ -20,7 +20,9 @@ const RoomListAddComponent = () => {
     const {moveToList} = useCustomMove();
 
     const handleClickAdd = () => {
-        addOne(roomList).then(()=>moveToList());
+        addOne(roomList).then(()=>{
+            alert("등록되었습니다.");
+            moveToList();});
     }
 
     const handleChangeRoomList = (evt) => {

@@ -41,7 +41,8 @@ const BookingAddComponent = () => {
     const handleClickAdd = () => {
         booking["empNo"] = getCookie("member").empNo;
         addOne(booking).then(()=>{
-            moveToList()
+            alert("등록되었습니다.");
+            moveToList();
         });
     }
 

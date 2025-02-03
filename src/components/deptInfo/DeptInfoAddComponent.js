@@ -33,6 +33,7 @@ const DeptInfoAddComponent = () => {
 
 
     const handleClickAdd = () => {
+
         if(empData.jobNo === 999){
             addOne(deptInfo).then(()=>moveToList());
         }else{
@@ -41,6 +42,7 @@ const DeptInfoAddComponent = () => {
         }
         
     }
+
 
     
     const handleChangeDeptInfo = (evt) => {

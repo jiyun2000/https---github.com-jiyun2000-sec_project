@@ -28,7 +28,9 @@ const RoomListModifyComponent = ({roomNo}) => {
     }
 
     const handleClickModify = () => {
-        putOne(roomNo,roomList).then(()=>moveToRead(roomNo));
+        putOne(roomNo,roomList).then(()=>{
+            alert("수정되었습니다.");
+            moveToRead(roomNo);});
     }
 
     const handleChangeRoomList = (evt) => {

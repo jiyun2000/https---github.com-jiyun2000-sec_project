@@ -52,9 +52,11 @@ const BoardModifyComponent = ({ boardNo }) => {
       return;
     }
    
-  };
 
+  };
+  
   const handleClickModify = () => {
+
     if(empData.jobNo === 999){
       putOne(boardNo, board).then(() => {
         moveToRead(boardNo);
@@ -64,6 +66,7 @@ const BoardModifyComponent = ({ boardNo }) => {
       return;
     }
     
+
   };
 
   const handleChangeBoard = (evt) => {

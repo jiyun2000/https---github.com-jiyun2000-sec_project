@@ -33,6 +33,7 @@ const BoardAddComponent = () => {
   }, [])
 
   const handleClickAdd = () => {
+
     if(empData.jobNo === 999){
       board['mailAddress'] = getCookie('member').email;
       addOne(board).then(() => {
@@ -43,6 +44,7 @@ const BoardAddComponent = () => {
       return;
     }
     
+
   };
 
 

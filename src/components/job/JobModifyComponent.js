@@ -43,13 +43,14 @@ const JobModifyComponent = ({jobNo}) => {
     }
 
     const handleClickModify = () => {
+
         if(empData.jobNo === 999){
             putOne(jobNo,job).then(()=>moveToRead(jobNo));
         }else{
             alert("권한이 없습니다.");
             return;
         }
-      
+
     }
 
     const handleChangeJob = (evt) => {

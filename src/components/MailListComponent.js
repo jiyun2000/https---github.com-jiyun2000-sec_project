@@ -97,14 +97,14 @@ const MailListComponent = () => {
             <div className="w-3/4 flex flex-wrap m-0">
               {cat == 'std' ? (
                 <div
-                  className="w-44 border-b-4 border-blue-400 text-3xl"
+                  className="w-44 border-b-4 border-blue-400 text-3xl cursor-pointer"
                   onClick={() => chgCat('std')}
                 >
                   기본
                 </div>
               ) : (
                 <div
-                  className="w-44 border-b-4 bg-gray-100 text-3xl"
+                  className="w-44 border-b-4 bg-gray-100 text-3xl cursor-pointer"
                   onClick={() => chgCat('std')}
                 >
                   기본
@@ -112,14 +112,14 @@ const MailListComponent = () => {
               )}
               {cat == 'import' ? (
                 <div
-                  className="w-44 border-b-4 border-blue-400 text-3xl"
+                  className="w-44 border-b-4 border-blue-400 text-3xl cursor-pointer"
                   onClick={() => chgCat('import')}
                 >
                   중요
                 </div>
               ) : (
                 <div
-                  className="w-44 border-b-4 bg-gray-100 text-3xl"
+                  className="w-44 border-b-4 bg-gray-100 text-3xl cursor-pointer"
                   onClick={() => chgCat('import')}
                 >
                   중요
@@ -127,14 +127,14 @@ const MailListComponent = () => {
               )}
               {cat == 'mysend' ? (
                 <div
-                  className="w-44 border-b-4 border-blue-400 text-3xl"
+                  className="w-44 border-b-4 border-blue-400 text-3xl cursor-pointer"
                   onClick={() => chgCat('mysend')}
                 >
                   보낸메일
                 </div>
               ) : (
                 <div
-                  className="w-44 border-b-4 bg-gray-100 text-3xl"
+                  className="w-44 border-b-4 bg-gray-100 text-3xl cursor-pointer"
                   onClick={() => chgCat('mysend')}
                 >
                   보낸메일
