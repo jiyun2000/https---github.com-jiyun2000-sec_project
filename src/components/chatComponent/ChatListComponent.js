@@ -14,7 +14,7 @@ const ChatListComponent = () => {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
-
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         getChatList(senderEmpNo)
@@ -27,6 +27,11 @@ const ChatListComponent = () => {
             });
     }, [senderEmpNo]);
 
+    useEffect(()=>{
+        getOneEmp(cookieEmpNo).then((data)=>{
+            setEmpData(data);
+        })
+    }, []);
 
     useEffect(() => {
         const empData = [];
@@ -67,7 +72,13 @@ const ChatListComponent = () => {
             const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
     
             navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
-        }else{
+        }else if(empData.jobNo === 999){ //관리자 계정
+            const [emp1, emp2] = chatNo.split('_');
+            const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
+    
+            navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
+        }
+        else{
             alert("권한이 없습니다")
             return;
         }

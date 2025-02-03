@@ -36,11 +36,20 @@ const NavigationComponent = () => {
     setLoc(path);
   };
 
+  const confirmLog = () => {
+    const isConfirm = window.confirm("로그아웃 하시겠습니까 ?");
+    console.log(isConfirm);
+    if(isConfirm){
+      removeCookie('member');
+      navigate('/');
+    }else{
+      navigate('/main');
+    }
+  }
 
   const logOut = () => {
     console.log('로그아웃');
-    removeCookie('member');
-    navigate('/');
+    confirmLog();
   };
 
   // return (

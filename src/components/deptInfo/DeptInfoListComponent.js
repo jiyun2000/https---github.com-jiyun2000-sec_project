@@ -6,6 +6,7 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
+import { getOneEmp } from '../../api/employeesApi';
 
 const initState = {
     deptNo : 0,
@@ -22,6 +23,7 @@ const DeptInfoListComponent = () => {
 
     const { moveToRead, moveToAdd } = useCustomMove();
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         getDeptList().then(res => {
@@ -30,8 +32,23 @@ const DeptInfoListComponent = () => {
       });
     }, [cnt]);
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data) => {
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }, []);
+
     const handleClickAdd = () =>{
-        moveToAdd();
+        if(empData.jobNo === 999){
+            moveToAdd();
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+        
     }
     const goToBoardList = () => {
         navigate(`/board/list`)

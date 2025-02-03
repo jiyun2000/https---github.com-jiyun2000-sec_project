@@ -5,12 +5,15 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
 import { getCookie } from "../../util/cookieUtil";
+import { jsx } from "react/jsx-runtime";
+import { getOneEmp } from "../../api/employeesApi";
 
 //empSchedule register component.
 const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
 
     const navigate = useNavigate();
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
 
     const [newEvent, setNewEvent] = useState({
         scheduleText:scheduleText,
@@ -21,6 +24,12 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
         console.log(newEvent)
     }, [newEvent])
      
+    useEffect(()=>{
+        getOneEmp(cookieEmpNo).then((data)=>{
+            setEmpData(data);
+        })
+    }, []);
+
     const handleClickChangeInput = (e) => {
         console.log(empNo);
         newEvent[e.target.name] = e.target.value;
@@ -53,7 +62,19 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
             console.log(data);}).catch((error) => {
                 console.log("errrrrrrr" + error);
             });
-        }else{
+        }else if(empData.jobNo === 999){
+            console.log("!!!!!" + empNo);
+            const empNoSave = {...newEvent, empNo :empNo};
+            postEmpScheule(empNoSave, empNo).then((data) => {
+                console.log(empNo);
+                console.log("ttttttttttt"  +  scheduleText);
+                alert("등록되었습니다.");
+                navigate(`/main`);
+            console.log(data);}).catch((error) => {
+                console.log("errrrrrrr" + error);
+            });
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }

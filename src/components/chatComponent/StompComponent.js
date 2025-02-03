@@ -169,7 +169,44 @@ const StompComponent = () => {
             } else {
                 console.log("Message content is empty");
             }
-        }else{
+        }else if(empData.jobNo === 999){ //관리자 계정
+            if (wsClient && wsClient.connected && messageObj.content.trim() !== '') {
+                const messageWithTime = {
+                    ...messageObj,
+                    sendTime: new Date().toISOString(),
+                    receiver: receiverEmpNo,
+                };
+        
+                console.log("messageWithTime " + JSON.stringify(messageWithTime));  // 메시지 내용 확인
+        
+                const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+                
+                // STOMP로 메시지 보내기
+                wsClient.publish({
+                    destination: `/pub/chat/${chatRoomId}`,
+                    body: JSON.stringify(messageWithTime),
+                });
+        
+                // Spring Boot 서버로 메시지 저장
+                jwtAxios.post(`http://localhost:8080/chat/${senderEmpNo}/${receiverEmpNo}`, messageWithTime, {
+                    headers: {
+                        'Content-Type': 'application/json; charset=utf-8',
+                    }
+                })
+                .then(response => {
+                    console.log("Message saved in DB:", response.data);
+                })
+                .catch(error => {
+                    console.log("Error saving message:", error);
+                });
+        
+                // 메시지 입력 필드 초기화
+                setMessageObj({ ...messageObj, content: '' });
+            } else {
+                console.log("Message content is empty");
+            }
+        }
+        else{
             alert("권한이 없습니다.")
             return;
         }

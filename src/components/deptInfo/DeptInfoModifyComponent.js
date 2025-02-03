@@ -5,7 +5,8 @@ import { getCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link, useNavigate } from 'react-router-dom';
+import { data, Link, useNavigate } from 'react-router-dom';
+import { getOneEmp } from "../../api/employeesApi";
 
 
 const initState = {
@@ -19,19 +20,40 @@ const DeptInfoModifyComponent = ({deptNo}) => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {moveToList, moveToRead} = useCustomMove();
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
 
     useEffect(()=>{
         getOne(deptNo).then(data=>setDeptInfo(data));
     },[deptNo]);
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data) => {
+            console.log(data);
+            setEmpData(data);
+        }).catch((error)=>{
+            console.log(error)
+        })
+    }, [])
+
     const handleClickDelete = () => {
-        delOne(deptNo).then(()=>moveToList());
+        if(empData.jobNo === 999){
+            delOne(deptNo).then(()=>moveToList());
+        }else{
+            alert('권한이 없습니다.');
+            return;
+        }
+        
     }
 
     const handleClickModify = () => {
-        putOne(deptNo,deptInfo).then(()=>{
-            alert("삭제제되었습니다.");
-            moveToRead(deptNo);});
+        if(empData.jobNo === 999){
+            putOne(deptNo,deptInfo).then(()=>moveToRead(deptNo));
+        }else{
+            alert('권한이 없습니다.');
+            return;
+        }
+        
+
     }
 
     const handleChangeDeptInfo = (evt) => {

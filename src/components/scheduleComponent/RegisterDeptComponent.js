@@ -59,7 +59,6 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
         const strCookieEmpNo = cookieEmpNo + '';
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
-                if(empData.jobNo === 999){
                     if (!deptSchNo) { //일정이 없다면
                         postDeptSchedule(deptNoSave, empNo, deptNo).then((data) => { //register
                             console.log(JSON.stringify(data));
@@ -78,10 +77,7 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
                     alert("권한이 없습니다.");
                     return;
                 }
-            }else{
-                alert("권한이 없습니다.");
-                return;
-            }   
+            
         };
 
     const goToBoardList = () => {
@@ -163,4 +159,3 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
 };
 
 export default RegisterDeptComponent;
-

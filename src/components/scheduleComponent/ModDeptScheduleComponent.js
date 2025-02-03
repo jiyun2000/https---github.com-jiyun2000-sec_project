@@ -32,8 +32,10 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
                     setScheduleModData({
                         getDeptScheNo: data.deptSchNo,
                         scheduleText: data.scheduleText,
-                        startDate: new Date(data.startDate),  
-                        endDate: new Date(data.endDate)    
+                        // startDate: new Date(data.startDate),
+                        startDate : data.startDate,  
+                        // endDate: new Date(data.endDate)
+                        endDate : data.endDate,    
                     });
                 } else {
                     console.log("ddddddddd" + data);

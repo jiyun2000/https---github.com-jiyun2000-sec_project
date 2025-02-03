@@ -6,6 +6,7 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
+import { getOneEmp } from '../../api/employeesApi';
 
 const initState = {
   boardNo: 0,
@@ -23,26 +24,49 @@ const BoardModifyComponent = ({ boardNo }) => {
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
   const { moveToList, moveToRead } = useCustomMove();
   const navigate = useNavigate();
+  const [empData, setEmpData] = useState('');
 
   useEffect(() => {
     getOne(boardNo).then((data) => setBoard(data));
   }, [boardNo]);
 
-  const handleClickDelete = () => {
-    board['category'] = '완료';
-    setBoard({ ...board });
+  useEffect(()=>{
+    getOneEmp(empNo).then((data) => {
+      setEmpData(data)
+    }).catch((error) => {
+      console.log(error);
+    })
+  }, [])
 
-    putOne(boardNo, board).then(() => {
-      alert("처리되었습니다.");
-      moveToList();
-    });
+
+  const handleClickDelete = () => {
+    if(empData.jobNo === 999){
+      board['category'] = '완료';
+      setBoard({ ...board });
+  
+      putOne(boardNo, board).then(() => {
+        moveToList();
+      });
+    }else{
+      alert("권한이 없습니다.");
+      return;
+    }
+   
+
   };
   
   const handleClickModify = () => {
-    putOne(boardNo, board).then(() => {
-      alert("수정되었습니다.");
-      moveToRead(boardNo);
-    });
+
+    if(empData.jobNo === 999){
+      putOne(boardNo, board).then(() => {
+        moveToRead(boardNo);
+      });
+    }else{
+      alert("권한이 없습니다.");
+      return;
+    }
+    
+
   };
 
   const handleChangeBoard = (evt) => {

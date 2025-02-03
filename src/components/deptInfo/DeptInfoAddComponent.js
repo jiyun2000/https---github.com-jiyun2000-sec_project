@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addOne } from "../../api/deptInfoApi";
 import { getCookie } from '../../util/cookieUtil';
@@ -6,6 +6,7 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
+import { getOneEmp } from "../../api/employeesApi";
 
 const initState = {
     deptNo : 0,
@@ -19,14 +20,31 @@ const DeptInfoAddComponent = () => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {moveToList} = useCustomMove();
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
+
+    useEffect(()=>{
+        getOneEmp(empNo).then((data) => {
+            console.log(data);
+            setEmpData(data);
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+
 
     const handleClickAdd = () => {
-        addOne(deptInfo).then(()=>{
-            alert("등록되었습니다.");
-            moveToList();
-        }
-    )}
 
+        if(empData.jobNo === 999){
+            addOne(deptInfo).then(()=>moveToList());
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+        
+    }
+
+
+    
     const handleChangeDeptInfo = (evt) => {
         deptInfo[evt.target.name] = evt.target.value;
         setDeptInfo({...deptInfo});

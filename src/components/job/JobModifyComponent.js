@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getCookie } from '../../util/cookieUtil';
+import { getOneEmp } from "../../api/employeesApi";
 
 const initState = {
     jobNo : 0,
@@ -17,19 +18,39 @@ const JobModifyComponent = ({jobNo}) => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {moveToList, moveToRead} = useCustomMove();
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
 
     useEffect(()=>{
         getJob(jobNo).then(data=>setJob(data));
     },[jobNo]);
 
+    useEffect(()=>{
+        getOneEmp(empNo).then((data) => {
+            setEmpData(data)
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, [])
+
     const handleClickDelete = () => {
-        delOne(jobNo).then(()=>moveToList());
+        if(empData.jobNo === 999){
+            delOne(jobNo).then(()=>moveToList());
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+        
     }
 
     const handleClickModify = () => {
-        putOne(jobNo,job).then(()=>{
-            alert("수정되었습니다.");
-            moveToRead(jobNo);});
+
+        if(empData.jobNo === 999){
+            putOne(jobNo,job).then(()=>moveToRead(jobNo));
+        }else{
+            alert("권한이 없습니다.");
+            return;
+        }
+
     }
 
     const handleChangeJob = (evt) => {

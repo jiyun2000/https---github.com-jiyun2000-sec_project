@@ -8,6 +8,7 @@ import chat from "../../assets/icon/chat.png";
 import { getCookie } from "../../util/cookieUtil";
 import {deptOne} from "../../api/deptInfoApi";
 import { jobOne } from "../../api/jobApi";
+import { getOne } from "../../api/boardApi";
 
 
 const initState = {
@@ -34,6 +35,7 @@ const EmployeesReadComponent = ({ empNo }) => {
     const [jobData, setJobData] = useState("");
     const [employeeNo,setEmployeeNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
+    const [empData, setEmpData] = useState('');
    
 
     useEffect(() => {
@@ -60,6 +62,15 @@ const EmployeesReadComponent = ({ empNo }) => {
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+    
+    useEffect(()=>{
+        getOne(empNo).then((data) => {
+            console.log(data);
+            setEmpData(data);
+        }).catch((error) => {
+            console.log(error)
+        })
+    }, []);
 
     return (
         <>
@@ -82,6 +93,8 @@ const EmployeesReadComponent = ({ empNo }) => {
                     </Link>
                 </div>
             </div>
+
+            
 
             <div className="flex flex-col items-center py-10 px-4 bg-[#edf3f5] w-full h-full">
                 <div className="bg-white p-6 rounded-xl shadow-xl w-3/4  border-2 border-[#c6e4ec]">

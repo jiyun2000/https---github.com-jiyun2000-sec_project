@@ -19,16 +19,21 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
 
     const [scheduleModData, setScheduleModData] = useState(initState);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         if (empNo && empSchNo) {
             getEmpScheduleById(empNo, empSchNo).then((data) => { //일정 한개 가져오기
+                console.log(data);
+                
                 if (data && data.startDate && data.endDate) {
                     setScheduleModData({
                         getEmpScheNo: data.empSchNo,
                         scheduleText: data.scheduleText,
-                        startDate: new Date(data.startDate),
-                        endDate: new Date(data.endDate)
+                        // startDate: new Date(data.startDate),
+                        startDate : data.startDate,
+                        // endDate: new Date(data.endDate)
+                        endDate : data.endDate,
                     });
                 }
             }).catch((error) => {
@@ -37,6 +42,11 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
         }
     }, [empNo, empSchNo]);
 
+    useEffect(()=>{
+        getOneEmp(cookieEmpNo).then((data) => {
+            setEmpData(data);
+        })
+    }, []);
 
     //수정
     const modifySchedule = () => {
@@ -60,7 +70,14 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
                 alert("수정되었습니다.");
                 navigate(`/main`);
             }).catch((error) => {console.log(error)});
-        }else{
+        }else if(empData.jobNo === 999){
+            putEmpScheduleOne(scheduleModData, empNo, empSchNo).then(response => {
+                console.log("response " + response);
+                alert("수정되었습니다.");
+                navigate(`/main`);
+            }).catch((error) => {console.log(error)});
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }

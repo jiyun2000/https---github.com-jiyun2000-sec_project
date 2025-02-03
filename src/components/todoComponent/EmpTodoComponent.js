@@ -3,6 +3,7 @@ import { getEmpTodo } from "../../api/todoApi/empTodoApi";
 import { useNavigate } from "react-router-dom";
 import { deleteScheduleOne } from "../../api/scheduleAPi/empScheduleApi";
 import { getCookie } from "../../util/cookieUtil";
+import { getOneEmp } from "../../api/employeesApi";
 
 const formatSelectDate = (dateString) => {
     const date = new Date(dateString);
@@ -20,10 +21,17 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
     const [selectDate, setSelectDate] = useState(initialSelectDate || new Date().toISOString().split('T')[0]);
     const navigate = useNavigate();
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         setSelectDate(initialSelectDate || new Date().toISOString().split('T')[0]);
     }, [initialSelectDate]);
+
+    useEffect(()=>{
+        getOneEmp(cookieEmpNo).then((data) => {
+            setCookieEmpNo(data);
+        })
+    }, []);
 
     useEffect(() => {
         const formattedDate = formatSelectDate(selectDate);
@@ -51,7 +59,10 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
             navigate(`/empSchedule/register/${empNo}`);
-        }else{
+        }else if(empData.jobNo === 999){ //관리자 계정
+            navigate(`/empSchedule/register/${empNo}`);
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }
@@ -64,7 +75,10 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
             navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
-        }else{
+        }else if(empData.jobNo === 999){
+            navigate(`/empSchedule/mod/${empNo}/${empSchNo}`)
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }
@@ -81,7 +95,14 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
             }).catch((error) => {
                 console.log("deleteScheduleErr" + error);
             });
-        }else{
+        }else if(empData.jobNo === 999){
+            deleteScheduleOne(empNo, empSchNo).then(() => {
+                setEvents(events.filter(event => event.empSchNo !== empSchNo));
+            }).catch((error) => {
+                console.log("deleteScheduleErr" + error);
+            });
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }
