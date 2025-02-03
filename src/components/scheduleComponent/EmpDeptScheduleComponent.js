@@ -33,6 +33,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
     const [empData, setEmpData] = useState('');
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
 
+    
     useEffect(() => {
         getList([deptNo, empNo]).then((data) => {
             const deptSche = data.deptSchedule;
@@ -144,7 +145,10 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
             navigate(`/empSchedule/register/${empNo}`);
-        }else{
+        }else if(empData.jobNo === 999){
+            navigate(`/empSchedule/register/${empNo}`);
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }
@@ -156,6 +160,8 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         const strCookieEmpNo = cookieEmpNo + '';
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
+            navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
+        }else if(empData.jobNo === 999){
             navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
         }else{
             alert("권한이 없습니다.");
@@ -175,7 +181,16 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
             }).catch((error) => {
                 console.log("errrrr" + error);
             });
-        }else{
+        }else if(empData.jobNo === 999){
+            alert("삭제하시겠습니까 ?");
+            deleteScheduleOne(empNo, empSchNo).then(() => {
+                setEvents(events.filter(event => event.empSchNo !== getEmpScheNo));
+                window.location.reload();
+            }).catch((error) => {
+                console.log("errrrr" + error);
+            });
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }

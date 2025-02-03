@@ -19,6 +19,7 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
 
     const [scheduleModData, setScheduleModData] = useState(initState);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         if (empNo && empSchNo) {
@@ -41,6 +42,11 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
         }
     }, [empNo, empSchNo]);
 
+    useEffect(()=>{
+        getOneEmp(cookieEmpNo).then((data) => {
+            setEmpData(data);
+        })
+    }, []);
 
     //수정
     const modifySchedule = () => {
@@ -64,7 +70,14 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
                 alert("수정되었습니다.");
                 navigate(`/main`);
             }).catch((error) => {console.log(error)});
-        }else{
+        }else if(empData.jobNo === 999){
+            putEmpScheduleOne(scheduleModData, empNo, empSchNo).then(response => {
+                console.log("response " + response);
+                alert("수정되었습니다.");
+                navigate(`/main`);
+            }).catch((error) => {console.log(error)});
+        }
+        else{
             alert("권한이 없습니다.");
             return;
         }

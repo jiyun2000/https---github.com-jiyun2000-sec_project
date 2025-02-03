@@ -5,6 +5,7 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import { getCookie } from '../../util/cookieUtil';
+import { getOneEmp } from '../../api/employeesApi';
 
 const ChatEmpListComponent = () => {
     const { empNo } = useParams();  
@@ -15,6 +16,7 @@ const ChatEmpListComponent = () => {
     const [search, setSearch] = useState('');
     const [searchType] = useState('name');  // 이름 검색만
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
+    const [empData, setEmpData] = useState('');
 
     useEffect(() => {
         const awaitEmpList = async () => {
@@ -31,6 +33,13 @@ const ChatEmpListComponent = () => {
             awaitEmpList();
         }
     }, [empNo, currentPage]); 
+
+    useEffect(()=>{
+        getOneEmp(cookieEmpNo).then((data)=>{
+            setEmpData(data);
+            console.log(JSON.stringify(data))
+        })
+    },[])
 
     const loadMore = async () => {
         const nextPage = currentPage + 1; 
@@ -54,7 +63,11 @@ const ChatEmpListComponent = () => {
             console.log(cookieEmpNo);
             navigate(`/chat/${empNo}/${receiverEmpNo}`);
             sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
-        }else{
+        }else if(empData.jobNo === 999){ //관리자 계정
+            navigate(`/chat/${empNo}/${receiverEmpNo}`);
+            sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
+        }
+        else{
             alert("권한이 없습니다.")
         }
        
