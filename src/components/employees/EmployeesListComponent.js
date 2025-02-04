@@ -7,6 +7,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getCookie } from '../../util/cookieUtil';
+import { getOne } from '../../api/deptInfoApi';
 
 const initState = {
     dtoList : [],
@@ -30,6 +31,8 @@ const EmployeesListComponent = () => {
     const [searchType, setSearchType] = useState('empNo'); //
     const [cookEmpNo, setCookEmpNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
+    const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
+    const [deptData, setDeptData] = useState('');
 
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
 
@@ -60,6 +63,13 @@ const EmployeesListComponent = () => {
         setFilterEmployees(filteredList); 
     }
 
+    useEffect(()=>{
+        getOne(cookDeptNo).then((data) => {
+            console.log(data);
+            setDeptData(data);
+        })
+    }, [])
+
 
     const handleSearch = (evt) => {
         setSearch(evt.target.value);
@@ -76,6 +86,10 @@ const EmployeesListComponent = () => {
         console.log(strCook);
         if(strEmp === strCook){
             moveToRead(cookEmpNo)
+        }else if(deptData.deptNo === 999){
+            moveToRead(empNo)
+        }else{
+            alert("권한이 없습니다.");
         }
     }
 

@@ -20,6 +20,8 @@ import todo from "../assets/icon/todo.png";
 import team from "../assets/icon/team.png";
 import admin from "../assets/icon/admin.png";
 import user from "../assets/icon/user.png";
+import BoardMainpageComponent from '../components/board/BoardMainPageComponent';
+
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -29,6 +31,7 @@ const MainPage = () => {
   const selectDate = `${today.getFullYear()}-${("0" + (today.getMonth()+1).toString()).slice(-2)}-${("0" + (today.getDate()).toString()).slice(-2)}`;
   const [empData, setEmpData] = useState(null);
   const [deptData, setDeptData] = useState('');
+  const [BoardData, setBoardData] = useState([]);
 
   const goToMenu = () => navigate(`/menu/add`);
   const goToMenuList = () => {
@@ -57,6 +60,8 @@ const MainPage = () => {
   const goToBoardList = () => {
     navigate(`/board/list`)
   }
+
+  
 
   return (
     <div className="min-h-screen bg-white pb-5">
@@ -119,6 +124,7 @@ const MainPage = () => {
             <img src={board} alt='Board' className='w-8'/>
             <p className='text-center text-xl font-semibold '>공지사항</p>
           </div>
+          <BoardMainpageComponent />
         </div>
         <div className='w-[30%] shadow-xl rounded-md p-4'>
           <div className='flex flex-row justify-center gap-5 p-2'>
@@ -161,7 +167,9 @@ const MainPage = () => {
             <img src={admin} alt='Admin' className='w-8'/>
             <p className='text-center text-xl'>관리자 문의</p>
           </div>
-          
+          <div>
+           
+          </div>
         </div>
       </div>
       
