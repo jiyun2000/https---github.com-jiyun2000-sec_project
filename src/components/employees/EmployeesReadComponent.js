@@ -7,7 +7,7 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import { getCookie } from "../../util/cookieUtil";
 import {deptOne} from "../../api/deptInfoApi";
-import { jobOne } from "../../api/jobApi";
+import { getJob, jobOne } from "../../api/jobApi";
 import { getOne } from "../../api/boardApi";
 
 
@@ -41,14 +41,11 @@ const EmployeesReadComponent = ({ empNo }) => {
     useEffect(() => {
         getOneEmp(empNo).then(res => {
             setEmployees(res);
-            console.log(res)
         });
     }, [empNo]);
 
     useEffect(()=>{
         deptOne(cookieDeptNo).then((data) => {
-            console.log(cookieDeptNo);
-            console.log(data);
             setDeptData(data);
         }).catch((error)=>{
             console.log(error);
@@ -65,7 +62,6 @@ const EmployeesReadComponent = ({ empNo }) => {
     
     useEffect(()=>{
         getOne(empNo).then((data) => {
-            console.log(data);
             setEmpData(data);
         }).catch((error) => {
             console.log(error)
@@ -94,8 +90,6 @@ const EmployeesReadComponent = ({ empNo }) => {
                 </div>
             </div>
 
-            
-
             <div className="flex flex-col items-center py-10 px-4 bg-[#edf3f5] w-full h-full">
                 <div className="bg-white p-6 rounded-xl shadow-xl w-3/4  border-2 border-[#c6e4ec]">
                     <h1 className="text-3xl font-semibold m-6 text-center text-[#3d3d3d]">{employees.firstName} {employees.lastName} 님</h1>
@@ -111,7 +105,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                         <div className="m-3 border-b-2 border-[#ebecee] p-2">주소 : {employees.address}</div>
                         <div className="m-3 border-b-2 border-[#ebecee] p-2" >전화번호 : {employees.phoneNum}</div>
                         <div className="m-3 border-b-2 border-[#ebecee] p-2">성별 : {employees.gender === 'm' ? '남성' : '여성'} </div>
-                        <div className="m-3 border-b-2 border-[#ebecee] p-2">주빈등록번호 : {employees.citizenId}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">주민등록번호 : {employees.citizenId}</div>
                     </div>
 
                     <div className="flex justify-center mt-6 space-x-4">

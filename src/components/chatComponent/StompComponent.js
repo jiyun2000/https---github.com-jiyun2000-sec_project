@@ -236,7 +236,7 @@ const StompComponent = () => {
         console.log(strSen);
         if(strSen === strCook){
             console.log("outChatRoom");
-            alert("채팅방에 나가시겠습니까?")
+            alert("채팅방에서 나가셨습니다")
             console.log("senderEmpNo" + senderEmpNo);
             console.log("receiverEmpNo" + receiverEmpNo);
             leaveChatRoom(senderEmpNo,receiverEmpNo);
@@ -248,6 +248,12 @@ const StompComponent = () => {
             return;
         }
     }
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          
+        }
+      }
 
     const goToBoardList = () => {
         navigate(`/board/list`)
@@ -298,10 +304,15 @@ const StompComponent = () => {
                             type="text"
                             value={messageObj.content}
                             onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') {
+                                  stompHandler.sendMessage()
+                                }
+                              }}
                             className='border-2 border-[#6f8cb4] rounded-md p-1 w-2/5 '
                         />
                         <button type="submit" 
-                            onClick={stompHandler.sendMessage}
+                            onClick={stompHandler.sendMessage} 
                             className='bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mx-2 p-1 w-1/6 '
                         >
                             전송
