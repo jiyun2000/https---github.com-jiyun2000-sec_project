@@ -21,13 +21,13 @@ const TodayCommuteComponent = ({empNo}) => {
     }, [empNo]);
 
     if (!commuteData) {
-        return <p>오늘 출근 안함!</p>;
+        return <p>오늘 출근 안함</p>;
     }
     
     return (
         <div>
-            <p>출근 시간: {commuteData.checkInTime}</p>
-            <p>퇴근 시간: {commuteData.checkOutTime}</p>
+            <p>출근 : {commuteData.checkInTime}</p>
+            <p>퇴근 : {commuteData.checkOutTime}</p>
         </div>
     );
 };

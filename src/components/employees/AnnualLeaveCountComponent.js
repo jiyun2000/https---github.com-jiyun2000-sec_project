@@ -21,7 +21,7 @@ const AnnualLeaveCountComponent = ({empNo}) => {
     return (
         <>
             <div>
-                남은 시간 연차: {annual ? annual.hours : '0'} 시간
+                {annual ? annual.hours : '0'} 시간
             </div>
         </>
     )

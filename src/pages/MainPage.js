@@ -14,6 +14,12 @@ import BoardTitleComponent from '../components/board/BoardTitleComponent';
 import menu from "../assets/icon/menu.png";
 import birth from "../assets/icon/birth.png";
 import { getList, getOneEmp } from '../api/employeesApi';
+import { deptOne } from '../api/deptInfoApi';
+import board from "../assets/icon/board.png";
+import todo from "../assets/icon/todo.png";
+import team from "../assets/icon/team.png";
+import admin from "../assets/icon/admin.png";
+import user from "../assets/icon/user.png";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -22,6 +28,7 @@ const MainPage = () => {
   const today = new Date();
   const selectDate = `${today.getFullYear()}-${("0" + (today.getMonth()+1).toString()).slice(-2)}-${("0" + (today.getDate()).toString()).slice(-2)}`;
   const [empData, setEmpData] = useState(null);
+  const [deptData, setDeptData] = useState('');
 
   const goToMenu = () => navigate(`/menu/add`);
   const goToMenuList = () => {
@@ -30,6 +37,13 @@ const MainPage = () => {
     navigate(`/menu/list?page=${page}&size=${size}`);
   };
   
+  useEffect(()=>{
+    deptOne(deptNo).then((data)=>{
+      console.log(data);
+      setDeptData(data);
+    })
+  }, []);
+
 
   useEffect(()=>{
     getOneEmp(empNo).then((data)=>{
@@ -65,11 +79,95 @@ const MainPage = () => {
         </div>
       </div>
 
-      <div className='text-center font-semibold text-3xl'>
-        환영합니다 {empData ? empData.firstName : ''}{empData ? empData.lastName : ''} 님
+  <div className='flex flex-row m-3'>
+    <div className='m-3'>
+      <Link to={`/employees/read/${empNo}`}><img src={user} alt='User' className='w-[120px] ml-8 h-[120px]' /></Link>
+    </div>
+    <div className='flex flex-col'>
+      <div className='flex flex-row w-full'>
+        <div className='font-semibold text-3xl m-3 ml-8'>
+          {empData ? `${empData.firstName} ${empData.lastName}` : ''} 님
+        </div>
+        <div className='text-2xl font-semibold m-3'>
+          ({deptData.deptName})
+        </div>
       </div>
 
-      <div className="flex flex-row w-full mt-8 px-6">
+      <div className='flex flex-row space-x-8 ml-8 gap-10'>
+        <div className='font-medium text-xl'>
+          <div className='bg-[#dce1f3] rounded-md text-center'>근무정보</div>
+          <TodayCommutePage empNo={empNo} />
+        </div>
+
+        <div className='font-medium text-xl'>
+          <div className='bg-[#dfdcf3] rounded-md text-center'>입사</div>
+          <DDayPage empNo={empNo} />
+        </div>
+
+        <div className='font-medium text-xl'>
+          <div className='bg-[#dce7f3] rounded-md text-center'> 연차</div>
+          <AnnualLeaveCountPage empNo={empNo} />
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div className='flex flex-col w-full mt-3'>
+      <div className='flex flex-row m-3 gap-5 justify-center'>
+        <div className='w-[30%] shadow-xl rounded-md p-4'>
+          <div className='flex flex-row justify-center gap-5 p-2'> 
+            <img src={board} alt='Board' className='w-8'/>
+            <p className='text-center text-xl font-semibold '>공지사항</p>
+          </div>
+        </div>
+        <div className='w-[30%] shadow-xl rounded-md p-4'>
+          <div className='flex flex-row justify-center gap-5 p-2'>
+            <img src={todo} alt='Todo' className='w-8'/>
+            <p className='text-center text-xl font-semibold '>개인일정</p>
+          </div>
+          <EmpTodoPage empNo={empNo} selectDate={selectDate} />
+        </div>
+        <div className='w-[30%] shadow-xl rounded-md p-4'>
+          <div className='flex flex-row justify-center gap-5 p-2'>
+            <img src={team} alt='Team' className='w-8'/>
+            <p className='text-center text-xl font-semibold '>{deptData.deptName}일정</p>
+          </div>
+          <DeptTodoPage empNo={empNo} deptNo={deptNo} selectDate={selectDate} />
+        </div>
+      </div>
+    </div>
+
+    <div className='flex flex-col w-full'>
+      <div className='flex flex-row m-3 gap-5 justify-center'> 
+        <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
+          <div  className='flex flex-row justify-center gap-5 p-2'>
+            <img src={birth} alt="Birth" className="w-8 mb-2" />
+            <p className='text-center text-xl font-semibold '>오늘의 생일자</p>
+          </div>
+          <BirthEmpPage />
+        </div>
+        <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
+          <div className='flex flex-row justify-center gap-5 p-2'>
+            <img src={menu} alt="Menu" className="w-8 mb-2" />
+            <p className='text-center text-xl font-semibold '>오늘의 메뉴</p>
+          </div>
+          <MenuPage menuDate={selectDate} />
+          <button type="button" className="text-lg mt-2 text-[#0f1f6f] hover:underline" onClick={goToMenuList}>
+                메뉴 리스트
+          </button>
+        </div>
+        <div className='w-[30%] shadow-xl rounded-md p-4'>
+          <div  className='flex flex-row justify-center gap-5 p-2'>
+            <img src={admin} alt='Admin' className='w-8'/>
+            <p className='text-center text-xl'>관리자 문의</p>
+          </div>
+          
+        </div>
+      </div>
+      
+
+    </div>
+      {/* <div className="flex flex-row w-full mt-8 px-6">
         <div className="w-1/2 p-4">
           <div className="select-none">
             <EmpTodoPage empNo={empNo} selectDate={selectDate} />
@@ -80,8 +178,8 @@ const MainPage = () => {
             <DeptTodoPage empNo={empNo} deptNo={deptNo} selectDate={selectDate} />
           </div>
         </div>
-      </div>
-
+      </div> */}
+{/* 
       <div className="flex flex-row w-full mt-2 px-6">
         <div className="w-1/3 p-4 text-center">
           <div className="select-none bg-[#e6edf6] rounded-md p-3 text-xl font-medium h-[10vh] flex items-center justify-center">
@@ -98,10 +196,10 @@ const MainPage = () => {
             <AnnualLeaveCountPage empNo={empNo} />
           </div>
         </div>
-      </div>
+      </div> */}
 
 
-      <div className="flex flex-row w-full mt-8 px-6 flex-grow">
+      {/* <div className="flex flex-row w-full mt-8 px-6 flex-grow">
         <div className="w-1/2 p-4 text-center flex items-center justify-center">
           <div className="flex flex-col items-center w-full p-3 bg-[#f1f6fb] rounded-md h-full">
             <img src={birth} alt="Birth" className="w-24 mb-2" />
@@ -114,16 +212,13 @@ const MainPage = () => {
             <img src={menu} alt="Menu" className="w-24 mb-2" />
             <MenuPage menuDate={selectDate} />
             <div className="mt-4">
-              {/* <button type="button" className="text-sm mr-3 text-blue-600 hover:underline" onClick={goToMenu}>
-                메뉴 등록
-              </button> */}
               <button type="button" className="text-sm text-blue-600 hover:underline" onClick={goToMenuList}>
                 메뉴 리스트
               </button>
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -22,13 +22,12 @@ const MenuComponent = () => {
     return (
       <>
         <div>
-          <h2 className="text-center text-2xl font-semibold">오늘의 메뉴</h2>
           <div className="flex flex-col">
-            <div className="font-thin text-lg">{menuData.mainMenu}</div>
-            <div className="font-thin text-lg">
+            <div className="font-medium text-lg">{menuData.mainMenu}</div>
+            <div className="font-medium text-lg">
               {menuData.firSideDish} | {menuData.secSideDish} | {menuData.thirdSideDish}
             </div>
-            <div className="font-thin text-lg">{menuData.dessert}</div>
+            <div className="font-medium text-lg">{menuData.dessert}</div>
           </div>
         </div>
       </>

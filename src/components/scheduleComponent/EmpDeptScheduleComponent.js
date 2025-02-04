@@ -201,12 +201,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         const strCookieEmpNo = cookieEmpNo + '';
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
-            if(empData.jobNo === 999){
                 navigate(`/deptSchedule/mod/${deptNo}/${empNo}/${deptSchNo}`);
-            }else{
-                alert("권한이 없습니다.");
-                return;
-            }
         }else{
             alert("권한이 없습니다.");
             return;
@@ -218,7 +213,6 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         const strCookieEmpNo = cookieEmpNo + '';
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
-            if(empData.jobNo === 999){
                 alert("삭제하시겠습니까 ?");
                 deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
                     setEvents(events.filter(event => event.deptSchNo !== getDeptScheNo));
@@ -226,10 +220,6 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
                 }).catch((error) => {
                     console.log("Errrr" + error);
                 });
-            }else{
-                alert("권한이 없습니다.");
-                return;
-            }
         }else{
             alert("권한이 없습니다.");
             return;
@@ -251,12 +241,8 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         const strCookieEmpNo = cookieEmpNo + '';
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
-            if(empData.jobNo === 999){
-                navigate(`/deptSchedule/register/${deptNo}/${empNo}`);
-            }else{
-                alert('권한이 없습니다.');
-                return;
-            }
+            navigate(`/deptSchedule/register/${deptNo}/${empNo}`);
+           
         }else{
             alert("권한이 없습니다.");
             return;

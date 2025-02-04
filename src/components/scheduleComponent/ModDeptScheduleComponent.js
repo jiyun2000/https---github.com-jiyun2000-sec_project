@@ -71,16 +71,11 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
         const strCookieEmpNo = cookieEmpNo + '';
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
-            if(empData.jobNo === 999){
                 putDeptSchedule(scheduleModData, deptNo, empNo, deptSchNo).then(response => {
                     console.log("Resss" + response);
                     alert("수정되었습니다.");
                     navigate(`/main`);
                 }).catch((error) => {console.log("Errrrr" + error)})
-            }else{
-                alert("권한이 없습니다.")
-                return;
-            }
         }else{
             alert("권한이 없습니다.");
             return;

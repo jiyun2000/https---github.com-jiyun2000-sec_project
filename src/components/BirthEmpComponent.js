@@ -29,7 +29,6 @@ const BirthEmpComponent = () => {
   
     return (
     <div className="h-[20vh] w-full flex flex-col">
-        <h2 className="text-2xl font-semibold text-center">오늘의 생일자</h2>
         <div className="overflow-y-auto flex-grow">
           {Array.isArray(birthEmp.dtoList) && birthEmp.dtoList.length > 0 ? (
             birthEmp.dtoList.map((data) => (

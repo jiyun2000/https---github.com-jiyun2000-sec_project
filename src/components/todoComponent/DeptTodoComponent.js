@@ -3,6 +3,7 @@ import { getDeptTodo } from "../../api/todoApi/deptTodoApi";
 import { useNavigate } from "react-router-dom";
 import { deleteDeptScheduleOne } from "../../api/scheduleAPi/deptScheduleApi";
 import { getOneEmp } from "../../api/employeesApi";
+import { getOne } from "../../api/deptInfoApi";
 
 
 const formatSelectDate = (dateString) => {
@@ -19,6 +20,7 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
     const [selectDate, setSelectDate] = useState(initialSelectDate || new Date().toISOString().split('T')[0]);
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
+    const [deptData, setDeptData] = useState('');
 
     useEffect(() => {
         setSelectDate(initialSelectDate || new Date().toISOString().split('T')[0]);
@@ -51,50 +53,35 @@ const DeptTodoComponent = ({ empNo, deptNo, selectDate: initialSelectDate }) => 
         })
     }, []);
 
+    useEffect(()=>{
+        getOne(deptNo).then((data) => {
+            setDeptData(data);      
+        })
+    }, []);
+
     //부서 일정 수정
     const modDeptSchedule = (deptSchNo) => {
-        if(empData.jobNo === 999){
             navigate(`/deptSchedule/mod/${deptNo}/${empNo}/${deptSchNo}`);
-        }else{
-            alert("권한이 없습니다.");
-            console.log(empData.jobNo)
-            return;
-        }
-        
     };
 
     //부서 일정 삭제
     const deleteDeptSchedule = (deptSchNo) => {
-        if(empData.jobNo === 999 ){
             deleteDeptScheduleOne(deptNo, deptSchNo).then(() => {
                 setEvents(events.filter(event => event.deptSchNo !== deptSchNo));
             }).catch((error) => {
                 console.log("deleteDeptScheduleOne Errrrror " + error);
             });
-        }else{
-            alert("권한이 없습니다.");
-            return;
-        }
-        
     };
 
     //부서 일정 추가
     const addSchedule = () => {
-        if(empData.jobNo === 999){
             navigate(`/deptSchedule/register/${deptNo}/${empNo}`); 
-        }else{
-            alert("권한이 없습니다.");
-            console.log(empData.jobNo)
-            return;
-        }
-       
     };
     
 
     return (
         <>
-            <div className="text-center p-2 bg-[#d5e7fc] rounded-md bg-opacity-50 h-[35vh] overflow-y-scroll">
-            <h2 className="text-3xl font-semibold p-2">오늘의 부서 일정</h2><br />
+            <div className="text-center p-2  rounded-md h-[35vh] overflow-y-scroll">
             {events && events.length > 0 ? (
                 events.map((evt) => (
                     <div key={evt.deptSchNo}>

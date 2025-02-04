@@ -118,8 +118,7 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
 
     return (
         <>
-            <div className="text-center bg-[#d5e7fc] bg-opacity-50 h-[35vh] overflow-y-scroll p-2 rounded-md">
-            <h2 className="text-3xl font-semibold p-2">오늘의 일정</h2> <br />
+            <div className="text-center h-[35vh] overflow-y-scroll p-2 rounded-md">
             {events && events.length > 0 ? (
                 events.map((evt) => (
                     <div key={evt.empSchNo} >
