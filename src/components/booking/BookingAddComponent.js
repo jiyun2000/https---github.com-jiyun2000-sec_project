@@ -91,6 +91,25 @@ const BookingAddComponent = () => {
             </div>
 
             <div className="flex justify-center mt-10 ">
+                    <div className="w-1/5 p-6 font-bold">방번호</div>
+                    
+                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
+                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="roomNo"
+                    type={'number'} 
+                    value={booking.roomNo} 
+                    onChange={handleChangeBooking}>
+                        <option value={0}></option>
+                        {roomList.map((res)=>{
+                            return(
+                                <option value={res.roomNo}>{res.roomName}</option>
+                            )
+                        })}
+                    </select>
+                </div>
+            </div>
+            
+            <div className="flex justify-center mt-10 ">
             <div className="w-1/5 p-6 font-bold">시작시간</div>
                 <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
                     <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
@@ -109,25 +128,6 @@ const BookingAddComponent = () => {
                     type={'time'} 
                     value={booking.end} 
                     onChange={handleChangeBooking}></input>
-                </div>
-            </div>
-
-            <div className="flex justify-center mt-10 ">
-                    <div className="w-1/5 p-6 font-bold">방번호</div>
-                    
-                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
-                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="roomNo"
-                    type={'number'} 
-                    value={booking.roomNo} 
-                    onChange={handleChangeBooking}>
-                        <option value={0}></option>
-                        {roomList.map((res)=>{
-                            return(
-                                <option value={res.roomNo}>{res.roomName}</option>
-                            )
-                        })}
-                    </select>
                 </div>
             </div>
 

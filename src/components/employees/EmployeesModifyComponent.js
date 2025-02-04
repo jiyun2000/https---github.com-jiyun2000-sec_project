@@ -157,7 +157,7 @@ const EmployeesModifyComponent = ({empNo}) => {
                     <div className="w-[12%] p-6 text-right font-bold">부서</div>
                     <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
                         {deptInfo.map((data)=>{
-                            return data.deptNo===999?<></>:(<option value={data.deptNo}>{data.deptName}</option>)
+                            return (<option value={data.deptNo}>{data.deptName}</option>)
                         })}
 
                     </select>
@@ -167,7 +167,7 @@ const EmployeesModifyComponent = ({empNo}) => {
                     <div className="w-[12%] p-6 text-right font-bold">직책</div>
                     <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
                     {job.map((data)=>{
-                            return data.jobNo===999?<></>:(<option value={job.jobNo}>{data.jobTitle}</option>)
+                            return (<option value={job.jobNo}>{data.jobTitle}</option>)
                         })}
                     </select>
             </div>
@@ -201,13 +201,6 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">성별</div>
-                    {/* <select name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
-                    <option value={100}>100(디렉터)</option>
-                        <option value={200}>200(매니저)</option>
-                        <option value={300}>300(시니어)</option>
-                        <option value={400}>400(사원)</option>
-                        <option value={500}>500(인턴)</option>
-                    </select> */}
                     <select name="gender" value={employees.gender} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
                         <option value={"m"}>남성</option>
                         <option value={"w"}>여성</option>

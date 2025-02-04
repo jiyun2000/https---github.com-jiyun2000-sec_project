@@ -36,7 +36,13 @@ const EmployeesReadComponent = ({ empNo }) => {
     const [employeeNo,setEmployeeNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
+    const [phoneNumber,setPhoneNumber] = useState('');
+    const [citizenNumber,setCitizenNumber] = useState('');
    
+    useEffect(()=>{
+        setCitizenNumber(employees.citizenId.substring(0,6)+'-'+employees.citizenId.substring(6,employees.citizenId.length));
+        setPhoneNumber(employees.phoneNum.substring(0,3)+'-'+employees.phoneNum.substring(3,7)+'-'+employees.phoneNum.substring(7,employees.phoneNum.length));
+    },[employees]);
 
     useEffect(() => {
         getOneEmp(empNo).then(res => {
@@ -103,9 +109,9 @@ const EmployeesReadComponent = ({ empNo }) => {
                         <div className="m-3 border-b-2 border-[#ebecee] p-2">직책번호 : {employees.jobNo}</div>
                         <div className="m-3 border-b-2 border-[#ebecee] p-2">생년월일 : {employees.birthday}</div>
                         <div className="m-3 border-b-2 border-[#ebecee] p-2">주소 : {employees.address}</div>
-                        <div className="m-3 border-b-2 border-[#ebecee] p-2" >전화번호 : {employees.phoneNum}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2" >전화번호 : {phoneNumber}</div>
                         <div className="m-3 border-b-2 border-[#ebecee] p-2">성별 : {employees.gender === 'm' ? '남성' : '여성'} </div>
-                        <div className="m-3 border-b-2 border-[#ebecee] p-2">주민등록번호 : {employees.citizenId}</div>
+                        <div className="m-3 border-b-2 border-[#ebecee] p-2">주민등록번호 : {citizenNumber}</div>
                     </div>
 
                     <div className="flex justify-center mt-6 space-x-4">

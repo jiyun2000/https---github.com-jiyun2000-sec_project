@@ -91,7 +91,7 @@ const RoomListReadComponent = ({roomNo})=>{
             <div className="flex justify-center">
                 <div className="relative mb-4 flex w-full flex-wrap items-stretch">
                     <div className="w-1/5 p-6 font-bold">회의실 위치</div>
-                    <div className="w-4/5 p-6 rounded-md border border-blue-300">{roomList.location}</div>
+                    <div className="w-2/3 p-6 rounded-md border border-blue-300">{roomList.location}</div>
                 </div>
             </div>
 

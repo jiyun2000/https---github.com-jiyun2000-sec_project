@@ -108,13 +108,13 @@ const BookingListComponent = () => {
         </div>
 
      <div className="container mx-auto p-6">
-                <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약하기</h2>
+                <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약</h2>
                 <div className="text-2xl">
                     <div className="flex justify-center space-x-10">
                         <div className="w-1/2 p-6 text-center rounded-md bg-white border-2 border-[#8ba7cd] text-black  hover:bg-[#6f8cb4]  cursor-pointer hober:text-white"
                             id="cr"
                             onClick={handleChangeBooking}>
-                            회의실
+                            회의실 예약현황
                         </div>
                     </div>
                 </div>
