@@ -20,6 +20,7 @@ const DeptInfoListComponent = () => {
     const [deptInfo,setDeptInfo] = useState([initState]);
     let cnt = 0;
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
 
     const { moveToRead, moveToAdd } = useCustomMove();
     const navigate = useNavigate();
@@ -99,13 +100,13 @@ const DeptInfoListComponent = () => {
                 })}
             </div>
 
-            <div className="flex justify-center p-6">
+            {cookDeptNo===999?<div className="flex justify-center p-6">
                 <button type="button"
                     className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md "
                     onClick={handleClickAdd}>
                     추가
                 </button>
-        </div>
+        </div>:<></>}
     </div>
     </div>
     </>

@@ -30,6 +30,7 @@ const EmployeesListComponent = () => {
     const [filterEmployees, setFilterEmployees] = useState([]);
     const [searchType, setSearchType] = useState('empNo'); //
     const [cookEmpNo, setCookEmpNo] = useState(getCookie("member").empNo);
+    const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
     const navigate = useNavigate();
     const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
     const [deptData, setDeptData] = useState('');
@@ -181,8 +182,8 @@ const EmployeesListComponent = () => {
                         movePage={moveToList}
                     />
                 </div>
-    
-                <div className="flex justify-center mt-6">
+                
+                {cookDeptNo===999?<div className="flex justify-center mt-6">
                     <button
                         type="button"
                         onClick={handleClickAdd}
@@ -190,7 +191,7 @@ const EmployeesListComponent = () => {
                     >
                         추가
                     </button>
-                </div>
+                </div>:<></>}
             </div>
         </div>
     );

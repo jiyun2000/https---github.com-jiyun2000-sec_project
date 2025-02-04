@@ -25,6 +25,7 @@ const initState = {
 const BoardListComponent = () => {
   const [board, setBoard] = useState(initState);
   const [empNo, setEmpNo] = useState(getCookie('member').empNo);
+  const [deptNo, setDeptNo] = useState(getCookie('member').deptNo);
   const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
   const navigate = useNavigate();
   const [empData, setEmpData] = useState('');
@@ -130,7 +131,7 @@ const BoardListComponent = () => {
             </table>
           </div>
         </div>
-        <div className="flex justify-center p-4">
+        {deptNo===999?<div className="flex justify-center p-4">
           <button
             type="button"
             className="inline-block  p-4 m-2 text-xl w-32 text-white  rounded-md bg-[#8ba7cd]  hover:bg-[#6f8cb4]  cursor-pointer"
@@ -138,7 +139,7 @@ const BoardListComponent = () => {
           >
             추가
           </button>
-        </div>
+        </div>:<></>}
         <PageComponent serverData={board} movePage={moveToList} />
       </div>
     </>
