@@ -5,6 +5,7 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
+import { getCookie } from "../../util/cookieUtil";
 
 const initState = {
     commNo : 0 ,
@@ -18,6 +19,7 @@ const CommuteModifyComponent = ({commNo}) => {
     const [commute, setCommute] = useState({...initState});
 
     const {moveToCommuteList} = useCustomMove();
+    const [empNo, setEmpNo] = useState(getCookie('member').empNo);
 
     useEffect(()=>{
         getOneCommute(commNo).then(data=>{

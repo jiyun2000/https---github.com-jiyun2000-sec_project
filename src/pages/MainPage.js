@@ -37,6 +37,8 @@ const MainPage = () => {
       setEmpData(data);
     }).catch((error)=>{
       console.log(error);
+      console.log("ddd");
+      
     })
   },[])
 
