@@ -19,7 +19,7 @@ const DDayComponent = ({empNo}) => {
     return(
         <>
         <div>
-             ♥ + {dDay} 일
+              + {dDay} 일
         </div>
         </>
     )

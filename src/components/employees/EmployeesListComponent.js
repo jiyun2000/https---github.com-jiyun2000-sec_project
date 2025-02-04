@@ -30,7 +30,6 @@ const EmployeesListComponent = () => {
     const [filterEmployees, setFilterEmployees] = useState([]);
     const [searchType, setSearchType] = useState('empNo'); //
     const [cookEmpNo, setCookEmpNo] = useState(getCookie("member").empNo);
-    const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
     const navigate = useNavigate();
     const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
     const [deptData, setDeptData] = useState('');
