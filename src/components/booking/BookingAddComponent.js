@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
-import { addOne } from "../../api/bookingApi";
+import { addOne, getListAtDate, getListAtDateWithRoomNo } from "../../api/bookingApi";
 import { getCookie } from "../../util/cookieUtil";
 import { getList } from "../../api/roomListApi";
 import { Link, useNavigate } from "react-router-dom";
@@ -26,7 +26,10 @@ const initStateRL = {
 
 const BookingAddComponent = () => {
     const [booking, setBooking] = useState({...initState});
-
+    const [bookingAtDate, setBookingAtDate] = useState([]);
+    const [bookDate, setBookDate] = useState('');
+    const [roomNumber, setRoomNumber] = useState(0);
+    const [timeSlot, setTimeSlot] = useState([8,9,10,11,12,13,14,15,16,17,18]);
     const [roomList, setRoomList] = useState([initStateRL]);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
 
@@ -38,6 +41,13 @@ const BookingAddComponent = () => {
         getList().then(res=>setRoomList(res));
     },[booking]);
 
+    useEffect(()=>{
+        if(bookDate!==''){
+            if(roomNumber!==0){
+                getListAtDateWithRoomNo(bookDate,roomNumber).then(res=>setBookingAtDate(res));
+            }
+        }
+    },[bookDate,roomNumber]);
     const handleClickAdd = () => {
         booking["empNo"] = getCookie("member").empNo;
         addOne(booking).then(()=>{
@@ -49,6 +59,16 @@ const BookingAddComponent = () => {
     const handleChangeBooking = (evt) => {
         booking[evt.target.name] = evt.target.value;
         setBooking({...booking});
+    }
+
+    const handleChangeDate = (evt) => {
+        booking[evt.target.name] = evt.target.value;
+        setBookDate(evt.target.value);
+    }
+
+    const handleChangeRoomNo = (evt) => {
+        booking[evt.target.name] = evt.target.value;
+        setRoomNumber(evt.target.value);
     }
 
     const goToBoardList = () => {
@@ -86,7 +106,7 @@ const BookingAddComponent = () => {
                     name="bookDate"
                     type={'date'} 
                     value={booking.bookDate}
-                    onChange={handleChangeBooking}></input>
+                    onChange={handleChangeDate}></input>
                 </div>
             </div>
 
@@ -98,7 +118,7 @@ const BookingAddComponent = () => {
                     name="roomNo"
                     type={'number'} 
                     value={booking.roomNo} 
-                    onChange={handleChangeBooking}>
+                    onChange={handleChangeRoomNo}>
                         <option value={0}></option>
                         {roomList.map((res)=>{
                             return(
@@ -130,7 +150,18 @@ const BookingAddComponent = () => {
                     onChange={handleChangeBooking}></input>
                 </div>
             </div>
+            
+            <div className="grid place-items-center w-full">
+            <div className="w-[75%] flex m-auto flex-wrap  ">
+                {bookingAtDate.map((data)=>{
+                    return <div className="grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2">
+                        {data.start} ~ {data.end}
+                    </div>
+                })}
+            </div>
+            </div>
 
+            
             <div className="flex justify-center p-4">
                 <button type="button"
                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"

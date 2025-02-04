@@ -4,14 +4,26 @@ export const API_SERVER_HOST = 'http://localhost:8080';
 
 const prefix = `${API_SERVER_HOST}/api/booking`;
 
-export const getList = async (bookType, pageParam) => {
+export const getList = async (bookDate,bookType, pageParam) => {
     const [page, size] = pageParam;
-    const res = await jwtAxios.get(`${prefix}/list/${bookType}`,{
+    const res = await jwtAxios.get(`${prefix}/list/${bookType}/${bookDate}`,{
         params : {
             page : page,
             size : size
         }
     });
+
+    return res.data;
+}
+
+export const getListAtDate = async (bookDate) => {
+    const res = await jwtAxios.get(`${prefix}/list/date/${bookDate}`);
+
+    return res.data;
+}
+
+export const getListAtDateWithRoomNo = async (bookDate,roomNo) => {
+    const res = await jwtAxios.get(`${prefix}/list/date/${bookDate}/${roomNo}`);
 
     return res.data;
 }
