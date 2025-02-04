@@ -3,13 +3,13 @@ import useCustomMove from "../../hooks/useCustomMove";
 import { listMenu } from "../../api/menuApi";
 import PageComponent from "../common/PageComponent";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import { getOneEmp } from "../../api/employeesApi";
-
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     dtoList: [],
@@ -32,6 +32,7 @@ const MenuListComponent = () => {
     const [menuDateExist, setMenuDateExist] = useState(false);
     const [menuDate, setMenuDate] = useState('')
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(() => {
         listMenu([page, size]).then((data) => {
@@ -70,6 +71,10 @@ const MenuListComponent = () => {
         navigate(`/board/list`)
       }
 
+    const checkRemove = () => {
+        removeCookie("alert");
+      }
+
     return (
         <>
         <div>
@@ -86,9 +91,12 @@ const MenuListComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
-                    </Link>
+                    }
+          </Link>
                 </div>
             </div>
             <div className="text-3xl font-bold mb-6 text-center m-5">메뉴 리스트</div>

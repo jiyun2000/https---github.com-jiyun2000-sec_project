@@ -5,8 +5,9 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
 import { getOneEmp } from "../../api/employeesApi";
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     commNo : 0 ,
@@ -22,6 +23,8 @@ const CommuteModifyComponent = ({commNo}) => {
     const {moveToCommuteList} = useCustomMove();
     const [getEmpData, SetGetEmpData] = useState("");
     const navigate = useNavigate();
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+  
 
     useEffect(()=>{
         getOneCommute(commNo).then(data=>{
@@ -54,6 +57,9 @@ const CommuteModifyComponent = ({commNo}) => {
         navigate(`/board/list`)
       }
 
+      const checkRemove = () => {
+          removeCookie("alert");
+        }
     return (
         <div>
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -69,8 +75,11 @@ const CommuteModifyComponent = ({commNo}) => {
                 <Link to="/mail" className="w-12 cursor-pointer">
                     <img src={mail} alt="Mail" className="w-full" />
                 </Link>
-                <Link to={`/chat/empList/${commute.empNo}?page=1`} className="w-12 cursor-pointer">
+                <Link to={`/chat/empList/${commute.empNo}?page=1`} className="w-12 cursor-pointer"  onClick={()=>checkRemove()}>
+                {chatCntCook  ? 
+                    <img src={colorChat} alt='colorChat' className='w-full' /> :
                     <img src={chat} alt="Chat" className="w-full" />
+                }
                 </Link>
             </div>
         </div>

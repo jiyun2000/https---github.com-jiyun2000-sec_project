@@ -6,7 +6,8 @@ import RoomListPageComponent from "../common/RoomListPageComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import BoardTitleComponent from "../board/BoardTitleComponent";
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     roomNo : 0,
@@ -32,7 +33,7 @@ const RoomListReadComponent = ({roomNo})=>{
     const [booking, setBooking] = useState(initStateBooking);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
-
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const {page, size, moveToRoomList, moveToList, moveToModify} = useCustomMove();
 
     useEffect(()=>{
@@ -51,6 +52,10 @@ const RoomListReadComponent = ({roomNo})=>{
         navigate(`/board/list`)
       }
 
+const checkRemove = () => {
+    removeCookie("alert");
+  }
+
     return <>
     <div>
     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -66,8 +71,11 @@ const RoomListReadComponent = ({roomNo})=>{
           <Link to="/mail" className="w-12 cursor-pointer">
             <img src={mail} alt="Mail" className="w-full" />
           </Link>
-          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
-            <img src={chat} alt="Chat" className="w-full" />
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+          {chatCntCook  ? 
+              <img src={colorChat} alt='colorChat' className='w-full' /> :
+              <img src={chat} alt="Chat" className="w-full" />
+          }
           </Link>
         </div>
       </div>

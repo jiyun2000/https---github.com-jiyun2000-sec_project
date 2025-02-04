@@ -5,7 +5,9 @@ import { getOneEmp } from "../../api/employeesApi";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import alert from "../../assets/icon/alert.png";
+import colorChat from "../../assets/icon/colorChat.png";
 
 const ChatListComponent = () => {
     const { senderEmpNo } = useParams();
@@ -15,17 +17,22 @@ const ChatListComponent = () => {
     const [page, setPage] = useState(1);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(() => {
         getChatList(senderEmpNo)
             .then((data) => {
                 console.log(JSON.stringify(data));
                 setChatList(data);
+                
             })
             .catch((error) => {
                 console.log(error);
             });
     }, [senderEmpNo]);
+
+   
+    
 
     useEffect(()=>{
         getOneEmp(cookieEmpNo).then((data)=>{
@@ -70,12 +77,15 @@ const ChatListComponent = () => {
         if(strSen === strCook){
             const [emp1, emp2] = chatNo.split('_');
             const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
-    
+            console.log(receiverEmpNo);
+            
+            removeCookie(receiverEmpNo);
             navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
         }else if(empData.jobNo === 999){ //관리자 계정
             const [emp1, emp2] = chatNo.split('_');
             const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
     
+            removeCookie(receiverEmpNo);
             navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
         }
         else{
@@ -93,6 +103,11 @@ const ChatListComponent = () => {
         navigate(`/board/list`)
       }
 
+
+    const checkRemove = () => {
+    removeCookie("alert");
+    }
+
     return (
         <div>
             <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -108,8 +123,11 @@ const ChatListComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer">
-                        <img src={chat} alt="Chat" className="w-full"  />  
+                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer"  onClick={()=>checkRemove()}>
+                    {chatCntCook ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
+                        <img src={chat} alt="Chat" className="w-full" />
+                    } 
                     </Link>
                 </div>
             </div>
@@ -125,18 +143,26 @@ const ChatListComponent = () => {
                             const [emp1, emp2] = chat.chatNo.split('_');
                             const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
                             const receiverName = userNames[receiverEmpNo];
+                            const myCook = getCookie(receiverEmpNo);
+                            console.log(myCook);
 
                             return (
                                 <div key={chat.chatNo} className="bg-white p-4 rounded-xl shadow-md w-3/4 mb-2">
-                                    <div className="mb-4 text-center">
+                                    <div className="mb-4 text-center flex flex-row justify-center">
                                         <p className="font-semibold text-lg text-gray-800">
                                             {receiverName} 님
                                         </p>
+                                        {myCook ? 
+                                         <img src={alert} alt="alert" className="w-[25px] ml-3"/>
+                                        : ""}
                                     </div>
                                     <button
                                         type="button"
                                         className="w-full bg-[#8ba7cd] hover:bg-[#6f8cb4] text-white py-2 px-4 rounded-md text-sm"
-                                        onClick={() => goToChatRoom(chat.chatNo)}
+                                        onClick={() => {
+                                            removeCookie(receiverEmpNo);
+                                            goToChatRoom(chat.chatNo);
+                                        }}
                                     >
                                         채팅 시작
                                     </button>

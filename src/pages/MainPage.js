@@ -4,7 +4,7 @@ import DeptTodoPage from './todoPage/DeptTodoPage';
 import mail from "../assets/icon/mail.png";
 import chat from "../assets/icon/chat.png";
 import { useEffect, useState } from 'react';
-import { getCookie } from '../util/cookieUtil';
+import { getCookie, removeCookie } from '../util/cookieUtil';
 import TodayCommutePage from './employees/TodayCommutePage';
 import MenuPage from './menu/MenuPage';
 import DDayPage from './DDayPage';
@@ -21,6 +21,10 @@ import team from "../assets/icon/team.png";
 import admin from "../assets/icon/admin.png";
 import user from "../assets/icon/user.png";
 import BoardMainpageComponent from '../components/board/BoardMainPageComponent';
+import CalendarPage from './todoPage/CalendarPage';
+import moment from 'moment';
+import colorChat from "../assets/icon/colorChat.png";
+
 
 
 const MainPage = () => {
@@ -32,6 +36,8 @@ const MainPage = () => {
   const [empData, setEmpData] = useState(null);
   const [deptData, setDeptData] = useState('');
   const [BoardData, setBoardData] = useState([]);
+  const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+  
 
   const goToMenu = () => navigate(`/menu/add`);
   const goToMenuList = () => {
@@ -61,7 +67,9 @@ const MainPage = () => {
     navigate(`/board/list`)
   }
 
-  
+  const checkRemove = () => {
+    removeCookie("alert");
+  }
 
   return (
     <div className="min-h-screen bg-white pb-5">
@@ -78,8 +86,11 @@ const MainPage = () => {
           <Link to="/mail" className="w-12 cursor-pointer">
             <img src={mail} alt="Mail" className="w-full" />
           </Link>
-          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
-            <img src={chat} alt="Chat" className="w-full" />
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+          {chatCntCook  ? 
+              <img src={colorChat} alt='colorChat' className='w-full' /> :
+              <img src={chat} alt="Chat" className="w-full" />
+          }
           </Link>
         </div>
       </div>
@@ -163,12 +174,10 @@ const MainPage = () => {
           </button>
         </div>
         <div className='w-[30%] shadow-xl rounded-md p-4'>
-          <div  className='flex flex-row justify-center gap-5 p-2'>
-            <img src={admin} alt='Admin' className='w-8'/>
-            <p className='text-center text-xl'>관리자 문의</p>
-          </div>
           <div>
-           
+            <CalendarPage
+               formatDay={(locale, date) => moment(date).format("D")}
+            />
           </div>
         </div>
       </div>

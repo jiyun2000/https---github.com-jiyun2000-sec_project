@@ -8,19 +8,22 @@ import { getOneEmp } from '../../api/employeesApi';
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const StompComponent = () => {
     const navigate = useNavigate();
     const { senderEmpNo, receiverEmpNo } = useParams(); 
     const SERVER_URL = 'http://localhost:8080/chat';
     const [wsClient, setWsClient] = useState(undefined); //stomp 연결 후 생성한 client 
+    const [secWsClient, setSecWsClient] = useState(undefined);
     const [isEnterChat, setIsEnterChat] = useState(false); //채팅창 입장 여부
     const [messages, setMessages] = useState([]);  //채팅 메시지지
     const [userId, setUserId] = useState(senderEmpNo); 
     const [empData, setEmpData] = useState(null);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
- 
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
@@ -66,6 +69,7 @@ const StompComponent = () => {
             console.log("receiverEmpNo " + receiverEmpNo) 
             const sortedEmpNos = [senderEmpNo, receiverEmpNo].sort();
             stompHandler.connect(sortedEmpNos[0], sortedEmpNos[1]); 
+            chatSendAlert.connect(receiverEmpNo);
             loadChatHistory(); //과거 리스트 호출
         
         } else { //아니면 다시 리스트로 이동
@@ -150,6 +154,7 @@ const StompComponent = () => {
                     destination: `/pub/chat/${chatRoomId}`,
                     body: JSON.stringify(messageWithTime),
                 });
+                
         
                 // Spring Boot 서버로 메시지 저장
                 jwtAxios.post(`http://localhost:8080/chat/${senderEmpNo}/${receiverEmpNo}`, messageWithTime, {
@@ -222,6 +227,63 @@ const StompComponent = () => {
         navigate(`/chat/empList/${senderEmpNo}`);
     },
 };
+
+const chatSendAlert = {
+        connect : (empNo) => {
+            const client = new Client({
+                webSocketFactory: () => new SockJS(SERVER_URL),
+                reconnectDelay: 5000,
+                heartbeatIncoming: 4000,
+                heartbeatOutgoing: 4000,
+
+                onConnect : (conn) => {
+                    console.log("소켓 연결 완" + receiverEmpNo);
+                    client.subscribe(`/sub/chat/${receiverEmpNo}`, (message)=>{
+                        const chatMsg = message;
+                        console.log("!!!!!!!!!!");
+                        
+                        setMessages((prevMessages) => [
+                            ...prevMessages,
+                            {
+                                content: chatMsg.content,
+                                sender: chatMsg.sender,
+                                sendTime: chatMsg.sendTime,
+                            },
+                        ]);
+ 
+                    console.log("ㅋㅋㅋ");
+                    console.log(chatMsg);
+                    })
+                },
+                onWebSocketClose: () => {
+                    console.log('onWebSocketClose');
+                },
+                //소켓 연결 에러
+                onWebSocketError: (error) => {
+                    console.log("onWebSocketError " + error);
+                },
+                //stomp 에러러
+                onStompError: (frame) => {
+                    console.log("onStompError " + frame);
+                },
+            })
+            setSecWsClient(client); //client객체 추가
+            client.activate(); //client 활성화
+        },
+        sendMessage : () => {
+            secWsClient.publish({
+                destination: `/pub/chat/${receiverEmpNo}`,
+                body: JSON.stringify({sender:senderEmpNo}),
+            });
+            console.log("!!!!!!");
+            console.log(senderEmpNo);
+            
+        }
+    }
+
+    
+
+
     const generateChatRoomId = (senderEmpNo, receiverEmpNo) => {
         const smallEmpNo = Math.min(senderEmpNo, receiverEmpNo);
         const largeEmpNo = Math.max(senderEmpNo, receiverEmpNo);
@@ -252,6 +314,10 @@ const StompComponent = () => {
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+
+    const checkRemove = () => {
+        removeCookie("alert");
+    }
     return ( 
         <>
         <div>
@@ -268,8 +334,11 @@ const StompComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>
@@ -301,7 +370,10 @@ const StompComponent = () => {
                             className='border-2 border-[#6f8cb4] rounded-md p-1 w-2/5 '
                         />
                         <button type="submit" 
-                            onClick={stompHandler.sendMessage}
+                            onClick={()=>{
+                                stompHandler.sendMessage();
+                                chatSendAlert.sendMessage();
+                            }}
                             className='bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mx-2 p-1 w-1/6 '
                         >
                             전송

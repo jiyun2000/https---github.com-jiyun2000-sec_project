@@ -54,58 +54,22 @@ const EmpTodoComponent = ({ empNo, selectDate: initialSelectDate }) => {
 
     //개인 일정 추가
     const empTodoAdd = () => {
-        const strEmpNo = empNo + '';
-        const strCookieEmpNo = cookieEmpNo + '';
-        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
-        if(strEmpNo === strCookieEmpNo){
-            navigate(`/empSchedule/register/${empNo}`);
-        }else if(empData.jobNo === 999){ //관리자 계정
-            navigate(`/empSchedule/register/${empNo}`);
-        }
-        else{
-            alert("권한이 없습니다.");
-            return;
-        }
+        navigate(`/empSchedule/register/${empNo}`);
     };
 
     //개인 일정 수정
     const modSchedule = (empSchNo) => {
-        const strEmpNo = empNo + '';
-        const strCookieEmpNo = cookieEmpNo + '';
-        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
-        if(strEmpNo === strCookieEmpNo){
-            navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
-        }else if(empData.jobNo === 999){
-            navigate(`/empSchedule/mod/${empNo}/${empSchNo}`)
-        }
-        else{
-            alert("권한이 없습니다.");
-            return;
-        }
+         navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
     };
 
     //개인 일정 삭제
     const deleteSchedule = (empSchNo) => {
-        const strEmpNo = empNo + '';
-        const strCookieEmpNo = cookieEmpNo + '';
-        console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
-        if(strEmpNo === strCookieEmpNo){
-            deleteScheduleOne(empNo, empSchNo).then(() => {
-                setEvents(events.filter(event => event.empSchNo !== empSchNo));
-            }).catch((error) => {
-                console.log("deleteScheduleErr" + error);
-            });
-        }else if(empData.jobNo === 999){
-            deleteScheduleOne(empNo, empSchNo).then(() => {
-                setEvents(events.filter(event => event.empSchNo !== empSchNo));
-            }).catch((error) => {
-                console.log("deleteScheduleErr" + error);
-            });
-        }
-        else{
-            alert("권한이 없습니다.");
-            return;
-        }
+        alert("일정을 삭제하겠습니다.");
+        deleteScheduleOne(empNo, empSchNo).then(() => {
+            setEvents(events.filter(event => event.empSchNo !== empSchNo));
+        }).catch((error) => {
+            console.log("deleteScheduleErr" + error);
+        });
     };
 
     const formatDate = (dateString) => {

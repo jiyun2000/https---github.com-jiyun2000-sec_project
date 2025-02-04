@@ -11,7 +11,8 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
 import { getOneEmp } from "../../api/employeesApi";
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import colorChat from "../../assets/icon/colorChat.png";
 
 Modal.setAppElement('#root');
 
@@ -32,7 +33,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
-
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     
     useEffect(() => {
         getList([deptNo, empNo]).then((data) => {
@@ -250,7 +251,9 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         
     };
 
-
+const checkRemove = () => {
+    removeCookie("alert");
+  }
 
     const goToBoardList = () => {
         navigate(`/board/list`)
@@ -273,8 +276,11 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>

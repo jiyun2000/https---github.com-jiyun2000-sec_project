@@ -5,7 +5,8 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
 import { getOneEmp } from "../../api/employeesApi";
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import colorChat from "../../assets/icon/colorChat.png";
 
 // deptSchedule modify component
 const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
@@ -20,7 +21,7 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
     const [scheduleModData, setScheduleModData] = useState(initState); 
     const [empData, setEmpData] = useState('');
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
-
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     useEffect(() => {
         if (deptNo && deptSchNo && empNo ) {
             console.log("DeptNO" + deptNo + "DeptscheNo" + deptSchNo + "empNo" + empNo);
@@ -92,6 +93,9 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
         navigate(`/board/list`)
       }
 
+       const checkRemove = () => {
+          removeCookie("alert");
+        }
     return (
         <>
         <div>
@@ -108,8 +112,11 @@ const ModDeptScheduleComponent = ({deptNo, deptSchNo, empNo}) => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>
