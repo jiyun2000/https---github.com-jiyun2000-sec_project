@@ -125,6 +125,7 @@ const EmployeesAddComponent = () => {
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">메일 주소</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+                    placeholder="example@abc.com"
                     name="mailAddress"
                     type={'text'} 
                     value={employees.mailAddress}
@@ -182,6 +183,7 @@ const EmployeesAddComponent = () => {
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">전화번호</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+                    placeholder="- 빼고 입력"
                     name="phoneNum"
                     type={'text'} 
                     value={employees.phoneNum} 
@@ -200,6 +202,7 @@ const EmployeesAddComponent = () => {
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">주민등록번호</div>
                     <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+                    placeholder="- 빼고 입력"
                     name="citizenId"
                     type={'text'} 
                     value={employees.citizenId} 

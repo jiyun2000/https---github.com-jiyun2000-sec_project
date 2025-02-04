@@ -127,11 +127,11 @@ const EmployeesReadComponent = ({ empNo }) => {
                             연차
                         </button>
 
-                        {employeeNo === empNo || employeeNo===1?<button type="button"
+                        <button type="button"
                             className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={() => moveToModify(empNo)}>
                             수정
-                        </button>:<></>}
+                        </button>
                         
 
                         <button type="button"
