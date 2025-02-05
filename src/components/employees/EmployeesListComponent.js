@@ -40,7 +40,9 @@ const EmployeesListComponent = () => {
     useEffect(() => {
             getList([page,size]).then(data => {
                 setEmployees(data);
-                setFilterEmployees(data.dtoList);
+                console.log(data);
+                console.log(data.dtoList); 
+
             });
     }, [page,size]);
 
@@ -48,22 +50,6 @@ const EmployeesListComponent = () => {
         moveToAdd();
     }
     
-    const handleFilter = () => {
-        const lowerSearch = search.toLowerCase();
-        let filteredList = [];
-        if (searchType === 'empNo') {
-            filteredList = employees.dtoList.filter(employee =>
-                employee.empNo.toString().includes(lowerSearch)
-            );
-        } else if (searchType === 'name') {
-            filteredList = employees.dtoList.filter(employee => {
-                const fullName = (employee.firstName + employee.lastName).toLowerCase();
-                return fullName.includes(lowerSearch);  
-            });
-        }
-        setFilterEmployees(filteredList); 
-    }
-
     useEffect(()=>{
         getOne(cookDeptNo).then((data) => {
             console.log(data);
@@ -72,9 +58,6 @@ const EmployeesListComponent = () => {
     }, [])
 
 
-    const handleSearch = (evt) => {
-        setSearch(evt.target.value);
-    }
 
     const goToBoardList = () => {
         navigate(`/board/list`)
@@ -125,33 +108,6 @@ const EmployeesListComponent = () => {
             <div className="flex flex-col items-center py-10 px-4">
                 <h1 className="text-3xl font-semibold mb-6 border-b border-gray-400">직원 목록</h1>
     
-                <div className="flex flex-wrap items-center justify-center gap-4 mb-6">
-                    <select
-                        value={searchType}
-                        onChange={(e) => setSearchType(e.target.value)}
-                        className="p-2 border-2 border-gray-300 rounded-md"
-                    >
-                        <option value="empNo">사원번호</option>
-                        <option value="name">이름</option>
-                    </select>
-    
-                    <input
-                        type="text"
-                        value={search}
-                        onChange={handleSearch}
-                        className="p-2 border-2 border-gray-300 rounded-md w-64 "
-                        placeholder="검색어 입력"
-                    />
-    
-                    <button
-                        type="button"
-                        onClick={handleFilter}
-                        className="inline-block px-6 py-2 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
-                    >
-                        검색
-                    </button>
-                </div>
-    
                 <div className="overflow-x-auto w-full">
                     <table className="w-full ">
                         <thead className="bg-gray-200 sticky top-0 z-10">
@@ -165,7 +121,7 @@ const EmployeesListComponent = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {filterEmployees.map((data) => (
+                            {employees.dtoList.map((data) => (
                                 <tr
                                     key={data.empNo}
                                     className="bg-gray-50 cursor-pointer text-center"
