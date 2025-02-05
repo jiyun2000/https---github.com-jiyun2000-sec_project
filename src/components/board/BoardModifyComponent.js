@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { delOne, getOne, putOne } from '../../api/boardApi';
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import { getOneEmp } from '../../api/employeesApi';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
   boardNo: 0,
@@ -25,7 +26,8 @@ const BoardModifyComponent = ({ boardNo }) => {
   const { moveToList, moveToRead } = useCustomMove();
   const navigate = useNavigate();
   const [empData, setEmpData] = useState('');
-
+  const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+  
   useEffect(() => {
     getOne(boardNo).then((data) => setBoard(data));
   }, [boardNo]);
@@ -78,7 +80,35 @@ const BoardModifyComponent = ({ boardNo }) => {
     navigate(`/board/list`)
   }
 
+    const checkRemove = () => {
+      removeCookie('alert');
+    }
+
   return (
+    <>
+      <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+        <div className="flex items-center space-x-8">
+          <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
+            [공지사항]
+          </div>
+          <div className="w-64 text-2xl font-semibold cursor-pointer">
+            <BoardTitleComponent />
+          </div>
+        </div>
+        <div className="flex space-x-4">
+          <Link to="/mail" className="w-12 cursor-pointer">
+            <img src={mail} alt="Mail" className="w-full" />
+          </Link>
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={checkRemove}>
+          {chatCntCook ? 
+              <img src={colorChat} alt='colorChat' className='w-full' /> :
+              <img src={chat} alt="Chat" className="w-full" />
+        }
+          </Link>
+        </div>
+      </div>
+
+
     <div className="flex flex-col justify-center items-center w-full m-3">
       <div className="w-2/3 shadow-lg p-5 pr-5">
         <h2 className="text-center text-3xl font-semibold">
@@ -350,6 +380,7 @@ const BoardModifyComponent = ({ boardNo }) => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

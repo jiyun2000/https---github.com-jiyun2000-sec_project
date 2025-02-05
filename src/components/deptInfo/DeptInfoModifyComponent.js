@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
 import { delOne, getOne, putOne } from "../../api/deptInfoApi";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { data, Link, useNavigate } from 'react-router-dom';
 import { getOneEmp } from "../../api/employeesApi";
+import colorChat from "../../assets/icon/colorChat.png";
 
 
 const initState = {
@@ -21,6 +22,7 @@ const DeptInfoModifyComponent = ({deptNo}) => {
     const {moveToList, moveToRead} = useCustomMove();
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(()=>{
         getOne(deptNo).then(data=>setDeptInfo(data));
@@ -65,6 +67,12 @@ const DeptInfoModifyComponent = ({deptNo}) => {
         navigate(`/board/list`)
       }
 
+    
+      const checkRemove = () => {
+        removeCookie("alert");
+      }
+    
+
     return (
         <>
         <div>
@@ -73,7 +81,7 @@ const DeptInfoModifyComponent = ({deptNo}) => {
           <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
             [공지사항]
           </div>
-          <div className="w-64 text-2xl font-semibold cursor-pointer">
+          <div className="w-64 text-2xl font-semibold cursor-pointer" >
             <BoardTitleComponent />
           </div>
         </div>
@@ -81,8 +89,11 @@ const DeptInfoModifyComponent = ({deptNo}) => {
           <Link to="/mail" className="w-12 cursor-pointer">
             <img src={mail} alt="Mail" className="w-full" />
           </Link>
-          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
-            <img src={chat} alt="Chat" className="w-full" />
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer"  onClick={()=>checkRemove()}>
+          {chatCntCook  ? 
+              <img src={colorChat} alt='colorChat' className='w-full' /> :
+              <img src={chat} alt="Chat" className="w-full" />
+          }
           </Link>
         </div>
       </div>

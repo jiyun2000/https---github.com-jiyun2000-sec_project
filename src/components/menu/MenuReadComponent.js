@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { delOne, getOne } from "../../api/menuApi";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import { getOneEmp } from "../../api/employeesApi";
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     empNo: 0,
@@ -24,6 +25,7 @@ const MenuReadComponent = () => {
     const navigate = useNavigate();
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     
     useEffect(()=>{
         getOneEmp(empNo).then((data)=>{
@@ -72,6 +74,10 @@ const MenuReadComponent = () => {
         navigate(`/board/list`)
       }
 
+      const checkRemove = () => {
+        removeCookie("alert");
+      }
+
     return (
         <div>
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -87,8 +93,11 @@ const MenuReadComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>

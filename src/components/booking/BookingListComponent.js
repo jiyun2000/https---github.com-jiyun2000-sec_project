@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { getList } from '../../api/bookingApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     dtoList : [],
@@ -32,7 +33,7 @@ const BookingListComponent = () => {
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [bookDate, setBookDate] = useState('');
     const navigate = useNavigate();
-
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
 
 
@@ -53,6 +54,13 @@ const BookingListComponent = () => {
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+
+
+    const checkRemove = () => {
+        removeCookie("alert");
+    }
+
+
     
     const handleChangeDate = (evt) => {
         booking[evt.target.name] = evt.target.value;
@@ -74,8 +82,11 @@ const BookingListComponent = () => {
                 <Link to="/mail" className="w-12 cursor-pointer">
                     <img src={mail} alt="Mail" className="w-full" />
                 </Link>
-                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                {chatCntCook ? 
+                    <img src={colorChat} alt='colorChat' className='w-full' /> :
                     <img src={chat} alt="Chat" className="w-full" />
+                }
                 </Link>
             </div>
         </div>

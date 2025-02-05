@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { getDeptList } from '../../api/deptInfoApi';
 import useCustomMove from '../../hooks/useCustomMove';
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import { getOneEmp } from '../../api/employeesApi';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     deptNo : 0,
@@ -25,6 +26,7 @@ const DeptInfoListComponent = () => {
     const { moveToRead, moveToAdd } = useCustomMove();
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(() => {
         getDeptList().then(res => {
@@ -54,6 +56,12 @@ const DeptInfoListComponent = () => {
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+
+
+    const checkRemove = () => {
+        removeCookie("alert");
+    }
+
     
     return (<>
     <div>
@@ -70,8 +78,11 @@ const DeptInfoListComponent = () => {
                 <Link to="/mail" className="w-12 cursor-pointer">
                     <img src={mail} alt="Mail" className="w-full" />
                 </Link>
-                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                {chatCntCook ? 
+                    <img src={colorChat} alt='colorChat' className='w-full' /> :
                     <img src={chat} alt="Chat" className="w-full" />
+                }
                 </Link>
             </div>
         </div>

@@ -5,8 +5,8 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
 import { getOneEmp } from "../../api/employeesApi";
-import { getCookie } from "../../util/cookieUtil";
-
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import colorChat from "../../assets/icon/colorChat.png";
 //deptSchedule register component
 const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
     const navigate = useNavigate();
@@ -18,7 +18,7 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
         endDate: endDate,  
     });
      const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
-
+     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const handleClickChangeInput = (e) => {
         setNewEvent({
             ...newEvent,
@@ -84,6 +84,11 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
         navigate(`/board/list`)
         }
 
+  const checkRemove = () => {
+    removeCookie("alert");
+  }
+
+
     return (
         <>
         <div>
@@ -100,8 +105,11 @@ const RegisterDeptComponent = ({ scheduleText, startDate, endDate }) => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>

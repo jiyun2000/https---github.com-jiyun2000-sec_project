@@ -5,11 +5,15 @@ import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
 import {deptOne} from "../../api/deptInfoApi";
-import { getJob, jobOne } from "../../api/jobApi";
-import { getOne } from "../../api/boardApi";
 
+import { getJob, jobOne } from "../../api/jobApi";
+
+import { getOne } from "../../api/boardApi";
+import colorChat from "../../assets/icon/colorChat.png";
+import m from "../../assets/icon/m.png";
+import w from "../../assets/icon/w.png";
 
 const initState = {
     empNo: 0,
@@ -36,6 +40,9 @@ const EmployeesReadComponent = ({ empNo }) => {
     const [employeeNo,setEmployeeNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
+
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+
     const [phoneNumber,setPhoneNumber] = useState('');
     const [citizenNumber,setCitizenNumber] = useState('');
    
@@ -43,6 +50,7 @@ const EmployeesReadComponent = ({ empNo }) => {
         setCitizenNumber(employees.citizenId.substring(0,6)+'-'+employees.citizenId.substring(6,employees.citizenId.length));
         setPhoneNumber(employees.phoneNum.substring(0,3)+'-'+employees.phoneNum.substring(3,7)+'-'+employees.phoneNum.substring(7,employees.phoneNum.length));
     },[employees]);
+
 
     useEffect(() => {
         getOneEmp(empNo).then(res => {
@@ -53,6 +61,7 @@ const EmployeesReadComponent = ({ empNo }) => {
     useEffect(()=>{
         deptOne(cookieDeptNo).then((data) => {
             setDeptData(data);
+
         }).catch((error)=>{
             console.log(error);
         })
@@ -74,6 +83,10 @@ const EmployeesReadComponent = ({ empNo }) => {
         })
     }, []);
 
+      const checkRemove = () => {
+        removeCookie("alert");
+      }
+
     return (
         <>
         <div>
@@ -90,11 +103,15 @@ const EmployeesReadComponent = ({ empNo }) => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>
+
 
             <div className="flex flex-col items-center py-10 px-4 bg-[#edf3f5] w-full h-full">
                 <div className="bg-white p-6 rounded-xl shadow-xl w-3/4  border-2 border-[#c6e4ec]">
@@ -144,10 +161,19 @@ const EmployeesReadComponent = ({ empNo }) => {
                             className="inline-block rounded p-4 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                             onClick={() => moveToList({ page })}>
                             리스트
+
                         </button>
-                    </div>
+                    )}
+                    <button 
+                        className="w-[35%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
+                        onClick={() => moveToList({ page })}
+                    >
+                        리스트
+                    </button>
                 </div>
+
             </div>
+
         </div>
         </>
     );

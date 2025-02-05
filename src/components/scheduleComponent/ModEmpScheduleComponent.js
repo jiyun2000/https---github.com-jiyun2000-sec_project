@@ -5,8 +5,8 @@ import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
 import { getOneEmp } from "../../api/employeesApi";
-import { getCookie } from "../../util/cookieUtil";
-
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import colorChat from "../../assets/icon/colorChat.png";
 //empSchedule modify component
 const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
     const navigate = useNavigate();
@@ -20,6 +20,7 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
     const [scheduleModData, setScheduleModData] = useState(initState);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(() => {
         if (empNo && empSchNo) {
@@ -92,6 +93,10 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
         navigate(`/board/list`)
       }
 
+    const checkRemove = () => {
+        removeCookie("alert");
+      }
+
     return (
         <>
         <div>
@@ -108,8 +113,11 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>
