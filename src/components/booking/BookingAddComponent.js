@@ -30,21 +30,54 @@ const initStateRL = {
 
 const BookingAddComponent = () => {
     const [booking, setBooking] = useState({...initState});
+    const [bookingTemp, setBookingTemp] = useState({...initState});
     const [bookingAtDate, setBookingAtDate] = useState([]);
     const [bookDate, setBookDate] = useState('');
     const [roomNumber, setRoomNumber] = useState(0);
-    const [timeSlot, setTimeSlot] = useState([8,9,10,11,12,13,14,15,16,17,18]);
+    const [addBooking, setAddBooking] = useState([]);
+
+    const [timeSlotStart, setTimeSlotStart] = useState(["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"]);
+    const [timeSlotEnd, setTimeSlotEnd] = useState(["09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00","19:00"]);
+    const [timeSlotRes, setTimeSlotRes] = useState(["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"]);
+    let timeSlotTemp = ["08:00","09:00","10:00","11:00","12:00","13:00","14:00","15:00","16:00","17:00","18:00"];
+    let slotsTemp = [];
+    let remove = false;
     const [roomList, setRoomList] = useState([initStateRL]);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
 
     const navigate = useNavigate();
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
-
     const {moveToList} = useCustomMove();
 
     useEffect(()=>{
         getList().then(res=>setRoomList(res));
+        
+        if(booking!==initState){
+            for(let i = 0; i<addBooking.length; i++){
+                if(addBooking[i].start!==booking.start){
+                    slotsTemp.push(addBooking[i]);
+                }else{
+                    remove = true;
+                }
+            }
+            if(!remove){
+                slotsTemp.push({...booking});
+            }
+            console.log(slotsTemp);
+            setAddBooking(slotsTemp);
+        }
     },[booking]);
+
+    useEffect(()=>{
+        for(let i = 0;i<timeSlotStart.length;i++){
+            for(let j = 0; j<bookingAtDate.length;j++){
+                if(timeSlotStart[i]===bookingAtDate[j].start){
+                    timeSlotTemp[i] = '';
+                }
+                setTimeSlotRes(timeSlotTemp);
+            }
+        }       
+    },[bookingAtDate])
 
     useEffect(()=>{
         if(bookDate!==''){
@@ -52,13 +85,20 @@ const BookingAddComponent = () => {
                 getListAtDateWithRoomNo(bookDate,roomNumber).then(res=>setBookingAtDate(res));
             }
         }
+        setAddBooking([{initState}]);
     },[bookDate,roomNumber]);
+
     const handleClickAdd = () => {
-        booking["empNo"] = getCookie("member").empNo;
-        addOne(booking).then(()=>{
-            alert("등록되었습니다.");
-            moveToList();
-        });
+
+        if(addBooking.length>1){
+            for(let i = 1;i<addBooking.length;i++){
+                addOne(addBooking[i]).then(()=>{
+                console.log(addBooking[i]);
+            });
+        };
+        alert("등록되었습니다.");
+        moveToList();
+        }
     }
 
     const handleChangeBooking = (evt) => {
@@ -79,6 +119,20 @@ const BookingAddComponent = () => {
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+    
+    const handleClickBooking = (evt) => {
+        booking["empNo"] = getCookie("member").empNo;
+        booking[evt.target.name] = evt.target.id;
+        booking["end"] = evt.target.value;
+        setBooking({...booking});
+        console.log(evt.target.className === "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white");
+        console.log(evt.target.className);
+        if(evt.target.className === "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white"){
+            evt.target.className = "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-[#aaaaaa]";
+        }else{
+            evt.target.className = "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white";
+        }
+    }
 
 
   const checkRemove = () => {
@@ -141,7 +195,7 @@ const BookingAddComponent = () => {
                 </div>
             </div>
             
-            <div className="flex justify-center mt-10 ">
+            {/* <div className="flex justify-center mt-10 ">
             <div className="w-1/5 p-6 font-bold">시작시간</div>
                 <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
                     <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
@@ -161,9 +215,9 @@ const BookingAddComponent = () => {
                     value={booking.end} 
                     onChange={handleChangeBooking}></input>
                 </div>
-            </div>
+            </div> */}
             
-            <div className="grid place-items-center w-full">
+            {/* <div className="grid place-items-center w-full">
             <div className="w-[75%] flex m-auto flex-wrap  ">
                 {bookingAtDate.map((data)=>{
                     return <div className="grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2">
@@ -171,8 +225,22 @@ const BookingAddComponent = () => {
                     </div>
                 })}
             </div>
-            </div>
+            </div> */}
 
+            {roomNumber===0?<></>:bookDate===''?<></>:<div className="grid place-items-center w-full">
+            <div className="w-full flex m-auto flex-wrap  ">
+                {timeSlotRes.map((data)=>{
+                    return data===''?<></>:<button 
+                        className="grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white"
+                        onClick={handleClickBooking}
+                        id={data} 
+                        name="start"
+                        value={timeSlotEnd[timeSlotStart.indexOf(data)]}
+                        >
+                        {data} ~ {data!==''?timeSlotEnd[timeSlotStart.indexOf(data)]:<></>}
+                    </button>})}
+            </div>
+            </div>  }
             
             <div className="flex justify-center p-4">
                 <button type="button"
