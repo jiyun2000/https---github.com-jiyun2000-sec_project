@@ -436,6 +436,11 @@ const chatSendAlert = {
                                     type="text"
                                     value={messageObj.content}
                                     onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
+                                    onKeyDown={(event) => {
+                                        if (event.key === 'Enter') {
+                                            stompHandler.sendMessage();
+                                        }
+                                      }}
                                     className="border-2 border-[#6f8cb4] rounded-md p-2 w-2/4"
                                     placeholder="메시지를 입력하세요"
                                 />
