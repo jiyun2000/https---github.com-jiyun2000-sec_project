@@ -64,8 +64,21 @@ const BookingListComponent = () => {
     
     const handleChangeDate = (evt) => {
         booking[evt.target.name] = evt.target.value;
+        console.log(evt.target.name);
+        console.log(evt.target.value);
+        
+        // if(bookDate && bookDate != null){
+        //     setBookDate(evt.target.value);
+        // }else{
+        //     alert("해당 날짜에 예약된 일정이 없습니다.")
+        //     return;
+        // }
         setBookDate(evt.target.value);
+       
     }
+
+    const dateNow = new Date();
+    const today = dateNow.toISOString().slice(0,10)
 
     return (<>
     <div>
@@ -99,13 +112,14 @@ const BookingListComponent = () => {
                         name="bookDate"
                         type={'date'} 
                         value={booking.bookDate}
+                        defaultValue={today}
                         onChange={handleChangeDate}></input>
                     </div>
                 </div>
 
                 <h2 className="text-3xl font-semibold text-center mt-10 mb-6">예약 내역</h2>
                 <div className="flex flex-wrap justify-center">
-                    {booking.dtoList.map((data) => {
+                    { booking.dtoList.map((data) => {
                         return (
                             <div key={data.bookNo} className="flex flex-col min-w-[400px] p-6 m-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-100"
                                 onClick={() => moveToRead(data.bookNo)}>

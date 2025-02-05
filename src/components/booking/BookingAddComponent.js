@@ -138,6 +138,11 @@ const BookingAddComponent = () => {
   const checkRemove = () => {
     removeCookie("alert");
   }
+
+  const dateNow = new Date();
+  const today = dateNow.toISOString().slice(0,10);
+  console.log(today);
+  
     return (
         <div>
         <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -172,6 +177,7 @@ const BookingAddComponent = () => {
                     name="bookDate"
                     type={'date'} 
                     value={booking.bookDate}
+                    defaultValue={today}
                     onChange={handleChangeDate}></input>
                 </div>
             </div>

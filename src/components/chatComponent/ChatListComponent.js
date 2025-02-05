@@ -178,7 +178,7 @@ const ChatListComponent = () => {
                     className="bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] py-2 px-6 rounded-full text-lg"
                     onClick={goToEmpList}
                 >
-                    친구목록
+                    직원목록
                 </button>
             </div>
         </div>

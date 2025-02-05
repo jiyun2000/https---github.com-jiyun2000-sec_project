@@ -52,12 +52,16 @@ const StompComponent = () => {
             
             const response = await jwtAxios.get(`http://localhost:8080/chat/chat-history/${chatRoomId}`);
 
+            const curr = new Date();
+            console.log(curr);
+            
         if(Array.isArray(response.data)){
             const formattedMessages = response.data.map(([sender, message, timestamp]) => ({
                             sender: sender,
                             content: message,
                             sendTime: new Date(timestamp).toLocaleString()
-                        }));
+                        })); 
+                        console.log("Ffff" + JSON.stringify(formattedMessages)); //새벽시간
                         setMessages(formattedMessages);
         }else {
             console.log("errr");
@@ -108,7 +112,8 @@ const StompComponent = () => {
                
                 client.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
                     const chatMsg = JSON.parse(message.body);  // 받은 메시지
-                    console.log("Received message: ", chatMsg);  // 서버에서 받은 메시지 확인
+                    console.log("Received message: ", chatMsg);  // 서버에서 받은 메시지 확인 -> 한국시간 o
+                    
                     
                     setMessages((prevMessages) => [
                         ...prevMessages,
@@ -117,8 +122,9 @@ const StompComponent = () => {
                             sender: chatMsg.sender,
                             sendTime: chatMsg.sendTime,
                         },
-                    ]);
+                    ]);                 
                 });
+                
                 
             },
             //소켓 연결 종료
@@ -144,11 +150,15 @@ const StompComponent = () => {
         const strSen = senderEmpNo + '';
         console.log(strCook);
         console.log(strSen);
+        console.log("ㅁㅁㅁㅁ " + new Date);
+        
+    
+        
         if(strSen === strCook){
             if (wsClient && wsClient.connected && messageObj.content.trim() !== '') {
                 const messageWithTime = {
                     ...messageObj,
-                    sendTime: new Date().toISOString(),
+                    sendTime: new Date().toISOString,
                     receiver: receiverEmpNo,
                 };
         
@@ -383,7 +393,7 @@ const chatSendAlert = {
                                 style={{ 
                                     display: 'flex', 
                                     flexDirection: 'column', 
-                                    width: '80%', 
+                                    width: '60%', 
                                     height: '600px', 
                                     backgroundColor: '#91B9F5', 
                                     border: '1px solid #ddd', 
@@ -425,6 +435,7 @@ const chatSendAlert = {
                                                 </p>
                                                 <p>{item.content}</p>
                                                 <p style={{ fontSize: '10px', textAlign: 'right', marginTop: '5px' }}>{item.sendTime}</p>
+                                                
                                             </div>
                                         </div>
                                     );
