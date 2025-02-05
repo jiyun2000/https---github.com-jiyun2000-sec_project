@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import useCustomMove from '../../hooks/useCustomMove';
 import { addOne } from '../../api/boardApi';
 import { getOneEmp } from '../../api/employeesApi';
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import { Link, useNavigate } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import BoardTitleComponent from './BoardTitleComponent';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
   boardNo: 0,
@@ -25,6 +26,7 @@ const BoardAddComponent = () => {
   const { moveToList } = useCustomMove();
   const [empNo, setEmpNo] = useState(getCookie('member').empNo);
   const [empData, setEmpData] = useState('');
+  const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
   useEffect(()=>{
     getOneEmp(empNo).then((data) => {
@@ -46,7 +48,10 @@ const BoardAddComponent = () => {
     
 
   };
-
+  
+  const checkRemove = () => {
+    removeCookie("alert");
+  }
 
 
   const handleChangeBoard = (evt) => {
@@ -290,8 +295,12 @@ const BoardAddComponent = () => {
           <Link
             to={`/chat/empList/${empNo}?page=1`}
             className="w-12 cursor-pointer"
+            onClick={()=>checkRemove()}
           >
-            <img src={chat} alt="Chat" className="w-full" />
+           {chatCntCook  ? 
+              <img src={colorChat} alt='colorChat' className='w-full' /> :
+              <img src={chat} alt="Chat" className="w-full" />
+          }
           </Link>
         </div>
       </div>

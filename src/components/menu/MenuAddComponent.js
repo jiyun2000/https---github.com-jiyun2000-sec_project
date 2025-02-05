@@ -1,12 +1,13 @@
 import {useState } from "react";
 import { addMenu, listMenu } from "../../api/menuApi";
 import { useNavigate } from "react-router-dom";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import useCustomMove from "../../hooks/useCustomMove";
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     empNo : 0,
@@ -24,6 +25,7 @@ const MenuAddComponent = () => {
     const [menuDTO, setMenuDTO] = useState({...initState});
     const [menuDateExist, setMenuDateExist] = useState(false);
     const { page, size } = useCustomMove();
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     const handleClickChangeInput = (e) => {;
         menuDTO[e.target.name] = e.target.value;
@@ -58,7 +60,9 @@ const MenuAddComponent = () => {
         navigate(`/board/list`)
       }
     
-    
+      const checkRemove = () => {
+        removeCookie("alert");
+      }
 
     return (
         <>
@@ -76,9 +80,12 @@ const MenuAddComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
-                    </Link>
+                    }
+          </Link>
                 </div>
             </div>
 

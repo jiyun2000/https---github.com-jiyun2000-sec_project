@@ -3,11 +3,12 @@ import useCustomMove from "../../hooks/useCustomMove";
 import { getEmpList, getOne } from "../../api/deptInfoApi";
 import DeptInfoPageComponent from "../common/DeptInfoPageComponent";
 import { useNavigate, useParams } from "react-router-dom";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     deptNo : 0,
@@ -36,6 +37,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
     const {page, size, moveToDeptInfoList, moveToList, moveToModify} = useCustomMove();
     const [deptInfoNo, setDeptInfoNo] = useState(getCookie("member").deptNo);
     const navigate = useNavigate();
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(()=>{
         getOne(deptNo).then(res => {
@@ -57,6 +59,9 @@ const DeptInfoReadComponent = ({deptNo})=>{
         navigate(`/employees/read/${empNo}`)
     }
 
+    const checkRemove = () => {
+        removeCookie("alert");
+      }
     return <>
     <div>
     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -72,8 +77,11 @@ const DeptInfoReadComponent = ({deptNo})=>{
           <Link to="/mail" className="w-12 cursor-pointer">
             <img src={mail} alt="Mail" className="w-full" />
           </Link>
-          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
-            <img src={chat} alt="Chat" className="w-full" />
+          <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer"  onClick={()=>checkRemove()}>
+          {chatCntCook  ? 
+              <img src={colorChat} alt='colorChat' className='w-full' /> :
+              <img src={chat} alt="Chat" className="w-full" />
+          }
           </Link>
         </div>
       </div>

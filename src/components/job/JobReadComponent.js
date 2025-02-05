@@ -7,7 +7,8 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     jobNo : 0,
@@ -33,6 +34,7 @@ const JobReadComponent = ({jobNo})=>{
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
     const navigate = useNavigate();
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
 
     const {page, size, moveToJobList, moveToList, moveToModify} = useCustomMove();
@@ -53,6 +55,11 @@ const JobReadComponent = ({jobNo})=>{
         navigate(`/board/list`)
       }
 
+    
+      const checkRemove = () => {
+        removeCookie("alert");
+      }
+      
     return <>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -68,9 +75,12 @@ const JobReadComponent = ({jobNo})=>{
                 <Link to="/mail" className="w-12 cursor-pointer">
                     <img src={mail} alt="Mail" className="w-full" />
                 </Link>
-                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                {chatCntCook  ? 
+                    <img src={colorChat} alt='colorChat' className='w-full' /> :
                     <img src={chat} alt="Chat" className="w-full" />
-                </Link>
+                }
+          </Link>
             </div>
         </div>
 

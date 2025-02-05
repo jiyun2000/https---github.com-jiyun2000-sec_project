@@ -4,9 +4,10 @@ import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from "../../assets/icon/chat.png";
-import { getCookie } from "../../util/cookieUtil";
+import { getCookie, removeCookie } from "../../util/cookieUtil";
 import { jsx } from "react/jsx-runtime";
 import { getOneEmp } from "../../api/employeesApi";
+import colorChat from "../../assets/icon/colorChat.png";
 
 //empSchedule register component.
 const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
@@ -14,6 +15,7 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
     const navigate = useNavigate();
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     const [newEvent, setNewEvent] = useState({
         scheduleText:scheduleText,
@@ -83,6 +85,10 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+
+ const checkRemove = () => {
+    removeCookie("alert");
+  }
     
     return (
         <>
@@ -100,8 +106,11 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>

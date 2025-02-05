@@ -5,8 +5,8 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
-import { getCookie } from "../../util/cookieUtil";
-
+import { getCookie, removeCookie } from "../../util/cookieUtil";
+import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
     dayOffNo : 0 ,
@@ -20,6 +20,7 @@ const DayOffReadComponent = ({dayOffNo})=>{
     let cnt = 0;
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     const {page,moveToList, moveToModify} = useCustomMove();
 
@@ -32,6 +33,10 @@ const DayOffReadComponent = ({dayOffNo})=>{
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
+
+    const checkRemove = () => {
+        removeCookie("alert");
+    }
 
     return <>
     <div>
@@ -48,8 +53,11 @@ const DayOffReadComponent = ({dayOffNo})=>{
                 <Link to="/mail" className="w-12 cursor-pointer">
                     <img src={mail} alt="Mail" className="w-full" />
                 </Link>
-                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer"  onClick={()=>checkRemove()}>
+                {chatCntCook  ? 
+                    <img src={colorChat} alt='colorChat' className='w-full' /> :
                     <img src={chat} alt="Chat" className="w-full" />
+                }
                 </Link>
             </div>
         </div>   

@@ -4,8 +4,9 @@ import { empList, sendChat } from "../../api/chatAPi/chatAPi";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
-import { getCookie } from '../../util/cookieUtil';
+import { getCookie, removeCookie } from '../../util/cookieUtil';
 import { getOneEmp } from '../../api/employeesApi';
+import colorChat from "../../assets/icon/colorChat.png";
 
 const ChatEmpListComponent = () => {
     const { empNo } = useParams();  
@@ -17,6 +18,7 @@ const ChatEmpListComponent = () => {
     const [searchType] = useState('name');  // 이름 검색만
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [empData, setEmpData] = useState('');
+    const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(() => {
         const awaitEmpList = async () => {
@@ -102,6 +104,10 @@ const ChatEmpListComponent = () => {
         navigate(`/board/list`)
       }
 
+  const checkRemove = () => {
+    removeCookie("alert");
+  }
+
     return (
         <div className="flex flex-col items-center py-10 px-6">
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -117,8 +123,11 @@ const ChatEmpListComponent = () => {
                     <Link to="/mail" className="w-12 cursor-pointer">
                         <img src={mail} alt="Mail" className="w-full" />
                     </Link>
-                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer">
+                    <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+                    {chatCntCook  ? 
+                        <img src={colorChat} alt='colorChat' className='w-full' /> :
                         <img src={chat} alt="Chat" className="w-full" />
+                    }
                     </Link>
                 </div>
             </div>
