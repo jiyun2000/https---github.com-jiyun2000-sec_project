@@ -118,8 +118,8 @@ const ReportAddComponent = () => {
             </div>
         </div>
 
-
-        <div className="shadow-2xl mt-10 m-2 p-4 rounded-md">
+    <div className="flex flex-col w-full items-center justify-center">
+        <div className="w-[80%] shadow-2xl mt-10 m-2 p-4 rounded-md ">
             <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
             <div className="flex justify-center">
             <div className="w-1/5 p-6 font-bold">마감일</div>
@@ -187,6 +187,7 @@ const ReportAddComponent = () => {
                     등록
                 </button>
             </div>
+        </div>
         </div>
     </div>
     )
