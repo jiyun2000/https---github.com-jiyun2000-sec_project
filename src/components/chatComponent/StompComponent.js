@@ -305,7 +305,7 @@ const chatSendAlert = {
         console.log(strSen);
         if(strSen === strCook){
             console.log("outChatRoom");
-            alert("채팅방에 나가시겠습니까?")
+            alert("채팅방에서 나가셨습니다")
             console.log("senderEmpNo" + senderEmpNo);
             console.log("receiverEmpNo" + receiverEmpNo);
             leaveChatRoom(senderEmpNo,receiverEmpNo);
@@ -317,6 +317,12 @@ const chatSendAlert = {
             return;
         }
     }
+
+    const handleKeyDown = (event) => {
+        if (event.keyCode === 13) {
+          
+        }
+      }
 
     const goToBoardList = () => {
         navigate(`/board/list`)
@@ -465,8 +471,10 @@ const chatSendAlert = {
                     )}
                 </div>
             </div>
+
         </>
     );
+
 
 
     // return ( 

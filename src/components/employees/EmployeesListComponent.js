@@ -176,7 +176,7 @@ const EmployeesListComponent = () => {
                                     <td className="px-6 py-4">{data.hireDate}</td>
                                     <td className="px-6 py-4">{data.mailAddress}</td>
                                     <td className="px-6 py-4">{data.gender === 'm' ? '남성' : '여성'}</td>
-                                    <td className="px-6 py-4">{data.phoneNum}</td>
+                                    <td className="px-6 py-4">{data.phoneNum.substring(0,3)+'-'+data.phoneNum.substring(3,7)+'-'+data.phoneNum.substring(7,data.phoneNum.length)}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -189,8 +189,8 @@ const EmployeesListComponent = () => {
                         movePage={moveToList}
                     />
                 </div>
-    
-                <div className="flex justify-center mt-6">
+                
+                {cookDeptNo===999?<div className="flex justify-center mt-6">
                     <button
                         type="button"
                         onClick={handleClickAdd}
@@ -198,7 +198,7 @@ const EmployeesListComponent = () => {
                     >
                         추가
                     </button>
-                </div>
+                </div>:<></>}
             </div>
         </div>
     );

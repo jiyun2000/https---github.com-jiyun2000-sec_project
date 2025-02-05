@@ -91,23 +91,23 @@ const DeptInfoReadComponent = ({deptNo})=>{
   
         <div className=" flex flex-col items-center justify-center">
             <div className="flex justify-center items-center p-6 rounded-lg shadow-sm">
-                <span className="font-semibold text-lg ">부서 번호</span>
-                <span className="text-lg ">{deptInfo.deptNo}</span>
+                <div className="font-semibold text-lg ml-2 mr-2">부서 번호</div>
+                <div className="text-lg ml-2 mr-2">{deptInfo.deptNo}</div>
             </div>
     
             <div className="flex justify-center items-center  p-6 rounded-lg shadow-sm">
-                <span className="font-semibold text-lg ">부서 이름</span>
-                <span className="text-lg ">{deptInfo.deptName}</span>
+                <div className="font-semibold text-lg ml-2 mr-2">부서 이름</div>
+                <div className="text-lg ml-2 mr-2">{deptInfo.deptName}</div>
             </div>
     
             <div className="flex justify-center items-center  p-6 rounded-lg shadow-sm">
-                <span className="font-semibold text-lg">부서 주소</span>
-                <span className="text-lg ">{deptInfo.deptAddress}</span>
+                <div className="font-semibold text-lg ml-2 mr-2">부서 주소</div>
+                <div className="text-lg ml-2 mr-2">{deptInfo.deptAddress}</div>
             </div>
     
             <div className="flex justify-center items-center p-6 rounded-lg shadow-sm">
-                <span className="font-semibold text-lg ">대표 번호</span>
-                <span className="text-lg ">{deptInfo.phoneNo}</span>
+                <div className="font-semibold text-lg ml-2 mr-2">대표 번호</div>
+                <div className="text-lg ml-2 mr-2">{deptInfo.phoneNo}</div>
             </div>
         </div>
   

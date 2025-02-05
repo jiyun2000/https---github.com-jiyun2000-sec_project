@@ -31,66 +31,42 @@ const BookingListComponent = () => {
 
     const [booking,setBooking] = useState(initState);
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
-    const [res, setRes] = useState(initRes);
+    const [bookDate, setBookDate] = useState('');
     const navigate = useNavigate();
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
 
-    const [temp, setTemp] = useState();
 
     useEffect(() => {
-        if(res.cr !== ''){
-            getList(res.cr,[1,size]).then(data => {
-                setBooking(data);
-                setTemp(1);
-            });
-        };
-
-        if(res.wr !== ''){
-            getList(res.wr,[1,size]).then(data => {
-                setBooking(data);
-                setTemp(2);
-            });
-        };
-        
-    }, [res]);
-
-    useEffect(() => {
-        if(temp === 1){
-            getList('cr',[page,size]).then(data => {
+        if(bookDate!==''){
+            getList(bookDate,'cr',[page,size]).then(data => {
                 setBooking(data);
             });
-        };
+        }
 
-        if(temp === 2){
-            getList('wr',[page,size]).then(data => {
-                setBooking(data);
-            });
-        };
-        
-    }, [page, size]);
+    }, [bookDate,page, size]);
 
-    useEffect(()=>{
-        setRes({...initRes});
-    },[booking]);
 
     const handleClickAdd = () =>{
         moveToAdd();
-    }
-
-    const handleChangeBooking = (evt) => {
-        res[evt.target.id] = evt.target.id;
-        setRes({...res});
     }
 
     const goToBoardList = () => {
         navigate(`/board/list`)
       }
 
+
     const checkRemove = () => {
         removeCookie("alert");
     }
-      
+
+
+    
+    const handleChangeDate = (evt) => {
+        booking[evt.target.name] = evt.target.value;
+        setBookDate(evt.target.value);
+    }
+
     return (<>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -116,14 +92,14 @@ const BookingListComponent = () => {
         </div>
 
      <div className="container mx-auto p-6">
-                <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약하기</h2>
+                <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약</h2>
                 <div className="text-2xl">
                     <div className="flex justify-center space-x-10">
-                        <div className="w-1/2 p-6 text-center rounded-md bg-white border-2 border-[#8ba7cd] text-black  hover:bg-[#6f8cb4]  cursor-pointer hober:text-white"
-                            id="cr"
-                            onClick={handleChangeBooking}>
-                            회의실
-                        </div>
+                        <input className="w-1/2 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                        name="bookDate"
+                        type={'date'} 
+                        value={booking.bookDate}
+                        onChange={handleChangeDate}></input>
                     </div>
                 </div>
 

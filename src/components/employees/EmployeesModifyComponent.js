@@ -7,8 +7,10 @@ import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
+
 import { getCookie, removeCookie } from "../../util/cookieUtil";
 import colorChat from "../../assets/icon/colorChat.png";
+
 
 
 const initState = {
@@ -43,6 +45,8 @@ const initStateDeptinfo = {
 
 const EmployeesModifyComponent = ({empNo}) => {
     const [employees, setEmployees] = useState({...initState});
+
+    const [cookDeptNo,setCookDeptNo] = useState(getCookie("member").deptNo);
 
     const [job,setJob] = useState([initStateJob]);
     
@@ -118,7 +122,7 @@ const EmployeesModifyComponent = ({empNo}) => {
 
         <div className="flex flex-col items-center py-10 px-4">
         <h1 className="text-3xl font-semibold mb-6">{employees.firstName} {employees.lastName} 님 사원정보 수정</h1>
-        <div className="bg-white p-4  mb-2 w-full">
+        {cookDeptNo===999?<div className="bg-white p-4  mb-2 w-full">
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                 <div className="w-[12%] p-6 text-right font-bold">사원번호</div>
                 <div className="w-[25%] p-6 rounded-md border border-slate-400 text-center">{employees.empNo}</div>
@@ -164,7 +168,7 @@ const EmployeesModifyComponent = ({empNo}) => {
                     <div className="w-[12%] p-6 text-right font-bold">부서</div>
                     <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="deptNo" value={employees.deptNo} onClick={handleChangeEmployees}>
                         {deptInfo.map((data)=>{
-                            return data.deptNo===999?<></>:(<option value={data.deptNo}>{data.deptName}</option>)
+                            return (<option value={data.deptNo}>{data.deptName}</option>)
                         })}
 
                     </select>
@@ -174,7 +178,7 @@ const EmployeesModifyComponent = ({empNo}) => {
                     <div className="w-[12%] p-6 text-right font-bold">직책</div>
                     <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees}>
                     {job.map((data)=>{
-                            return data.jobNo===999?<></>:(<option value={job.jobNo}>{data.jobTitle}</option>)
+                            return (<option value={job.jobNo}>{data.jobTitle}</option>)
                         })}
                     </select>
             </div>
@@ -208,13 +212,6 @@ const EmployeesModifyComponent = ({empNo}) => {
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">성별</div>
-                    {/* <select name="jobNo" value={employees.jobNo} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
-                    <option value={100}>100(디렉터)</option>
-                        <option value={200}>200(매니저)</option>
-                        <option value={300}>300(시니어)</option>
-                        <option value={400}>400(사원)</option>
-                        <option value={500}>500(인턴)</option>
-                    </select> */}
                     <select name="gender" value={employees.gender} onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
                         <option value={"m"}>남성</option>
                         <option value={"w"}>여성</option>
@@ -254,7 +251,30 @@ const EmployeesModifyComponent = ({empNo}) => {
                     삭제
                 </button>
             </div>
-        </div>
+        </div>:<div className="bg-white p-4  mb-2 w-full">
+            <div className="flex flex-row items-center justify-center mt-10 mb-4">
+                <div className="w-[12%] p-6 text-right font-bold">사원번호</div>
+                <div className="w-[25%] p-6 rounded-md border border-slate-400 text-center">{employees.empNo}</div>
+            </div>
+
+            <div className="flex flex-row items-center justify-center mt-10 mb-4">
+                    <div className="w-[12%] p-6 text-right font-bold">비밀번호</div>
+                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+                    name="password"
+                    type={'password'} 
+                    value={employees.password} 
+                    onChange={handleChangeEmployees}></input>
+            </div>
+
+            <div className="flex justify-center p-4">
+                <button type="button"
+                className="inline-block  p-4 m-2 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md cursor-pointer"
+                onClick={handleClickModify}>
+                    수정
+                </button>
+
+            </div>
+        </div>}
         </div>
         </div>
     )

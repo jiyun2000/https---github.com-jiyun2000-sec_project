@@ -48,6 +48,11 @@ const LoginComponent = () => {
             type={'text'}
             value={loginParam.email}
             onChange={handleChange}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleClickLogin()
+              }
+            }}
           ></input>
         </div>
       </div>
@@ -60,6 +65,11 @@ const LoginComponent = () => {
             type={'password'}
             value={loginParam.pw}
             onChange={handleChange}
+            onKeyDown={(event) => {
+              if (event.key === 'Enter') {
+                handleClickLogin()
+              }
+            }}
           ></input>
         </div>
       </div>

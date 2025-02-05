@@ -4,6 +4,7 @@ import '../css/scrollbar.css';
 import { findReceivers, sendMail } from '../api/mailApi';
 import MailExtraComponent from './MailExtraComponent';
 import { useNavigate } from 'react-router-dom';
+import upload from "../assets/icon/upload.png";
 
 const MailWriteModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -376,9 +377,9 @@ const MailWriteModal = () => {
                 </div>
                 <div className="h-[100%] max-h-20 min-h-20 w-full border-t-2 border-b-gray-600 bg-gray-100 flex flex-wrap items-center">
                   <div className="w-[70%] flex">
-                    <div className="size-20 bg-pink-400">
-                      <label className="fixed size-20 text-center cursor-pointer" ref={dndRef}>
-                      파일첨부
+                    <div className="size-20">
+                      <label className="fixed size-20 text-center cursor-pointer grid place-items-center" ref={dndRef}>
+                      <img src={upload} alt='upload' className='flex w-10'/>
                         <input
                           type="file"
                           hidden="true"
@@ -387,12 +388,6 @@ const MailWriteModal = () => {
                             onChangeFile(evt);
                           }}
                         ></input>
-                      </label>
-                    </div>
-                    <div className="size-20 bg-red-300">
-                      <label className="fixed size-20 text-center cursor-pointer">
-                        파일첨부
-                        <input type="file" hidden="true"></input>
                       </label>
                     </div>
                     <div
