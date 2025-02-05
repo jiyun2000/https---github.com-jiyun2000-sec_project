@@ -70,6 +70,7 @@ const Layout = () => {
         chatAlert.connect(getCookie("member").empNo);
     },[])
     return <>
+    
         <div className="fixed top-0 left-0">
             <NavigationComponent />
         </div>

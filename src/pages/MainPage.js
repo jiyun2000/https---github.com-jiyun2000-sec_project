@@ -20,7 +20,7 @@ import todo from "../assets/icon/todo.png";
 import team from "../assets/icon/team.png";
 import admin from "../assets/icon/admin.png";
 import user from "../assets/icon/user.png";
-import BoardMainpageComponent from '../components/board/BoardMainPageComponent';
+import BoardMainpage from "../pages/board/BoardMainPage";
 import CalendarPage from './todoPage/CalendarPage';
 import moment from 'moment';
 import colorChat from "../assets/icon/colorChat.png";
@@ -135,7 +135,7 @@ const MainPage = () => {
             <img src={board} alt='Board' className='w-8'/>
             <p className='text-center text-xl font-semibold '>공지사항</p>
           </div>
-          <BoardMainpageComponent />
+          <BoardMainpage />
         </div>
         <div className='w-[30%] shadow-xl rounded-md p-4'>
           <div className='flex flex-row justify-center gap-5 p-2'>
@@ -174,12 +174,16 @@ const MainPage = () => {
           </button>
         </div>
         <div className='w-[30%] shadow-xl rounded-md p-4'>
+          <div className="flex flex-row items-center justify-center gap-2">
+            <p className='text-center text-xl font-semibold mb-4'>Calendar</p> 
+          </div>
           <div>
             <CalendarPage
-               formatDay={(locale, date) => moment(date).format("D")}
+              formatDay={(locale, date) => moment(date).format("D")}
             />
           </div>
         </div>
+
       </div>
       
 

@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Client } from "@stomp/stompjs";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SockJS from "sockjs-client";
 import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
@@ -23,11 +23,18 @@ const StompComponent = () => {
     const [empData, setEmpData] = useState(null);
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+    const msgContainerRef = useRef('');
 
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
     });
+
+    useEffect(()=>{
+        if(msgContainerRef.current){
+            msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+        }
+    },[messages]);
 
     useEffect(()=>{
         getOneEmp(receiverEmpNo).then((data)=>{
@@ -318,113 +325,262 @@ const chatSendAlert = {
     const checkRemove = () => {
         removeCookie("alert");
     }
-    return ( 
+    return (
         <>
-        <div>
-        <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
-                <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
-                        [공지사항]
+            <div>
+                <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+                    <div className="flex items-center space-x-8">
+                        <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
+                            [공지사항]
+                        </div>
+                        <div className="w-64 text-2xl font-semibold cursor-pointer">
+                            <BoardTitleComponent />
+                        </div>
                     </div>
-                    <div className="w-64 text-2xl font-semibold cursor-pointer">
-                        <BoardTitleComponent />
+                    <div className="flex space-x-4">
+                        <Link to="/mail" className="w-12 cursor-pointer">
+                            <img src={mail} alt="Mail" className="w-full" />
+                        </Link>
+                        <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer" onClick={() => checkRemove()}>
+                            {chatCntCook ? 
+                                <img src={colorChat} alt='colorChat' className='w-full' /> :
+                                <img src={chat} alt="Chat" className="w-full" />
+                            }
+                        </Link>
                     </div>
                 </div>
-                <div className="flex space-x-4">
-                    <Link to="/mail" className="w-12 cursor-pointer">
-                        <img src={mail} alt="Mail" className="w-full" />
-                    </Link>
-                    <Link to={`/chat/empList/${senderEmpNo}?page=1`} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
-                    {chatCntCook  ? 
-                        <img src={colorChat} alt='colorChat' className='w-full' /> :
-                        <img src={chat} alt="Chat" className="w-full" />
-                    }
-                    </Link>
+                
+                <div>
+                    {!isEnterChat ? (
+                        <div style={{ textAlign: 'center' }}>
+                            <h2>채팅방에 오신 것을 환영합니다.</h2>
+                            <button type="button" onClick={stompHandler.connect} className="bg-[#6f8cb4] text-white p-2 rounded-md">채팅방 입장</button>
+                        </div>
+                    ) : (
+                        <div style={{
+                            display: 'flex', 
+                            justifyContent: 'center', 
+                            alignItems: 'center', 
+                            minHeight: '100vh', 
+                            flexDirection: 'column',
+                            width: '100%',
+                            textAlign: 'center',
+                        }}>
+                            <div className="text-center w-full items-center justify-center">
+                                <h2 className='text-center font-semibold text-2xl m-2'>
+                                    {empData ? `${empData.firstName} ${empData.lastName}` : ''}
+                                </h2>
+                            </div>
+    
+                            <div 
+                                ref={msgContainerRef}
+                                style={{ 
+                                    display: 'flex', 
+                                    flexDirection: 'column', 
+                                    width: '80%', 
+                                    height: '600px', 
+                                    backgroundColor: '#91B9F5', 
+                                    border: '1px solid #ddd', 
+                                    margin: '20px', 
+                                    borderRadius: '10px',
+                                    padding: '10px',
+                                    overflowY: 'auto',
+                                }}
+                            >
+                                {messages.length > 0 && messages.map((item, index) => {
+                                    if (!item.sender || !item.content || isNaN(Number(item.sender))) {
+                                        return null;
+                                    }
+    
+                                    const sender = Number(item.sender);
+                                    const userEmpNo = Number(senderEmpNo);
+                                    const isUserMessage = sender === userEmpNo;
+    
+                                    return (
+                                        <div 
+                                            key={index} 
+                                            style={{
+                                                textAlign: isUserMessage ? 'right' : 'left', 
+                                                marginBottom: '10px',
+                                            }}
+                                        >
+                                            <div style={{
+                                                display: 'inline-block',
+                                                backgroundColor: isUserMessage ? '#FFE146' : '#FFFFFF',
+                                                color: isUserMessage ? '#000' : '#000',
+                                                borderRadius: '20px',
+                                                padding: '10px 15px',
+                                                maxWidth: '70%',
+                                                wordBreak: 'break-word',
+                                                fontSize: '14px',
+                                            }}>
+                                                <p style={{ margin: 0, fontWeight: 'bold' }}>
+                                                    {isUserMessage ? '[Me]' : `[${empData.firstName} ${empData.lastName}]`}
+                                                </p>
+                                                <p>{item.content}</p>
+                                                <p style={{ fontSize: '10px', textAlign: 'right', marginTop: '5px' }}>{item.sendTime}</p>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+    
+                            <div className="flex flex-row justify-center gap-2 w-full">
+                                <input
+                                    type="text"
+                                    value={messageObj.content}
+                                    onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
+                                    className="border-2 border-[#6f8cb4] rounded-md p-2 w-2/4"
+                                    placeholder="메시지를 입력하세요"
+                                />
+                                <button 
+                                    type="submit" 
+                                    onClick={() => {
+                                        stompHandler.sendMessage();
+                                        chatSendAlert.sendMessage();
+                                    }}
+                                    className="bg-[#83a3d0] text-white hover:bg-[#718aab] rounded-md p-2 w-1/5"
+                                >
+                                    전송
+                                </button>
+                            </div>
+    
+                            <div style={{ marginTop: 10 }}>
+                                <button 
+                                    type="button" 
+                                    onClick={stompHandler.disconnect} 
+                                    className="bg-[#727272] text-white hover:bg-[#2f2f2f] rounded-md p-2 mx-2"
+                                >
+                                    닫기
+                                </button> 
+                                <button 
+                                    type='button' 
+                                    onClick={outChatRoom} 
+                                    className='bg-[#727272] text-white hover:bg-[#2f2f2f] p-2 rounded-md'
+                                >
+                                    채팅방 나가기
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-        <div>
-            {!isEnterChat ? (
-                <div style={{ textAlign: 'center' }}>
-                    <h2>채팅방에 오신 것을 환영합니다.</h2>
-                    <button type="button" onClick={stompHandler.connect}>
-                        채팅방 입장
-                    </button>
-                </div>
-            ) : (
-                <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'center', 
-                    alignItems: 'center', 
-                    minHeight: '100vh',
-                    flexDirection: 'column',
-                    width: '100%',
-                    textAlign: 'center'
-                }}>
-                <div className='text-center w-full items-center justify-center'>
-                    <h2 className='text-center font-semibold text-2xl m-2'>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
-                    <div className='flex flex-row justify-center gap-2'>
-                        <input
-                            type="text"
-                            value={messageObj.content}
-                            onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
-                            className='border-2 border-[#6f8cb4] rounded-md p-1 w-2/5 '
-                        />
-                        <button type="submit" 
-                            onClick={()=>{
-                                stompHandler.sendMessage();
-                                chatSendAlert.sendMessage();
-                            }}
-                            className='bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mx-2 p-1 w-1/6 '
-                        >
-                            전송
-                        </button>
-                    </div>
-                    </div>
-                    <div style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        width: '60%', 
-                        height: '700px', 
-                        backgroundColor: '#b3c1d6', 
-                        border: '1px solid black', 
-                        margin: '20px', 
-                        overflowY: 'scroll' 
-                    }}>
-                        {messages.length > 0 && messages.map((item, index) => {
-                            if (!item.sender || !item.content || isNaN(Number(item.sender))) {
-                                return null;}
-
-                            const sender = Number(item.sender); 
-                            const userEmpNo = Number(senderEmpNo); 
-                            const isUserMessage = sender === userEmpNo; 
-
-                        return (
-                            <div key={index} style={{ 
-                            textAlign: isUserMessage ? 'right' : 'left', 
-                            marginBottom: '10px' }}>
-                            <h1 style={{
-                            fontSize: 16,
-                            padding: '5px 10px',
-                            borderRadius: '10px',
-                            display: 'inline-block'}}>
-                            {isUserMessage ? `[ME] ${item.content} (${item.sendTime})` : `[${empData.firstName}${empData.lastName}] ${item.content} (${item.sendTime})`}
-                            </h1>
-                            </div>
-                        );
-                     })}
-                </div>
-
-                    <div style={{ marginTop: 10 }}>
-                        <button type="button" onClick={stompHandler.disconnect} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md p-1 '>
-                            닫기
-                        </button> 
-                        <button type='button' onClick={outChatRoom} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4]] p-1 mx-1 rounded-md '>채팅방 나가기</button>
-                    </div>
-                </div>
-            )}
-        </div>
-        </div>
         </>
     );
+
+
+    // return ( 
+    //     <>
+    //     <div>
+    //     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
+    //             <div className="flex items-center space-x-8">
+    //                 <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
+    //                     [공지사항]
+    //                 </div>
+    //                 <div className="w-64 text-2xl font-semibold cursor-pointer">
+    //                     <BoardTitleComponent />
+    //                 </div>
+    //             </div>
+    //             <div className="flex space-x-4">
+    //                 <Link to="/mail" className="w-12 cursor-pointer">
+    //                     <img src={mail} alt="Mail" className="w-full" />
+    //                 </Link>
+    //                 <Link to={/chat/empList/${senderEmpNo}?page=1} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
+    //                 {chatCntCook  ? 
+    //                     <img src={colorChat} alt='colorChat' className='w-full' /> :
+    //                     <img src={chat} alt="Chat" className="w-full" />
+    //                 }
+    //                 </Link>
+    //             </div>
+    //         </div>
+    //     <div>
+    //         {!isEnterChat ? (
+    //             <div style={{ textAlign: 'center' }}>
+    //                 <h2>채팅방에 오신 것을 환영합니다.</h2>
+    //                 <button type="button" onClick={stompHandler.connect}>
+    //                     채팅방 입장
+    //                 </button>
+    //             </div>
+    //         ) : (
+    //             <div 
+    //             style={{ 
+    //                 display: 'flex', 
+    //                 justifyContent: 'center', 
+    //                 alignItems: 'center', 
+    //                 minHeight: '100vh',
+    //                 flexDirection: 'column',
+    //                 width: '100%',
+    //                 textAlign: 'center'
+    //             }}>
+    //             <div className='text-center w-full items-center justify-center'>
+    //                 <h2 className='text-center font-semibold text-2xl m-2'>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
+                    
+    //                 </div>
+    //                 <div 
+    //                 ref={msgContainerRef}
+    //                 style={{ 
+    //                     display: 'flex', 
+    //                     flexDirection: 'column', 
+    //                     width: '60%', 
+    //                     height: '700px', 
+    //                     backgroundColor: '#b3c1d6', 
+    //                     border: '1px solid black', 
+    //                     margin: '20px', 
+    //                     overflowY: 'scroll' 
+    //                 }}>
+    //                     {messages.length > 0 && messages.map((item, index) => {
+    //                         if (!item.sender || !item.content || isNaN(Number(item.sender))) {
+    //                             return null;}
+
+    //                         const sender = Number(item.sender); 
+    //                         const userEmpNo = Number(senderEmpNo); 
+    //                         const isUserMessage = sender === userEmpNo; 
+
+    //                     return (
+    //                         <div key={index} style={{ 
+    //                         textAlign: isUserMessage ? 'right' : 'left', 
+    //                         marginBottom: '10px' }}>
+    //                         <h1 style={{
+    //                         fontSize: 16,
+    //                         padding: '5px 10px',
+    //                         borderRadius: '10px',
+    //                         display: 'inline-block'}}>
+    //                         {isUserMessage ? [ME] ${item.content} (${item.sendTime}) : [${empData.firstName}${empData.lastName}] ${item.content} (${item.sendTime})}
+    //                         </h1>
+    //                         </div>
+    //                     );
+    //                  })}
+    //             </div>
+    //             <div className='flex flex-row justify-center gap-2 w-full'>
+    //                     <input
+    //                         type="text"
+    //                         value={messageObj.content}
+    //                         onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
+    //                         className='border-2 border-[#6f8cb4] rounded-md p-1 w-2/6 '
+    //                     />
+    //                     <button type="submit" 
+    //                         onClick={()=>{
+    //                             stompHandler.sendMessage();
+    //                             chatSendAlert.sendMessage();
+    //                         }}
+    //                         className='bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mx-2 p-1 w-1/6 '
+    //                     >
+    //                         전송
+    //                     </button>
+    //                 </div>
+
+    //                 <div style={{ marginTop: 10 }}>
+    //                     <button type="button" onClick={stompHandler.disconnect} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md p-1 '>
+    //                         닫기
+    //                     </button> 
+    //                     <button type='button' onClick={outChatRoom} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4]] p-1 mx-1 rounded-md '>채팅방 나가기</button>
+    //                 </div>
+    //             </div>
+    //         )}
+    //     </div>
+    //     </div>
+    //     </>
+    // );
+    
 };
 export default StompComponent;
