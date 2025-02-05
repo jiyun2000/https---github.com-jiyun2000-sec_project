@@ -74,9 +74,9 @@ const BookingAddComponent = () => {
                 if(timeSlotStart[i]===bookingAtDate[j].start){
                     timeSlotTemp[i] = '';
                 }
-                setTimeSlotRes(timeSlotTemp);
             }
-        }       
+        }
+        setTimeSlotRes(timeSlotTemp);
     },[bookingAtDate])
 
     useEffect(()=>{
@@ -86,7 +86,21 @@ const BookingAddComponent = () => {
             }
         }
         setAddBooking([{initState}]);
+        
     },[bookDate,roomNumber]);
+
+    useEffect(()=>{
+        let qrs = document.querySelectorAll(".slot");
+        if(bookDate!==''){
+            if(roomNumber!==0){
+                for(let i = 0; i<qrs.length;i++){
+                    if(qrs[i]!==undefined){
+                        qrs[i].className = "slot grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white";
+                    }
+                }
+            }
+        }
+    },[timeSlotRes])
 
     const handleClickAdd = () => {
 
@@ -125,12 +139,10 @@ const BookingAddComponent = () => {
         booking[evt.target.name] = evt.target.id;
         booking["end"] = evt.target.value;
         setBooking({...booking});
-        console.log(evt.target.className === "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white");
-        console.log(evt.target.className);
-        if(evt.target.className === "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white"){
-            evt.target.className = "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-[#aaaaaa]";
+        if(evt.target.className === "slot grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white"){
+            evt.target.className = "slot grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-[#aaaaaa]";
         }else{
-            evt.target.className = "grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white";
+            evt.target.className = "slot grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white";
         }
     }
 
@@ -231,7 +243,7 @@ const BookingAddComponent = () => {
             <div className="w-full flex m-auto flex-wrap  ">
                 {timeSlotRes.map((data)=>{
                     return data===''?<></>:<button 
-                        className="grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white"
+                        className="slot grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2 cursor-pointer bg-white"
                         onClick={handleClickBooking}
                         id={data} 
                         name="start"
