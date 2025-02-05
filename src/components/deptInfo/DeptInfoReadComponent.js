@@ -55,10 +55,6 @@ const DeptInfoReadComponent = ({deptNo})=>{
         navigate(`/board/list`)
       }
 
-    const goToEmpRead = (empNo) => {
-        navigate(`/employees/read/${empNo}`)
-    }
-
     const checkRemove = () => {
         removeCookie("alert");
       }
@@ -149,7 +145,6 @@ const DeptInfoReadComponent = ({deptNo})=>{
                                 <tr
                                     key={data.empNo}
                                     className="bg-gray-50 cursor-pointer text-center"
-                                    onClick={()=>goToEmpRead(data.empNo)}
                                 >
                                     <td className="px-6 py-4">{data.empNo}</td>
                                     <td className="px-6 py-4">{data.firstName} {data.lastName}</td>
