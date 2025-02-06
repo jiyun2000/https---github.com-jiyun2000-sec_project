@@ -80,11 +80,11 @@ const ReportAddComponent = () => {
         formData.append('receiver',report.receiver);
         formData.append('finalReceiver',report.finalReceiver);
 
-        if(report.sender===undefined){
+        if(report.receiver===0){
             alert("수신인을 추가해주세요.");
             return;
         }
-        if(report.finalReceiver===undefined){
+        if(report.finalReceiver===0){
             alert("최종 결재인을 추가해주세요.");
             return;
         }
