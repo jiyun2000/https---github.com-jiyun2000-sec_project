@@ -80,15 +80,15 @@ const ReportAddComponent = () => {
         formData.append('receiver',report.receiver);
         formData.append('finalReceiver',report.finalReceiver);
 
-        if(formData.sender===undefined){
+        if(report.sender===undefined){
             alert("수신인을 추가해주세요.");
             return;
         }
-        if(formData.finalReceiver===undefined){
+        if(report.finalReceiver===undefined){
             alert("최종 결재인을 추가해주세요.");
             return;
         }
-        if(formData.deadLine===undefined){
+        if(report.deadLine===undefined){
             alert("결재기한을 추가해주세요.");
             return;
         }
@@ -98,7 +98,6 @@ const ReportAddComponent = () => {
         }
         
         addReport(empNo,formData).then((res)=>{
-            console.log(res);
             alert("등록되었습니다.");
             moveToReportReceivedPage();
         });
