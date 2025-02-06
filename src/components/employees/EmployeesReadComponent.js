@@ -153,7 +153,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                         </div>
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">전화번호:</span>
-                            <span className="text-gray-500">{employees.phoneNum}</span>
+                            <span className="text-gray-500">{employees.phoneNum.substring(0,3)}-{employees.phoneNum.substring(3,7)}-{employees.phoneNum.substring(7,employees.phoneNum.length)}</span>
                         </div>
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">주민등록번호:</span>
