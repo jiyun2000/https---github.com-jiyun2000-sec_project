@@ -30,7 +30,6 @@ const MailListComponent = () => {
     setMailData,
   } = useOutletContext();
   //const [mailData, setMailData] = useState(initState);
-
   const chgCat = (param) => {
     setPage(1);
     setCat(param);
@@ -150,7 +149,7 @@ const MailListComponent = () => {
           </div>
 
           <div className="flex flex-wrap flex-col">
-            {mail.dtoList ? (mailData.dtoList.map((mail) => {
+            {mailData.dtoList ? (mailData.dtoList.map((mail) => {
               return (
                 <>
                   <div
