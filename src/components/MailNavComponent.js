@@ -34,7 +34,7 @@ const MailNavComponent = () => {
     // navigate({ pathName: `../list`, search: qStr });
     setPage(page + val);
   };
-  const newTotals = Math.ceil(mailData.totalCnt / size);
+  const newTotals = Math.ceil((mailData ? mailData.totalCnt : 1) / size);
   return (
     <div className="h-20 flex flex-row shadow-lg">
       <div className=" w-[30%]">

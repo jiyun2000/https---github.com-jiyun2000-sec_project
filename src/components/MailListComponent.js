@@ -150,7 +150,7 @@ const MailListComponent = () => {
           </div>
 
           <div className="flex flex-wrap flex-col">
-            {mailData.dtoList.map((mail) => {
+            {mail.dtoList ? (mailData.dtoList.map((mail) => {
               return (
                 <>
                   <div
@@ -207,7 +207,7 @@ const MailListComponent = () => {
                   </div>
                 </>
               );
-            })}
+            })):<></>}
           </div>
         </div>
       </div>

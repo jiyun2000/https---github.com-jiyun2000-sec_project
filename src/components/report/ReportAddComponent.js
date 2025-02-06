@@ -80,7 +80,25 @@ const ReportAddComponent = () => {
         formData.append('receiver',report.receiver);
         formData.append('finalReceiver',report.finalReceiver);
 
-        addReport(empNo,formData).then(()=>{
+        if(formData.sender===undefined){
+            alert("수신인을 추가해주세요.");
+            return;
+        }
+        if(formData.finalReceiver===undefined){
+            alert("최종 결재인을 추가해주세요.");
+            return;
+        }
+        if(formData.deadLine===undefined){
+            alert("결재기한을 추가해주세요.");
+            return;
+        }
+        if(files.length<1){
+            alert("결재서류를 첨부해주세요.");
+            return;
+        }
+        
+        addReport(empNo,formData).then((res)=>{
+            console.log(res);
             alert("등록되었습니다.");
             moveToReportReceivedPage();
         });
