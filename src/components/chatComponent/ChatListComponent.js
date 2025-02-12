@@ -81,7 +81,7 @@ const ChatListComponent = () => {
             
             removeCookie(receiverEmpNo);
             navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
-        }else if(empData.jobNo === 999){ //관리자 계정
+        }else if(empData.jobNo === 1){ //관리자 계정
             const [emp1, emp2] = chatNo.split('_');
             const receiverEmpNo = emp1 === senderEmpNo ? emp2 : emp1;
     

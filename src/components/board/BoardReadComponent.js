@@ -100,7 +100,7 @@ const BoardReadComponent = ({ boardNo }) => {
           </div>
 
           <div className="flex justify-center p-4">
-            {deptNo===999||email===board.mailAddress?<button
+            {deptNo===1||email===board.mailAddress?<button
               type="button"
               className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4]  cursor-pointer"
               onClick={() => moveToModify(boardNo)}

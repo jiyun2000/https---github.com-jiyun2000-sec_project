@@ -191,7 +191,7 @@ const StompComponent = () => {
             } else {
                 console.log("Message content is empty");
             }
-        }else if(empData.jobNo === 999){ //관리자 계정
+        }else if(empData.jobNo === 1){ //관리자 계정
             if (wsClient && wsClient.connected && messageObj.content.trim() !== '') {
                 const messageWithTime = {
                     ...messageObj,

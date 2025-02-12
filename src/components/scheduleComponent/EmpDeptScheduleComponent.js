@@ -146,7 +146,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
             navigate(`/empSchedule/register/${empNo}`);
-        }else if(empData.jobNo === 999){
+        }else if(empData.jobNo === 1){
             navigate(`/empSchedule/register/${empNo}`);
         }
         else{
@@ -162,7 +162,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
         console.log(strEmpNo + "~~~~~~" + strCookieEmpNo);
         if(strEmpNo === strCookieEmpNo){
             navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
-        }else if(empData.jobNo === 999){
+        }else if(empData.jobNo === 1){
             navigate(`/empSchedule/mod/${empNo}/${empSchNo}`);
         }else{
             alert("권한이 없습니다.");
@@ -182,7 +182,7 @@ const EmpDeptScheduleComponent = ({ deptNo, empNo}) => {
             }).catch((error) => {
                 console.log("errrrr" + error);
             });
-        }else if(empData.jobNo === 999){
+        }else if(empData.jobNo === 1){
             alert("삭제하시겠습니까 ?");
             deleteScheduleOne(empNo, empSchNo).then(() => {
                 setEvents(events.filter(event => event.empSchNo !== getEmpScheNo));

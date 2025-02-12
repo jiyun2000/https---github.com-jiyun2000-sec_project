@@ -34,7 +34,7 @@ const JobAddComponent = () => {
 
     const handleClickAdd = () => {
 
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             addOne(job).then(()=>moveToList());
         }else{
             alert("권한이 없습니다.");

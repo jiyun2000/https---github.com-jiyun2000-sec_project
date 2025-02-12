@@ -42,7 +42,7 @@ const BoardModifyComponent = ({ boardNo }) => {
 
 
   const handleClickDelete = () => {
-    if(empData.jobNo === 999){
+    if(empData.jobNo === 1){
       board['category'] = '완료';
       setBoard({ ...board });
   
@@ -59,7 +59,7 @@ const BoardModifyComponent = ({ boardNo }) => {
   
   const handleClickModify = () => {
 
-    if(empData.jobNo === 999){
+    if(empData.jobNo === 1){
       putOne(boardNo, board).then(() => {
         moveToRead(boardNo);
       });

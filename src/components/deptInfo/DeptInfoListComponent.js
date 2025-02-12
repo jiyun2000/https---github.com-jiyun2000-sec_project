@@ -45,7 +45,7 @@ const DeptInfoListComponent = () => {
     }, []);
 
     const handleClickAdd = () =>{
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             moveToAdd();
         }else{
             alert("권한이 없습니다.");
@@ -92,7 +92,7 @@ const DeptInfoListComponent = () => {
 
             <div className="flex flex-col items-center gap-6 mt-8">
                 {deptInfo.map((res) => {
-                    return res.deptNo===999?<></>:(
+                    return res.deptNo===1?<></>:(
                         <div
                             key={res.deptNo}
                             className="flex flex-col p-6 bg-white rounded-lg shadow-lg hover:shadow-xl cursor-pointer w-[350px] mx-auto"
@@ -111,7 +111,7 @@ const DeptInfoListComponent = () => {
                 })}
             </div>
 
-            {cookDeptNo===999?<div className="flex justify-center p-6">
+            {cookDeptNo===1?<div className="flex justify-center p-6">
                 <button type="button"
                     className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md "
                     onClick={handleClickAdd}>

@@ -108,7 +108,7 @@ const DeptInfoReadComponent = ({deptNo})=>{
         </div>
   
         <div className="mt-8 flex justify-center gap-4">
-            {deptInfoNo===999?<button
+            {deptInfoNo===1?<button
                 type="button"
                 className="px-6 py-2 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={() => moveToModify(deptNo)}

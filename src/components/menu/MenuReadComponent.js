@@ -45,7 +45,7 @@ const MenuReadComponent = () => {
     }, [menuNo]);
 
     const modMenu = (menuNo) => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             navigate(`/menu/${menuNo}`);
         }else{
             alert("권한이 없습니다.")
@@ -55,7 +55,7 @@ const MenuReadComponent = () => {
     }
 
     const delMenu = (menuNo) => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             if (window.confirm("삭제하시겠습니까?")) {
                 delOne(menuNo).then((res) => {
                     navigate(`/menu/list`);

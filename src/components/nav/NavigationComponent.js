@@ -61,7 +61,7 @@ const NavigationComponent = () => {
         </div>
         <ul className="w-full border-t border-gray-300">
             {menu.map((menu, index) => (
-                deptNo===999?<li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
+                deptNo===1?<li key={index} id={menu} onClick={()=>openMenu(menu.path)} className="w-full p-4 flex justify-between border-b border-gray-300 cursor-pointer hover:bg-[#bebebe]">
                     <span>{menu.name}</span>
                     {/* <CaretRight className='w-[6px] fill-[#333333]' /> */}
                 </li>:<>

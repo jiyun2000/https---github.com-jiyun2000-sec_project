@@ -64,7 +64,7 @@ const CommuteListComponent = ()=>{
       }
     
       const goToModify = (commNo) => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             moveToModifyCommute(commNo);
         }else{
             alert("권한이 없습니다.")
@@ -112,7 +112,7 @@ const CommuteListComponent = ()=>{
                     <th className="px-4 py-2 text-center text-xl font-semibold">날짜</th>
                     <th className="px-4 py-2 text-center text-xl font-semibold">출근</th>
                     <th className="px-4 py-2 text-center text-xl font-semibold">퇴근</th>
-                    {deptNo === 999 && (
+                    {deptNo === 1 && (
                     <th className="px-4 py-2 text-center text-xl font-semibold">수정</th>
                     )}    
                     </tr>
@@ -124,7 +124,7 @@ const CommuteListComponent = ()=>{
                             <td className="px-4 py-3 text-center">{data.checkDate}</td>
                             <td className="px-4 py-3 text-center">{data.checkInTime}</td>
                             <td className="px-4 py-3 text-center">{data.checkOutTime}</td>
-                            {deptNo === 999 && (
+                            {deptNo === 1 && (
                             <td className="px-4 py-2 text-center">
                                     <button 
                                         type="button" 

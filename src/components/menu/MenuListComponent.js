@@ -58,7 +58,7 @@ const MenuListComponent = () => {
 
     const goToMenuAdd = () => {
         console.log(empData.jobNo)
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             navigate(`/menu/add`)
         }else{
             alert("권한이 없습니다.");

@@ -70,7 +70,7 @@ const EmployeesListComponent = () => {
         console.log(strCook);
         if(strEmp === strCook){
             moveToRead(cookEmpNo)
-        }else if(deptData.deptNo === 999){
+        }else if(deptData.deptNo === 1){
             moveToRead(empNo)
         }else{
             alert("권한이 없습니다.");
@@ -146,7 +146,7 @@ const EmployeesListComponent = () => {
                     />
                 </div>
                 
-                {cookDeptNo===999?<div className="flex justify-center mt-6">
+                {cookDeptNo===1?<div className="flex justify-center mt-6">
                     <button
                         type="button"
                         onClick={handleClickAdd}
