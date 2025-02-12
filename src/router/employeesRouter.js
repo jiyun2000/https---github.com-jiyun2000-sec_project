@@ -7,6 +7,7 @@ import AnnualLeaveReadPage from "../pages/employees/AnnualLeaveReadPage.js";
 import CommuteListPage from "../pages/employees/CommuteListPage.js";
 import CommuteModifyPage from "../pages/employees/CommuteModifyPage.js";
 import TodayCommutePage from "../pages/employees/TodayCommutePage.js";
+import AnnualLeaveModifyPage from "../pages/employees/AnnualLeaveModifyPage.js";
 
 const employeesRouter = () => {
     return [
@@ -31,18 +32,22 @@ const employeesRouter = () => {
             element : <EmployeesAddPage/>
         },
         {
-            path : 'annualleave',
+            path : 'annualleave/:empNo',
             element : <AnnualLeaveReadPage/>
         },
         {
-            path : 'commute',
+            path : 'annualleave/modify/:empNo',
+            element : <AnnualLeaveModifyPage/>
+        },
+        {
+            path : 'commute/:empNo',
             element : <CommuteListPage/>
         },
         {
             path : 'commute/modify/:commNo',
             element : <CommuteModifyPage/>
         },{
-            path : 'commute//todayCommute/:empNo',
+            path : 'commute/todayCommute/:empNo',
             element : <TodayCommutePage />
         }
     ]

@@ -81,6 +81,14 @@ const EmployeesListComponent = () => {
         removeCookie("alert");
       }
 
+      const handleClickAddExcel = () => {
+
+      }
+
+      const handleClickDownloadExcel = () => {
+        
+      }
+
     return  (
         <div>
             <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -107,6 +115,16 @@ const EmployeesListComponent = () => {
     
             <div className="flex flex-col items-center py-10 px-4">
                 <h1 className="text-3xl font-semibold mb-6 border-b border-gray-400">직원 목록</h1>
+
+                <div className='flex justify-end w-full my-5'>
+                    <button
+                        type="button"
+                        onClick={handleClickDownloadExcel}
+                        className="inline-block px-6 py-3 text-xl bg-white text-black border border-[#6f8cb4] hover:bg-[#6f8cb4] hover:text-white rounded-md"
+                    >
+                        일괄 등록 폼 다운로드
+                    </button>
+                </div>
     
                 <div className="overflow-x-auto w-full">
                     <table className="w-full ">
@@ -146,13 +164,21 @@ const EmployeesListComponent = () => {
                     />
                 </div>
                 
-                {cookDeptNo===1?<div className="flex justify-center mt-6">
+                {cookDeptNo===1?<div className="flex justify-center mt-6 w-full">
                     <button
                         type="button"
                         onClick={handleClickAdd}
+                        className="inline-block px-6 py-3 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mr-5"
+                    >
+                        직원 등록
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={handleClickAddExcel}
                         className="inline-block px-6 py-3 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                     >
-                        추가
+                        일괄 등록
                     </button>
                 </div>:<></>
                 }

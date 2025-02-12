@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { getALOne } from "../../api/annualLeaveApi";
+import { getALOne, putALOne } from "../../api/annualLeaveApi";
 import { useNavigate, useParams } from "react-router-dom";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
@@ -18,16 +18,15 @@ const initState = {
     hours : 0
 }
 
-const AnnualLeaveReadComponent = ({empNo})=>{
+const AnnualLeaveModifyComponent = ({empNo})=>{
     const [annualLeave, setAnnualLeave] = useState(initState);
     const [empData, setEmpData] = useState("");
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
-    const [deptData, setDeptData] = useState(getCookie("member").deptNo);
     let cnt = 0;
 
     const navigate = useNavigate();
 
-    const {page,moveToList, moveToRead,modifyAnnualLeave} = useCustomMove();
+    const {page,moveToList, moveToRead, moveToAnnualLeave} = useCustomMove();
 
     useEffect(()=>{
         getALOne(empNo).then(res => {
@@ -35,8 +34,10 @@ const AnnualLeaveReadComponent = ({empNo})=>{
         });
     },[cnt]);
 
-    const moveToAdd = () =>{
-        navigate({pathname:`../../dayoff/add`});
+    const handleClickModify = () =>{
+        putALOne(empNo,annualLeave).then(()=>{
+            moveToAnnualLeave({empNo});
+        })
     }
     useEffect(()=>{
         getOneEmp(empNo).then((data)=>{
@@ -54,6 +55,12 @@ const AnnualLeaveReadComponent = ({empNo})=>{
     const checkRemove = () => {
         removeCookie("alert");
       }
+
+      const handleClickChange = (evt) => {
+        
+        annualLeave[evt.target.name] = evt.target.value;
+        setAnnualLeave({...annualLeave});
+    }
 
     return <>
     <div>
@@ -87,7 +94,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
                 </div>
             </div> */}
         <div>
-           <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 연차 </h2>
+           <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 연차 수정</h2>
         </div>
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-row items-center justify-center">
@@ -99,37 +106,44 @@ const AnnualLeaveReadComponent = ({empNo})=>{
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-row items-center justify-center">
                     <div className="w-[10%] p-6 font-bold">근속년수</div>
-                    <div className="w-[20%] p-6 rounded-md border border-slate-400 text-center">{annualLeave.antecedent}</div>
+                    <input 
+                        name="antecedent"
+                        className="w-[20%] p-6 rounded-md border border-slate-400 text-center"
+                        type="number"
+                        value={annualLeave.antecedent}
+                        onChange={handleClickChange}
+                    >
+                    </input>
                 </div>
             </div>
 
             <div className="flex justify-center mt-10">
                 <div className="relative mb-4 flex w-full flex-row items-center justify-center">
                     <div className="w-[10%] p-6 font-bold">남은 시간</div>
-                    <div className="w-[20%] p-6 rounded-md border border-slate-400 text-center">{annualLeave.hours}</div>
+                    <input 
+                        name="hours"
+                        className="w-[20%] p-6 rounded-md border border-slate-400 text-center"
+                        type="number"
+                        value={annualLeave.hours}
+                        onChange={handleClickChange}
+                    ></input>
                 </div>
             </div>
+            
 
             <div className="flex justify-center p-4">
-
                 <button type="button" 
                 className="inline-block  p-4 m-2 text-xl w-40 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
-                onClick={moveToAdd}>
-                    연차 사용
-                </button>
-
-                <button type="button" 
-                className="inline-block  p-4 m-2 text-xl w-40 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
-                onClick={()=>moveToRead(empNo)}>
+                onClick={()=>moveToAnnualLeave({empNo})}>
                     이전
                 </button>
 
-                {deptData===1?<button type="button" 
+                <button type="button" 
                 className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500 hover:bg-[#a73a3a]"
-                onClick={()=>modifyAnnualLeave(empNo)}>
+                onClick={handleClickModify}>
                     수정
-                </button>:<></>}
-
+                </button>
+                
                 <button type="button"
                 className=" p-4 m-2 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                 onClick={()=>moveToList({page})}>
@@ -142,4 +156,4 @@ const AnnualLeaveReadComponent = ({empNo})=>{
     </>
 }
 
-export default AnnualLeaveReadComponent;
+export default AnnualLeaveModifyComponent;

@@ -24,8 +24,7 @@ const initState = {
     current : 0
 }
 
-const CommuteListComponent = ()=>{
-    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+const CommuteListComponent = ({empNo})=>{
     const [commute, setCommute] = useState(initState);
     const [empData, setEmpData] = useState("");
     const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);

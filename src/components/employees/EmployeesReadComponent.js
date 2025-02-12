@@ -172,24 +172,23 @@ const EmployeesReadComponent = ({ empNo }) => {
                     </button>
                     <button 
                     className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={moveToCommuteList}
+                    onClick={()=>moveToCommuteList({empNo})}
                     >
                     출퇴근
                     </button>
                     <button 
                     className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={moveToAnnualLeave}
+                    onClick={()=>moveToAnnualLeave({empNo})}
                     >
                     연차
                     </button>
-                    {(employeeNo === empNo || employeeNo === 1) && (
+                    
                     <button 
                         className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                         onClick={() => moveToModify(empNo)}
                     >
                         수정
                     </button>
-                    )}
                     <button 
                     className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                     onClick={() => moveToList({ page })}

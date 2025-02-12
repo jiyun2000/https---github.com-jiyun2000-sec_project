@@ -22,11 +22,6 @@ const initState = {
     current : 0
 }
 
-const initRes = {
-    cr : '',
-    wr : ''
-}
-
 const BookingListComponent = () => {
 
     const [booking,setBooking] = useState(initState);
@@ -111,7 +106,7 @@ const BookingListComponent = () => {
                         <input className="w-1/2 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                         name="bookDate"
                         type={'date'} 
-                        value={booking.bookDate}
+                        value={bookDate}
                         defaultValue={today}
                         onChange={handleChangeDate}></input>
                     </div>
