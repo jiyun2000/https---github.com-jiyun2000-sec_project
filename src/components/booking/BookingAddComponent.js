@@ -204,11 +204,11 @@ const BookingAddComponent = () => {
                     value={booking.roomNo} 
                     onChange={handleChangeRoomNo}>
                         <option value={0}></option>
-                        {roomList.map((res)=>{
+                        {roomList.length>0?roomList.map((res)=>{
                             return(
                                 <option value={res.roomNo}>{res.roomName}</option>
                             )
-                        })}
+                        }):<option disabled>등록된 회의실이 없습니다.</option>}
                     </select>
                 </div>
             </div>
