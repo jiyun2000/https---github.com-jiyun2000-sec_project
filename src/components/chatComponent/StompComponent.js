@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Client } from "@stomp/stompjs";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import SockJS from "sockjs-client";
 import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
@@ -10,6 +10,8 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import { getCookie, removeCookie } from '../../util/cookieUtil';
 import colorChat from "../../assets/icon/colorChat.png";
+import upload from "../../assets/icon/upload.png";
+
 
 const StompComponent = () => {
     const navigate = useNavigate();
@@ -24,11 +26,14 @@ const StompComponent = () => {
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const msgContainerRef = useRef('');
-
+    const [fileList, setFileList] = useState([]);
+    const fileId = useRef(0);
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
     });
+    const dndRef = useRef();
+    const [isExtraShow, setIsExtraShow] = useState();
 
     useEffect(()=>{
         if(msgContainerRef.current){
@@ -341,6 +346,30 @@ const chatSendAlert = {
     const checkRemove = () => {
         removeCookie("alert");
     }
+
+    const onChangeFile = useCallback(
+        (evt) => {
+          console.log('file change');
+          // if (evt.dataTransfer) {
+          //   evt.dataTransfer.files;
+          // } else {
+          //   evt.target.files;
+          // }
+    
+          let files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+          let listTemp = [...fileList];
+          for (let file of files) {
+            listTemp.push({ id: fileId.current++, file: file });
+          }
+          if (evt.type === 'change') {
+            evt.target.value = null;
+          }
+          setFileList(listTemp);
+        },
+        [fileList]
+      );
+
+      
     return (
         <>
             <div>
@@ -441,7 +470,8 @@ const chatSendAlert = {
                                     );
                                 })}
                             </div>
-    
+
+                        <div className='flex flex-col'>
                             <div className="flex flex-row justify-center gap-2 w-full">
                                 <input
                                     type="text"
@@ -455,6 +485,7 @@ const chatSendAlert = {
                                     className="border-2 border-[#6f8cb4] rounded-md p-2 w-2/4"
                                     placeholder="메시지를 입력하세요"
                                 />
+                               
                                 <button 
                                     type="submit" 
                                     onClick={() => {
@@ -465,7 +496,45 @@ const chatSendAlert = {
                                 >
                                     전송
                                 </button>
+
+                                <div className='flex flex-row'>
+                                    <div className='flex flex-row justify-center gap-2 w-full'>
+                                        <label ref={dndRef} className='w-[80%] items-center justify-center'>
+                                             <img src={upload} alt='upload' className='w-[20%]'/>
+                                                <input
+                                                    type="file"
+                                                    hidden="true"
+                                                    multiple="true"
+                                                    onChange={(evt) => {
+                                                        onChangeFile(evt);
+                                                    }}
+                                                ></input>
+                                        </label>
+                                    </div>
+                                    <div
+                                    onClick={() => {
+                                        setIsExtraShow(true);
+                                    }}
+                                    ></div>
+                                
+                                    
+                                    <div>
+                                        <div className='bg-[#83a3d0] text-white hover:bg-[#718aab] rounded-md p-2 '
+                                            onClick={() => {
+                                                stompHandler.sendMessage({
+                                                files: fileList,
+                                            });
+                                            }}
+                                        >
+                                            파일전송
+                                        </div>
+                                    </div>
+                                </div>            
+
+
+
                             </div>
+                        </div>
     
                             <div style={{ marginTop: 10 }}>
                                 <button 

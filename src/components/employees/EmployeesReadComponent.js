@@ -78,6 +78,10 @@ const EmployeesReadComponent = ({ empNo }) => {
         removeCookie("alert");
       }
 
+    const changeImage = () => {
+        navigate(`/empImage/`);
+    }
+
     return (
         <>
         <div>
@@ -114,6 +118,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                         <img src={m} alt="man" className="w-[200px] h-[200px]" /> : 
                         <img src={w} alt="woman" className="w-[200px] h-[200px]" />
                     }
+                <button type="button" onClick={()=>changeImage(empNo)} className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg mt-3 hover:bg-[#303030]">사진변경</button>
                     </div>
                     
                     <div className="flex flex-col  space-y-4 items-center">
