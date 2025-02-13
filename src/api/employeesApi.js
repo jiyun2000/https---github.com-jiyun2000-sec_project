@@ -37,6 +37,11 @@ export const addOne = async(employees)=>{
     return res.data;
 }
 
+export const addFiles = async(files)=>{
+    const res = await jwtAxios.post(`${prefix}/add/excel`,files);
+    return res.data;
+}
+
 export const getAllList = async()=>{
     const res = await jwtAxios.get(`${prefix}/list/all`);
     return res.data;

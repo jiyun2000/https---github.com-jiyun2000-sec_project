@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getList } from '../../api/employeesApi';
+import { API_SERVER_HOST, getList } from '../../api/employeesApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
 import BoardTitleComponent from '../board/BoardTitleComponent';
@@ -35,7 +35,7 @@ const EmployeesListComponent = () => {
     const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
     const [deptData, setDeptData] = useState('');
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
-    const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
+    const { page, size, moveToRead, moveToAdd, moveToList, moveToAddExcel } = useCustomMove();
 
     useEffect(() => {
             getList([page,size]).then(data => {
@@ -82,11 +82,7 @@ const EmployeesListComponent = () => {
       }
 
       const handleClickAddExcel = () => {
-
-      }
-
-      const handleClickDownloadExcel = () => {
-        
+        moveToAddExcel();
       }
 
     return  (
@@ -117,13 +113,12 @@ const EmployeesListComponent = () => {
                 <h1 className="text-3xl font-semibold mb-6 border-b border-gray-400">직원 목록</h1>
 
                 <div className='flex justify-end w-full my-5'>
-                    <button
-                        type="button"
-                        onClick={handleClickDownloadExcel}
-                        className="inline-block px-6 py-3 text-xl bg-white text-black border border-[#6f8cb4] hover:bg-[#6f8cb4] hover:text-white rounded-md"
-                    >
+                    <a 
+                    alt="form"
+                    className="inline-block px-6 py-3 text-xl bg-white text-black border border-[#6f8cb4] hover:bg-[#6f8cb4] hover:text-white rounded-md"
+                    href={`${API_SERVER_HOST}/api/employees/download/form`}>
                         일괄 등록 폼 다운로드
-                    </button>
+                    </a>
                 </div>
     
                 <div className="overflow-x-auto w-full">

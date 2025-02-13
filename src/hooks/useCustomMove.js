@@ -191,6 +191,10 @@ const useCustomMove = () => {
         navigate({pathname:`../add`});
     }
 
+    const moveToAddExcel = () => {
+        navigate({pathname:`../add/excel`});
+    }
+
     const moveToAnnualLeave = (pageParam) => {
         let queryStr = '';
 
@@ -228,7 +232,7 @@ const useCustomMove = () => {
     };
 
 
-    return {page, size,moveToReceivedReportRead, modifyAnnualLeave, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd, moveToMenuList};
+    return {page, size,moveToReceivedReportRead, modifyAnnualLeave, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToAddExcel, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd, moveToMenuList};
 }
 
 export default useCustomMove;
