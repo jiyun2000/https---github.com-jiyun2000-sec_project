@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import useCustomMove from "../../hooks/useCustomMove";
-import { delOne, getOne, getOneRoom, putOne } from "../../api/roomListApi";
+import { delOne, getBookList, getOne, getOneRoom, putOne } from "../../api/roomListApi";
 import { getCookie, removeCookie } from "../../util/cookieUtil";
 import { Link, useNavigate } from "react-router-dom";
 import BoardTitleComponent from "../board/BoardTitleComponent";
@@ -17,16 +17,25 @@ const initState = {
 const RoomListModifyComponent = ({roomNo}) => {
     const [roomList, setRoomList] = useState({...initState});
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+    const [delFlag, setDelFlag] = useState(0);
     const navigate = useNavigate();
-    const {moveToList, moveToRead} = useCustomMove();
+    const {moveToList, moveToRead, page, size} = useCustomMove();
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
     useEffect(()=>{
         getOneRoom(roomNo).then(data=>setRoomList(data));
+        getBookList(roomNo,[page,size]).then(res => {
+            if(res.dtoList.length>0){
+                setDelFlag(res.dtoList.length);
+            };
+        })
     },[roomNo]);
 
     const handleClickDelete = () => {
-        delOne(roomNo).then(()=>moveToList());
+        delOne(roomNo).then(()=>{
+            alert('삭제되었습니다');
+            moveToList();
+        });
     }
 
     const handleClickModify = () => {
@@ -107,15 +116,15 @@ const RoomListModifyComponent = ({roomNo}) => {
                 <button type="button"
                  className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={handleClickModify}>
-                    수정
+                    수정 완료
                 </button>
 
-                <button type="button"
+                {delFlag===0?<button type="button"
                  className="inline-block rounded p-4 m-2 text-xl w-32 text-white  bg-[#8ba7cd]  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={handleClickDelete}
                 >
                     삭제
-                </button>
+                </button>:<></>}
             </div>
         </div>
     </div>
