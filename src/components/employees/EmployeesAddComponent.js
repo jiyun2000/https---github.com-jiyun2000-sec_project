@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
-import { addOne } from "../../api/employeesApi";
+import { addOne, mailCheck } from "../../api/employeesApi";
 import { setALOne } from "../../api/annualLeaveApi";
 import { getJobList } from "../../api/jobApi";
 import { getDeptList } from "../../api/deptInfoApi";
@@ -42,11 +42,11 @@ const initStateDeptinfo = {
 
 const EmployeesAddComponent = () => {
     const [employees, setEmployees] = useState({...initState});
-
+    const [checkPw,setCheckPw] = useState("");
     const [job,setJob] = useState([initStateJob]);
-    
+    const [checkPassword,setCheckPassword] = useState("");
     const [deptInfo,setDeptInfo] = useState([initStateDeptinfo]);
-
+    const [checkMail, setCheckMail] = useState("");
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const {moveToList} = useCustomMove();
     const navigate = useNavigate();
@@ -70,6 +70,17 @@ const EmployeesAddComponent = () => {
         });
     }
     
+    const handleChangePassword = (evt) => {
+        setCheckPw(evt.target.value);
+    }
+
+    useEffect(()=>{
+        if(checkPw===employees.password){
+            setCheckPassword("ok");
+        }else{
+            setCheckPassword("no");
+        }
+    },[checkPw])
 
     const handleChangeEmployees = (evt) => {
         employees[evt.target.name] = evt.target.value;
@@ -83,6 +94,16 @@ const EmployeesAddComponent = () => {
     const checkRemove = () => {
         removeCookie("alert");
       }
+    
+    const handleClickCheck = () => {
+        mailCheck(employees).then((res)=>{
+            if(res===0){
+                setCheckMail("ok");
+            }else{
+                setCheckMail("no");
+            }
+        })
+    }
 
     return (
         <div>
@@ -139,7 +160,22 @@ const EmployeesAddComponent = () => {
                     type={'text'} 
                     value={employees.mailAddress}
                     onChange={handleChangeEmployees}></input>
+                    <button className="w-[10%] p-2 rounded-md border border-slate-400 text-center ml-4"
+                    onClick={handleClickCheck}
+                    >
+                        중복 확인
+                    </button>
             </div>
+
+            {checkMail===""?<></>:<div className="flex flex-row items-center justify-center mt-10 mb-4">
+                {checkMail==="ok"?<div className="p-1 text-right font-bold">
+                    사용 가능한 메일 주소 입니다
+                </div>:<div className="p-1 text-right font-bold text-red-500">
+                    이미 존재하는 메일 주소입니다.
+                </div>
+                }
+            </div>}
+            
 
             <div className="flex flex-row items-center justify-center mt-10 mb-4">
                     <div className="w-[12%] p-6 text-right font-bold">연봉</div>
@@ -226,6 +262,23 @@ const EmployeesAddComponent = () => {
                     value={employees.password} 
                     onChange={handleChangeEmployees}></input>
             </div>
+
+            <div className="flex flex-row items-center justify-center mt-10 mb-4">
+                    <div className="w-[12%] p-6 text-right font-bold">비밀번호 확인</div>
+                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+                    type={'password'} 
+                    value={checkPw} 
+                    onChange={handleChangePassword}></input>
+            </div>
+
+            {checkPassword===""?<></>:<div className="flex flex-row items-center justify-center mt-10 mb-4">
+                {checkPassword==="ok"?<div className="p-1 text-right font-bold">
+                    비밀번호가 같습니다.
+                </div>:<div className="p-1 text-right font-bold text-red-500">
+                    비밀번호가 다릅니다.
+                </div>
+                }
+            </div>}
 
             <div className="flex justify-center p-4">
                 <button type="button"

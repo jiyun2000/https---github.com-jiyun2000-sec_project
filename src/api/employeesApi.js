@@ -62,3 +62,9 @@ export const getBirth = async(pageParam) => {
     });
     return res.data;
 }
+
+export const mailCheck = async(employees)=>{
+    console.log(`${prefix}/check`);
+    const res = await jwtAxios.post(`${prefix}/check`,employees)
+    return res.data;
+}
