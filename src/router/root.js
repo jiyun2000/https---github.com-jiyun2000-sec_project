@@ -32,6 +32,7 @@ import MenuReadPage from "../pages/menu/MenuReadPage";
 import MenuModPage from "../pages/menu/MenuModpage";
 import BirthEmpPage from "../pages/BirthEmpPage";
 import AnnualLeaveCountPage from "../pages/employees/AnnualLeaveCountPage";
+import EmpImagePage from "../pages/employees/EmpImagePage";
 
 
 const root = createBrowserRouter([
@@ -163,6 +164,10 @@ const root = createBrowserRouter([
                     {
                         path : 'employees/annualleave/count/:empNo',
                         element : <AnnualLeaveCountPage />
+                    },
+                    {
+                        path : 'empImage/:empNo',
+                        element : <EmpImagePage />
                     }
                 ]
             }
