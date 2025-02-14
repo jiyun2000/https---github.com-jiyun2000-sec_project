@@ -75,12 +75,14 @@ const EmployeesAddComponent = () => {
     }
 
     useEffect(()=>{
-        if(checkPw===employees.password){
-            setCheckPassword("ok");
-        }else{
-            setCheckPassword("no");
+        if(checkPw!==""){
+            if(checkPw===employees.password){
+                setCheckPassword("ok");
+            }else{
+                setCheckPassword("no");
+            }
         }
-    },[checkPw])
+    },[checkPw,employees.password])
 
     const handleChangeEmployees = (evt) => {
         employees[evt.target.name] = evt.target.value;
@@ -130,44 +132,46 @@ const EmployeesAddComponent = () => {
         </div>
 
 
-        <div className="flex flex-col items-center py-10 px-4">
+        <div className="flex flex-col py-10 px-20">
         <h1 className="text-3xl font-semibold mb-6">직원 등록</h1>
-        <div className="bg-white p-4 mb-2 w-full">
-                <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">성</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
-                    name="firstName"
-                    type={'text'} 
-                    value={employees.firstName}
-                    onChange={handleChangeEmployees}></input>
+        <div className="bg-white mx-auto mb-2 max-w-2xl">
+            <div className="w-full flex items-center justify-center mt-10 mb-4">
+                <div className="w-[150px] flex-shrink-0 p-6 font-bold">성</div>
+                <input className="flex-grow p-6 rounded-md border border-slate-400" 
+                name="firstName"
+                type={'text'} 
+                value={employees.firstName}
+                onChange={handleChangeEmployees}></input>
 
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">이름</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">이름</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     name="lastName"
                     type={'text'} 
                     value={employees.lastName}
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">메일 주소</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
-                    placeholder="example@abc.com"
-                    name="mailAddress"
-                    type={'text'} 
-                    value={employees.mailAddress}
-                    onChange={handleChangeEmployees}></input>
-                    <button className="w-[10%] p-2 rounded-md border border-slate-400 text-center ml-4"
-                    onClick={handleClickCheck}
-                    >
-                        중복 확인
-                    </button>
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">메일 주소</div>
+                    <div className="flex-grow flex flex-nowrap gap-3">
+                        <input className="flex-grow p-6 rounded-md border border-slate-400" 
+                        placeholder="example@abc.com"
+                        name="mailAddress"
+                        type={'text'} 
+                        value={employees.mailAddress}
+                        onChange={handleChangeEmployees}></input>
+                        <button className="whitespace-nowrap p-2 rounded-md border border-slate-400"
+                        onClick={handleClickCheck}
+                        >
+                            중복 확인
+                        </button>
+                    </div>
             </div>
 
-            {checkMail===""?<></>:<div className="flex flex-row items-center justify-center mt-10 mb-4">
+            {checkMail===""?<></>:<div className="flex flex-row items-center justify-center mb-4">
                 {checkMail==="ok"?<div className="p-1 text-right font-bold">
                     사용 가능한 메일 주소 입니다
                 </div>:<div className="p-1 text-right font-bold text-red-500">
@@ -177,18 +181,18 @@ const EmployeesAddComponent = () => {
             </div>}
             
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">연봉</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">연봉</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     name="salary"
                     type={'number'} 
                     value={employees.salary} 
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">부서</div>
-                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="deptNo" onClick={handleChangeEmployees}>
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">부서</div>
+                    <select className="flex-grow p-6 rounded-md border border-slate-400" name="deptNo" onClick={handleChangeEmployees}>
                         <option value={0}></option>
                         {deptInfo.map((data)=>{
                             return (<option value={data.deptNo}>{data.deptName}</option>)
@@ -197,9 +201,9 @@ const EmployeesAddComponent = () => {
                     </select>
             </div>
             
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">직책</div>
-                    <select className="w-[25%] p-6 rounded-md border border-slate-400 text-center" name="jobNo" onChange={handleChangeEmployees}>
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">직책</div>
+                    <select className="flex-grow p-6 rounded-md border border-slate-400" name="jobNo" onChange={handleChangeEmployees}>
                     <option value={0}></option>
                     {job.map((data)=>{
                            return (<option value={data.jobNo}>{data.jobTitle}</option>)
@@ -207,27 +211,27 @@ const EmployeesAddComponent = () => {
                     </select>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">생년월일</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">생년월일</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     name="birthday"
                     type={'date'} 
                     value={employees.birthday} 
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">주소</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">주소</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     name="address"
                     type={'text'} 
                     value={employees.address} 
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">전화번호</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">전화번호</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     placeholder="- 빼고 입력"
                     name="phoneNum"
                     type={'text'} 
@@ -235,18 +239,18 @@ const EmployeesAddComponent = () => {
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">성별</div>
-                    <select name="gender" onChange={handleChangeEmployees} className="w-[25%] p-6 rounded-md border border-slate-400 text-center">
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">성별</div>
+                    <select name="gender" onChange={handleChangeEmployees} className="flex-grow p-6 rounded-md border border-slate-400">
                         <option value={"m"}>남성</option>
                         <option value={"y"}>여성</option>
                     </select>
             </div>
 
             
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">주민등록번호</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">주민등록번호</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     placeholder="- 빼고 입력"
                     name="citizenId"
                     type={'text'} 
@@ -254,24 +258,24 @@ const EmployeesAddComponent = () => {
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">비밀번호</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">비밀번호</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     name="password"
                     type={'password'} 
                     value={employees.password} 
                     onChange={handleChangeEmployees}></input>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-10 mb-4">
-                    <div className="w-[12%] p-6 text-right font-bold">비밀번호 확인</div>
-                    <input className="w-[25%] p-6 rounded-md border border-slate-400 text-center" 
+            <div className="flex items-center justify-center mt-10 mb-4">
+                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">비밀번호 확인</div>
+                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
                     type={'password'} 
                     value={checkPw} 
                     onChange={handleChangePassword}></input>
             </div>
 
-            {checkPassword===""?<></>:<div className="flex flex-row items-center justify-center mt-10 mb-4">
+            {checkPassword===""?<></>:<div className="flex flex-row items-center justify-center mb-4">
                 {checkPassword==="ok"?<div className="p-1 text-right font-bold">
                     비밀번호가 같습니다.
                 </div>:<div className="p-1 text-right font-bold text-red-500">
@@ -280,13 +284,13 @@ const EmployeesAddComponent = () => {
                 }
             </div>}
 
-            <div className="flex justify-center p-4">
+            {checkMail==="ok"?<div className="flex justify-center p-4">
                 <button type="button"
                 className="inline-block rounded p-4 m-2 text-xl w-32  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={handleClickAdd}>
                     등록
                 </button>
-            </div>
+            </div>:<></>}
         </div>
         </div>
     </div>
