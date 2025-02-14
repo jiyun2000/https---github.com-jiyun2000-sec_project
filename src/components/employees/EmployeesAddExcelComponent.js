@@ -44,6 +44,7 @@ const EmployeesAddExcelComponent = () => {
         formData.append('files',files[0]);
 
         addFiles(formData).then((res)=>{
+            alert(res+'명이 정상등록되었습니다.');
             moveToList();
         })
     }
