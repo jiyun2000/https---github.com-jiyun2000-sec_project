@@ -79,7 +79,7 @@ const EmployeesReadComponent = ({ empNo }) => {
       }
 
     const changeImage = () => {
-        navigate(`/empImage/`);
+        navigate(`/empImage/${employeeNo}`);
     }
 
     return (

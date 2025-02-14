@@ -1,15 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import upload from "../../assets/icon/upload.png";
-import { getEmpImageOne, register } from "../../api/employeesImageApi";
+import { getEmpImageOne, modImg, register } from "../../api/employeesImageApi";
 import { getCookie } from "../../util/cookieUtil";
 import { getOneEmp } from "../../api/employeesApi";
+export const API_SERVER_HOST = 'http://localhost:8080';
 
 const initState = {
-    empImgNo : 0,
     empNo : 0,
     url : '',
     files : [],
-    uploadFileNames : ''
 }
 
 const EmpImageComponent = () => {
@@ -31,42 +30,43 @@ const EmpImageComponent = () => {
         })
     }, []);
 
-    // const onChangeFile = useCallback(
-    //     (evt) => {
-    //         console.log('file change');
-  
-    //         let files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
-    //         let listTemp = [...fileList];
-    //         for (let file of files) {
-    //         listTemp.push({ id: fileId.current++, file: file });
-    //         }
-    //         if (evt.type === 'change') {
-    //         evt.target.value = null;
-    //         }
-    //         setFileList(listTemp);
-    //     },
-    //     [fileList]
-    //     );
+    const sendImage = () => {
+        if(getEmpImageOne !=null){
+            console.log("이미 사진 있음.");
+            try{
+                modImg(cookEmpNo);
+                console.log("성공");
+            }catch{
+                console.log("err");
+                
+            }
+            
+            
 
-        const sendImage = () => {
+
+        }else{
             const fileList = fileId.current.files;
-
+            console.log(fileId);
+            console.log(fileList);
+            
             const formData = new FormData();
             
             for(let i = 0; i<fileList.length; i++){
                 formData.append('files',fileList[i]);
             };
-
-            formData.append('empImgNo', fileList.empImgNo);
-            formData.append('empNo',fileList.empNo);
-            formData.append('url',fileList.url);
-            formData.append('uploadFileNames',fileList.uploadFileNames);
-            console.log(formData.files);
             
-            register(formData);  
-            console.log("등록 성공");//실패잖아 ;;;;;;;;;;;;;;;
-           
-            }
+            console.log(cookEmpNo);
+            
+            // formData.append('empImgNo', fileList.empImgNo);
+            formData.append('empNo',cookEmpNo);
+            formData.append('url',fileList[0].name);
+            // formData.append('uploadFileNames',fileList.uploadFileNames);
+
+            console.log(formData);
+            register(formData,cookEmpNo);  
+        }
+        
+    }
 
 
     useEffect(()=>{
@@ -93,13 +93,15 @@ const EmpImageComponent = () => {
 
         <div className="w-[50%] flex flex-row items-center justify-center m-5 gap-7">
             <p>현재 사진</p>
-            {getEmpImage ? <img src={getEmpImage.url}/> : <></> }
-            {/* {getEmpImage.url} */}
+            {getEmpImage ? <img src={`${API_SERVER_HOST}/api/empImage/view/${getEmpImage.url}`}/> : <></> }
+            {getEmpImage.url}
+            
+            
         </div>
 
         <div className='flex flex-row'>
             <div className='flex flex-row justify-center'>
-                <label ref={dndRef} className='w-[50%] items-center justify-center'>
+                <label ref={dndRef} className='w-[50%] items-center justify-center inline-block '>
                         <img src={upload} alt='upload' className='w-[20%]'/>
                         <input
                             ref={fileId}
@@ -124,6 +126,7 @@ const EmpImageComponent = () => {
                     onClick={() => {
                         sendImage({
                             files: fileList,
+                            empNo:cookEmpNo
                         });
                         }}
                 >

@@ -166,7 +166,7 @@ const root = createBrowserRouter([
                         element : <AnnualLeaveCountPage />
                     },
                     {
-                        path : 'empImage',
+                        path : 'empImage/:empNo',
                         element : <EmpImagePage />
                     }
                 ]
