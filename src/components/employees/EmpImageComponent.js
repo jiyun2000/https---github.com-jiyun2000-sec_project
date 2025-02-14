@@ -31,20 +31,7 @@ const EmpImageComponent = () => {
     }, []);
 
     const sendImage = () => {
-        if(getEmpImageOne !=null){
-            console.log("이미 사진 있음.");
-            try{
-                modImg(cookEmpNo);
-                console.log("성공");
-            }catch{
-                console.log("err");
-                
-            }
-            
-            
-
-
-        }else{
+    
             const fileList = fileId.current.files;
             console.log(fileId);
             console.log(fileList);
@@ -60,11 +47,12 @@ const EmpImageComponent = () => {
             // formData.append('empImgNo', fileList.empImgNo);
             formData.append('empNo',cookEmpNo);
             formData.append('url',fileList[0].name);
+            formData.append('uuid',fileList.uploadFileNames);
             // formData.append('uploadFileNames',fileList.uploadFileNames);
 
             console.log(formData);
             register(formData,cookEmpNo);  
-        }
+
         
     }
 
