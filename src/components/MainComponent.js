@@ -95,99 +95,97 @@ const MainComponent = () => {
         </div>
       </div>
 
-  <div className='flex flex-row m-3'>
-    <div className='m-3'>
-      <Link to={`/employees/read/${empNo}`}><img src={user} alt='User' className='w-[120px] ml-8 h-[120px]' /></Link>
-    </div>
-    <div className='flex flex-col'>
-      <div className='flex flex-row w-full'>
-        <div className='font-semibold text-3xl m-3 ml-8'>
-          {empData ? `${empData.firstName} ${empData.lastName}` : ''} 님
+      <div className='flex flex-row m-3'>
+        <div className='m-3'>
+          <Link to={`/employees/read/${empNo}`}><img src={user} alt='User' className='w-[120px] ml-8 h-[120px]' /></Link>
         </div>
-        <div className='text-2xl font-semibold m-3'>
-          ({deptData.deptName})
+        <div className='flex flex-col'>
+          <div className='flex flex-row w-full'>
+            <div className='font-semibold text-3xl m-3 ml-8'>
+              {empData ? `${empData.firstName} ${empData.lastName}` : ''} 님
+            </div>
+            <div className='text-2xl font-semibold m-3'>
+              ({deptData.deptName})
+            </div>
+          </div>
+
+          <div className='flex flex-row space-x-8 ml-8 gap-10'>
+            <div className='font-medium text-xl'>
+              <div className='bg-[#dce1f3] rounded-md text-center'>근무정보</div>
+              <TodayCommutePage empNo={empNo} />
+            </div>
+
+            <div className='font-medium text-xl'>
+              <div className='bg-[#dfdcf3] rounded-md text-center'>입사</div>
+              <DDayPage empNo={empNo} />
+            </div>
+
+            <div className='font-medium text-xl'>
+              <div className='bg-[#dce7f3] rounded-md text-center'> 연차</div>
+              <AnnualLeaveCountPage empNo={empNo} />
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className='flex flex-row space-x-8 ml-8 gap-10'>
-        <div className='font-medium text-xl'>
-          <div className='bg-[#dce1f3] rounded-md text-center'>근무정보</div>
-          <TodayCommutePage empNo={empNo} />
-        </div>
-
-        <div className='font-medium text-xl'>
-          <div className='bg-[#dfdcf3] rounded-md text-center'>입사</div>
-          <DDayPage empNo={empNo} />
-        </div>
-
-        <div className='font-medium text-xl'>
-          <div className='bg-[#dce7f3] rounded-md text-center'> 연차</div>
-          <AnnualLeaveCountPage empNo={empNo} />
+      <div className='flex flex-col w-full mt-3'>
+        <div className='flex flex-row m-3 gap-5 justify-center'>
+          <div className='w-[30%] shadow-xl rounded-md p-4'>
+            <div className='flex flex-row justify-center gap-5 p-2'> 
+              <img src={board} alt='Board' className='w-8'/>
+              <p className='text-center text-xl font-semibold '>공지사항</p>
+            </div>
+            <BoardMainpage />
+          </div>
+          <div className='w-[30%] shadow-xl rounded-md p-4'>
+            <div className='flex flex-row justify-center gap-5 p-2'>
+              <img src={todo} alt='Todo' className='w-8'/>
+              <p className='text-center text-xl font-semibold '>개인일정</p>
+            </div>
+            <EmpTodoPage empNo={empNo} selectDate={selectDate} />
+          </div>
+          <div className='w-[30%] shadow-xl rounded-md p-4'>
+            <div className='flex flex-row justify-center gap-5 p-2'>
+              <img src={team} alt='Team' className='w-8'/>
+              <p className='text-center text-xl font-semibold '>{deptData.deptName}일정</p>
+            </div>
+            <DeptTodoPage empNo={empNo} deptNo={deptNo} selectDate={selectDate} />
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-    <div className='flex flex-col w-full mt-3'>
-      <div className='flex flex-row m-3 gap-5 justify-center'>
-        <div className='w-[30%] shadow-xl rounded-md p-4'>
-          <div className='flex flex-row justify-center gap-5 p-2'> 
-            <img src={board} alt='Board' className='w-8'/>
-            <p className='text-center text-xl font-semibold '>공지사항</p>
+      <div className='flex flex-col w-full'>
+        <div className='flex flex-row m-3 gap-5 justify-center'> 
+          <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
+            <div  className='flex flex-row justify-center gap-5 p-2'>
+              <img src={birth} alt="Birth" className="w-8 mb-2" />
+              <p className='text-center text-xl font-semibold '>오늘의 생일자</p>
+            </div>
+            <BirthEmpPage />
           </div>
-          <BoardMainpage />
-        </div>
-        <div className='w-[30%] shadow-xl rounded-md p-4'>
-          <div className='flex flex-row justify-center gap-5 p-2'>
-            <img src={todo} alt='Todo' className='w-8'/>
-            <p className='text-center text-xl font-semibold '>개인일정</p>
+          <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
+            <div className='flex flex-row justify-center gap-5 p-2'>
+              <img src={menu} alt="Menu" className="w-8 mb-2" />
+              <p className='text-center text-xl font-semibold '>오늘의 메뉴</p>
+            </div>
+            <MenuPage menuDate={selectDate} />
+            <button type="button" className="text-lg mt-2 text-[#0f1f6f] hover:underline" onClick={goToMenuList}>
+                  메뉴 리스트
+            </button>
           </div>
-          <EmpTodoPage empNo={empNo} selectDate={selectDate} />
-        </div>
-        <div className='w-[30%] shadow-xl rounded-md p-4'>
-          <div className='flex flex-row justify-center gap-5 p-2'>
-            <img src={team} alt='Team' className='w-8'/>
-            <p className='text-center text-xl font-semibold '>{deptData.deptName}일정</p>
-          </div>
-          <DeptTodoPage empNo={empNo} deptNo={deptNo} selectDate={selectDate} />
-        </div>
-      </div>
-    </div>
-
-    <div className='flex flex-col w-full'>
-      <div className='flex flex-row m-3 gap-5 justify-center'> 
-        <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
-          <div  className='flex flex-row justify-center gap-5 p-2'>
-            <img src={birth} alt="Birth" className="w-8 mb-2" />
-            <p className='text-center text-xl font-semibold '>오늘의 생일자</p>
-          </div>
-          <BirthEmpPage />
-        </div>
-        <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
-          <div className='flex flex-row justify-center gap-5 p-2'>
-            <img src={menu} alt="Menu" className="w-8 mb-2" />
-            <p className='text-center text-xl font-semibold '>오늘의 메뉴</p>
-          </div>
-          <MenuPage menuDate={selectDate} />
-          <button type="button" className="text-lg mt-2 text-[#0f1f6f] hover:underline" onClick={goToMenuList}>
-                메뉴 리스트
-          </button>
-        </div>
-        <div className='w-[30%] shadow-xl rounded-md p-4'>
-          <div className="flex flex-row items-center justify-center gap-2">
-            <p className='text-center text-xl font-semibold mb-4'>Calendar</p> 
-          </div>
-          <div>
-            <CalendarPage
-              formatDay={(locale, date) => moment(date).format("D")}
-            />
+          <div className='w-[30%] shadow-xl rounded-md p-4'>
+            <div className="flex flex-row items-center justify-center gap-2">
+              <p className='text-center text-xl font-semibold mb-4'>Calendar</p> 
+            </div>
+            <div>
+              <CalendarPage
+                formatDay={(locale, date) => moment(date).format("D")}
+              />
+            </div>
           </div>
         </div>
-
       </div>
       
-
-    </div>
       {/* <div className="flex flex-row w-full mt-8 px-6">
         <div className="w-1/2 p-4">
           <div className="select-none">

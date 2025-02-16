@@ -100,32 +100,32 @@ const BookingListComponent = () => {
         </div>
 
      <div className="container mx-auto p-6">
-                <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약</h2>
-                <div className="text-2xl">
-                    <div className="flex justify-center space-x-10">
-                        <input className="w-1/2 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                        name="bookDate"
-                        type={'date'} 
-                        value={bookDate}
-                        defaultValue={today}
-                        onChange={handleChangeDate}></input>
-                    </div>
-                </div>
+        <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약</h2>
+        <div className="text-2xl">
+            <div className="flex justify-center space-x-10">
+                <input className="w-1/2 p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                name="bookDate"
+                type={'date'} 
+                value={bookDate}
+                defaultValue={today}
+                onChange={handleChangeDate}></input>
+            </div>
+        </div>
 
-                <h2 className="text-3xl font-semibold text-center mt-10 mb-6">예약 내역</h2>
-                <div className="flex flex-wrap justify-center">
-                    { booking.dtoList.map((data) => {
-                        return (
-                            <div key={data.bookNo} className="flex flex-col min-w-[400px] p-6 m-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-100"
-                                onClick={() => moveToRead(data.bookNo)}>
-                                <div>방번호 : {data.roomNo}</div>
-                                <div>예약 날짜 : {data.bookDate}</div>
-                                <div>시작 시간 : {data.start}</div>
-                                <div>끝난 시간 : {data.end}</div>
-                            </div>
-                        )
-                    })}
-                </div>
+        <h2 className="text-3xl font-semibold text-center mt-10 mb-6">예약 내역</h2>
+        <div className="flex flex-wrap justify-center">
+            { booking.dtoList.map((data) => {
+                return (
+                    <div key={data.bookNo} className="flex flex-col min-w-[400px] p-6 m-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-100"
+                        onClick={() => moveToRead(data.bookNo)}>
+                        <div>방번호 : {data.roomNo}</div>
+                        <div>예약 날짜 : {data.bookDate}</div>
+                        <div>시작 시간 : {data.start}</div>
+                        <div>끝난 시간 : {data.end}</div>
+                    </div>
+                )
+            })}
+        </div>
 
         <PageComponent
             serverData={booking} 
