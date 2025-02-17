@@ -11,6 +11,8 @@ import { getOne } from "../../api/boardApi";
 import colorChat from "../../assets/icon/colorChat.png";
 import m from "../../assets/icon/m.png";
 import w from "../../assets/icon/w.png";
+import { getEmpImageOne } from "../../api/employeesImageApi";
+export const API_SERVER_HOST = 'http://localhost:8080';
 
 const initState = {
     empNo: 0,
@@ -38,6 +40,8 @@ const EmployeesReadComponent = ({ empNo }) => {
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+    const [empImgData, setEmpImgData] = useState('');
+
 
     useEffect(() => {
         getOneEmp(empNo).then(res => {
@@ -81,6 +85,12 @@ const EmployeesReadComponent = ({ empNo }) => {
     const changeImage = () => {
         navigate(`/empImage/${employeeNo}`);
     }
+
+    useEffect(()=>{
+        getEmpImageOne(employeeNo).then((data) => {
+            setEmpImgData(data);
+        })
+    }, []);
 
     const employeeDetails = [
         { label: "사원 번호", value: employees.empNo },
@@ -127,10 +137,13 @@ const EmployeesReadComponent = ({ empNo }) => {
                 </div>
                 <div className="w-full flex gap-4 justify-center items-center mb-10">
                     <div className="flex-1 flex flex-col items-center m-auto">
-                        {employees.gender === 'm' ? 
+                        {empImgData && empImgData.uuid ? (
+                            <img src={`${API_SERVER_HOST}/api/empImage/view/${empImgData.uuid}`} alt="Profile" className="w-[200px] h-[200px]" />  
+                        ):(
+                            employees.gender === 'm' ? 
                             <img src={m} alt="man" className="w-[200px] h-[200px]" /> : 
                             <img src={w} alt="woman" className="w-[200px] h-[200px]" />
-                        }
+                        )}
                         <button type="button" onClick={()=>changeImage(empNo)} className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg mt-3 hover:bg-[#303030]">사진변경</button>
        </div>
                     
