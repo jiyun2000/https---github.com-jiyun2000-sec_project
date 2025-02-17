@@ -27,12 +27,15 @@ export const getEmpImageOne = async (empNo) => {
     return res.data;
 }
 
+
 export const viewImg = async (uuid) => {
     const res = await jwtAxios.get(`${prefix}/view/${uuid}`);
+
     console.log(res.data);
     
     return res.data;
 } 
+
 
 
 export const updateImg = (formData, empNo, empImgDTO) => {
@@ -45,5 +48,6 @@ export const updateImg = (formData, empNo, empImgDTO) => {
 
 export const delImg = async (empNo) => {
     const res = await jwtAxios.delete(`${prefix}/${empNo}`);
+
     return res.data;
 }

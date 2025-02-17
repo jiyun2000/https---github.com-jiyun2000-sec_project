@@ -348,14 +348,16 @@ const chatSendAlert = {
     const onChangeFile = useCallback(
         (evt) => {
           console.log('file change');
-          console.log(evt.target.files);
 
+          // if (evt.dataTransfer) {
+          //   evt.dataTransfer.files;
+          // } else {
+          //   evt.target.files;
+          // }
+    
           let files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
-          console.log("files   => " + files);
-          
           let listTemp = [...fileList];
 
-          
           for (let file of files) {
             listTemp.push({ id: fileId.current++, file: file });
           }

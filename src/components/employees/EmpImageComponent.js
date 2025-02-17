@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import upload from "../../assets/icon/upload.png";
-import { delImg, getEmpImageOne, modImg, register, updateImg } from "../../api/employeesImageApi"; // updateImg API 추가
+
+import { delImg, getEmpImageOne, modImg, register, updateImg } from "../../api/employeesImageApi"; 
 import { getCookie, removeCookie } from "../../util/cookieUtil";
 import { getOneEmp } from "../../api/employeesApi";
 import m from "../../assets/icon/m.png";
@@ -17,10 +18,12 @@ const initState = {
     empNo: 0,
     url: '',
     files: [],
+
 }
 
 const EmpImageComponent = () => {
     const dndRef = useRef();
+
     const [fileList, setFileList] = useState({ ...initState });
     const fileId = useRef();
     const [cookEmpNo, setCookEmpNO] = useState(getCookie('member').empNo);
@@ -159,5 +162,6 @@ const EmpImageComponent = () => {
         </>
     );
 };
+
 
 export default EmpImageComponent;
