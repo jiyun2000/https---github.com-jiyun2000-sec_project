@@ -64,7 +64,7 @@ const RegisterComponent = ({scheduleText,startDate, endDate, empNo}) => {
             console.log(data);}).catch((error) => {
                 console.log("errrrrrrr" + error);
             });
-        }else if(empData.jobNo === 999){
+        }else if(empData.jobNo === 1){
             console.log("!!!!!" + empNo);
             const empNoSave = {...newEvent, empNo :empNo};
             postEmpScheule(empNoSave, empNo).then((data) => {

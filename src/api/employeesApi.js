@@ -37,6 +37,11 @@ export const addOne = async(employees)=>{
     return res.data;
 }
 
+export const addFiles = async(files)=>{
+    const res = await jwtAxios.post(`${prefix}/add/excel`,files);
+    return res.data;
+}
+
 export const getAllList = async()=>{
     const res = await jwtAxios.get(`${prefix}/list/all`);
     return res.data;
@@ -55,5 +60,11 @@ export const getBirth = async(pageParam) => {
             size : size
         }
     });
+    return res.data;
+}
+
+export const mailCheck = async(employees)=>{
+    console.log(`${prefix}/check`);
+    const res = await jwtAxios.post(`${prefix}/check`,employees)
     return res.data;
 }

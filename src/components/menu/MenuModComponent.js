@@ -47,7 +47,7 @@ const MenuModComponent = ({menuNo}) => {
     }, []);
 
     const handleClickModify = () => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             putOne(menuNo, menu).then((res) => {
                 console.log(res);
                 navigate(`/menu/list`);

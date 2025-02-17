@@ -18,16 +18,16 @@ const initState = {
     hours : 0
 }
 
-const AnnualLeaveReadComponent = ()=>{
-    const [empNo,setEmpNo] = useState(getCookie("member").empNo);
+const AnnualLeaveReadComponent = ({empNo})=>{
     const [annualLeave, setAnnualLeave] = useState(initState);
     const [empData, setEmpData] = useState("");
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+    const [deptData, setDeptData] = useState(getCookie("member").deptNo);
     let cnt = 0;
 
     const navigate = useNavigate();
 
-    const {page,moveToList, moveToRead} = useCustomMove();
+    const {page,moveToList, moveToRead,modifyAnnualLeave} = useCustomMove();
 
     useEffect(()=>{
         getALOne(empNo).then(res => {
@@ -124,11 +124,11 @@ const AnnualLeaveReadComponent = ()=>{
                     이전
                 </button>
 
-                {/* <button type="button" 
-                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500"
-                onClick={()=>moveToModify(empNo)}>
-                    Modify
-                </button> */}
+                {deptData===1?<button type="button" 
+                className="inline-block rounded p-4 m-2 text-xl w-32 text-white bg-red-500 hover:bg-[#a73a3a]"
+                onClick={()=>modifyAnnualLeave(empNo)}>
+                    수정
+                </button>:<></>}
 
                 <button type="button"
                 className=" p-4 m-2 text-xl w-32 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"

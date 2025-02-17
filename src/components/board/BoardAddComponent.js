@@ -36,7 +36,7 @@ const BoardAddComponent = () => {
 
   const handleClickAdd = () => {
 
-    if(empData.jobNo === 999){
+    if(empData.jobNo === 1){
       board['mailAddress'] = getCookie('member').email;
       addOne(board).then(() => {
         moveToList();

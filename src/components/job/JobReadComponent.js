@@ -102,7 +102,7 @@ const JobReadComponent = ({jobNo})=>{
             </div>
 
             <div className="flex justify-center p-4 gap-4">
-                {deptNo===999?<button type="button" 
+                {deptNo===1?<button type="button" 
                 className="py-2 px-6 text-lg  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={()=>moveToModify(jobNo)}>
                     수정

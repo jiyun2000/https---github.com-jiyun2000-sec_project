@@ -65,7 +65,7 @@ const ChatEmpListComponent = () => {
             console.log(cookieEmpNo);
             navigate(`/chat/${empNo}/${receiverEmpNo}`);
             sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
-        }else if(empData.jobNo === 999){ //관리자 계정
+        }else if(empData.jobNo === 1){ //관리자 계정
             navigate(`/chat/${empNo}/${receiverEmpNo}`);
             sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
         }

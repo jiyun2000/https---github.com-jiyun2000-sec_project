@@ -24,8 +24,7 @@ const initState = {
     current : 0
 }
 
-const CommuteListComponent = ()=>{
-    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
+const CommuteListComponent = ({empNo})=>{
     const [commute, setCommute] = useState(initState);
     const [empData, setEmpData] = useState("");
     const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
@@ -64,7 +63,7 @@ const CommuteListComponent = ()=>{
       }
     
       const goToModify = (commNo) => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             moveToModifyCommute(commNo);
         }else{
             alert("권한이 없습니다.")
@@ -73,6 +72,9 @@ const CommuteListComponent = ()=>{
  const checkRemove = () => {
     removeCookie("alert");
   }
+
+  const dateNow = new Date();
+  const today = dateNow.toISOString().slice(0,10);
     return <>
     <div>
         <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -99,63 +101,70 @@ const CommuteListComponent = ()=>{
             
 
 
-        <div className=" mt-10 m-2 p-4">
-            <div>
-                <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 출퇴근 목록</h2>
-            </div>
-            <div className='flex flex-col p-6 w-full'>
-    {commute.dtoList.map((data) => {
-        return (
-            <div 
-                key={data.checkDate} 
-                className='flex flex-row w-full p-2 m-2 rounded-md justify-center items-center'
-            >
-                <div className="flex flex-row justify-center items-center w-full">
-                    <div className="text-2xl text-center w-[40%] p-2 rounded shadow-md">
-                        <div>날짜 : {data.checkDate}</div>
-                        <div>출근 : {data.checkInTime}</div>
-                        <div>퇴근 : {data.checkOutTime}</div>
-                    </div>
-                    <div className="flex p-4 w-[15%] justify-center">
-                        {deptNo===999?<button 
-                            type="button" 
-                            className="inline-block px-6 py-3 text-xl text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
-                            onClick={() => goToModify(data.commNo)}
-                        >
-                            수정
-                        </button>:<></>}
-                        
-                    </div>
-                </div>
-            </div>
-        );
-    })}
+        <div className="mt-10 m-2 p-4">
+    <h2 className="text-center text-3xl font-semibold">{empData.firstName}{empData.lastName}님 근태현황</h2>
+    
+    <div className="overflow-x-auto mt-6 flex justify-center">
+        <table className="w-[70%] bg-white border border-gray-200 shadow-lg">
+            <thead className="bg-gray-100 ">
+                <tr>
+                    <th className="px-4 py-2 text-center text-xl font-semibold">날짜</th>
+                    <th className="px-4 py-2 text-center text-xl font-semibold">출근</th>
+                    <th className="px-4 py-2 text-center text-xl font-semibold">퇴근</th>
+                    {deptNo === 1 && (
+                    <th className="px-4 py-2 text-center text-xl font-semibold">수정</th>
+                    )}    
+                    </tr>
+            </thead>
+            <tbody>
+                {commute.dtoList.map((data) => {
+                    return (
+                        <tr key={data.checkDate} className="border-b ">
+                            <td className="px-4 py-3 text-center">{data.checkDate}</td>
+                            <td className="px-4 py-3 text-center">{data.checkInTime}</td>
+                            <td className="px-4 py-3 text-center">{data.checkOutTime}</td>
+                            {deptNo === 1 && (
+                            <td className="px-4 py-2 text-center">
+                                    <button 
+                                        type="button" 
+                                        className="inline-block px-6 py-3 text-xl text-white bg-[#777777] hover:bg-[#3c3b3b] rounded-md"
+                                        onClick={() => goToModify(data.commNo)}
+                                    >
+                                        수정
+                                    </button>
+                            </td>
+                         )}
+
+                        </tr>
+                    );
+                })}
+            </tbody>
+        </table>
+    </div>
+    <CommutePageComponent
+        serverData={commute} 
+        empNo={empNo}
+        movePage={moveToCommuteList}
+    />
 </div>
 
-
-            <CommutePageComponent
-                serverData={commute} 
-                empNo = {empNo}
-                movePage={moveToCommuteList}
-                />
-            </div>
 
             <div className="flex justify-center p-4 gap-4">
 
                 <button type="button" 
-                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#777777] text-white  hover:bg-[#3c3b3b] rounded-md mb-8 cursor-pointer"
                 onClick={()=>handleCheckIn()}>
                     출근
                 </button>
                 
                 <button type="button" 
-                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#777777] text-white  hover:bg-[#3c3b3b] rounded-md mb-8 cursor-pointer"
                 onClick={()=>handleCheckOut()}>
                     퇴근
                 </button>
 
                 <button type="button"  
-                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#777777] text-white  hover:bg-[#3c3b3b] rounded-md mb-8 cursor-pointer"
                 onClick={()=>moveToRead(empNo)}>
                     이전
                 </button>
@@ -167,7 +176,7 @@ const CommuteListComponent = ()=>{
                 </button> */}
 
                 <button type="button"
-                className="inline-block px-6 py-3 text-xl font-medium bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mb-8 cursor-pointer"
+                className="inline-block px-6 py-3 text-xl font-medium bg-[#777777] text-white  hover:bg-[#3c3b3b] rounded-md mb-8 cursor-pointer"
                 onClick={()=>moveToList({page})}>
                     직원목록
                 </button>

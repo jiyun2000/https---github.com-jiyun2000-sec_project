@@ -80,7 +80,24 @@ const ReportAddComponent = () => {
         formData.append('receiver',report.receiver);
         formData.append('finalReceiver',report.finalReceiver);
 
-        addReport(empNo,formData).then(()=>{
+        if(report.receiver===0){
+            alert("수신인을 추가해주세요.");
+            return;
+        }
+        if(report.finalReceiver===0){
+            alert("최종 결재인을 추가해주세요.");
+            return;
+        }
+        if(report.deadLine===undefined){
+            alert("결재기한을 추가해주세요.");
+            return;
+        }
+        if(files.length<1){
+            alert("결재서류를 첨부해주세요.");
+            return;
+        }
+        
+        addReport(empNo,formData).then((res)=>{
             alert("등록되었습니다.");
             moveToReportReceivedPage();
         });
@@ -118,8 +135,8 @@ const ReportAddComponent = () => {
             </div>
         </div>
 
-
-        <div className="shadow-2xl mt-10 m-2 p-4 rounded-md">
+    <div className="flex flex-col w-full items-center justify-center">
+        <div className="w-[80%] shadow-2xl mt-10 m-2 p-4 rounded-md ">
             <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
             <div className="flex justify-center">
             <div className="w-1/5 p-6 font-bold">마감일</div>
@@ -187,6 +204,7 @@ const ReportAddComponent = () => {
                     등록
                 </button>
             </div>
+        </div>
         </div>
     </div>
     )

@@ -38,7 +38,7 @@ const DeptInfoModifyComponent = ({deptNo}) => {
     }, [])
 
     const handleClickDelete = () => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             delOne(deptNo).then(()=>moveToList());
         }else{
             alert('권한이 없습니다.');
@@ -48,7 +48,7 @@ const DeptInfoModifyComponent = ({deptNo}) => {
     }
 
     const handleClickModify = () => {
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             putOne(deptNo,deptInfo).then(()=>moveToRead(deptNo));
         }else{
             alert('권한이 없습니다.');

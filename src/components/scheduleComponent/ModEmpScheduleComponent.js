@@ -71,7 +71,7 @@ const ModEmpScheduleComponent = ({ empNo, empSchNo }) => {
                 alert("수정되었습니다.");
                 navigate(`/main`);
             }).catch((error) => {console.log(error)});
-        }else if(empData.jobNo === 999){
+        }else if(empData.jobNo === 1){
             putEmpScheduleOne(scheduleModData, empNo, empSchNo).then(response => {
                 console.log("response " + response);
                 alert("수정되었습니다.");

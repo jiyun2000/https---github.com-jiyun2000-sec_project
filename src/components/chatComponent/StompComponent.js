@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Client } from "@stomp/stompjs";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import SockJS from "sockjs-client";
 import { leaveChatRoom } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
@@ -10,6 +10,8 @@ import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import { getCookie, removeCookie } from '../../util/cookieUtil';
 import colorChat from "../../assets/icon/colorChat.png";
+import upload from "../../assets/icon/upload.png";
+
 
 const StompComponent = () => {
     const navigate = useNavigate();
@@ -24,11 +26,14 @@ const StompComponent = () => {
     const [cookieEmpNo, setCookieEmpNo] = useState(getCookie("member").empNo);
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const msgContainerRef = useRef('');
-
+    const [fileList, setFileList] = useState([]);
+    const fileId = useRef(0);
     const [messageObj, setMessageObj] = useState({
         content: '',
         sender: userId,
     });
+    const dndRef = useRef();
+    const [isExtraShow, setIsExtraShow] = useState();
 
     useEffect(()=>{
         if(msgContainerRef.current){
@@ -189,9 +194,9 @@ const StompComponent = () => {
                 // 메시지 입력 필드 초기화
                 setMessageObj({ ...messageObj, content: '' });
             } else {
-                console.log("Message content is empty");
+                console.log("메시지 비어있음.");
             }
-        }else if(empData.jobNo === 999){ //관리자 계정
+        }else if(empData.jobNo === 1){ //관리자 계정
             if (wsClient && wsClient.connected && messageObj.content.trim() !== '') {
                 const messageWithTime = {
                     ...messageObj,
@@ -299,8 +304,6 @@ const chatSendAlert = {
     }
 
     
-
-
     const generateChatRoomId = (senderEmpNo, receiverEmpNo) => {
         const smallEmpNo = Math.min(senderEmpNo, receiverEmpNo);
         const largeEmpNo = Math.max(senderEmpNo, receiverEmpNo);
@@ -341,6 +344,30 @@ const chatSendAlert = {
     const checkRemove = () => {
         removeCookie("alert");
     }
+
+    const onChangeFile = useCallback(
+        (evt) => {
+          console.log('file change');
+          console.log(evt.target.files);
+
+          let files = evt.dataTransfer ? evt.dataTransfer.files : evt.target.files;
+          console.log("files   => " + files);
+          
+          let listTemp = [...fileList];
+
+          
+          for (let file of files) {
+            listTemp.push({ id: fileId.current++, file: file });
+          }
+          if (evt.type === 'change') {
+            evt.target.value = null;
+          }
+          setFileList(listTemp);
+        },
+        [fileList]
+      );
+
+      
     return (
         <>
             <div>
@@ -441,7 +468,8 @@ const chatSendAlert = {
                                     );
                                 })}
                             </div>
-    
+
+                        <div className='flex flex-col'>
                             <div className="flex flex-row justify-center gap-2 w-full">
                                 <input
                                     type="text"
@@ -455,6 +483,7 @@ const chatSendAlert = {
                                     className="border-2 border-[#6f8cb4] rounded-md p-2 w-2/4"
                                     placeholder="메시지를 입력하세요"
                                 />
+                               
                                 <button 
                                     type="submit" 
                                     onClick={() => {
@@ -465,7 +494,45 @@ const chatSendAlert = {
                                 >
                                     전송
                                 </button>
+
+                                <div className='flex flex-row'>
+                                    <div className='flex flex-row justify-center gap-2 w-full'>
+                                        <label ref={dndRef} className='w-[80%] items-center justify-center'>
+                                             <img src={upload} alt='upload' className='w-[20%]'/>
+                                                <input
+                                                    type="file"
+                                                    hidden="true"
+                                                    multiple="true"
+                                                    onChange={(evt) => {
+                                                        onChangeFile(evt);
+                                                    }}
+                                                ></input>
+                                        </label>
+                                    </div>
+                                    <div
+                                    onClick={() => {
+                                        setIsExtraShow(true);
+                                    }}
+                                    ></div>
+                                
+                                    
+                                    <div>
+                                        <div className='bg-[#83a3d0] text-white hover:bg-[#718aab] rounded-md p-2 '
+                                            onClick={() => {
+                                                stompHandler.sendMessage({
+                                                files: fileList,
+                                            });
+                                            }}
+                                        >
+                                            파일전송
+                                        </div>
+                                    </div>
+                                </div>            
+
+
+
                             </div>
+                        </div>
     
                             <div style={{ marginTop: 10 }}>
                                 <button 
@@ -491,120 +558,7 @@ const chatSendAlert = {
         </>
     );
 
-
-
-    // return ( 
-    //     <>
-    //     <div>
-    //     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
-    //             <div className="flex items-center space-x-8">
-    //                 <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
-    //                     [공지사항]
-    //                 </div>
-    //                 <div className="w-64 text-2xl font-semibold cursor-pointer">
-    //                     <BoardTitleComponent />
-    //                 </div>
-    //             </div>
-    //             <div className="flex space-x-4">
-    //                 <Link to="/mail" className="w-12 cursor-pointer">
-    //                     <img src={mail} alt="Mail" className="w-full" />
-    //                 </Link>
-    //                 <Link to={/chat/empList/${senderEmpNo}?page=1} className="w-12 cursor-pointer" onClick={()=>checkRemove()}>
-    //                 {chatCntCook  ? 
-    //                     <img src={colorChat} alt='colorChat' className='w-full' /> :
-    //                     <img src={chat} alt="Chat" className="w-full" />
-    //                 }
-    //                 </Link>
-    //             </div>
-    //         </div>
-    //     <div>
-    //         {!isEnterChat ? (
-    //             <div style={{ textAlign: 'center' }}>
-    //                 <h2>채팅방에 오신 것을 환영합니다.</h2>
-    //                 <button type="button" onClick={stompHandler.connect}>
-    //                     채팅방 입장
-    //                 </button>
-    //             </div>
-    //         ) : (
-    //             <div 
-    //             style={{ 
-    //                 display: 'flex', 
-    //                 justifyContent: 'center', 
-    //                 alignItems: 'center', 
-    //                 minHeight: '100vh',
-    //                 flexDirection: 'column',
-    //                 width: '100%',
-    //                 textAlign: 'center'
-    //             }}>
-    //             <div className='text-center w-full items-center justify-center'>
-    //                 <h2 className='text-center font-semibold text-2xl m-2'>{empData ? empData.firstName : ''}{empData ? empData.lastName : ''}님</h2>
-                    
-    //                 </div>
-    //                 <div 
-    //                 ref={msgContainerRef}
-    //                 style={{ 
-    //                     display: 'flex', 
-    //                     flexDirection: 'column', 
-    //                     width: '60%', 
-    //                     height: '700px', 
-    //                     backgroundColor: '#b3c1d6', 
-    //                     border: '1px solid black', 
-    //                     margin: '20px', 
-    //                     overflowY: 'scroll' 
-    //                 }}>
-    //                     {messages.length > 0 && messages.map((item, index) => {
-    //                         if (!item.sender || !item.content || isNaN(Number(item.sender))) {
-    //                             return null;}
-
-    //                         const sender = Number(item.sender); 
-    //                         const userEmpNo = Number(senderEmpNo); 
-    //                         const isUserMessage = sender === userEmpNo; 
-
-    //                     return (
-    //                         <div key={index} style={{ 
-    //                         textAlign: isUserMessage ? 'right' : 'left', 
-    //                         marginBottom: '10px' }}>
-    //                         <h1 style={{
-    //                         fontSize: 16,
-    //                         padding: '5px 10px',
-    //                         borderRadius: '10px',
-    //                         display: 'inline-block'}}>
-    //                         {isUserMessage ? [ME] ${item.content} (${item.sendTime}) : [${empData.firstName}${empData.lastName}] ${item.content} (${item.sendTime})}
-    //                         </h1>
-    //                         </div>
-    //                     );
-    //                  })}
-    //             </div>
-    //             <div className='flex flex-row justify-center gap-2 w-full'>
-    //                     <input
-    //                         type="text"
-    //                         value={messageObj.content}
-    //                         onChange={(e) => setMessageObj({ ...messageObj, content: e.target.value })}
-    //                         className='border-2 border-[#6f8cb4] rounded-md p-1 w-2/6 '
-    //                     />
-    //                     <button type="submit" 
-    //                         onClick={()=>{
-    //                             stompHandler.sendMessage();
-    //                             chatSendAlert.sendMessage();
-    //                         }}
-    //                         className='bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mx-2 p-1 w-1/6 '
-    //                     >
-    //                         전송
-    //                     </button>
-    //                 </div>
-
-    //                 <div style={{ marginTop: 10 }}>
-    //                     <button type="button" onClick={stompHandler.disconnect} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md p-1 '>
-    //                         닫기
-    //                     </button> 
-    //                     <button type='button' onClick={outChatRoom} className=' bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4]] p-1 mx-1 rounded-md '>채팅방 나가기</button>
-    //                 </div>
-    //             </div>
-    //         )}
-    //     </div>
-    //     </div>
-    //     </>
-    // );
-    
 };
+
 export default StompComponent;
+

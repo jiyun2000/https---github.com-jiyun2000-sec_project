@@ -72,7 +72,7 @@ const RoomListComponent = () => {
                     return(
                     <div 
                     key = {res.roomNo} 
-                    className='flex w-2/4 p-2 m-2 rounded-md font-light items-center text-center border border-blue-300 justify-center' 
+                    className='flex w-2/4 p-2 m-2 rounded-md font-light items-center text-center border border-blue-300 justify-center cursor-pointer hover:bg-blue-300' 
                     onClick = {() => moveToRead(res.roomNo)}
                     >
                         {res.roomName} <br />

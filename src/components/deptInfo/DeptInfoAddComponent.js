@@ -36,7 +36,7 @@ const DeptInfoAddComponent = () => {
 
     const handleClickAdd = () => {
 
-        if(empData.jobNo === 999){
+        if(empData.jobNo === 1){
             addOne(deptInfo).then(()=>moveToList());
         }else{
             alert("권한이 없습니다.");
@@ -88,17 +88,6 @@ const DeptInfoAddComponent = () => {
         <div >
             <div>
                 <h2 className="text-center mt-10 font-bold text-3xl">부서 등록</h2>
-            </div>
-        <div className="flex justify-center mt-10 m-2">
-            <div className="mb-4 flex w-full flex-row items-center justify-center">
-                <div className="w-[10%] p-6 font-bold">부서번호</div>
-                <input className="w-[30%] p-6 rounded-md border border-slate-400 text-center" 
-                    name="deptNo"
-                    type={'number'} 
-                    value={deptInfo.deptInfoNo}
-                    onChange={handleChangeDeptInfo}
-                    ></input>
-                </div>
             </div>
 
             <div className="flex justify-center m-2">

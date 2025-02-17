@@ -43,6 +43,10 @@ const useCustomMove = () => {
         navigate({pathname:`../modify/${num}`,search:queryDefault});
     }
 
+    const modifyAnnualLeave = (num) => {
+        navigate({pathname:`../annualleave/modify/${num}`,search:queryDefault});
+    }
+
     const moveToModifyCommute = (num) => {
         navigate({pathname:`../commute/modify/${num}`,search:queryDefault});
     }
@@ -144,7 +148,7 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
-        navigate({pathname:`../commute`,search:queryStr})
+        navigate({pathname:`../commute/${pageParam.empNo}`,search:queryStr})
     };
 
     const moveToDeptInfoList = (pageParam) => {
@@ -187,6 +191,10 @@ const useCustomMove = () => {
         navigate({pathname:`../add`});
     }
 
+    const moveToAddExcel = () => {
+        navigate({pathname:`../add/excel`});
+    }
+
     const moveToAnnualLeave = (pageParam) => {
         let queryStr = '';
 
@@ -202,7 +210,7 @@ const useCustomMove = () => {
             queryStr = queryDefault;
         }
 
-        navigate({pathname : `../annualleave`})
+        navigate({pathname : `../annualleave/${pageParam.empNo}`})
     }
 
     const moveToMenuList = (pageParam) => {
@@ -224,7 +232,7 @@ const useCustomMove = () => {
     };
 
 
-    return {page, size,moveToReceivedReportRead, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd, moveToMenuList};
+    return {page, size,moveToReceivedReportRead, modifyAnnualLeave, moveToSentReportRead, moveToReportReceivedPage, moveToReportSentPage, moveToReportSent, moveToAddReport, moveToAddExcel, moveToReportReceived, moveToModifyCommute, moveToCommuteList, moveToAnnualLeave, moveToJobRead, moveToRead, moveToModify, moveToList, moveToJobList, moveToDeptInfoList, moveToRoomList, moveToAdd, moveToMenuList};
 }
 
 export default useCustomMove;

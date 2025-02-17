@@ -78,6 +78,10 @@ const EmployeesReadComponent = ({ empNo }) => {
         removeCookie("alert");
       }
 
+    const changeImage = () => {
+        navigate(`/empImage/${employeeNo}`);
+    }
+
     return (
         <>
         <div>
@@ -114,6 +118,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                         <img src={m} alt="man" className="w-[200px] h-[200px]" /> : 
                         <img src={w} alt="woman" className="w-[200px] h-[200px]" />
                     }
+                <button type="button" onClick={()=>changeImage(empNo)} className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg mt-3 hover:bg-[#303030]">사진변경</button>
                     </div>
                     
                     <div className="flex flex-col  space-y-4 items-center">
@@ -153,7 +158,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                         </div>
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">전화번호:</span>
-                            <span className="text-gray-500">{employees.phoneNum}</span>
+                            <span className="text-gray-500">{employees.phoneNum.substring(0,3)}-{employees.phoneNum.substring(3,7)}-{employees.phoneNum.substring(7,employees.phoneNum.length)}</span>
                         </div>
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">주민등록번호:</span>
@@ -172,24 +177,23 @@ const EmployeesReadComponent = ({ empNo }) => {
                     </button>
                     <button 
                     className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={moveToCommuteList}
+                    onClick={()=>moveToCommuteList({empNo})}
                     >
                     출퇴근
                     </button>
                     <button 
                     className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={moveToAnnualLeave}
+                    onClick={()=>moveToAnnualLeave({empNo})}
                     >
                     연차
                     </button>
-                    {(employeeNo === empNo || employeeNo === 1) && (
+                    
                     <button 
                         className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                         onClick={() => moveToModify(empNo)}
                     >
                         수정
                     </button>
-                    )}
                     <button 
                     className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                     onClick={() => moveToList({ page })}

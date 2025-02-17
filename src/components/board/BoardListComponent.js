@@ -46,7 +46,7 @@ const BoardListComponent = () => {
   }, [])
 
   const handleClickAdd = () => {
-    if(empData.jobNo === 999){
+    if(empData.jobNo === 1){
       moveToAdd();
     }else{
       alert("권한이 없습니다.");
@@ -141,7 +141,7 @@ const BoardListComponent = () => {
             </table>
           </div>
         </div>
-        {deptNo===999?<div className="flex justify-center p-4">
+        {deptNo===1?<div className="flex justify-center p-4">
           <button
             type="button"
             className="inline-block  p-4 m-2 text-xl w-32 text-white  rounded-md bg-[#8ba7cd]  hover:bg-[#6f8cb4]  cursor-pointer"

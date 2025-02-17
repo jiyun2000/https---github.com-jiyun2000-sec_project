@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getList } from '../../api/employeesApi';
+import { API_SERVER_HOST, getList } from '../../api/employeesApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
 import BoardTitleComponent from '../board/BoardTitleComponent';
@@ -35,7 +35,7 @@ const EmployeesListComponent = () => {
     const [cookDeptNo, setCookDeptNo] = useState(getCookie("member").deptNo);
     const [deptData, setDeptData] = useState('');
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
-    const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
+    const { page, size, moveToRead, moveToAdd, moveToList, moveToAddExcel } = useCustomMove();
 
     useEffect(() => {
             getList([page,size]).then(data => {
@@ -70,7 +70,7 @@ const EmployeesListComponent = () => {
         console.log(strCook);
         if(strEmp === strCook){
             moveToRead(cookEmpNo)
-        }else if(deptData.deptNo === 999){
+        }else if(deptData.deptNo === 1){
             moveToRead(empNo)
         }else{
             alert("권한이 없습니다.");
@@ -79,6 +79,10 @@ const EmployeesListComponent = () => {
 
       const checkRemove = () => {
         removeCookie("alert");
+      }
+
+      const handleClickAddExcel = () => {
+        moveToAddExcel();
       }
 
     return  (
@@ -107,6 +111,15 @@ const EmployeesListComponent = () => {
     
             <div className="flex flex-col items-center py-10 px-4">
                 <h1 className="text-3xl font-semibold mb-6 border-b border-gray-400">직원 목록</h1>
+
+                <div className='flex justify-end w-full my-5'>
+                    <a 
+                    alt="form"
+                    className="inline-block px-6 py-3 text-xl bg-white text-black border border-[#6f8cb4] hover:bg-[#6f8cb4] hover:text-white rounded-md"
+                    href={`${API_SERVER_HOST}/api/employees/download/form`}>
+                        일괄 등록 폼 다운로드
+                    </a>
+                </div>
     
                 <div className="overflow-x-auto w-full">
                     <table className="w-full ">
@@ -132,7 +145,7 @@ const EmployeesListComponent = () => {
                                     <td className="px-6 py-4">{data.hireDate}</td>
                                     <td className="px-6 py-4">{data.mailAddress}</td>
                                     <td className="px-6 py-4">{data.gender === 'm' ? '남성' : '여성'}</td>
-                                    <td className="px-6 py-4">{data.phoneNum}</td>
+                                    <td className="px-6 py-4">{data.phoneNum.substring(0,3)}-{data.phoneNum.substring(3,7)}-{data.phoneNum.substring(7,data.phoneNum.length)}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -146,13 +159,21 @@ const EmployeesListComponent = () => {
                     />
                 </div>
                 
-                {cookDeptNo===999?<div className="flex justify-center mt-6">
+                {cookDeptNo===1?<div className="flex justify-center mt-6 w-full">
                     <button
                         type="button"
                         onClick={handleClickAdd}
+                        className="inline-block px-6 py-3 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md mr-5"
+                    >
+                        직원 등록
+                    </button>
+
+                    <button
+                        type="button"
+                        onClick={handleClickAddExcel}
                         className="inline-block px-6 py-3 text-xl bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
                     >
-                        추가
+                        일괄 등록
                     </button>
                 </div>:<></>
                 }
