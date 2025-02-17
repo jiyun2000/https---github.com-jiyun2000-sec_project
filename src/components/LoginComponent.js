@@ -5,6 +5,7 @@ import { ReactComponent as Logo } from "../assets/icon/logo.svg";
 import { ReactComponent as LoginImg } from "../assets/img/loginImg.svg";
 import { ReactComponent as Password } from "../assets/icon/password.svg";
 import { ReactComponent as Email } from "../assets/icon/email.svg";
+import { useNavigate } from 'react-router-dom';
 
 const initState = {
   email: '',
@@ -23,6 +24,7 @@ const LoginComponent = () => {
   const [focusInput, setFocusInput] = useState('border-cyan-500');
   const [blurIcon, setblurIcon] = useState('fill-slate-300');
   const [focusIcon, setFocusIcon] = useState('fill-cyan-500');
+  const navigate = useNavigate();
 
   const handleChange = (evt) => {
     loginParam[evt.target.name] = evt.target.value;

@@ -1,15 +1,8 @@
 import { Link, useNavigate } from 'react-router-dom';
-import EmpTodoPage from '../pages/todoPage/EmpTodoPage';
-import DeptTodoPage from '../pages/todoPage/DeptTodoPage';
 import mail from "../assets/icon/mail.png";
 import chat from "../assets/icon/chat.png";
 import { useEffect, useState } from 'react';
 import { getCookie, removeCookie } from '../util/cookieUtil';
-import TodayCommutePage from '../pages/employees/TodayCommutePage';
-import MenuPage from '../pages/menu/MenuPage';
-import DDayPage from '../pages/DDayPage';
-import BirthEmpPage from '../pages/BirthEmpPage';
-import AnnualLeaveCountPage from '../pages/employees/AnnualLeaveCountPage';
 import BoardTitleComponent from '../components/board/BoardTitleComponent';
 import menu from "../assets/icon/menu.png";
 import birth from "../assets/icon/birth.png";
@@ -18,16 +11,21 @@ import { deptOne } from '../api/deptInfoApi';
 import board from "../assets/icon/board.png";
 import todo from "../assets/icon/todo.png";
 import team from "../assets/icon/team.png";
-import admin from "../assets/icon/admin.png";
-import user from "../assets/icon/user.png";
-import BoardMainpage from "../pages/board/BoardMainPage";
-import CalendarPage from '../pages/todoPage/CalendarPage';
 import moment from 'moment';
 import colorChat from "../assets/icon/colorChat.png";
 
 import { getEmpImageOne } from '../api/employeesImageApi';
 import m from "../assets/icon/m.png";
 import w from "../assets/icon/w.png";
+import TodayCommuteComponent from './employees/TodayCommuteComponent';
+import DDayComponent from './DDayComponent';
+import AnnualLeaveCountComponent from './employees/AnnualLeaveCountComponent';
+import BoardMainpageComponent from './board/BoardMainPageComponent';
+import EmpTodoComponent from './todoComponent/EmpTodoComponent';
+import DeptTodoComponent from './todoComponent/DeptTodoComponent';
+import BirthEmpComponent from './BirthEmpComponent';
+import MenuComponent from './menu/MenuComponent';
+import CalendarComponent from './todoComponent/CalendarComponent';
 export const API_SERVER_HOST = 'http://localhost:8080';
 
 
@@ -144,17 +142,17 @@ const MainComponent = () => {
           <div className='flex flex-row space-x-8 ml-8 gap-10'>
             <div className='font-medium text-xl'>
               <div className='bg-[#dce1f3] rounded-md text-center'>근무정보</div>
-              <TodayCommutePage empNo={empNo} />
+              <TodayCommuteComponent empNo={empNo} />
             </div>
 
             <div className='font-medium text-xl'>
               <div className='bg-[#dfdcf3] rounded-md text-center'>입사</div>
-              <DDayPage empNo={empNo} />
+              <DDayComponent empNo={empNo} />
             </div>
 
             <div className='font-medium text-xl'>
               <div className='bg-[#dce7f3] rounded-md text-center'> 연차</div>
-              <AnnualLeaveCountPage empNo={empNo} />
+              <AnnualLeaveCountComponent empNo={empNo} />
             </div>
           </div>
         </div>
@@ -167,21 +165,21 @@ const MainComponent = () => {
               <img src={board} alt='Board' className='w-8'/>
               <p className='text-center text-xl font-semibold '>공지사항</p>
             </div>
-            <BoardMainpage />
+            <BoardMainpageComponent />
           </div>
           <div className='w-[30%] shadow-xl rounded-md p-4'>
             <div className='flex flex-row justify-center gap-5 p-2'>
               <img src={todo} alt='Todo' className='w-8'/>
               <p className='text-center text-xl font-semibold '>개인일정</p>
             </div>
-            <EmpTodoPage empNo={empNo} selectDate={selectDate} />
+            <EmpTodoComponent empNo={empNo} selectDate={selectDate} />
           </div>
           <div className='w-[30%] shadow-xl rounded-md p-4'>
             <div className='flex flex-row justify-center gap-5 p-2'>
               <img src={team} alt='Team' className='w-8'/>
               <p className='text-center text-xl font-semibold '>{deptData.deptName}일정</p>
             </div>
-            <DeptTodoPage empNo={empNo} deptNo={deptNo} selectDate={selectDate} />
+            <DeptTodoComponent empNo={empNo} deptNo={deptNo} selectDate={selectDate} />
           </div>
         </div>
       </div>
@@ -193,14 +191,14 @@ const MainComponent = () => {
               <img src={birth} alt="Birth" className="w-8 mb-2" />
               <p className='text-center text-xl font-semibold '>오늘의 생일자</p>
             </div>
-            <BirthEmpPage />
+            <BirthEmpComponent />
           </div>
           <div className='w-[30%] shadow-xl rounded-md p-4 text-center'>
             <div className='flex flex-row justify-center gap-5 p-2'>
               <img src={menu} alt="Menu" className="w-8 mb-2" />
               <p className='text-center text-xl font-semibold '>오늘의 메뉴</p>
             </div>
-            <MenuPage menuDate={selectDate} />
+            <MenuComponent menuDate={selectDate} />
             <button type="button" className="text-lg mt-2 text-[#0f1f6f] hover:underline" onClick={goToMenuList}>
                   메뉴 리스트
             </button>
@@ -210,7 +208,7 @@ const MainComponent = () => {
               <p className='text-center text-xl font-semibold mb-4'>Calendar</p> 
             </div>
             <div>
-              <CalendarPage
+              <CalendarComponent
                 formatDay={(locale, date) => moment(date).format("D")}
               />
             </div>
