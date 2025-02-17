@@ -100,6 +100,7 @@ const BookingListComponent = () => {
         </div>
 
      <div className="container mx-auto p-6">
+
         <h2 className="text-3xl font-semibold text-center mb-10">회의실 예약</h2>
         <div className="text-2xl">
             <div className="flex justify-center space-x-10">
@@ -111,6 +112,7 @@ const BookingListComponent = () => {
                 onChange={handleChangeDate}></input>
             </div>
         </div>
+
 
         <h2 className="text-3xl font-semibold text-center mt-10 mb-6">예약 내역</h2>
         <div className="flex flex-wrap justify-center">

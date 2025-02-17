@@ -36,6 +36,7 @@ import EmpImagePage from "../pages/employees/EmpImagePage";
 
 
 const root = createBrowserRouter([
+
     {
         path: '',
         element: <LoginPage />,
@@ -161,6 +162,7 @@ const root = createBrowserRouter([
             {
                 path : 'empImage/:empNo',
                 element : <EmpImagePage />
+
             }
         ]
     }

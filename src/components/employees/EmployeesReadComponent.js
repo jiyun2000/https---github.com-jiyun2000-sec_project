@@ -95,6 +95,7 @@ const EmployeesReadComponent = ({ empNo }) => {
         { label: "주민등록번호", value: `${employees.citizenId.substring(0,6)}-${employees.citizenId.substring(6,13)}` }
     ];
 
+
     return (
         <>
             <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -120,7 +121,7 @@ const EmployeesReadComponent = ({ empNo }) => {
             </div>
 
             
-            <div className="flex flex-col items-center justify-center max-w-[600px] mx-auto mt-20">
+    <div className="flex flex-col items-center justify-center max-w-[600px] mx-auto mt-20">
                 <div className="text-center mb-10">
                     <h2 className="text-3xl font-semibold text-gray-800">사원 정보</h2>
                 </div>
@@ -131,7 +132,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                             <img src={w} alt="woman" className="w-[200px] h-[200px]" />
                         }
                         <button type="button" onClick={()=>changeImage(empNo)} className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg mt-3 hover:bg-[#303030]">사진변경</button>
-                    </div>
+       </div>
                     
                     <div className="flex-1 space-y-3">
                         {employeeDetails.map((detail, index) => (
@@ -192,15 +193,18 @@ const EmployeesReadComponent = ({ empNo }) => {
                         리포트
                     </button>
                     <button 
+
                         className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                         onClick={()=>moveToCommuteList({empNo})}
+
                     >
                         출퇴근
                     </button>
                     <button 
+
                         className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                         onClick={()=>moveToAnnualLeave({empNo})}
-                    >
+                   >
                         연차
                     </button>
                     

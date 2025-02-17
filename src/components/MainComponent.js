@@ -25,6 +25,11 @@ import CalendarPage from '../pages/todoPage/CalendarPage';
 import moment from 'moment';
 import colorChat from "../assets/icon/colorChat.png";
 
+import { getEmpImageOne } from '../api/employeesImageApi';
+import m from "../assets/icon/m.png";
+import w from "../assets/icon/w.png";
+export const API_SERVER_HOST = 'http://localhost:8080';
+
 
 
 const MainComponent = () => {
@@ -33,10 +38,13 @@ const MainComponent = () => {
   const [deptNo, setDeptNo] = useState(getCookie("member").deptNo);
   const today = new Date();
   const selectDate = `${today.getFullYear()}-${("0" + (today.getMonth()+1).toString()).slice(-2)}-${("0" + (today.getDate()).toString()).slice(-2)}`;
-  const [empData, setEmpData] = useState(null);
+
+  const [empData, setEmpData] = useState('');
   const [deptData, setDeptData] = useState('');
   const [BoardData, setBoardData] = useState([]);
   const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+  const [empImgData, setEmpImgData] = useState('');
+
   
 
   const goToMenu = () => navigate(`/menu/add`);
@@ -56,12 +64,17 @@ const MainComponent = () => {
 
   useEffect(()=>{
     getOneEmp(empNo).then((data)=>{
-      console.log(data);
+
+      console.log("ddddd" + data);
+      console.log("zzzz" + JSON.stringify(data));
+      
+
       setEmpData(data);
     }).catch((error)=>{
       console.log(error);
     })
   },[])
+
 
   const goToBoardList = () => {
     navigate(`/board/list`)
@@ -70,6 +83,16 @@ const MainComponent = () => {
   const checkRemove = () => {
     removeCookie("alert");
   }
+
+
+  useEffect(()=>{
+    getEmpImageOne(empNo).then((data)=>{
+      setEmpImgData(data);
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-white pb-5">
@@ -95,9 +118,18 @@ const MainComponent = () => {
         </div>
       </div>
 
+
       <div className='flex flex-row m-3'>
         <div className='m-3'>
-          <Link to={`/employees/read/${empNo}`}><img src={user} alt='User' className='w-[120px] ml-8 h-[120px]' /></Link>
+         <Link to={`/employees/read/${empNo}`}>
+      {empImgData && empImgData.uuid ? (
+        <img src={`${API_SERVER_HOST}/api/empImage/view/${empImgData.uuid}`} alt="Profile" className="w-[120px] ml-8 h-[120px]" />
+      ) : (
+        empData.gender === 'm' ? 
+                        <img src={m} alt="man" className="w-[120px] ml-8 h-[120px]" /> : 
+                        <img src={w} alt="woman" className="w-[120px] ml-8 h-[120px]" />
+      )}
+      </Link>
         </div>
         <div className='flex flex-col'>
           <div className='flex flex-row w-full'>
@@ -186,6 +218,7 @@ const MainComponent = () => {
         </div>
       </div>
       
+
       {/* <div className="flex flex-row w-full mt-8 px-6">
         <div className="w-1/2 p-4">
           <div className="select-none">
