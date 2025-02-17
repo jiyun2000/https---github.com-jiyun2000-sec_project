@@ -82,9 +82,21 @@ const EmployeesReadComponent = ({ empNo }) => {
         navigate(`/empImage/${employeeNo}`);
     }
 
+    const employeeDetails = [
+        { label: "사원 번호", value: employees.empNo },
+        { label: "이름", value: `${employees.firstName} ${employees.lastName}` },
+        { label: "입사일", value: employees.hireDate },
+        { label: "메일주소", value: employees.mailAddress },
+        { label: "연봉", value: employees.salary },
+        { label: "부서", value: deptData.deptName },
+        { label: "직책번호", value: employees.jobNo },
+        { label: "성별", value: employees.gender === 'm' ? '남성' : '여성' },
+        { label: "전화번호", value: `${employees.phoneNum.substring(0,3)}-${employees.phoneNum.substring(3,7)}-${employees.phoneNum.substring(7,employees.phoneNum.length)}` },
+        { label: "주민등록번호", value: `${employees.citizenId.substring(0,6)}-${employees.citizenId.substring(6,13)}` }
+    ];
+
     return (
         <>
-        <div>
             <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
                 <div className="flex items-center space-x-8">
                     <div className="text-2xl font-semibold text-blue-800 select-none  cursor-pointer" onClick={goToBoardList}>
@@ -108,23 +120,28 @@ const EmployeesReadComponent = ({ empNo }) => {
             </div>
 
             
-            <div className="flex flex-col items-center justify-center w-full">
-                    <div className="text-center m-6">
-                        <h2 className="text-3xl mt-10 font-semibold text-gray-800 mb-4">사원 정보</h2>
-                    </div>
-                <div className="flex flex-row justify-center items-center w-full max-w-screen-lg">
-                    <div className="flex flex-col items-center m-5 mr-10">
-                    {employees.gender === 'm' ? 
-                        <img src={m} alt="man" className="w-[200px] h-[200px]" /> : 
-                        <img src={w} alt="woman" className="w-[200px] h-[200px]" />
-                    }
-                <button type="button" onClick={()=>changeImage(empNo)} className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg mt-3 hover:bg-[#303030]">사진변경</button>
+            <div className="flex flex-col items-center justify-center max-w-[600px] mx-auto mt-20">
+                <div className="text-center mb-10">
+                    <h2 className="text-3xl font-semibold text-gray-800">사원 정보</h2>
+                </div>
+                <div className="w-full flex gap-4 justify-center items-center mb-10">
+                    <div className="flex-1 flex flex-col items-center m-auto">
+                        {employees.gender === 'm' ? 
+                            <img src={m} alt="man" className="w-[200px] h-[200px]" /> : 
+                            <img src={w} alt="woman" className="w-[200px] h-[200px]" />
+                        }
+                        <button type="button" onClick={()=>changeImage(empNo)} className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg mt-3 hover:bg-[#303030]">사진변경</button>
                     </div>
                     
-                    <div className="flex flex-col  space-y-4 items-center">
-                    
-                    <div className="space-y-3">
-                        <div className="flex flex-row gap-5  text-xl">
+                    <div className="flex-1 space-y-3">
+                        {employeeDetails.map((detail, index) => (
+                            <div key={index} className="flex items-center gap-3 text-xl">
+                                <span className="whitespace-pre font-semibold text-gray-700">{detail.label}</span>
+                                <div className="w-[2px] h-[1em] rounded-[1px] bg-gray-200"></div>
+                                <span className="whitespace-break-spaces text-gray-500">{detail.value}</span>
+                            </div>
+                        ))}
+                        {/* <div className="flex flex-row gap-5  text-xl">
                             <span className="font-semibold text-gray-700">사원 번호:</span>
                             <span className="text-gray-500">{employees.empNo}</span>
                         </div>
@@ -163,48 +180,44 @@ const EmployeesReadComponent = ({ empNo }) => {
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">주민등록번호:</span>
                             <span className="text-gray-500">{employees.citizenId.substring(0,6)}-{employees.citizenId.substring(6,13)}</span>
-                        </div>
-                     </div>
+                        </div> */}
                     </div>
                 </div>
 
-                <div className="flex flex-wrap justify-center w-[60%] gap-4 mt-10 mx-3">
+                <div className="w-full grid grid-cols-2 justify-center gap-4">
                     <button 
-                    className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={() => goToReport(empNo)}
+                        className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
+                        onClick={() => goToReport(empNo)}
                     >
-                    리포트
+                        리포트
                     </button>
                     <button 
-                    className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={()=>moveToCommuteList({empNo})}
+                        className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
+                        onClick={()=>moveToCommuteList({empNo})}
                     >
-                    출퇴근
+                        출퇴근
                     </button>
                     <button 
-                    className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={()=>moveToAnnualLeave({empNo})}
+                        className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
+                        onClick={()=>moveToAnnualLeave({empNo})}
                     >
-                    연차
+                        연차
                     </button>
                     
                     <button 
-                        className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
+                        className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
                         onClick={() => moveToModify(empNo)}
                     >
                         수정
                     </button>
                     <button 
-                    className="w-[40%] py-2 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
-                    onClick={() => moveToList({ page })}
+                        className="py-3 bg-[#7b7b7b] text-white rounded-lg hover:bg-[#303030]"
+                        onClick={() => moveToList({ page })}
                     >
-                    리스트
+                        리스트
                     </button>
                 </div>
-                </div>
-
-
-        </div>
+            </div>
         </>
     );
 };
