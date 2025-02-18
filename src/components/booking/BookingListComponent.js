@@ -6,7 +6,7 @@ import { getCookie, removeCookie } from '../../util/cookieUtil';
 import mail from "../../assets/icon/mail.png";
 import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import colorChat from "../../assets/icon/colorChat.png";
 
 const initState = {
@@ -30,16 +30,27 @@ const BookingListComponent = () => {
     const navigate = useNavigate();
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
+    const [temp,setTemp] = useSearchParams()
 
+
+    useEffect(() => {
+        if(bookDate!==''){
+            getList(bookDate,'cr',[(page == 1 ? page:1),size]).then(data => {
+                setTemp({page:1,size:10});
+                setBooking(data);
+            });
+        }
+
+    }, [bookDate]); 
 
     useEffect(() => {
         if(bookDate!==''){
             getList(bookDate,'cr',[page,size]).then(data => {
                 setBooking(data);
             });
-        }
+        };
 
-    }, [bookDate,page, size]);
+    }, [page, size]);
 
 
     const handleClickAdd = () =>{
@@ -54,22 +65,10 @@ const BookingListComponent = () => {
     const checkRemove = () => {
         removeCookie("alert");
     }
-
-
     
     const handleChangeDate = (evt) => {
         booking[evt.target.name] = evt.target.value;
-        console.log(evt.target.name);
-        console.log(evt.target.value);
-        
-        // if(bookDate && bookDate != null){
-        //     setBookDate(evt.target.value);
-        // }else{
-        //     alert("해당 날짜에 예약된 일정이 없습니다.")
-        //     return;
-        // }
         setBookDate(evt.target.value);
-       
     }
 
     const dateNow = new Date();
@@ -115,20 +114,34 @@ const BookingListComponent = () => {
 
 
         <h2 className="text-3xl font-semibold text-center mt-10 mb-6">예약 내역</h2>
-        <div className="flex flex-wrap justify-center">
-            { booking.dtoList.map((data) => {
-                return (
-                    <div key={data.bookNo} className="flex flex-col min-w-[400px] p-6 m-4 rounded-lg shadow-lg text-center cursor-pointer hover:bg-gray-100"
-                        onClick={() => moveToRead(data.bookNo)}>
-                        <div>방번호 : {data.roomNo}</div>
-                        <div>예약 날짜 : {data.bookDate}</div>
-                        <div>시작 시간 : {data.start}</div>
-                        <div>끝난 시간 : {data.end}</div>
-                    </div>
-                )
-            })}
-        </div>
-
+        <div className="overflow-x-auto w-full">
+            <table className="w-full ">
+              <thead className="bg-gray-200 sticky top-0 z-10">
+                <tr>
+                  <th className="px-6 py-4 text-center">방번호</th>
+                  <th className="px-6 py-4 text-center">예약 날짜</th>
+                  <th className="px-6 py-4 text-center">시작 시간</th>
+                  <th className="px-6 py-4 text-center">끝난 시간</th>
+                </tr>
+              </thead>
+              <tbody>
+                {booking.dtoList.length>0?booking.dtoList.map((data) => (
+                  <tr
+                    key={data.bookNo}
+                    className="bg-gray-50 cursor-pointer text-center"
+                    onClick={() => moveToRead(data.bookNo)}
+                  >
+                    <td className="px-6 py-4 text-center">{data.roomNo}</td>
+                    <td className="px-6 py-4 text-center">{data.bookDate}</td>
+                    <td className="px-6 py-4 text-center">{data.start}</td>
+                    <td className="px-6 py-4 text-center">{data.end}</td>
+                  </tr>
+                )):<tr>
+                    <td colSpan={4} className="px-6 py-4 text-center">예약내역이 없습니다.</td>    
+                </tr>}
+              </tbody>
+            </table>
+          </div>
         <PageComponent
             serverData={booking} 
             movePage={moveToList}

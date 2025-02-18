@@ -12,6 +12,7 @@ import colorChat from "../../assets/icon/colorChat.png";
 import m from "../../assets/icon/m.png";
 import w from "../../assets/icon/w.png";
 import { getEmpImageOne } from "../../api/employeesImageApi";
+import { getJob } from "../../api/jobApi";
 export const API_SERVER_HOST = 'http://localhost:8080';
 
 const initState = {
@@ -30,12 +31,23 @@ const initState = {
     citizenId: ''
 };
 
+const initStateJob = {
+    jobNo : 0,
+    jobTitle : ''
+};
+
+const initStateDeptinfo = {
+    deptNo : 0,
+    deptName : '',
+    deptAddress : '',
+    phoneNo : ''
+};
+
 const EmployeesReadComponent = ({ empNo }) => {
     const [employees, setEmployees] = useState(initState);
-    const [cookieDeptNo, setCookieDeptNo] = useState(getCookie("member").deptNo);
+    const [deptData, setDeptData] = useState('');
+    const [jobData, setJobData] = useState('');
     const { page, moveToReportReceived, moveToList, moveToModify, moveToCommuteList, moveToAnnualLeave } = useCustomMove();
-    const [deptData, setDeptData] = useState("");
-    const [jobData, setJobData] = useState("");
     const [employeeNo,setEmployeeNo] = useState(getCookie("member").empNo);
     const navigate = useNavigate();
     const [empData, setEmpData] = useState('');
@@ -46,20 +58,23 @@ const EmployeesReadComponent = ({ empNo }) => {
     useEffect(() => {
         getOneEmp(empNo).then(res => {
             setEmployees(res);
-            console.log(res)
         });
     }, [empNo]);
 
     useEffect(()=>{
-        deptOne(cookieDeptNo).then((data) => {
-            console.log(cookieDeptNo);
-            console.log(data);
-            setDeptData(data);
+        deptOne(employees.deptNo).then((data) => {
+            setDeptData(data.deptName);
 
         }).catch((error)=>{
             console.log(error);
         })
-    }, [])
+
+        getJob(employees.jobNo).then((data)=>{
+            setJobData(data.jobTitle);
+        }).catch((error)=>{
+            console.log(error);
+        })
+    }, [employees]);
 
     const goToReport = (empNo) => {
         navigate(`/report/list/received`)
@@ -71,7 +86,6 @@ const EmployeesReadComponent = ({ empNo }) => {
     
     useEffect(()=>{
         getOne(empNo).then((data) => {
-            console.log(data);
             setEmpData(data);
         }).catch((error) => {
             console.log(error)
@@ -98,8 +112,8 @@ const EmployeesReadComponent = ({ empNo }) => {
         { label: "입사일", value: employees.hireDate },
         { label: "메일주소", value: employees.mailAddress },
         { label: "연봉", value: employees.salary },
-        { label: "부서", value: deptData.deptName },
-        { label: "직책번호", value: employees.jobNo },
+        { label: "부서", value: deptData },
+        { label: "직책번호", value: jobData },
         { label: "성별", value: employees.gender === 'm' ? '남성' : '여성' },
         { label: "전화번호", value: `${employees.phoneNum.substring(0,3)}-${employees.phoneNum.substring(3,7)}-${employees.phoneNum.substring(7,employees.phoneNum.length)}` },
         { label: "주민등록번호", value: `${employees.citizenId.substring(0,6)}-${employees.citizenId.substring(6,13)}` }
@@ -181,7 +195,7 @@ const EmployeesReadComponent = ({ empNo }) => {
                         </div>
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">직책번호:</span>
-                            <span className="text-gray-500">{employees.jobNo}</span>
+                            <span className="text-gray-500">{jobData.jobTitle}</span>
                         </div>
                         <div className="flex flex-row gap-5 text-xl">
                             <span className="font-semibold text-gray-700">성별:</span>
