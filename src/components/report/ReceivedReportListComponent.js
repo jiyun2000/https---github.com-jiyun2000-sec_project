@@ -37,6 +37,7 @@ const ReceivedReportListComponent = () => {
     useEffect(() => {
         getReceivedList(empNo,[page,size]).then(data => {
             setReport(data);
+            console.log(data);
         });
     }, [page,size]);
 
@@ -108,7 +109,7 @@ const ReceivedReportListComponent = () => {
                             </div>
                             {data.reportStatus !== "완료" ?<>
                                     <div className="text-sm mb-2 text-gray-600">보낸 사람 : {data.sender}</div>
-                                    <div className="text-sm text-gray-600">받는 사람 : {data.receiver}</div>
+                                    <div className="text-sm text-gray-600">받는 사람 : {data.receivers}</div>
                                 </>:<></>
                             }
                         </div>

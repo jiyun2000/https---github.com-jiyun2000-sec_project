@@ -123,7 +123,7 @@ const SentReportListComponent = () => {
                             {data.reportStatus !== "완료" && (
                                 <>
                                     <div className="text-sm mb-2 text-gray-600">보낸 사람 : {data.sender}</div>
-                                    <div className="text-sm text-gray-600">받는 사람 : {data.receiver}</div>
+                                    <div className="text-sm text-gray-600">받는 사람 : {data.receivers}</div>
                                 </>
                             )}
                         </div>

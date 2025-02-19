@@ -15,8 +15,7 @@ const initState = {//초기화 상대 객체 선언
     reportStatus : '',
     reportingDate : '',
     sender : 0,
-    receiver : 0,
-    finalReceiver: 0,
+    receivers : [],
     files : [],
     uploadFileNames : []
 };
@@ -45,8 +44,6 @@ const SentReportReadComponent = ({reportNo}) => {
   const [sender, setSender] = useState(initStateEmp);
   
   const [receiver, setReceiver] = useState(initStateEmp);
-  
-  const [finalReceiver, setFinalReceiver] = useState(initStateEmp);
 
   const {moveToReportSentPage, moveToModify} = useCustomMove();
   const [empNo, setEmpNo] = useState(getCookie("member").empNo);
@@ -60,15 +57,14 @@ const SentReportReadComponent = ({reportNo}) => {
   }, [reportNo]);
   useEffect(()=>{
     if(report!==initState){
-      getOneEmp(report.receiver).then(data=>{
-        setReceiver(data);
-      });
-      getOneEmp(report.sender).then(data=>{
-        setSender(data);
-      });
-      getOneEmp(report.finalReceiver).then(data=>{
-        setFinalReceiver(data);
-      });
+      if(report.reportStatus!=='완료'){
+        getOneEmp(report.receivers).then(data=>{
+          setReceiver(data);
+        });
+        getOneEmp(report.sender).then(data=>{
+          setSender(data);
+        });
+      }
     }
   },[report]);
 
@@ -107,7 +103,7 @@ const SentReportReadComponent = ({reportNo}) => {
 
     <div className="flex justify-center m-3">
     <div className = "w-full shadow-xl p-4"> 
-      <h2 className="text-center text-3xl font-semibold">{receiver.firstName} {receiver.lastName}님께 보낸 보고서</h2>
+      {report.reportStatus==='완료'?<h2 className="text-center text-3xl font-semibold">완료된 보고서</h2>:<h2 className="text-center text-3xl font-semibold">{receiver.firstName} {receiver.lastName}님께 보낸 보고서</h2>}
       <div className="flex justify-center mt-10">
       <div className="w-1/5 p-6 font-bold">보고서 번호</div>
       <div className="mb-4 flex w-full justify-center">
@@ -141,30 +137,27 @@ const SentReportReadComponent = ({reportNo}) => {
           </div>
         </div>
       </div>
-      <div className="flex justify-center">
-      <div className="w-1/5 p-6 font-bold">받는 사람</div>
-        <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-          {receiver.firstName} {receiver.lastName}       
+
+      {report.reportStatus==='완료'?<></>:<>
+        <div className="flex justify-center">
+        <div className="w-1/5 p-6 font-bold">받는 사람</div>
+          <div className="mb-4 flex w-full justify-center">
+            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+            {receiver.firstName} {receiver.lastName}       
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center">
-      <div className="w-1/5 p-6 font-bold">보낸 사람</div>
-        <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-          {sender.firstName} {sender.lastName}        
+        <div className="flex justify-center">
+        <div className="w-1/5 p-6 font-bold">보낸 사람</div>
+          <div className="mb-4 flex w-full justify-center">
+            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+            {sender.firstName} {sender.lastName}        
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center">
-      <div className="w-1/5 p-6 font-bold">최종 결재</div>
-        <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-          {finalReceiver.firstName} {finalReceiver.lastName}        
-          </div>
-        </div>
-      </div>
+      </>}
+     
+      
       <div className="w-full justify-center flex  flex-col m-auto items-center">
       <div className="w-1/5 p-6 font-bold">관련 문서</div>
         {report.uploadFileNames.map( (fileName, i) => 
