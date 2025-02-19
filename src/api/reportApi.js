@@ -39,10 +39,10 @@ export const putOne = async(reportNo, report)=>{
     return res.data;
 }
 
-export const addReport = async(empNo,employees)=>{
+export const addReport = async(empNo,report)=>{
     const header = {
         headers : {"Content-Type" : "multipart/form-data"}
       };
-    const res = await jwtAxios.post(`${prefix}/register/${empNo}`,employees,header);
+    const res = await jwtAxios.post(`${prefix}/register/${empNo}`,report,header);
     return res.data;
 }
