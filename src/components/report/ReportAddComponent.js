@@ -8,13 +8,15 @@ import chat from '../../assets/icon/chat.png';
 import BoardTitleComponent from "../board/BoardTitleComponent";
 import { Link, useNavigate } from "react-router-dom";
 import colorChat from "../../assets/icon/colorChat.png";
+import Select from "react-select";
 
 const initState = {
     deadLine : '',
+    title : '',
+    contents : '',
     reportStatus : '',
     sender : 0,
-    receiver : 0,
-    finalReceiver: 0,
+    receivers : [],
     files : []
 }
 
@@ -74,20 +76,17 @@ const ReportAddComponent = () => {
             formData.append('files',files[i]);
         }
 
+        formData.append('title',report.title);
+        formData.append('contents',report.contents);
         formData.append('deadLine',report.deadLine);
         formData.append('reportStatus',report.reportStatus);
         formData.append('sender',report.sender);
-        formData.append('receiver',report.receiver);
-        formData.append('finalReceiver',report.finalReceiver);
 
-        if(report.receiver===0){
+        if(report.receivers.lengt<1){
             alert("수신인을 추가해주세요.");
             return;
         }
-        if(report.finalReceiver===0){
-            alert("최종 결재인을 추가해주세요.");
-            return;
-        }
+        
         if(report.deadLine===undefined){
             alert("결재기한을 추가해주세요.");
             return;
@@ -95,6 +94,10 @@ const ReportAddComponent = () => {
         if(files.length<1){
             alert("결재서류를 첨부해주세요.");
             return;
+        }
+
+        for(let i = 0; i<report.receivers.length; i++){
+            formData.append('receivers',report.receivers[i]);
         }
         
         addReport(empNo,formData).then((res)=>{
@@ -139,7 +142,29 @@ const ReportAddComponent = () => {
         <div className="w-[80%] shadow-2xl mt-10 m-2 p-4 rounded-md ">
             <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
             <div className="flex justify-center">
-            <div className="w-1/5 p-6 font-bold">마감일</div>
+                <div className="w-1/5 p-6 font-bold">제목</div>
+                <div className="mb-4 flex w-full justify-center">
+                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="title"
+                    type={'text'} 
+                    value={report.title}
+                    onChange={handleChangeReport}></input>
+                </div>
+            </div>
+
+            <div className="flex justify-center">
+                <div className="w-1/5 p-6 font-bold">내용</div>
+                <div className="mb-4 flex w-full justify-center">
+                    <textarea className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="contents"
+                    type={'text'} 
+                    value={report.contents}
+                    onChange={handleChangeReport}></textarea>
+                </div>
+            </div>
+
+            <div className="flex justify-center">
+                <div className="w-1/5 p-6 font-bold">마감일</div>
                 <div className="mb-4 flex w-full justify-center">
                     <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
                     name="deadLine"
@@ -150,43 +175,33 @@ const ReportAddComponent = () => {
             </div>
 
             <div className="flex justify-center">
-            <div className="w-1/5 p-6 font-bold">받는 사람</div>
+                <div className="w-1/5 p-6 font-bold">받는 사람</div>
                 <div className="mb-4 flex w-full justify-center">
-                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="receiver"
-                    type={'number'} 
-                    value={report.receiver}
-                    onChange={handleChangeReport}>
-                        <option value={0}></option>
-                        {employees.map((res)=>{
-                            return res.empNo===empNo?<></>:(
-                                <option value={res.empNo}> {res.firstName} {res.lastName}</option>
-                            )
-                        })}
-                    </select>
+                    
+                <Select
+                    isMulti
+                    closeMenuOnSelect={false}
+                    options={employees.filter(res => res.empNo !== empNo).map(res => ({
+                        value: res.empNo,
+                        label: `${res.firstName} ${res.lastName}`
+                    }))} 
+                    value={report.receivers.map(empNo => {
+                        const employee = employees.find(res => res.empNo === empNo);
+                        return employee ? { value: employee.empNo, label: `${employee.firstName} ${employee.lastName}` } : null;
+                    }).filter(Boolean)} 
+                    onChange={(selectedOptions) => {
+                        setReport(prev => ({
+                            ...prev,
+                            receivers: selectedOptions.map(option => option.value) // 순서 유지
+                        }));
+                    }}
+                    className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md"
+                />
                 </div>
             </div>
 
             <div className="flex justify-center">
-            <div className="w-1/5 p-6 font-bold">최종 결재</div>
-                <div className="mb-4 flex w-full justify-center">
-                    <select className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="finalReceiver"
-                    type={'number'} 
-                    value={report.finalReceiver}
-                    onChange={handleChangeReport}>
-                        <option value={0}></option>
-                        {employees.map((res)=>{
-                            return res.empNo===empNo?<></>:(
-                                <option value={res.empNo}> {res.firstName} {res.lastName}</option>
-                            )
-                        })}
-                    </select>
-                </div>
-            </div>
-
-            <div className="flex justify-center">
-            <div className="w-1/5 p-6 font-bold">파일</div>
+                <div className="w-1/5 p-6 font-bold">파일</div>
                 <div className="mb-4 flex w-full justify-center">   
                     <input 
                     ref={uploadRef} 

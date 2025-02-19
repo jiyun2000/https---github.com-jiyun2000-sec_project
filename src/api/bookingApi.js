@@ -6,6 +6,7 @@ const prefix = `${API_SERVER_HOST}/api/booking`;
 
 export const getList = async (bookDate,bookType, pageParam) => {
     const [page, size] = pageParam;
+    console.log(page);
     const res = await jwtAxios.get(`${prefix}/list/${bookType}/${bookDate}`,{
         params : {
             page : page,
