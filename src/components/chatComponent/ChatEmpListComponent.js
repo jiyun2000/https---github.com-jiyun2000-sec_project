@@ -59,13 +59,15 @@ const ChatEmpListComponent = () => {
     const sendMessage = (senderEmpNo, receiverEmpNo, chatMessageDTO) => {
         const strCook = cookieEmpNo + '';
         const strSen = senderEmpNo + '';
-        console.log(strCook);
-        console.log(strSen);
+        console.log("strCook => " + strCook);
+        console.log("strSen => " + strSen);
         if(strSen === strCook){
             console.log(cookieEmpNo);
             navigate(`/chat/${empNo}/${receiverEmpNo}`);
             sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
         }else if(empData.jobNo === 1){ //관리자 계정
+            console.log("관리자 계정");
+            
             navigate(`/chat/${empNo}/${receiverEmpNo}`);
             sendChat(senderEmpNo, receiverEmpNo, chatMessageDTO);
         }

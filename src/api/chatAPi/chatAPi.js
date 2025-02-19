@@ -33,8 +33,22 @@ export const getChatList = async (senderEmpNo) => {
         return res.data;
 }
 
+export const sendFile = async (formData, chatNo, chatFileDTO, empNo, chatDTO) => {
+        console.log("Api chatNo" + chatNo);
+        console.log("api dto " + chatFileDTO);
+        
+        
+        const res = await jwtAxios.post(`${host}/file/${chatNo}/${empNo}`,formData, chatDTO, {
+                headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+        });
+        
+        return res.data;
+}
 
-
-
-
+export const getFileDetail = async (attachOriginName) => {
+        const res = await jwtAxios.get(`${host}/fileDetail/${attachOriginName}`);
+        return res.data;
+}
 
