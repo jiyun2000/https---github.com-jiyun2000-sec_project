@@ -35,8 +35,8 @@ const AnnualLeaveReadComponent = ({empNo})=>{
         });
     },[cnt]);
 
-    const moveToAdd = () =>{
-        navigate({pathname:`../../dayoff/add`});
+    const moveToAdd = (num) =>{
+        navigate({pathname:`../../dayoff/add/${num}`});
     }
     useEffect(()=>{
         getOneEmp(empNo).then((data)=>{
@@ -114,7 +114,7 @@ const AnnualLeaveReadComponent = ({empNo})=>{
 
                 <button type="button" 
                 className="inline-block  p-4 m-2 text-xl w-40 bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] rounded-md"
-                onClick={moveToAdd}>
+                onClick={()=>moveToAdd(empNo)}>
                     연차 사용
                 </button>
 

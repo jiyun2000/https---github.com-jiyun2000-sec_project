@@ -23,7 +23,7 @@ const dayOffRouter = () => {
             element : <DayOffModifyPage/>
         },
         {
-            path : 'add',
+            path : 'add/:empNo',
             element : <DayOffAddPage/>
         }
     ]

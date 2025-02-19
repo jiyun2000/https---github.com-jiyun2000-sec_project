@@ -18,18 +18,17 @@ const initState = {
     empNo : 0
 }
 
-const DayOffAddComponent = () => {
+const DayOffAddComponent = ({empNo}) => {
     const [dayOff, setDayOff] = useState({...initState});
 
     const navigate = useNavigate();
-    const [empNo, setEmpNo] = useState(getCookie("member").empNo);
     const [getEmpData, setGetEmpData] = useState("");
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
-    const handleClickAdd = () => {
+    const handleClickAdd = (num) => {
         dayOff["empNo"] = getCookie("member").empNo;
         addOne(dayOff).then(()=>{
-            navigate({pathname:`../../employees/annualleave`});
+            navigate({pathname:`../../employees/annualleave/${num}`});
         });
     }
 
@@ -107,7 +106,7 @@ const DayOffAddComponent = () => {
             <div className="flex justify-center p-4 m-8">
                 <button type="button"
                 className=" p-4 m-2 text-xl w-32 text-white bg-[#8ba7cd]  hover:bg-[#6f8cb4] rounded-md"
-                onClick={handleClickAdd}>
+                onClick={()=>handleClickAdd(empNo)}>
                     추가
                 </button>
             </div>
