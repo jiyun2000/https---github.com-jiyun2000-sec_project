@@ -101,7 +101,7 @@ const EmployeesReadComponent = ({ empNo }) => {
     }
 
     useEffect(()=>{
-        getEmpImageOne(employeeNo).then((data) => {
+        getEmpImageOne(empNo).then((data) => {
             setEmpImgData(data);
         })
     }, []);
