@@ -36,3 +36,8 @@ export const addOne = async(dayOff)=>{
     const res = await jwtAxios.post(`${prefix}/add`,dayOff);
     return res.data;
 }
+
+export const getTodayDayOff = async (dayOffDate) => {
+    const res = await jwtAxios.get(`${prefix}/todayList/${dayOffDate}`);
+    return res.data;
+}

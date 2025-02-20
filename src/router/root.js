@@ -33,6 +33,7 @@ import MenuModPage from "../pages/menu/MenuModpage";
 import BirthEmpPage from "../pages/BirthEmpPage";
 import AnnualLeaveCountPage from "../pages/employees/AnnualLeaveCountPage";
 import EmpImagePage from "../pages/employees/EmpImagePage";
+import RegisterAllEmpPage from "../pages/schedulePage/RegisterAllEmpPage";
 
 
 const root = createBrowserRouter([
@@ -163,6 +164,10 @@ const root = createBrowserRouter([
                 path : 'empImage/:empNo',
                 element : <EmpImagePage />
 
+            },
+            {
+                path:'empSchedule/resAll',
+                element : <RegisterAllEmpPage />
             }
         ]
     }
