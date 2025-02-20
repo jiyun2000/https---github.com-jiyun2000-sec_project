@@ -12,6 +12,8 @@ import colorChat from '../../assets/icon/colorChat.png';
 const initState = {//초기화 상대 객체 선언
     reportNo : 0,
     deadLine : '',
+    title: '',
+    contents: '',
     reportStatus : '',
     reportingDate : '',
     sender : 0,
@@ -53,6 +55,7 @@ const SentReportReadComponent = ({reportNo}) => {
     //서버에 데이터 요청 보내기
     getOne(reportNo).then(data =>{
       setReport(data);
+      console.log(data);
     });
   }, [reportNo]);
   useEffect(()=>{
@@ -115,12 +118,31 @@ const SentReportReadComponent = ({reportNo}) => {
 
         <div className="flex justify-center">
         <div className="w-1/5 p-6 font-bold">마감일</div>
-        <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-            {report.deadLine}        
+          <div className="mb-4 flex w-full justify-center">
+            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+              {report.deadLine}        
+            </div>
           </div>
         </div>
-      </div>
+
+        <div className="flex justify-center">
+        <div className="w-1/5 p-6 font-bold">제목</div>
+          <div className="mb-4 flex w-full justify-center">
+            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+              {report.title}        
+            </div>
+          </div>
+        </div>
+
+        <div className="flex justify-center">
+        <div className="w-1/5 p-6 font-bold">내용</div>
+          <div className="mb-4 flex w-full justify-center">
+            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
+              {report.contents}        
+            </div>
+          </div>
+        </div>
+
       <div className="flex justify-center">
       <div className="w-1/5 p-6 font-bold">진행 상태</div>
         <div className="mb-4 flex w-full justify-center">

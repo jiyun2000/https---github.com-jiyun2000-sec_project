@@ -97,22 +97,46 @@ const ReceivedReportListComponent = () => {
             <div className="flex flex-col items-center justify-center gap-4">
                 {report.dtoList.map((data) => {
                     return  data.reportStatus==="진행중"?(
+                        data.isDayOff===false?<>
+                            <div 
+                                key={data.reportNo}
+                                className="w-2/4 p-6 bg-white rounded-lg shadow-lg  cursor-pointer"
+                                onClick={() => moveToReceivedReportRead(data.reportNo)}>
+                                <div className="text-lg font-semibold mb-2">
+                                    보고서 구분 : 일반
+                                </div>
+                                <div className="text-lg font-semibold mb-2">
+                                    마감기한 : {data.deadLine}
+                                </div>
+                                <div className="text-sm mb-2 text-gray-600">
+                                    진행 상태 : {data.reportStatus}
+                                </div>
+                                {data.reportStatus !== "완료" ?<>
+                                        <div className="text-sm mb-2 text-gray-600">제목 : {data.title}</div>
+                                    </>:<></>
+                                }
+                            </div>
+                        </>:<>
                         <div 
-                            key={data.reportNo}
-                            className="w-2/4 p-6 bg-white rounded-lg shadow-lg  cursor-pointer"
-                            onClick={() => moveToReceivedReportRead(data.reportNo)}>
-                            <div className="text-lg font-semibold mb-2">
-                                마감기한 : {data.deadLine}
+                                key={data.reportNo}
+                                className="w-2/4 p-6 bg-white rounded-lg shadow-lg  cursor-pointer"
+                                onClick={() => moveToReceivedReportRead(data.reportNo)}>
+                                <div className="text-lg font-semibold mb-2">
+                                    보고서 구분 : 연차
+                                </div>
+                                <div className="text-lg font-semibold mb-2">
+                                    마감기한 : {data.deadLine}
+                                </div>
+                                <div className="text-sm mb-2 text-gray-600">
+                                    진행 상태 : {data.reportStatus}
+                                </div>
+                                {data.reportStatus !== "완료" ?<>
+                                        <div className="text-sm mb-2 text-gray-600">날짜 : {data.title}</div>
+                                        <div className="text-sm mb-2 text-gray-600">시간 : {data.contents}</div>
+                                    </>:<></>
+                                }
                             </div>
-                            <div className="text-sm mb-2 text-gray-600">
-                                진행 상태 : {data.reportStatus}
-                            </div>
-                            {data.reportStatus !== "완료" ?<>
-                                    <div className="text-sm mb-2 text-gray-600">보낸 사람 : {data.sender}</div>
-                                    <div className="text-sm text-gray-600">받는 사람 : {data.receivers}</div>
-                                </>:<></>
-                            }
-                        </div>
+                        </>
                     ):<></>
                 })}
             </div>

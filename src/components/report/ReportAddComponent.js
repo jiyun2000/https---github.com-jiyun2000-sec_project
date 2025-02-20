@@ -17,6 +17,7 @@ const initState = {
     reportStatus : '',
     sender : 0,
     receivers : [],
+    isDayOff: false,
     files : []
 }
 
@@ -50,6 +51,7 @@ const ReportAddComponent = () => {
     const navigate = useNavigate();
 
     useEffect(()=>{
+       
         getAllList().then((data)=>{
             setEmployees(data);
         });
@@ -60,6 +62,15 @@ const ReportAddComponent = () => {
 
     const handleChangeReport = (evt) => {
         report[evt.target.name] = evt.target.value;
+
+        setReport({...report});
+    }
+
+    const handleChangeChecked = (evt) => {
+        report['title'] = '';
+        report['contents'] = '';
+        report[evt.target.name] = evt.target.checked;
+        
         setReport({...report});
     }
 
@@ -67,20 +78,29 @@ const ReportAddComponent = () => {
 
         report["sender"] = empNo;
         report["reportStatus"] = "진행중";
-
-        const files = uploadRef.current.files;
-
         const formData = new FormData();
 
-        for(let i = 0; i<files.length; i++){
-            formData.append('files',files[i]);
+        if(uploadRef.current!==null){
+            const files = uploadRef.current.files;
+    
+            for(let i = 0; i<files.length; i++){
+                formData.append('files',files[i]);
+            }
         }
+
+        console.log(report.isDayOff);
+
 
         formData.append('title',report.title);
         formData.append('contents',report.contents);
-        formData.append('deadLine',report.deadLine);
+        if(report.isDayOff){
+            formData.append('deadLine',report.title);
+        }else{
+            formData.append('deadLine',report.deadLine);
+        }
         formData.append('reportStatus',report.reportStatus);
         formData.append('sender',report.sender);
+        formData.append('isDayOff',report.isDayOff);
 
         if(report.receivers.lengt<1){
             alert("수신인을 추가해주세요.");
@@ -91,10 +111,10 @@ const ReportAddComponent = () => {
             alert("결재기한을 추가해주세요.");
             return;
         }
-        if(files.length<1){
-            alert("결재서류를 첨부해주세요.");
-            return;
-        }
+        // if(files.length<1){
+        //     alert("결재서류를 첨부해주세요.");
+        //     return;
+        // }
 
         for(let i = 0; i<report.receivers.length; i++){
             formData.append('receivers',report.receivers[i]);
@@ -141,38 +161,63 @@ const ReportAddComponent = () => {
     <div className="flex flex-col w-full items-center justify-center">
         <div className="w-[80%] shadow-2xl mt-10 m-2 p-4 rounded-md ">
             <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
+
             <div className="flex justify-center">
-                <div className="w-1/5 p-6 font-bold">제목</div>
-                <div className="mb-4 flex w-full justify-center">
+                <div className="w-1/5 p-6 font-bold">연차 사용</div>
+                <div className="mb-4 flex w-full">
                     <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="title"
-                    type={'text'} 
-                    value={report.title}
-                    onChange={handleChangeReport}></input>
+                    name="isDayOff"
+                    type={'checkbox'} 
+                    //value={report.title}
+                    onChange={handleChangeChecked}></input>
                 </div>
             </div>
 
-            <div className="flex justify-center">
-                <div className="w-1/5 p-6 font-bold">내용</div>
-                <div className="mb-4 flex w-full justify-center">
-                    <textarea className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="contents"
-                    type={'text'} 
-                    value={report.contents}
-                    onChange={handleChangeReport}></textarea>
+            {report.isDayOff===false?<>
+                <div className="flex justify-center">
+                    <div className="w-1/5 p-6 font-bold">제목</div>
+                    <div className="mb-4 flex w-full justify-center">
+                        <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                        name="title"
+                        type={'text'} 
+                        value={report.title}
+                        onChange={handleChangeReport}></input>
+                    </div>
                 </div>
-            </div>
 
-            <div className="flex justify-center">
-                <div className="w-1/5 p-6 font-bold">마감일</div>
-                <div className="mb-4 flex w-full justify-center">
-                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="deadLine"
-                    type={'date'} 
-                    value={report.deadLine}
-                    onChange={handleChangeReport}></input>
+                <div className="flex justify-center">
+                    <div className="w-1/5 p-6 font-bold">내용</div>
+                    <div className="mb-4 flex w-full justify-center">
+                        <textarea className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                        name="contents"
+                        type={'text'} 
+                        value={report.contents}
+                        onChange={handleChangeReport}></textarea>
+                    </div>
                 </div>
-            </div>
+            </>:<>
+                <div className="flex justify-center">
+                    <div className="w-1/5 p-6 font-bold">날짜</div>
+                    <div className="mb-4 flex w-full justify-center">
+                        <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                        name="title"
+                        type={'date'} 
+                        value={report.title}
+                        onChange={handleChangeReport}></input>
+                    </div>
+                </div>
+
+                <div className="flex justify-center">
+                    <div className="w-1/5 p-6 font-bold">시간</div>
+                    <div className="mb-4 flex w-full justify-center">
+                        <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                        name="contents"
+                        type={'number'} 
+                        value={report.contents}
+                        onChange={handleChangeReport}></input>
+                    </div>
+                </div>
+            </>}
 
             <div className="flex justify-center">
                 <div className="w-1/5 p-6 font-bold">받는 사람</div>
@@ -200,6 +245,18 @@ const ReportAddComponent = () => {
                 </div>
             </div>
 
+            {report.isDayOff===false?<>
+            <div className="flex justify-center">
+                <div className="w-1/5 p-6 font-bold">마감일</div>
+                <div className="mb-4 flex w-full justify-center">
+                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
+                    name="deadLine"
+                    type={'date'} 
+                    value={report.deadLine}
+                    onChange={handleChangeReport}></input>
+                </div>
+            </div>
+            
             <div className="flex justify-center">
                 <div className="w-1/5 p-6 font-bold">파일</div>
                 <div className="mb-4 flex w-full justify-center">   
@@ -210,7 +267,8 @@ const ReportAddComponent = () => {
                     >    
                     </input>
                 </div>
-            </div>
+            </div></>:<></>}
+            
 
             <div className="flex justify-center p-4">
                 <button type="button"

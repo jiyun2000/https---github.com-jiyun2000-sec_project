@@ -30,7 +30,7 @@ const BookingListComponent = () => {
     const navigate = useNavigate();
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const { page, size, moveToRead, moveToAdd, moveToList } = useCustomMove();
-    const [temp,setTemp] = useSearchParams()
+    const [temp,setTemp] = useSearchParams();
 
 
     useEffect(() => {
