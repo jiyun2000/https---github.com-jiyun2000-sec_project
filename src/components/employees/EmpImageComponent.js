@@ -143,17 +143,31 @@ const EmpImageComponent = () => {
 
         <div className="flex flex-col  items-center justify-between w-full mb-8 p-6 bg-white rounded-lg shadow-lg border border-gray-300">
             <div className="relative w-full  p-4 border border-gray-300 rounded-lg shadow-md hover:shadow-lg ">
-                <input 
-                    ref={fileId} 
-                    type="file" 
-                    hidden 
-                    multiple 
-                    onChange={(e) => {
-                        const fileName = e.target.files ? e.target.files[0].name : '';
+
+                <input
+                ref={fileId}
+                type="file"
+                hidden
+                multiple
+                accept=".jpg,.jpeg,.png" 
+                onChange={(e) => {
+                    const file = e.target.files ? e.target.files[0] : null;
+                    if (file) {
+                    const fileName = file.name;
+                    const fileExtension = fileName.split('.').pop().toLowerCase();
+                    
+                    if (['jpg', 'jpeg', 'png'].includes(fileExtension)) {
                         setFileList(prevState => ({ ...prevState, url: fileName }));
-                    }} 
-                    id="fileInput"
+                    } else {
+                        alert('JPG, JPEG, PNG 파일만 업로드 가능합니다');
+                        e.target.value = '';
+                    }
+                    }
+                }}
+                id="fileInput"
                 />
+
+                
                 <label 
                     htmlFor="fileInput" 
                     className="flex items-center justify-between w-full h-[40px] px-4 border border-gray-300 rounded-md cursor-pointer"

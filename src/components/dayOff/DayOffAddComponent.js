@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
-import { addOne } from "../../api/dayOffApi";
+import { addOne, getTodayDayOff } from "../../api/dayOffApi";
 import { getCookie, removeCookie } from "../../util/cookieUtil";
 import { useNavigate } from "react-router-dom";
 import BoardTitleComponent from '../board/BoardTitleComponent';
@@ -24,6 +24,7 @@ const DayOffAddComponent = ({empNo}) => {
     const navigate = useNavigate();
     const [getEmpData, setGetEmpData] = useState("");
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
+   
 
     const handleClickAdd = (num) => {
         dayOff["empNo"] = getCookie("member").empNo;
@@ -111,6 +112,7 @@ const DayOffAddComponent = ({empNo}) => {
                 </button>
             </div>
         </div>
+
     </div>
     )
 }

@@ -1,8 +1,8 @@
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Client } from "@stomp/stompjs";
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useLayoutEffect } from "react";
 import SockJS from "sockjs-client";
-import { getFileDetail, leaveChatRoom, sendFile } from '../../api/chatAPi/chatAPi';
+import { getFileDetail, leaveChatRoom, sendChat, sendFile } from '../../api/chatAPi/chatAPi';
 import { jwtAxios } from '../../util/JWTutil';
 import { getOneEmp } from '../../api/employeesApi';
 import BoardTitleComponent from '../board/BoardTitleComponent';
@@ -45,13 +45,24 @@ const StompComponent = () => {
     const [isExtraShow, setIsExtraShow] = useState();
     const [fileName, setFileName] = useState('');
     
+    // useLayoutEffect(() => {
+    //     if (msgContainerRef.current && messages.length > 0) {
+    //       msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+    //     }
+    //   }, []);
 
-
-    useEffect(()=>{
-        if(msgContainerRef.current){
-            msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+    useEffect(() => {
+        if (msgContainerRef.current) {
+          msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
         }
-    },[messages]);
+      }, []);
+
+    useEffect(() => {
+        if (msgContainerRef.current) {
+          msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+        }
+      }, [messages]);
+
 
     useEffect(()=>{
         getOneEmp(receiverEmpNo).then((data)=>{
@@ -159,6 +170,8 @@ const StompComponent = () => {
                             uuid:chatMsg.uuid
                         },
                     ]);   
+
+                    window.location.reload()
                 });           
             },
             //소켓 연결 종료
@@ -358,118 +371,226 @@ const chatSendAlert = {
             return;
         }
     }
-
+    
     const chatFileStomp = {
         connect: (senderEmpNo, receiverEmpNo) => {
             if (wsClient && wsClient.connected) { 
                 console.log("이미 연결");
                 return;
             }
-
-        //Client 객체 생성성
-        const client = new Client({
-            webSocketFactory: () => new SockJS(SERVER_URL),
-            reconnectDelay: 5000,
-            heartbeatIncoming: 4000,
-            heartbeatOutgoing: 4000,
-
-            //웹소켓 연결결
-            onConnect: (conn) => {
-                console.log("chatFIleStomp emp " + senderEmpNo + "  //rece " + receiverEmpNo);
-                navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
-
-                console.log("file 소켓 연결 완" + conn);
-                setIsEnterChat(true); //채팅방 입장
-
-                const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
-                console.log(`/sub/chat/${chatRoomId}`);
-               
-                client.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
-                    const chatMsg = JSON.parse(message.body);  
-                    console.log("file chatMsg    =>  " + chatMsg); 
-                    
-                    setMessages((prevMessages) => [
-                        ...prevMessages,
-                        {
-                            content: chatMsg.fileName,
-                            sender: chatMsg.sender,
-                            sendTime: chatMsg.sendTime,
-                        },
-                    ]);                 
-                });
-                
-                
-            },
-            //소켓 연결 종료
-            onWebSocketClose: () => {
-                console.log('onWebSocketClose');
-            },
-            //소켓 연결 에러
-            onWebSocketError: (error) => {
-                console.log("onWebSocketError " + error);
-            },
-            //stomp 에러러
-            onStompError: (frame) => {
-                console.log("onStompError " + frame);
-            },
-        });
-
-        setWsClient(client); //client객체 추가
-        client.activate(); //client 활성화
-    },
-
-    sendMessage: (e) => {  // 메시지 보내기
-        const fileList = fileId.current.files;
-        const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
-        console.log("Gggg" + chatRoomId);
-        
-        if (fileList.length > 0) {
-            console.log("ooo" + fileList.attachUUID);
-            
-            console.log(fileList);
-            
-            const formData = new FormData();
-            console.log(formData);
-            console.log(JSON.stringify(formData));
-            
-            
-            for (let i = 0; i < fileList.length; i++) {
-                formData.append('files', fileList[i]);
-            }
     
-            formData.append('chatNo', chatRoomId);
-            formData.append('attachOriginName', fileList[0].name);
-
-            setFileName(fileList[0].name);
-
-            sendFile(formData, chatRoomId, fileList, senderEmpNo).then((data) => {
-                
-                console.log("data" + data);      
-
-                const messageWithFile = {
-                    sender: senderEmpNo,
-                    sendTime: new Date().toISOString(),
-                    // content: fileList[0].name,
-                    content : data,
-                    uuid : data
-                };
-
-                console.log("messageWithFile => " + JSON.stringify(messageWithFile)); //
-                
-                const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
-                wsClient.publish({
-                    destination: `/pub/chat/${chatRoomId}`,
-                    body: JSON.stringify(messageWithFile),
-                });
-
-              
+            //Client 객체 생성성
+            const client = new Client({
+                webSocketFactory: () => new SockJS(SERVER_URL),
+                reconnectDelay: 5000,
+                heartbeatIncoming: 4000,
+                heartbeatOutgoing: 4000,
     
-            }).catch((error) => {
-                console.log("errrrrrrrr file" + error);
+                //웹소켓 연결결
+                onConnect: (conn) => {
+                    console.log("chatFIleStomp emp " + senderEmpNo + "  //rece " + receiverEmpNo);
+                    navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
+    
+                    console.log("file 소켓 연결 완" + conn);
+                    setIsEnterChat(true); //채팅방 입장
+    
+                    const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+                    console.log(`/sub/chat/${chatRoomId}`);
+    
+                    client.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
+                        const chatMsg = JSON.parse(message.body);  
+                        console.log("file chatMsg    =>  " + chatMsg); 
+                        
+                        setMessages((prevMessages) => [
+                            ...prevMessages,
+                            {
+                                content: chatMsg.fileName,
+                                sender: chatMsg.sender,
+                                sendTime: chatMsg.sendTime,
+                            },
+                        ]);                 
+                    });
+                },
+                //소켓 연결 종료
+                onWebSocketClose: () => {
+                    console.log('onWebSocketClose');
+                },
+                //소켓 연결 에러
+                onWebSocketError: (error) => {
+                    console.log("onWebSocketError " + error);
+                },
+                //stomp 에러러
+                onStompError: (frame) => {
+                    console.log("onStompError " + frame);
+                },
             });
+    
+            setWsClient(client); //client객체 추가
+            client.activate(); //client 활성화
+        },
+    
+        sendMessage: (e) => {  // 메시지 보내기
+            const fileList = fileId.current.files;
+            const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+            console.log("Gggg" + chatRoomId);
+            
+            if (fileList.length > 0) {
+                console.log("파일 목록 준비 완료:", fileList);
+                
+                const formData = new FormData();
+                console.log("FormData 준비:", formData);
+    
+                for (let i = 0; i < fileList.length; i++) {
+                    formData.append('files', fileList[i]);
+                }
+        
+                formData.append('chatNo', chatRoomId);
+                formData.append('attachOriginName', fileList[0].name);
+    
+                setFileName(fileList[0].name);
+    
+                sendFile(formData, chatRoomId, fileList, senderEmpNo).then((data) => {
+                    
+                    console.log("서버 응답 데이터: " + data);      
+    
+                    const messageWithFile = {
+                        sender: senderEmpNo,
+                        sendTime: new Date().toISOString(),
+                        content: data,
+                        uuid: data
+                    };
+    
+                    console.log("보낼 메시지: " + JSON.stringify(messageWithFile));
+                    
+                    // 실제로 메시지를 전송
+                    wsClient.publish({
+                        destination: `/pub/chat/${chatRoomId}`,
+                        body: JSON.stringify(messageWithFile),
+                    });
+    
+                    window.location.reload();  // 페이지 새로 고침
+                }).catch((error) => {
+                    console.log("파일 전송 오류: " + error);
+                });
+                
+            } else {
+                console.log("파일이 없습니다.");
+            }
+        }
+    };
+    
+
+    // const chatFileStomp = {
+    //     connect: (senderEmpNo, receiverEmpNo) => {
+    //         if (wsClient && wsClient.connected) { 
+    //             console.log("이미 연결");
+    //             return;
+    //         }
+
+    //     //Client 객체 생성성
+    //     const client = new Client({
+    //         webSocketFactory: () => new SockJS(SERVER_URL),
+    //         reconnectDelay: 5000,
+    //         heartbeatIncoming: 4000,
+    //         heartbeatOutgoing: 4000,
+
+    //         //웹소켓 연결결
+    //         onConnect: (conn) => {
+    //             console.log("chatFIleStomp emp " + senderEmpNo + "  //rece " + receiverEmpNo);
+    //             navigate(`/chat/${senderEmpNo}/${receiverEmpNo}`);
+
+    //             console.log("file 소켓 연결 완" + conn);
+    //             setIsEnterChat(true); //채팅방 입장
+
+    //             const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+    //             console.log(`/sub/chat/${chatRoomId}`);
+               
+    //             client.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
+    //                 const chatMsg = JSON.parse(message.body);  
+    //                 console.log("file chatMsg    =>  " + chatMsg); 
+                    
+    //                 setMessages((prevMessages) => [
+    //                     ...prevMessages,
+    //                     {
+    //                         content: chatMsg.fileName,
+    //                         sender: chatMsg.sender,
+    //                         sendTime: chatMsg.sendTime,
+    //                     },
+    //                 ]);                 
+    //             });
+                
+                
+    //         },
+    //         //소켓 연결 종료
+    //         onWebSocketClose: () => {
+    //             console.log('onWebSocketClose');
+    //         },
+    //         //소켓 연결 에러
+    //         onWebSocketError: (error) => {
+    //             console.log("onWebSocketError " + error);
+    //         },
+    //         //stomp 에러러
+    //         onStompError: (frame) => {
+    //             console.log("onStompError " + frame);
+    //         },
+    //     });
+
+    //     setWsClient(client); //client객체 추가
+    //     client.activate(); //client 활성화
+    // },
+
+    // sendMessage: (e) => {  // 메시지 보내기
+    //     const fileList = fileId.current.files;
+    //     const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+    //     console.log("Gggg" + chatRoomId);
+        
+    //     if (fileList.length > 0) {
+    //         console.log("ooo" + fileList.attachUUID);
+            
+    //         console.log(fileList);
+            
+    //         const formData = new FormData();
+    //         console.log(formData);
+    //         console.log(JSON.stringify(formData));
+            
+            
+    //         for (let i = 0; i < fileList.length; i++) {
+    //             formData.append('files', fileList[i]);
+    //         }
+    
+    //         formData.append('chatNo', chatRoomId);
+    //         formData.append('attachOriginName', fileList[0].name);
+
+    //         setFileName(fileList[0].name);
+
+    //         sendFile(formData, chatRoomId, fileList, senderEmpNo).then((data) => {
+                
+    //             console.log("data" + data);      
+
+    //             const messageWithFile = {
+    //                 sender: senderEmpNo,
+    //                 sendTime: new Date().toISOString(),
+    //                 // content: fileList[0].name,
+    //                 content : data,
+    //                 uuid : data
+    //             };
+
+    //             console.log("messageWithFile => " + JSON.stringify(messageWithFile)); //
+                
+    //             const chatRoomId = generateChatRoomId(senderEmpNo, receiverEmpNo);
+    //             wsClient.publish({
+    //                 destination: `/pub/chat/${chatRoomId}`,
+    //                 body: JSON.stringify(messageWithFile),
+    //             });
+
+    //             window.location.reload();
+                
+    //         }).catch((error) => {
+    //             console.log("errrrrrrrr file" + error);
+    //         });
 
             
-        }}}
+    //     }}}
 
 
     const goToBoardList = () => {
@@ -480,7 +601,53 @@ const chatSendAlert = {
         removeCookie("alert");
     }
 
-  
+    // const handleDragOver = (e) => {
+    //     e.preventDefault();
+    //     // e.stopPropagation();
+    //   };
+    
+
+    //   const handleFileSelect = (e) => {
+    //     const files = e.target.files;
+    //     if (files.length > 0) {
+    //         setFileList(files); 
+    //         setFileName(files[0].name); 
+    //     }
+        
+    // };
+    
+    //     const handleDrop = (e) => {
+    //         e.preventDefault();
+    //         const files = e.dataTransfer.files;
+    //         console.log("드래그로 받은 파일:" + files);
+            
+    //         setFileList(files);  
+    //         setFileName(files[0].name); 
+    //     };
+
+    //     useEffect(() => {
+    //         if (fileList.length > 0) {
+    //             console.log("상태 변경 후 파일 목록:", fileList);
+    //             sendChat();
+    //         }
+    //     }, [fileList]); 
+
+    //     const sendChat = () => {
+    //         console.log("파일 목록 (sendChat):" + fileList); //잘받음
+
+    //         if (fileList.length > 0) {
+    //             const file = fileList[0]; 
+    //             console.log("파일 전송:" + file); //잘받음
+
+    //             const formData = new FormData();
+    //             formData.append('file' + file);
+
+    //             chatFileStomp.sendMessage(formData);
+    //             chatSendAlert.sendMessage();
+    //         } else {
+    //             console.log("파일을 선택하지 않았습니다.");
+    //         }
+    //     };
 
     return (
         <>
@@ -530,20 +697,20 @@ const chatSendAlert = {
                   </div>
       
                   <div 
-                    ref={msgContainerRef}
-                    style={{ 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        width: '60%', 
-                        height: '600px', 
-                        backgroundColor: '#91B9F5', 
-                        border: '1px solid #ddd', 
-                        margin: '20px', 
-                        borderRadius: '10px',
-                        padding: '10px',
-                        overflowY: 'auto',
-                    }}
-                  >
+                        ref={msgContainerRef}
+                        style={{ 
+                            display: 'flex', 
+                            flexDirection: 'column', 
+                            width: '80%', 
+                            height: '600px', 
+                            backgroundColor: '#91B9F5', 
+                            border: '1px solid #ddd', 
+                            margin: '20px', 
+                            borderRadius: '10px',
+                            padding: '10px',
+                            overflowY: 'auto',
+                        }}
+                    >
                    {messages.length > 0 && messages.map((item, index) => {
                         if (!item.sender || (item.content === "" && !item.uuid) || isNaN(Number(item.sender))) {
                             return null;
@@ -622,14 +789,14 @@ const chatSendAlert = {
                         />
                         
                         <button 
-                        type="submit" 
-                        onClick={() => {
-                            stompHandler.sendMessage();
-                            chatSendAlert.sendMessage();
-                        }}
-                        className="bg-[#83a3d0] text-white hover:bg-[#718aab] rounded-md p-3 w-[20%] "
+                            type="submit" 
+                            onClick={() => {
+                                stompHandler.sendMessage();
+                                chatSendAlert.sendMessage();
+                            }}
+                            className="bg-[#83a3d0] text-white hover:bg-[#718aab] rounded-md p-2 w-1/5"
                         >
-                        전송
+                            전송
                         </button>
                     </div>
 
@@ -637,8 +804,15 @@ const chatSendAlert = {
                         <label ref={dndRef}  className="w-[50%] cursor-pointer flex justify-center items-center bg-[#f1f5f9] hover:bg-[#e2e8f0] rounded-md p-2 border-2 border-[#6f8cb4] ">
                             <img src={upload} alt="upload" className="w-6 h-6 mr-2" />
                                 <span className="text-[#6f8cb4]"> 파일을 선택하세요</span>
-                            <input ref={fileId} type="file" hidden multiple="true" />
+                            <input ref={fileId} type="file" hidden multiple="true" onChange={(e)=>{
+                                const selectedFile = e.target.files;
+                                if(selectedFile.length>0){
+                                    setFileName(selectedFile[0].name);
+                                }
+                            }}/>
                         </label>
+
+                        {fileName && <p>선택된 파일 : {fileName}</p>}
 
                         <button
                         onClick={() => { chatFileStomp.sendMessage(); chatSendAlert.sendMessage();}}
@@ -646,8 +820,39 @@ const chatSendAlert = {
                         >
                         파일전송
                         </button>
+
+                        
                     </div>
-                   
+                     {/* <div className="flex justify-center items-center mt-4 space-x-4">
+                        <label
+                            className="w-[50%] cursor-pointer flex justify-center items-center bg-[#f1f5f9] hover:bg-[#e2e8f0] rounded-md p-2 border-2 border-[#6f8cb4]"
+                            onDragOver={handleDragOver}  
+                            onDrop={handleDrop}    
+                        >
+                            <span className="text-[#6f8cb4]">파일 선택</span>
+                            <input
+                            ref={fileId}
+                            type="file"
+                            hidden
+                            multiple
+                            onChange={handleFileSelect} 
+                            />
+                        </label>
+                        
+                        {fileName && <p>선택된 파일 : {fileName}</p>}
+
+                        <button
+                        onClick={sendChat}
+                        className="bg-[#83a3d0] text-white hover:bg-[#718aab] rounded-md p-3 w-[20%] "
+                        >
+                        파일전송
+                        </button> */}
+
+
+                        
+                        {/* </div> */}
+
+
 
                     <div className="mt-4 flex flex-row justify-center space-x-4">
                         <button 

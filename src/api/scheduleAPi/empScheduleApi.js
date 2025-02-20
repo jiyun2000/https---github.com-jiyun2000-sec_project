@@ -29,3 +29,10 @@ export const getEmpScheduleById = async (empNo, empSchNo) => {
     const res = await jwtAxios.get(`${host}/read/${empNo}/${empSchNo}`);
     return res.data;
 };
+
+export const allReg = async (empDto) => {
+    const res = await jwtAxios.post(`${host}/resAll`,empDto);
+    console.log(res.data);
+    
+    return res.data;
+}
