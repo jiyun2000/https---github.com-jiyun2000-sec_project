@@ -35,8 +35,8 @@ const AnnualLeaveReadComponent = ({empNo})=>{
         });
     },[cnt]);
 
-    const moveToAdd = (num) =>{
-        navigate({pathname:`../../dayoff/add/${num}`});
+    const moveToAdd = () =>{
+        navigate({pathname:`../../report/add`});
     }
     useEffect(()=>{
         getOneEmp(empNo).then((data)=>{
