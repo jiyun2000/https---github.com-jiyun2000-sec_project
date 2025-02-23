@@ -118,7 +118,7 @@ const BookingListComponent = () => {
             <table className="w-full ">
               <thead className="bg-gray-200 sticky top-0 z-10">
                 <tr>
-                  <th className="px-6 py-4 text-center">방번호</th>
+                  <th className="px-6 py-4 text-center">예약번호</th>
                   <th className="px-6 py-4 text-center">예약 날짜</th>
                   <th className="px-6 py-4 text-center">시작 시간</th>
                   <th className="px-6 py-4 text-center">끝난 시간</th>
@@ -131,7 +131,7 @@ const BookingListComponent = () => {
                     className="bg-gray-50 cursor-pointer text-center"
                     onClick={() => moveToRead(data.bookNo)}
                   >
-                    <td className="px-6 py-4 text-center">{data.roomNo}</td>
+                    <td className="px-6 py-4 text-center">{data.bookNo}</td>
                     <td className="px-6 py-4 text-center">{data.bookDate}</td>
                     <td className="px-6 py-4 text-center">{data.start}</td>
                     <td className="px-6 py-4 text-center">{data.end}</td>

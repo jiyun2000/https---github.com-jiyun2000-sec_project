@@ -30,7 +30,6 @@ const initStateRL = {
 
 const BookingAddComponent = () => {
     const [booking, setBooking] = useState({...initState});
-    const [bookingTemp, setBookingTemp] = useState({...initState});
     const [bookingAtDate, setBookingAtDate] = useState([]);
     const [bookDate, setBookDate] = useState('');
     const [roomNumber, setRoomNumber] = useState(0);
@@ -63,7 +62,6 @@ const BookingAddComponent = () => {
             if(!remove){
                 slotsTemp.push({...booking});
             }
-            console.log(slotsTemp);
             setAddBooking(slotsTemp);
         }
     },[booking]);
@@ -107,17 +105,11 @@ const BookingAddComponent = () => {
         if(addBooking.length>1){
             for(let i = 1;i<addBooking.length;i++){
                 addOne(addBooking[i]).then(()=>{
-                console.log(addBooking[i]);
             });
         };
         alert("등록되었습니다.");
         moveToList();
         }
-    }
-
-    const handleChangeBooking = (evt) => {
-        booking[evt.target.name] = evt.target.value;
-        setBooking({...booking});
     }
 
     const handleChangeDate = (evt) => {
@@ -153,7 +145,6 @@ const BookingAddComponent = () => {
 
   const dateNow = new Date();
   const today = dateNow.toISOString().slice(0,10);
-  console.log(today);
   
     return (
         <div>
@@ -212,38 +203,6 @@ const BookingAddComponent = () => {
                     </select>
                 </div>
             </div>
-            
-            {/* <div className="flex justify-center mt-10 ">
-            <div className="w-1/5 p-6 font-bold">시작시간</div>
-                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
-                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="start"
-                    type={'time'} 
-                    value={booking.start}
-                    onChange={handleChangeBooking}></input>
-                </div>
-            </div>
-
-            <div className="flex justify-center mt-10 ">
-            <div className="w-1/5 p-6 font-bold">끝난시간</div>
-                <div className="relative mb-4 flex w-full flex-wrap items-center justify-center">
-                    <input className="w-full p-6 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="end"
-                    type={'time'} 
-                    value={booking.end} 
-                    onChange={handleChangeBooking}></input>
-                </div>
-            </div> */}
-            
-            {/* <div className="grid place-items-center w-full">
-            <div className="w-[75%] flex m-auto flex-wrap  ">
-                {bookingAtDate.map((data)=>{
-                    return <div className="grid place-items-center w-[46%] border border-solid border-neutral-300 shadow-md text-center h-10 rounded-xl m-2">
-                        {data.start} ~ {data.end}
-                    </div>
-                })}
-            </div>
-            </div> */}
 
             {roomNumber===0?<></>:bookDate===''?<></>:<div className="grid place-items-center w-full">
             <div className="w-full flex m-auto flex-wrap  ">
