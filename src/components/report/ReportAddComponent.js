@@ -220,7 +220,7 @@ const ReportAddComponent = () => {
             </>}
 
             <div className="flex justify-center">
-                <div className="w-1/5 p-6 font-bold">받는 사람</div>
+                <div className="w-1/5 p-6 font-bold">받는 사람(입력한 순서대로 결재가 진행됩니다.)</div>
                 <div className="mb-4 flex w-full justify-center">
                     
                 <Select
