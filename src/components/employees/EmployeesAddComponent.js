@@ -284,13 +284,19 @@ const EmployeesAddComponent = () => {
                 }
             </div>}
 
-            {checkMail==="ok"?<div className="flex justify-center p-4">
-                <button type="button"
+            <div className="flex justify-center p-4">
+            {checkMail==="ok"?<button type="button"
                 className="inline-block rounded p-4 m-2 text-xl w-32  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
                 onClick={handleClickAdd}>
                     등록
                 </button>
-            </div>:<></>}
+                :<></>}
+                <button type="button"
+                className="inline-block rounded p-4 m-2 text-xl w-32  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
+                onClick={moveToList}>
+                    리스트
+                </button></div>
+            
         </div>
         </div>
     </div>
