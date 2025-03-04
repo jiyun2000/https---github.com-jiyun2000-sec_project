@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import useCustomMove from "../../hooks/useCustomMove";
 import { addReport } from "../../api/reportApi";
-import { getAllList } from "../../api/employeesApi";
+import { getAllList, getEmpListWithJobAndDept } from "../../api/employeesApi";
 import { getCookie, removeCookie } from "../../util/cookieUtil";
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
@@ -34,7 +34,9 @@ const initStateEmp = {
     address : '',
     phoneNum : '',
     gender : '',
-    citizenId : ''
+    citizenId : '',
+    deptName : '',
+    jobTitle : ''
 }
 
 const ReportAddComponent = () => {
@@ -52,7 +54,8 @@ const ReportAddComponent = () => {
 
     useEffect(()=>{
        
-        getAllList().then((data)=>{
+        getEmpListWithJobAndDept().then((data)=>{
+            console.log(data);
             setEmployees(data);
         });
     },[report]);
@@ -67,13 +70,26 @@ const ReportAddComponent = () => {
     }
 
     const handleChangeChecked = (evt) => {
-        report['title']='';
-        report['contents']='';
-        report['deadLine'] = '';
-        report['files'] = [];
-        report[evt.target.name] = evt.target.checked;
+        console.log(evt.target.id);
+        if(evt.target.id === 'isDayOff'){
+            report['title']='';
+            report['contents']='';
+            report['deadLine'] = '';
+            report['files'] = [];
+            report['isDayOff'] = true;
+            
+            setReport({...report});
+        }else{
+            
+            report['title']='';
+            report['contents']='';
+            report['deadLine'] = '';
+            report['files'] = [];
+            report['isDayOff'] = false;
+            
+            setReport({...report});
         
-        setReport({...report});
+        }
     }
 
     const handleClickAdd = (e) => {
@@ -164,14 +180,34 @@ const ReportAddComponent = () => {
         <div className="w-[80%] shadow-2xl mt-10 m-2 p-4 rounded-md ">
             <h2 className="text-center text-3xl font-semibold m-3">보고서 작성</h2>
 
-            <div className="flex justify-center">
-                <div className="w-1/5 p-3 font-bold">연차 사용</div>
-                <div className="mb-4 flex w-full">
-                    <input className="w-full p-3 rounded-r border border-solid border-neutral-300 shadow-md" 
-                    name="isDayOff"
-                    type={'checkbox'} 
-                    //value={report.title}
-                    onChange={handleChangeChecked}></input>
+            <div className="flex justify-center mb-5">
+                <div class="flex gap-10">
+                    <div class="inline-flex items-center">
+                        <label class="relative flex items-center cursor-pointer" for="normal">
+                        <input name="framework" 
+                            type="radio" 
+                            class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" 
+                            id="normal"
+                            onChange={handleChangeChecked}
+                            checked={!report.isDayOff}/>
+                        <span class="absolute bg-slate-800 w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </span>
+                        </label>
+                        <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="normal">일반</label>
+                    </div>
+                    
+                    <div class="inline-flex items-center">
+                        <label class="relative flex items-center cursor-pointer" for="isDayOff">
+                        <input name="framework" 
+                            type="radio" 
+                            class="peer h-5 w-5 cursor-pointer appearance-none rounded-full border border-slate-300 checked:border-slate-400 transition-all" 
+                            id="isDayOff"
+                            onChange={handleChangeChecked}/>
+                        <span class="absolute bg-slate-800 w-3 h-3 rounded-full opacity-0 peer-checked:opacity-100 transition-opacity duration-200 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                        </span>
+                        </label>
+                        <label class="ml-2 text-slate-600 cursor-pointer text-sm" for="isDayOff">연차</label>
+                    </div>
                 </div>
             </div>
 
@@ -228,11 +264,11 @@ const ReportAddComponent = () => {
                         closeMenuOnSelect={false}
                         options={employees.filter(res => res.empNo !== empNo).map(res => ({
                             value: res.empNo,
-                            label: `${res.firstName} ${res.lastName}`
+                            label: `${res.deptName} ${res.jobTitle} ${res.firstName}${res.lastName}`
                         }))} 
                         value={report.receivers.map(empNo => {
                             const employee = employees.find(res => res.empNo === empNo);
-                            return employee ? { value: employee.empNo, label: `${employee.firstName} ${employee.lastName}` } : null;
+                            return employee ? { value: employee.empNo, label: `${employee.deptName} ${employee.jobTitle} ${employee.firstName}${employee.lastName}` } : null;
                         }).filter(Boolean)} 
                         onChange={(selectedOptions) => {
                             setReport(prev => ({

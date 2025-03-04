@@ -8,6 +8,7 @@ import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getCookie, removeCookie } from "../../util/cookieUtil";
 import colorChat from '../../assets/icon/colorChat.png';
+import ReadComponent from "../common/ReadComponent";
 
 const initState = {//초기화 상대 객체 선언
     reportNo : 0,
@@ -79,6 +80,19 @@ const SentReportReadComponent = ({reportNo}) => {
       removeCookie("alert");
     }
 
+    const reportDetail = [
+      { label: "보고서 번호", value: report.reportNo },
+      { label: "마감 기한", value: report.deadLine },
+      report.isDayOff?{ label: "날짜", value: report.title }:{ label: "제목", value: report.title },
+      report.isDayOff?{ label: "시간", value: report.contents }:{ label: "내용", value: report.contents },
+      { label: "진행 상태", value: report.reportStatus },
+      { label: "보고 일시", value: report.reportingDate },
+      ...(report.reportStatus !== '완료' ? [
+        { label: "발신인", value: `${sender.firstName}${sender.lastName}` },
+        { label: "수신인", value: `${receiver.firstName}${receiver.lastName}` }
+      ] : [])
+  ];
+
   return (  
     <div>
       <div className="flex justify-between items-center w-full bg-white shadow-lg rounded-md mb-8 px-6 py-4">
@@ -104,103 +118,15 @@ const SentReportReadComponent = ({reportNo}) => {
       </div>
 
 
-    <div className="flex justify-center m-3">
-    <div className = "w-full shadow-xl p-4"> 
-      {report.reportStatus==='완료'?<h2 className="text-center text-3xl font-semibold">완료된 보고서</h2>:<h2 className="text-center text-3xl font-semibold">{receiver.firstName} {receiver.lastName}님께 보낸 보고서</h2>}
-      <div className="flex justify-center mt-10">
-      <div className="w-1/5 p-6 font-bold">보고서 번호</div>
-      <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-md border border-solid shadow-md">
-            {report.reportNo}        
-          </div>  
-        </div>
+      <div className="flex flex-col items-center">
+      <div className="shadow-xl mt-1 m-2 p-6 w-2/3 flex flex-col items-center">
+      <h2 className="text-center text-3xl font-semibold">{sender.firstName} {sender.lastName}님께 받은 보고서</h2>
+        <ReadComponent serverData={reportDetail}/>
       </div>
-
-        <div className="flex justify-center">
-        <div className="w-1/5 p-6 font-bold">마감일</div>
-          <div className="mb-4 flex w-full justify-center">
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-              {report.deadLine}        
-            </div>
-          </div>
-        </div>
-
-        {report.isDayOff===false?<>
-        <div className="flex justify-center">
-          <div className="w-1/5 p-6 font-bold">제목</div>
-            <div className="mb-4 flex w-full justify-center">
-              <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-                {report.title}        
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-          <div className="w-1/5 p-6 font-bold">내용</div>
-            <div className="mb-4 flex w-full justify-center">
-              <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-                {report.contents}        
-              </div>
-            </div>
-        </div></>:<>
-        <div className="flex justify-center">
-          <div className="w-1/5 p-6 font-bold">날짜</div>
-            <div className="mb-4 flex w-full justify-center">
-              <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-                {report.title}        
-              </div>
-            </div>
-          </div>
-
-          <div className="flex justify-center">
-          <div className="w-1/5 p-6 font-bold">시간</div>
-            <div className="mb-4 flex w-full justify-center">
-              <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-                {report.contents}        
-              </div>
-            </div>
-        </div>
-        </>}
-
-      <div className="flex justify-center">
-      <div className="w-1/5 p-6 font-bold">진행 상태</div>
-        <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-            {report.reportStatus}        
-          </div>
-        </div>  
-      </div>
-      <div className="flex justify-center">
-      <div className="w-1/5 p-6 font-bold">작성 날짜</div>
-        <div className="mb-4 flex w-full justify-center">
-          <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-            {report.reportingDate}        
-          </div>
-        </div>
-      </div>
-
-      {report.reportStatus==='완료'?<></>:<>
-        <div className="flex justify-center">
-        <div className="w-1/5 p-6 font-bold">받는 사람</div>
-          <div className="mb-4 flex w-full justify-center">
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-            {receiver.firstName} {receiver.lastName}       
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-center">
-        <div className="w-1/5 p-6 font-bold">보낸 사람</div>
-          <div className="mb-4 flex w-full justify-center">
-            <div className="w-4/5 p-6 rounded-r border border-solid shadow-md">
-            {sender.firstName} {sender.lastName}        
-            </div>
-          </div>
-        </div>
-      </>}
      
       
       <div className="w-full justify-center flex  flex-col m-auto items-center">
-      <div className="w-1/5 p-6 font-bold">관련 문서</div>
+      {report.uploadFileNames.length>1?<div className="w-1/5 p-6 font-bold text-center">관련 문서</div>:<></>}
         {report.uploadFileNames.map( (fileName, i) => 
           <a 
           alt ="report"
@@ -212,17 +138,17 @@ const SentReportReadComponent = ({reportNo}) => {
         )}
       </div>
       
+        
+      </div>
       <div className="flex justify-center p-4">
         <button type="button" 
           className="mt-4 bg-[#8ba7cd]  hover:bg-[#6f8cb4] text-white py-2 px-4 rounded-md w-2/5 text-sm "
           onClick={()=>moveToReportSentPage()}
         >
           리스트
-        </button>  
-      </div>
+        </button>
     </div>
     </div>
-  </div>
   );
 };
 
