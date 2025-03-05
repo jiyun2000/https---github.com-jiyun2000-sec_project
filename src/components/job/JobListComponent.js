@@ -83,6 +83,11 @@ const JobListComponent = () => {
     <div className='m-5'>
             <div className='flex flex-col p-6 items-center  '>
                 <h2 className='m-4 text-3xl font-semibold'>직책 안내</h2>
+                {job.length===1?<div
+                    className='flex w-80 p-2 m-6 text-2xl rounded items-center justify-center font-light' 
+                >
+                    직책을 추가해주세요.
+                </div>:<></>}
                 {job.map((res)=>{
                    return res.jobNo===1?<></>:(
                     <div 

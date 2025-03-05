@@ -30,7 +30,7 @@ const DeptInfoModifyComponent = ({deptNo}) => {
 
     useEffect(()=>{
         getOneEmp(empNo).then((data) => {
-            console.log(data);
+            //console.log(data);
             setEmpData(data);
         }).catch((error)=>{
             console.log(error)
