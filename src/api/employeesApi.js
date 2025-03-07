@@ -16,6 +16,7 @@ export const getList = async (pageParam) => {
     return res.data;
 }
 
+
 export const getFindList = async (pageParam, name) => {
     const [page, size] = pageParam;
     const res = await jwtAxios.get(`${prefix}/findList/${name}`,{
@@ -24,6 +25,13 @@ export const getFindList = async (pageParam, name) => {
             size:size
         }
     });
+
+    return res.data;
+}
+
+
+export const getEmpListWithJobAndDept = async ()=>{
+    const res = await jwtAxios.get(`${prefix}/list/detail`);
 
     return res.data;
 }

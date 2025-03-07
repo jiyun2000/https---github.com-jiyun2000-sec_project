@@ -9,6 +9,7 @@ import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getCookie, removeCookie } from '../../util/cookieUtil';
 import colorChat from "../../assets/icon/colorChat.png";
+import ReadComponent from "../common/ReadComponent";
 
 const initState = {
     jobNo : 0,
@@ -53,12 +54,17 @@ const JobReadComponent = ({jobNo})=>{
 
     const goToBoardList = () => {
         navigate(`/board/list`)
-      }
+    }
 
-    
-      const checkRemove = () => {
+
+    const checkRemove = () => {
         removeCookie("alert");
-      }
+    }
+    
+    const jobDetail = [
+        { label: "직책 번호", value: job.jobNo },
+        { label: "직책 이름", value: job.jobTitle },
+    ];
       
     return <>
     <div>
@@ -86,19 +92,9 @@ const JobReadComponent = ({jobNo})=>{
 
 
     <h1 className="text-center m-8 text-3xl font-semibold">{job.jobTitle} 직책 안내</h1>
-        <div className="m-4 p-4 text-2xl">
-            <div className="flex justify-center flex-col">
-                <div className="relative mb-4 flex w-full flex-row text-center justify-center">
-                    <div className="w-[15%] p-6 font-bold">직책 번호  </div>
-                    <div className="w-[20%] p-6 rounded-md 0 ">{job.jobNo}</div>
-                </div>
-            </div>
-
-            <div className="flex justify-center">
-                <div className="relative mb-4 flex w-full flex-row text-center justify-center">
-                    <div className="w-[15%] p-6 font-bold">직책 이름  </div>
-                    <div className="w-[20%] p-6 rounded-md  ">{job.jobTitle}</div>
-                </div>
+            <div className="flex flex-col items-center">
+            <div className="shadow-xl mt-1 m-2 p-6 w-2/3 flex flex-col items-center">
+                <ReadComponent serverData={jobDetail}/>
             </div>
 
             <div className="flex justify-center p-4 gap-4">

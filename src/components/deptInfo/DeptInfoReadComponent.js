@@ -9,6 +9,7 @@ import chat from "../../assets/icon/chat.png";
 import BoardTitleComponent from '../board/BoardTitleComponent';
 import { Link } from 'react-router-dom';
 import colorChat from "../../assets/icon/colorChat.png";
+import ReadComponent from "../common/ReadComponent";
 
 const initState = {
     deptNo : 0,
@@ -53,11 +54,18 @@ const DeptInfoReadComponent = ({deptNo})=>{
 
     const goToBoardList = () => {
         navigate(`/board/list`)
-      }
+    }
 
     const checkRemove = () => {
         removeCookie("alert");
-      }
+    }
+
+    const deptDetail = [
+        { label: "부서 번호", value: deptInfo.deptNo },
+        { label: "부서 이름", value: deptInfo.deptName },
+        { label: "부서 주소", value: deptInfo.deptAddress },
+        { label: "부서 연락처", value: deptInfo.phoneNo },
+    ];
     return <>
     <div>
     <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
@@ -85,27 +93,11 @@ const DeptInfoReadComponent = ({deptNo})=>{
     <div className="px-6 py-8 bg-white rounded-lg  mb-8 w-full">
         <h1 className="text-3xl font-bold text-center mb-8">{deptInfo.deptName} 부서 안내</h1>
   
-        <div className=" flex flex-col items-center justify-center">
-            <div className="flex justify-center items-center p-6 rounded-lg shadow-sm">
-                <div className="font-semibold text-lg ml-2 mr-2">부서 번호</div>
-                <div className="text-lg ml-2 mr-2">{deptInfo.deptNo}</div>
+        <div className="flex flex-col items-center">
+            <div className="shadow-xl mt-1 m-2 p-6 w-2/3 flex flex-col items-center">
+                <ReadComponent serverData={deptDetail}/>
             </div>
-    
-            <div className="flex justify-center items-center  p-6 rounded-lg shadow-sm">
-                <div className="font-semibold text-lg ml-2 mr-2">부서 이름</div>
-                <div className="text-lg ml-2 mr-2">{deptInfo.deptName}</div>
             </div>
-    
-            <div className="flex justify-center items-center  p-6 rounded-lg shadow-sm">
-                <div className="font-semibold text-lg ml-2 mr-2">부서 주소</div>
-                <div className="text-lg ml-2 mr-2">{deptInfo.deptAddress}</div>
-            </div>
-    
-            <div className="flex justify-center items-center p-6 rounded-lg shadow-sm">
-                <div className="font-semibold text-lg ml-2 mr-2">대표 번호</div>
-                <div className="text-lg ml-2 mr-2">{deptInfo.phoneNo}</div>
-            </div>
-        </div>
   
         <div className="mt-8 flex justify-center gap-4">
             {deptInfoNo===1?<button

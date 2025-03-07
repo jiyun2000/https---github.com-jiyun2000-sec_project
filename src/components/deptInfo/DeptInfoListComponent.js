@@ -91,6 +91,11 @@ const DeptInfoListComponent = () => {
             <h1 className="text-center text-3xl font-bold text-gray-900 mb-8">부서 안내</h1>
 
             <div className="flex flex-col items-center gap-6 mt-8">
+                {deptInfo.length===1?<div
+                    className='flex w-80 p-2 m-6 text-2xl rounded items-center justify-center font-light' 
+                >
+                    부서를 추가해주세요.
+                </div>:<></>}
                 {deptInfo.map((res) => {
                     return res.deptNo===1?<></>:(
                         <div
