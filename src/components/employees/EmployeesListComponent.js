@@ -3,7 +3,7 @@ import { API_SERVER_HOST, getFindList, getList } from '../../api/employeesApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
 import BoardTitleComponent from '../board/BoardTitleComponent';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import mail from '../../assets/icon/mail.png';
 import chat from '../../assets/icon/chat.png';
 import { getCookie, removeCookie } from '../../util/cookieUtil';
@@ -34,6 +34,7 @@ const EmployeesListComponent = () => {
     const [deptData, setDeptData] = useState('');
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const { page, size, moveToRead, moveToAdd, moveToList, moveToAddExcel } = useCustomMove();
+    const [temp,setTemp] = useSearchParams();
 
     useEffect(() => {
         if (search === '') {
@@ -45,8 +46,9 @@ const EmployeesListComponent = () => {
                 setFilterEmployees([]);
             });
         } else {
-            getFindList([page, size], search).then(data => {
+            getFindList([(page == 1 ? page:1), size], search).then(data => {
                 if (data.dtoList && Array.isArray(data.dtoList)) {
+                    setTemp({page:1,size:10});
                     setEmployees(data);
                     setFilterEmployees(data.dtoList);
                 } else {
