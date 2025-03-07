@@ -19,15 +19,16 @@ export const getList = async (pageParam) => {
 
 export const getFindList = async (pageParam, name) => {
     const [page, size] = pageParam;
-    const res = await jwtAxios.get(`${prefix}/findList/${name}`,{
-        params : {
-            page:page,
-            size:size
+    const res = await jwtAxios.get(`${prefix}/findlist/${name}`, {
+        params: {
+            page: page,
+            size: size
         }
     });
 
     return res.data;
 }
+
 
 
 export const getEmpListWithJobAndDept = async ()=>{
