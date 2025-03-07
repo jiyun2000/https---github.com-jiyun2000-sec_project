@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { API_SERVER_HOST, getList } from '../../api/employeesApi';
+import { API_SERVER_HOST, getFindList, getList } from '../../api/employeesApi';
 import useCustomMove from '../../hooks/useCustomMove';
 import PageComponent from '../common/PageComponent';
 import BoardTitleComponent from '../board/BoardTitleComponent';
@@ -36,6 +36,8 @@ const EmployeesListComponent = () => {
     const [deptData, setDeptData] = useState('');
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
     const { page, size, moveToRead, moveToAdd, moveToList, moveToAddExcel } = useCustomMove();
+    const [empFind, setEmpFind] = useState('');
+
 
     useEffect(() => {
             getList([page,size]).then(data => {
@@ -56,7 +58,6 @@ const EmployeesListComponent = () => {
             setDeptData(data);
         })
     }, [])
-
 
 
     const goToBoardList = () => {

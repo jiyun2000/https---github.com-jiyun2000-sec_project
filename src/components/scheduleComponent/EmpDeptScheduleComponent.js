@@ -289,7 +289,7 @@ const addAllSchedule = () => {
             </div>
 
             <div className="py-9 pl-9 pr-6">
-                {empData.jobNo === 1 ? <button onClick={addAllSchedule} type="button" className="rounded-lg bg-slate-400 p-3 mb-2 text-xl text-white ">회사 전체 일정 등록</button> : <></>}
+                {empData.deptNo === 1 ? <button onClick={addAllSchedule} type="button" className="rounded-lg bg-slate-400 p-3 mb-2 text-xl text-white ">회사 전체 일정 등록</button> : <></>}
                 <FullCalendar
                     plugins={[dayGridPlugin, interactionPlugin]}
                     dateClick={(info) => handleDateClick(info.dateStr)}
