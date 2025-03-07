@@ -17,7 +17,6 @@ const initState = {
   category: '',
   regdate: '',
   moddate: '',
-  replyCount: 0,
 };
 
 const BoardReadComponent = ({ boardNo }) => {

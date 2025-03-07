@@ -44,25 +44,31 @@ const StompComponent = () => {
     const dndRef = useRef();
     const [isExtraShow, setIsExtraShow] = useState();
     const [fileName, setFileName] = useState('');
+    const lastMessageRef = useRef(null);
     
     // useLayoutEffect(() => {
-    //     if (msgContainerRef.current && messages.length > 0) {
+    //     if (msgContainerRef.current) {
     //       msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
     //     }
     //   }, []);
 
-    useEffect(() => {
-        if (msgContainerRef.current) {
-          msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
-        }
-      }, []);
 
-    useEffect(() => {
-        if (msgContainerRef.current) {
-          msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
-        }
-      }, [messages]);
+    // useEffect(() => {
+    //     if (msgContainerRef.current) {
+    //       msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+    //     }
+    //   }, [messages]);
+    // useEffect(() => {
+    //     if (msgContainerRef.current) {
+    //       msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+    //     }
+    //   }, [messages]); 
 
+    //   useEffect(() => {
+    //     if (lastMessageRef.current) {
+    //       lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
+    //     }
+    //   }, [messages]);
 
     useEffect(()=>{
         getOneEmp(receiverEmpNo).then((data)=>{
@@ -78,6 +84,17 @@ const StompComponent = () => {
             setFileDetail(data);
         })
     }, [])
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+          if (msgContainerRef.current) {
+            msgContainerRef.current.scrollTop = msgContainerRef.current.scrollHeight;
+          }
+        }, 100);
+        
+        return () => clearTimeout(timer);
+      }, [messages]);
+      
 
     
    
@@ -235,6 +252,8 @@ const StompComponent = () => {
         
                 // 메시지 입력 필드 초기화
                 setMessageObj({ ...messageObj, content: '' });
+
+                window.location.reload();
             } else {
                 console.log("메시지 비어있음.");
             }
@@ -696,79 +715,78 @@ const chatSendAlert = {
                     </h2>
                   </div>
       
-                  <div 
-                        ref={msgContainerRef}
-                        style={{ 
-                            display: 'flex', 
-                            flexDirection: 'column', 
-                            width: '80%', 
-                            height: '600px', 
-                            backgroundColor: '#91B9F5', 
-                            border: '1px solid #ddd', 
-                            margin: '20px', 
-                            borderRadius: '10px',
-                            padding: '10px',
-                            overflowY: 'auto',
-                        }}
-                    >
-                   {messages.length > 0 && messages.map((item, index) => {
-                        if (!item.sender || (item.content === "" && !item.uuid) || isNaN(Number(item.sender))) {
-                            return null;
-                        }
+                  <div
+      ref={msgContainerRef}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '80%',
+        height: '500px',
+        backgroundColor: '#91B9F5',
+        border: '1px solid #ddd',
+        margin: '20px',
+        borderRadius: '10px',
+        padding: '10px',
+        overflowY: 'auto',
+      }}
+    >
+      {messages.length > 0 &&
+        messages.map((item, index) => {
+          if (!item.sender || (item.content === "" && !item.uuid) || isNaN(Number(item.sender))) {
+            return null;
+          }
 
-                        const sender = Number(item.sender);
-                        const userEmpNo = Number(senderEmpNo);
-                        const isUserMessage = sender === userEmpNo;
-                        const isImage = (content) => {
-                            return content && content.match(/\.(jpg|jpeg|png|gif)$/i);  
-                          };
-                          
-                          const isFile = (content) => {
-                            return content && content.match(/\.(pdf|docx|xlsx|pptx|txt)$/i); 
-                          };
-                       
-
-                            return (
-                                <div key={index} style={{
-                                    textAlign: isUserMessage ? 'right' : 'left', 
-                                    marginBottom: '10px',
-                                }}>
-                                  <div style={{
-                                                display: 'inline-block',
-                                                backgroundColor: isUserMessage ? '#FFE146' : '#FFFFFF',
-                                                color: isUserMessage ? '#000' : '#000',
-                                                borderRadius: '20px',
-                                                padding: '10px 15px',
-                                                maxWidth: '70%',
-                                                wordBreak: 'break-word',
-                                                fontSize: '14px',}}>
-                                    <p style={{ margin: 0, fontWeight: 'bold' }}>
-                                      {isUserMessage ? '[Me]' : `[${empData.firstName} ${empData.lastName}]`}
-                                    </p>
-                                    <p className="mt-1">
-                                      {item.content && item.content !== "" ? (
-                                        item.content
-                                      ) : item.uuid ? (
-                                        isImage(item.uuid) ? (
-                                          <img src={`${API_SERVER_HOST}/chat/view/${item.uuid}`} className="w-32" alt="message image" />
-                                        ) : isFile(item.uuid) ? (
-                                          <a href={`${API_SERVER_HOST}/chat/viewFile/${item.uuid}`} download>
-                                            <p>파일을 보냈습니다.</p>
-                                            <button className="bg-[#3e3e3e] text-white p-2 rounded-md">파일 다운로드</button>
-                                          </a>
-                                        ) : (
-                                          <span>지원하지 않는 파일 형식입니다.</span>
-                                        )
-                                      ) : (
-                                        <span>No content</span>
-                                      )}
-                                    </p>
-                                    <p className="text-xs text-right mt-2">{item.sendTime}</p>
-                                  </div>
-                                </div>
-                              );
-                            })}
-                          </div>
+          const sender = Number(item.sender);
+          const userEmpNo = Number(senderEmpNo);
+          const isUserMessage = sender === userEmpNo;
+          const isImage = (content) => content && content.match(/\.(jpg|jpeg|png|gif)$/i);
+          const isFile = (content) => content && content.match(/\.(pdf|docx|xlsx|pptx|txt)$/i);
+          return (
+            <div key={index} style={{ textAlign: isUserMessage ? 'right' : 'left', marginBottom: '10px' }}>
+              <div
+                style={{
+                  display: 'inline-block',
+                  backgroundColor: isUserMessage ? '#FFE146' : '#FFFFFF',
+                  color: isUserMessage ? '#000' : '#000',
+                  borderRadius: '20px',
+                  padding: '10px 15px',
+                  maxWidth: '70%',
+                  wordBreak: 'break-word',
+                  fontSize: '14px',
+                }}
+              >
+                <p style={{ margin: 0, fontWeight: 'bold' }}>
+                  {isUserMessage ? '[Me]' : `[${empData.firstName} ${empData.lastName}]`}
+                </p>
+                <p className="mt-1">
+                  {item.content && item.content !== "" ? (
+                    item.content
+                  ) : item.uuid ? (
+                    isImage(item.uuid) ? (
+                      <img
+                        src={`${API_SERVER_HOST}/chat/view/${item.uuid}`}
+                        className="w-32"
+                        alt="message image"
+                      />
+                    ) : isFile(item.uuid) ? (
+                      <a href={`${API_SERVER_HOST}/chat/viewFile/${item.uuid}`} download>
+                        <p>파일을 보냈습니다.</p>
+                        <button className="bg-[#3e3e3e] text-white p-2 rounded-md">파일 다운로드</button>
+                      </a>
+                    ) : (
+                      <span>지원하지 않는 파일 형식입니다.</span>
+                    )
+                  ) : (
+                    <span>No content</span>
+                  )}
+                </p>
+                <p className="text-xs text-right mt-2">{item.sendTime}</p>
+              </div>
+            </div>
+          );
+        })}
+          <div ref={lastMessageRef} />
+    </div>
                      
                         
       

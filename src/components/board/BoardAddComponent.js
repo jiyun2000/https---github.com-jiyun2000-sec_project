@@ -17,7 +17,6 @@ const initState = {
   category: '일반',
   regdate: '',
   moddate: '',
-  replyCount: 0,
 };
 
 const BoardAddComponent = () => {
