@@ -84,7 +84,7 @@ const JobAddComponent = () => {
 
 
         <h1 className="text-center mt-8 text-3xl">직책 추가하기</h1>
-        <div className="border border-blue-300 rounded-md mt-8 m-2 p-4 ">
+        <div className=" ">
 
             <div className="flex justify-center  mt-10  flex-col">
             <div className="flex justify-center mt-10  flex-col items-center" >

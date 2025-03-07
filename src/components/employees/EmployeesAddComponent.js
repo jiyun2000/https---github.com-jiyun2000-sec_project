@@ -42,265 +42,320 @@ const initStateDeptinfo = {
 
 const EmployeesAddComponent = () => {
     const [employees, setEmployees] = useState({...initState});
-    const [checkPw,setCheckPw] = useState("");
-    const [job,setJob] = useState([initStateJob]);
-    const [checkPassword,setCheckPassword] = useState("");
-    const [deptInfo,setDeptInfo] = useState([initStateDeptinfo]);
+    const [checkPw, setCheckPw] = useState("");
+    const [job, setJob] = useState([initStateJob]);
+    const [checkPassword, setCheckPassword] = useState("");
+    const [deptInfo, setDeptInfo] = useState([initStateDeptinfo]);
     const [checkMail, setCheckMail] = useState("");
     const [empNo, setEmpNo] = useState(getCookie("member").empNo);
-    const {moveToList} = useCustomMove();
+    const { moveToList } = useCustomMove();
     const navigate = useNavigate();
     const [chatCntCook, setChatCntCook] = useState(getCookie("alert"));
 
-    useEffect(()=>{
+    useEffect(() => {
         getJobList().then(res => {
             setJob(res);
         });
         getDeptList().then(res => {
             setDeptInfo(res);
         });
-    },[employees]);
+    }, [employees]);
 
     const handleClickAdd = () => {
-        addOne(employees).then((data)=>{
-            setALOne(data).then(()=>{
+        addOne(employees).then((data) => {
+            setALOne(data).then(() => {
                 alert("등록되었습니다.");
                 moveToList();
             });
         });
-    }
-    
+    };
+
     const handleChangePassword = (evt) => {
         setCheckPw(evt.target.value);
-    }
+    };
 
-    useEffect(()=>{
-        if(checkPw!==""){
-            if(checkPw===employees.password){
+    useEffect(() => {
+        if (checkPw !== "") {
+            if (checkPw === employees.password) {
                 setCheckPassword("ok");
-            }else{
+            } else {
                 setCheckPassword("no");
             }
         }
-    },[checkPw,employees.password])
+    }, [checkPw, employees.password]);
 
     const handleChangeEmployees = (evt) => {
         employees[evt.target.name] = evt.target.value;
-        setEmployees({...employees});
-    }
+        setEmployees({ ...employees });
+    };
 
     const goToBoardList = () => {
-        navigate(`/board/list`)
-      }
+        navigate(`/board/list`);
+    };
 
     const checkRemove = () => {
         removeCookie("alert");
-      }
-    
+    };
+
     const handleClickCheck = () => {
-        mailCheck(employees).then((res)=>{
-            if(res===0){
+        mailCheck(employees).then((res) => {
+            if (res === 0) {
                 setCheckMail("ok");
-            }else{
+            } else {
                 setCheckMail("no");
             }
-        })
-    }
+        });
+    };
 
     return (
-        <div>
-            <div className="flex justify-between items-center px-6 py-4 bg-white shadow-lg rounded-md mb-8">
-                <div className="flex items-center space-x-8">
-                    <div className="text-2xl font-semibold text-blue-800 select-none cursor-pointer" onClick={goToBoardList}>
-                        [공지사항]
+        <div className="min-h-screen bg-gray-50 py-10">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div className="flex justify-between items-center mb-8">
+                    <div className="flex items-center space-x-8">
+                        <div className="text-3xl font-semibold text-blue-800 cursor-pointer" onClick={goToBoardList}>
+                            [공지사항]
+                        </div>
+                        <div className="text-3xl font-semibold">
+                            <BoardTitleComponent />
+                        </div>
                     </div>
-                <div className="w-64 text-2xl font-semibold cursor-pointer">
-                    <BoardTitleComponent />
+                    <div className="flex space-x-4">
+                        <Link to="/mail" className="w-12 cursor-pointer">
+                            <img src={mail} alt="Mail" className="w-full" />
+                        </Link>
+                        <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer" onClick={checkRemove}>
+                            {chatCntCook ?
+                                <img src={colorChat} alt='colorChat' className='w-full' /> :
+                                <img src={chat} alt="Chat" className="w-full" />
+                            }
+                        </Link>
+                    </div>
                 </div>
-            </div>
-            <div className="flex space-x-4">
-                <Link to="/mail" className="w-12 cursor-pointer">
-                    <img src={mail} alt="Mail" className="w-full" />
-                </Link>
-                <Link to={`/chat/empList/${empNo}?page=1`} className="w-12 cursor-pointer"  onClick={()=>checkRemove()}>
-                {chatCntCook  ? 
-                    <img src={colorChat} alt='colorChat' className='w-full' /> :
-                    <img src={chat} alt="Chat" className="w-full" />
-                }
-                </Link>
-            </div>
-        </div>
 
+                <div className="bg-white p-8 rounded-xl shadow-md max-w-3xl mx-auto">
+                    <h1 className="text-3xl font-semibold text-gray-800 mb-6">직원 등록</h1>
 
-        <div className="flex flex-col py-10 px-20">
-        <h1 className="text-3xl font-semibold mb-6">직원 등록</h1>
-        <div className="bg-white mx-auto mb-2 max-w-2xl">
-            <div className="w-full flex items-center justify-center mt-10 mb-4">
-                <div className="w-[150px] flex-shrink-0 p-6 font-bold">성</div>
-                <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                name="firstName"
-                type={'text'} 
-                value={employees.firstName}
-                onChange={handleChangeEmployees}></input>
+                    {/* 성 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="firstName">성</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="firstName"
+                            type="text"
+                            value={employees.firstName}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
 
-            </div>
+                    {/* 이름 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="lastName">이름</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="lastName"
+                            type="text"
+                            value={employees.lastName}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
 
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">이름</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    name="lastName"
-                    type={'text'} 
-                    value={employees.lastName}
-                    onChange={handleChangeEmployees}></input>
-            </div>
+                    {/* 메일 주소 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="mailAddress">메일 주소</label>
+                        <div className="flex-grow flex items-center gap-3">
+                            <input
+                                className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="example@abc.com"
+                                name="mailAddress"
+                                type="text"
+                                value={employees.mailAddress}
+                                onChange={handleChangeEmployees}
+                            />
+                            <button
+                                className="px-4 py-2 border rounded-md text-white bg-blue-500 hover:bg-blue-600 focus:outline-none"
+                                onClick={handleClickCheck}
+                            >
+                                중복 확인
+                            </button>
+                        </div>
+                    </div>
 
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">메일 주소</div>
-                    <div className="flex-grow flex flex-nowrap gap-3">
-                        <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                        placeholder="example@abc.com"
-                        name="mailAddress"
-                        type={'text'} 
-                        value={employees.mailAddress}
-                        onChange={handleChangeEmployees}></input>
-                        <button className="whitespace-nowrap p-2 rounded-md border border-slate-400"
-                        onClick={handleClickCheck}
+                    {/* 중복 확인 메시지 */}
+                    {checkMail && (
+                        <div className="text-right mb-4 text-sm">
+                            {checkMail === "ok" ? (
+                                <span className="text-green-600 font-medium">사용 가능한 메일 주소입니다.</span>
+                            ) : (
+                                <span className="text-red-600 font-medium">이미 존재하는 메일 주소입니다.</span>
+                            )}
+                        </div>
+                    )}
+
+                    {/* 연봉 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="salary">연봉</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="salary"
+                            type="number"
+                            value={employees.salary}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
+
+                    {/* 부서 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="deptNo">부서</label>
+                        <select
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="deptNo"
+                            onChange={handleChangeEmployees}
                         >
-                            중복 확인
+                            <option value={0}>선택</option>
+                            {deptInfo.map((data) => (
+                                <option key={data.deptNo} value={data.deptNo}>
+                                    {data.deptName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* 직책 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="jobNo">직책</label>
+                        <select
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="jobNo"
+                            onChange={handleChangeEmployees}
+                        >
+                            <option value={0}>선택</option>
+                            {job.map((data) => (
+                                <option key={data.jobNo} value={data.jobNo}>
+                                    {data.jobTitle}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    {/* 생년월일 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="birthday">생년월일</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="birthday"
+                            type="date"
+                            value={employees.birthday}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
+
+                    {/* 주소 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="address">주소</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="address"
+                            type="text"
+                            value={employees.address}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
+
+                    {/* 전화번호 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="phoneNum">전화번호</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="- 빼고 입력"
+                            name="phoneNum"
+                            type="text"
+                            value={employees.phoneNum}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
+
+                    {/* 성별 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="gender">성별</label>
+                        <select
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="gender"
+                            onChange={handleChangeEmployees}
+                        >
+                            <option value="m">남성</option>
+                            <option value="y">여성</option>
+                        </select>
+                    </div>
+
+                    {/* 주민등록번호 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="citizenId">주민등록번호</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            placeholder="- 빼고 입력"
+                            name="citizenId"
+                            type="text"
+                            value={employees.citizenId}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
+
+                    {/* 비밀번호 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="password">비밀번호</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="password"
+                            type="password"
+                            value={employees.password}
+                            onChange={handleChangeEmployees}
+                        />
+                    </div>
+
+                    {/* 비밀번호 확인 */}
+                    <div className="flex items-center mb-4">
+                        <label className="w-32 text-lg font-medium text-gray-700" htmlFor="checkPw">비밀번호 확인</label>
+                        <input
+                            className="flex-grow p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            type="password"
+                            value={checkPw}
+                            onChange={handleChangePassword}
+                        />
+                    </div>
+
+                    {/* 비밀번호 일치 여부 */}
+                    {checkPassword && (
+                        <div className="text-right mb-4">
+                            {checkPassword === "ok" ? (
+                                <span className="text-green-600 font-medium">비밀번호가 같습니다.</span>
+                            ) : (
+                                <span className="text-red-600 font-medium">비밀번호가 다릅니다.</span>
+                            )}
+                        </div>
+                    )}
+
+                    <div className="flex justify-center">
+                        {checkMail === "ok" && (
+                            <button
+                                type="button"
+                                className="inline-block rounded p-4 m-2 text-xl w-32 bg-blue-600 text-white hover:bg-blue-700 focus:outline-none"
+                                onClick={handleClickAdd}
+                            >
+                                등록
+                            </button>
+                        )}
+                        <button
+                            type="button"
+                            className="inline-block rounded p-4 m-2 text-xl w-32 bg-gray-500 text-white hover:bg-gray-600 focus:outline-none"
+                            onClick={moveToList}
+                        >
+                            리스트
                         </button>
                     </div>
-            </div>
-
-            {checkMail===""?<></>:<div className="flex flex-row items-center justify-center mb-4">
-                {checkMail==="ok"?<div className="p-1 text-right font-bold">
-                    사용 가능한 메일 주소 입니다
-                </div>:<div className="p-1 text-right font-bold text-red-500">
-                    이미 존재하는 메일 주소입니다.
                 </div>
-                }
-            </div>}
-            
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">연봉</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    name="salary"
-                    type={'number'} 
-                    value={employees.salary} 
-                    onChange={handleChangeEmployees}></input>
             </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">부서</div>
-                    <select className="flex-grow p-6 rounded-md border border-slate-400" name="deptNo" onClick={handleChangeEmployees}>
-                        <option value={0}></option>
-                        {deptInfo.map((data)=>{
-                            return (<option value={data.deptNo}>{data.deptName}</option>)
-                        })}
-
-                    </select>
-            </div>
-            
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">직책</div>
-                    <select className="flex-grow p-6 rounded-md border border-slate-400" name="jobNo" onChange={handleChangeEmployees}>
-                    <option value={0}></option>
-                    {job.map((data)=>{
-                           return (<option value={data.jobNo}>{data.jobTitle}</option>)
-                        })}
-                    </select>
-            </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">생년월일</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    name="birthday"
-                    type={'date'} 
-                    value={employees.birthday} 
-                    onChange={handleChangeEmployees}></input>
-            </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">주소</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    name="address"
-                    type={'text'} 
-                    value={employees.address} 
-                    onChange={handleChangeEmployees}></input>
-            </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">전화번호</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    placeholder="- 빼고 입력"
-                    name="phoneNum"
-                    type={'text'} 
-                    value={employees.phoneNum} 
-                    onChange={handleChangeEmployees}></input>
-            </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">성별</div>
-                    <select name="gender" onChange={handleChangeEmployees} className="flex-grow p-6 rounded-md border border-slate-400">
-                        <option value={"m"}>남성</option>
-                        <option value={"y"}>여성</option>
-                    </select>
-            </div>
-
-            
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">주민등록번호</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    placeholder="- 빼고 입력"
-                    name="citizenId"
-                    type={'text'} 
-                    value={employees.citizenId} 
-                    onChange={handleChangeEmployees}></input>
-            </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">비밀번호</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    name="password"
-                    type={'password'} 
-                    value={employees.password} 
-                    onChange={handleChangeEmployees}></input>
-            </div>
-
-            <div className="flex items-center justify-center mt-10 mb-4">
-                    <div className="w-[150px] flex-shrink-0 p-6 font-bold">비밀번호 확인</div>
-                    <input className="flex-grow p-6 rounded-md border border-slate-400" 
-                    type={'password'} 
-                    value={checkPw} 
-                    onChange={handleChangePassword}></input>
-            </div>
-
-            {checkPassword===""?<></>:<div className="flex flex-row items-center justify-center mb-4">
-                {checkPassword==="ok"?<div className="p-1 text-right font-bold">
-                    비밀번호가 같습니다.
-                </div>:<div className="p-1 text-right font-bold text-red-500">
-                    비밀번호가 다릅니다.
-                </div>
-                }
-            </div>}
-
-            <div className="flex justify-center p-4">
-            {checkMail==="ok"?<button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
-                onClick={handleClickAdd}>
-                    등록
-                </button>
-                :<></>}
-                <button type="button"
-                className="inline-block rounded p-4 m-2 text-xl w-32  bg-[#8ba7cd] text-white  hover:bg-[#6f8cb4] cursor-pointer"
-                onClick={moveToList}>
-                    리스트
-                </button></div>
-            
         </div>
-        </div>
-    </div>
-    )
-}
+    );
+};
 
 export default EmployeesAddComponent;
