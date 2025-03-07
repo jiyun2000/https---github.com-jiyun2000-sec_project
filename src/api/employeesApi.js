@@ -16,11 +16,26 @@ export const getList = async (pageParam) => {
     return res.data;
 }
 
+
+export const getFindList = async (pageParam, name) => {
+    const [page, size] = pageParam;
+    const res = await jwtAxios.get(`${prefix}/findList/${name}`,{
+        params : {
+            page:page,
+            size:size
+        }
+    });
+
+    return res.data;
+}
+
+
 export const getEmpListWithJobAndDept = async ()=>{
     const res = await jwtAxios.get(`${prefix}/list/detail`);
 
     return res.data;
 }
+
 
 export const getOneEmp = async (empNo) => {
     const res = await jwtAxios.get(`${prefix}/read/${empNo}`);
